@@ -1,7 +1,27 @@
 import os
+from time import sleep
 
 
 class NoxADB:
-    def __init__(self, noxWorkPath=r'D:\Program Files\Nox\bin'):
-        os.chdir(noxWorkPath)
 
+    @classmethod
+    def quitAll(cls):
+        cmd = 'NoxConsole.exe quitall'
+        os.system(cmd)
+        print(cmd)
+        sleep(13)
+
+    def __init__(self, noxIndex):
+        self.noxIndex = noxIndex
+
+    def quit(self):
+        cmd = 'NoxConsole.exe quit -index:%d' % self.noxIndex
+        print(cmd)
+        os.popen(cmd)
+        sleep(1)
+
+    def runApp(self, packagename):
+        cmd = 'NoxConsole.exe runapp -index:%d -packagename:%s' % (self.noxIndex, packagename)
+        print(cmd)
+        os.popen(cmd)
+        sleep(1)
