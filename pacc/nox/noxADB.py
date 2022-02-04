@@ -4,7 +4,7 @@ from pacc.tools import findAllWithRe, sleep
 
 def getOnlineDevices():
     res = os.popen('adb devices').read()
-    res = findAllWithRe(res, r'(.+)\tdevice')
+    res = findAllWithRe(res, r'(127.0.0.1:.+)\tdevice')
     return res
 
 
