@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pacc',  # 包名
-    version='0.0.321',  # 版本
+    version='0.0.322',  # 版本
     packages=find_packages(),  # 目录下所有文件
     description="""Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或
                     WLAN（基于IPv4的无线局域网）对Android手机集群（包含模拟器，目前支持夜神模拟器）的控制提供支持""",  # 描述信息

@@ -14,41 +14,44 @@ class Activity:
 
 
 def doWork(deviceIP):
-    adbIns = NoxADB(deviceIP)
-    while Activity.MainActivity not in adbIns.getCurrentFocus():
-        sleep(5, False, False)
-    uiaIns = NoxUIAutomator(deviceIP)
-    uiaIns.getCurrentUIHierarchy()
-    isConfirmed = False
-    hasMy = False
-    while not uiaIns.click(contentDesc='跳过', offset_y=20):
-        uiaIns.click(contentDesc='重新检测')
-        if uiaIns.click(contentDesc='确定'):
-            isConfirmed = True
-            break
-        if uiaIns.click(contentDesc='我的'):
-            hasMy = True
-            break
-        sleep(5, False, False)
-    while not uiaIns.click(contentDesc='确定'):
-        if isConfirmed:
-            break
-        elif hasMy:
-            break
-        elif uiaIns.click(contentDesc='我的'):
-            break
-        sleep(5, False, False)
-    uiaIns.tap((484, 925))  # 点击【我的】
-    adbIns.pressBackKey()  # 从【保存凭据】返回
-    uiaIns.click(contentDesc='账号设置')
-    uiaIns.click(contentDesc='输入邀请码')
-    uiaIns.click(text='请输入邀请码')
-    adbIns.inputText('19JLGP')
-    uiaIns.click(contentDesc='提交')
-    uiaIns.click(contentDesc='提交')
-    uiaIns.getScreen()
-    adbIns.getCurrentFocus()
-    uiaIns.getCurrentUIHierarchy()
+    try:
+        adbIns = NoxADB(deviceIP)
+        while Activity.MainActivity not in adbIns.getCurrentFocus():
+            sleep(5, False, False)
+        uiaIns = NoxUIAutomator(deviceIP)
+        uiaIns.getCurrentUIHierarchy()
+        isConfirmed = False
+        hasMy = False
+        while not uiaIns.click(contentDesc='跳过', offset_y=20):
+            uiaIns.click(contentDesc='重新检测')
+            if uiaIns.click(contentDesc='确定'):
+                isConfirmed = True
+                break
+            if uiaIns.click(contentDesc='我的'):
+                hasMy = True
+                break
+            sleep(5, False, False)
+        while not uiaIns.click(contentDesc='确定'):
+            if isConfirmed:
+                break
+            elif hasMy:
+                break
+            elif uiaIns.click(contentDesc='我的'):
+                break
+            sleep(5, False, False)
+        uiaIns.tap((484, 925))  # 点击【我的】
+        adbIns.pressBackKey()  # 从【保存凭据】返回
+        uiaIns.click(contentDesc='账号设置')
+        uiaIns.click(contentDesc='输入邀请码')
+        uiaIns.click(text='请输入邀请码')
+        adbIns.inputText('19JLGP')
+        uiaIns.click(contentDesc='提交')
+        uiaIns.click(contentDesc='提交')
+        uiaIns.getScreen()
+        adbIns.getCurrentFocus()
+        uiaIns.getCurrentUIHierarchy()
+    except FileNotFoundError as e:
+        print(e)
 
 
 class HXCCM(NoxProj):
