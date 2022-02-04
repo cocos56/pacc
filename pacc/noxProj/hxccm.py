@@ -5,7 +5,7 @@ from datetime import datetime
 
 class HXCCM(NoxProj):
     def __init__(self, startIndex, noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
-        super(NoxProj, self).__init__(noxWorkPath)
+        super(HXCCM, self).__init__(noxWorkPath)
         self.noxStep = noxStep
         self.startIndex = startIndex
 

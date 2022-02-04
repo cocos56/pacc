@@ -1,6 +1,9 @@
+wheel
+twine
 urlextract
 easyocr
 pymysql
+cryptography
 xmltodict
 setuptools
 mysql-connector-python
