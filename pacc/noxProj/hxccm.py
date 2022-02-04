@@ -35,6 +35,8 @@ def doWork(deviceIP):
             break
         elif hasMy:
             break
+        elif uiaIns.click(contentDesc='我的'):
+            break
         sleep(5, False, False)
     uiaIns.tap((484, 925))  # 点击【我的】
     adbIns.pressBackKey()  # 从【保存凭据】返回
