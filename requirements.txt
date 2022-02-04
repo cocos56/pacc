@@ -1,0 +1,8 @@
+urlextract
+easyocr
+pymysql
+xmltodict
+setuptools
+mysql-connector-python
+Pillow
+numpy

@@ -1,0 +1,6 @@
+main.py
+__pycache__
+build/
+.idea/
+pacc.egg-info/
+setup.bat

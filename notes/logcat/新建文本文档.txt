@@ -1,0 +1,2 @@
+adb -s 1dae0608 logcat
+adb -s 1dae0608 logcat | grep com.kuaishou.nebula
