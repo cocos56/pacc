@@ -4,5 +4,5 @@ __all__ = [
     'runThreadsWithArgsList',
     'runThreadsWithFunctions',
     'threadLock',
-    'Thread'
+    'Thread',
 ]

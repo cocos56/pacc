@@ -4,12 +4,33 @@ from pacc.nox.noxADB import getOnlineDevices, NoxADB
 from pacc.nox.noxUIA import NoxUIAutomator
 from datetime import datetime
 from pacc.tools import sleep
+from pacc.multi.thread import runThreadsWithArgsList
 
 root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
 
 
 class Activity:
     MainActivity = root + 'MainActivity'  # 程序入口（广告页）
+
+
+def doWork(deviceIP):
+    adbIns = NoxADB(deviceIP)
+    while Activity.MainActivity not in adbIns.getCurrentFocus():
+        sleep(5, False, False)
+    uiaIns = NoxUIAutomator(deviceIP)
+    uiaIns.getCurrentUIHierarchy()
+    while not uiaIns.click(contentDesc='跳过', offset_y=20):
+        uiaIns.click(contentDesc='重新检测')
+        sleep(5, False, False)
+    while not uiaIns.click(contentDesc='确定'):
+        sleep(5, False, False)
+    uiaIns.tap((484, 925))  # 点击【我的】
+    adbIns.pressBackKey()  # 从【保存凭据】返回
+    uiaIns.click(contentDesc='账号设置')
+    uiaIns.click(contentDesc='输入邀请码')
+    uiaIns.click(text='请输入邀请码')
+    adbIns.inputText('19JLGP')
+    uiaIns.click(contentDesc='提交')
 
 
 class HXCCM(NoxProj):
@@ -42,22 +63,5 @@ class HXCCM(NoxProj):
                 sleep(5, False, False)
                 onlineDevices = getOnlineDevices()
             print(onlineDevices)
-            for i in onlineDevices:
-                adbIns = NoxADB(i)
-                while Activity.MainActivity not in adbIns.getCurrentFocus():
-                    sleep(5, False, False)
-                uiaIns = NoxUIAutomator(i)
-                uiaIns.getCurrentUIHierarchy()
-                while not uiaIns.click(contentDesc='跳过', offset_y=20):
-                    uiaIns.click(contentDesc='重新检测')
-                    sleep(5, False, False)
-                while not uiaIns.click(contentDesc='确定'):
-                    sleep(5, False, False)
-                uiaIns.tap((484, 925))  # 点击【我的】
-                adbIns.pressBackKey()  # 从【保存凭据】返回
-                uiaIns.click(contentDesc='账号设置')
-                uiaIns.click(contentDesc='输入邀请码')
-                uiaIns.click(text='请输入邀请码')
-                adbIns.inputText('19JLGP')
-                uiaIns.click(contentDesc='提交')
+            runThreadsWithArgsList(doWork, onlineDevices)
             input('按Enter键以继续\n')
