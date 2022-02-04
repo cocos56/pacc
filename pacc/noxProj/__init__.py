@@ -1,1 +1,1 @@
-from hxccm import HXCCM
+from .hxccm import HXCCM
