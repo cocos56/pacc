@@ -19,10 +19,22 @@ def doWork(deviceIP):
         sleep(5, False, False)
     uiaIns = NoxUIAutomator(deviceIP)
     uiaIns.getCurrentUIHierarchy()
+    isConfirmed = False
+    hasMy = False
     while not uiaIns.click(contentDesc='跳过', offset_y=20):
         uiaIns.click(contentDesc='重新检测')
+        if uiaIns.click(contentDesc='确定'):
+            isConfirmed = True
+            break
+        if uiaIns.click(contentDesc='我的'):
+            hasMy = True
+            break
         sleep(5, False, False)
     while not uiaIns.click(contentDesc='确定'):
+        if isConfirmed:
+            break
+        elif hasMy:
+            break
         sleep(5, False, False)
     uiaIns.tap((484, 925))  # 点击【我的】
     adbIns.pressBackKey()  # 从【保存凭据】返回
