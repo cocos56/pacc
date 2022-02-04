@@ -45,6 +45,7 @@ def doWork(deviceIP):
     uiaIns.click(text='请输入邀请码')
     adbIns.inputText('19JLGP')
     uiaIns.click(contentDesc='提交')
+    uiaIns.click(contentDesc='提交')
 
 
 class HXCCM(NoxProj):
