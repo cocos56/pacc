@@ -46,6 +46,9 @@ def doWork(deviceIP):
     adbIns.inputText('19JLGP')
     uiaIns.click(contentDesc='提交')
     uiaIns.click(contentDesc='提交')
+    uiaIns.getScreen()
+    adbIns.getCurrentFocus()
+    uiaIns.getCurrentUIHierarchy()
 
 
 class HXCCM(NoxProj):
