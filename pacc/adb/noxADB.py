@@ -18,10 +18,10 @@ class NoxADB:
         cmd = 'NoxConsole.exe quit -index:%d' % self.noxIndex
         print(cmd)
         os.popen(cmd)
-        sleep(1, False, False)
+        sleep(2, False, False)
 
     def runApp(self, packagename):
         cmd = 'NoxConsole.exe runapp -index:%d -packagename:%s' % (self.noxIndex, packagename)
         print(cmd)
         os.popen(cmd)
-        sleep(1, False, False)
+        sleep(2, False, False)
