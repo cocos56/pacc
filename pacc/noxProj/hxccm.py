@@ -1,6 +1,15 @@
 from .noxProj import NoxProj
-from ..adb.noxADB import NoxADB
+from pacc.nox.noxConsole import NoxConsole
+from pacc.nox.noxADB import getOnlineDevices, NoxADB
+from pacc.nox.noxUIA import NoxUIAutomator
 from datetime import datetime
+from pacc.tools import sleep
+
+root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
+
+
+class Activity:
+    MainActivity = root + 'MainActivity'  # 程序入口（广告页）
 
 
 class HXCCM(NoxProj):
@@ -10,15 +19,15 @@ class HXCCM(NoxProj):
         self.startIndex = startIndex
 
     def runApp(self):
-        NoxADB(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
+        NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
 
     def quitAll(self):
         for i in range(self.noxStep):
-            NoxADB(self.startIndex - 5 + i).quit()
+            NoxConsole(self.startIndex - 5 + i).quit()
 
     def mainLoop(self):
         print('初始化中，请耐心等待')
-        NoxADB.quitAll()
+        NoxConsole.quitAll()
         print('初始化完毕\n')
         while True:
             print(datetime.now())
@@ -26,4 +35,29 @@ class HXCCM(NoxProj):
                 self.startIndex += 1
                 self.runApp()
             self.quitAll()
+            sleep(15)
+            onlineDevices = getOnlineDevices()
+            while not len(onlineDevices) == self.noxStep:
+                # print(onlineDevices)
+                sleep(5, False, False)
+                onlineDevices = getOnlineDevices()
+            print(onlineDevices)
+            for i in onlineDevices:
+                adbIns = NoxADB(i)
+                while Activity.MainActivity not in adbIns.getCurrentFocus():
+                    sleep(5, False, False)
+                uiaIns = NoxUIAutomator(i)
+                uiaIns.getCurrentUIHierarchy()
+                while not uiaIns.click(contentDesc='跳过', offset_y=20):
+                    uiaIns.click(contentDesc='重新检测')
+                    sleep(5, False, False)
+                while not uiaIns.click(contentDesc='确定'):
+                    sleep(5, False, False)
+                uiaIns.tap((484, 925))  # 点击【我的】
+                adbIns.pressBackKey()  # 从【保存凭据】返回
+                uiaIns.click(contentDesc='账号设置')
+                uiaIns.click(contentDesc='输入邀请码')
+                uiaIns.click(text='请输入邀请码')
+                adbIns.inputText('19JLGP')
+                uiaIns.click(contentDesc='提交')
             input('按Enter键以继续\n')
