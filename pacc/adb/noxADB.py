@@ -1,5 +1,5 @@
 import os
-from time import sleep
+from ..tools import sleep
 
 
 class NoxADB:
