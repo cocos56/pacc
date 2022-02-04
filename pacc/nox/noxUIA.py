@@ -145,7 +145,7 @@ class NoxUIAutomator:
     def getCurrentUIHierarchy(self):
         os.system('adb -s %s shell rm /sdcard/window_dump.xml' % self.ip)
         cmd = 'adb -s %s shell uiautomator dump /sdcard/window_dump.xml' % self.ip
-        print(cmd)
+        # print(cmd)
         os.system(cmd)
         dirName = 'CurrentUIHierarchy'
         createDir(dirName)
