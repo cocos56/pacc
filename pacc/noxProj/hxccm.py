@@ -70,9 +70,6 @@ class HXCCM(NoxProj):
         NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
 
     def mainLoop(self):
-        print('初始化中，请耐心等待')
-        NoxConsole.quitAll()
-        print('初始化完毕\n')
         while True:
             print(datetime.now())
             NoxConsole.quitAll()
