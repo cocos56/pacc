@@ -11,6 +11,7 @@ root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
 
 class Activity:
     MainActivity = root + 'MainActivity'  # 程序入口（广告页）
+    Launcher = 'com.android.launcher3/com.android.launcher3.launcher3.Launcher'
 
 
 class HXCCM(NoxProj):
@@ -83,7 +84,7 @@ class HXCCM(NoxProj):
             for i in range(self.noxStep):
                 self.startIndex += 1
                 self.runApp()
-            sleep(20)
+            sleep(35)
             onlineDevices = getOnlineDevices()
             while True:
                 # print(onlineDevices)
@@ -125,6 +126,10 @@ class HXCCM(NoxProj):
                         adbIns.pressBackKey()  # 从【保存凭据】返回
                         uiaIns.click(contentDesc='账号设置')
                         self.doWorkWhenInputICode(adbIns, uiaIns)
+                        continue
+                    elif Activity.Launcher in adbIns.getCurrentFocus():
+                        adbIns.start(Activity.MainActivity)
+                        self.doAllWork(i)
                         continue
                     adbIns.getCurrentFocus()
                     uiaIns.getScreen()

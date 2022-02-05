@@ -13,6 +13,14 @@ class NoxADB:
     def __init__(self, ip):
         self.ip = ip
 
+    def start(self, Activity, wait=True):
+        cmd = 'shell am start '
+        if wait:
+            cmd += '-W '
+        cmd = "adb -s %s %s%s" % (self.ip, cmd, Activity)
+        os.system(cmd)
+        print(cmd)
+
     def inputText(self, text):
         cmd = 'adb -s %s shell input text "%s"' % (self.ip, text)
         print(cmd)
