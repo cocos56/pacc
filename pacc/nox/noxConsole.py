@@ -10,8 +10,7 @@ class NoxConsole:
         os.system(cmd)
         print(cmd)
         sleep(13)
-        r = os.popen('tasklist | findstr "Nox.exe"').read()
-        if r:
+        if os.popen('tasklist | findstr "Nox.exe"').read():
             cmd = 'taskkill /IM Nox.exe'
             print(cmd)
             os.system(cmd)
