@@ -131,7 +131,7 @@ class HXCCM(NoxProj):
                         adbIns.start(Activity.MainActivity)
                         self.doAllWork(i)
                         continue
-                    adbIns.getCurrentFocus()
-                    uiaIns.getScreen()
-                    uiaIns.getCurrentUIHierarchy()
-                    input('结束页错误，请按Enter键以继续\n')
+                    # adbIns.getCurrentFocus()
+                    # uiaIns.getScreen()
+                    # uiaIns.getCurrentUIHierarchy()
+                    # input('结束页错误，请按Enter键以继续\n')
