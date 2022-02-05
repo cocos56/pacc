@@ -54,9 +54,6 @@ class HXCCM(NoxProj):
             uiaIns.click(text='请输入邀请码')
             adbIns.inputText(self.iCode)
             uiaIns.click(contentDesc='提交')
-            uiaIns.getScreen()
-            adbIns.getCurrentFocus()
-            uiaIns.getCurrentUIHierarchy()
         except FileNotFoundError as e:
             print(e)
 
@@ -98,6 +95,15 @@ class HXCCM(NoxProj):
                     if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
                         continue
                     elif uiaIns.getDict(contentDesc='输入邀请码'):
+                        uiaIns.click(contentDesc='输入邀请码')
+                        uiaIns.click(text='请输入邀请码')
+                        adbIns.inputText(self.iCode)
+                        uiaIns.click(contentDesc='提交')
+                    elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
+                        uiaIns.click(contentDesc='确定')
+                        uiaIns.tap((484, 925))  # 点击【我的】
+                        adbIns.pressBackKey()  # 从【保存凭据】返回
+                        uiaIns.click(contentDesc='账号设置')
                         uiaIns.click(contentDesc='输入邀请码')
                         uiaIns.click(text='请输入邀请码')
                         adbIns.inputText(self.iCode)
