@@ -30,39 +30,46 @@ class HXCCM(NoxProj):
             uiaIns.getScreen()
             uiaIns.getCurrentUIHierarchy()
 
+    def doWorkWhenInputICode(self, adbIns, uiaIns):
+        uiaIns.click(contentDesc='输入邀请码')
+        uiaIns.click(text='请输入邀请码')
+        adbIns.inputText(self.iCode)
+        uiaIns.click(contentDesc='提交')
+        pass
+
+    def doAllWork(self, deviceIP):
+        adbIns = NoxADB(deviceIP)
+        while Activity.MainActivity not in adbIns.getCurrentFocus():
+            sleep(5, False, False)
+        uiaIns = NoxUIAutomator(deviceIP)
+        uiaIns.getCurrentUIHierarchy()
+        isConfirmed = False
+        hasMy = False
+        while not uiaIns.click(contentDesc='跳过', offset_y=20):
+            uiaIns.click(contentDesc='重新检测')
+            if uiaIns.click(contentDesc='确定'):
+                isConfirmed = True
+                break
+            if uiaIns.click(contentDesc='我的'):
+                hasMy = True
+                break
+            sleep(5, False, False)
+        while not uiaIns.click(contentDesc='确定'):
+            if isConfirmed:
+                break
+            elif hasMy:
+                break
+            elif uiaIns.click(contentDesc='我的'):
+                break
+            sleep(5, False, False)
+        uiaIns.tap((484, 925))  # 点击【我的】
+        adbIns.pressBackKey()  # 从【保存凭据】返回
+        uiaIns.click(contentDesc='账号设置')
+        self.doWorkWhenInputICode(adbIns, uiaIns)
+
     def doWork(self, deviceIP):
         try:
-            adbIns = NoxADB(deviceIP)
-            while Activity.MainActivity not in adbIns.getCurrentFocus():
-                sleep(5, False, False)
-            uiaIns = NoxUIAutomator(deviceIP)
-            uiaIns.getCurrentUIHierarchy()
-            isConfirmed = False
-            hasMy = False
-            while not uiaIns.click(contentDesc='跳过', offset_y=20):
-                uiaIns.click(contentDesc='重新检测')
-                if uiaIns.click(contentDesc='确定'):
-                    isConfirmed = True
-                    break
-                if uiaIns.click(contentDesc='我的'):
-                    hasMy = True
-                    break
-                sleep(5, False, False)
-            while not uiaIns.click(contentDesc='确定'):
-                if isConfirmed:
-                    break
-                elif hasMy:
-                    break
-                elif uiaIns.click(contentDesc='我的'):
-                    break
-                sleep(5, False, False)
-            uiaIns.tap((484, 925))  # 点击【我的】
-            adbIns.pressBackKey()  # 从【保存凭据】返回
-            uiaIns.click(contentDesc='账号设置')
-            uiaIns.click(contentDesc='输入邀请码')
-            uiaIns.click(text='请输入邀请码')
-            adbIns.inputText(self.iCode)
-            uiaIns.click(contentDesc='提交')
+            self.doAllWork(deviceIP)
         except FileNotFoundError as e:
             print(e)
 
@@ -99,26 +106,17 @@ class HXCCM(NoxProj):
                         continue
                     elif uiaIns.getDict(text='请输入邀请码'):
                         adbIns.pressBackKey()
-                        uiaIns.click(contentDesc='输入邀请码')
-                        uiaIns.click(text='请输入邀请码')
-                        adbIns.inputText(self.iCode)
-                        uiaIns.click(contentDesc='提交')
+                        self.doWorkWhenInputICode(adbIns, uiaIns)
                         continue
                     elif uiaIns.getDict(contentDesc='输入邀请码'):
-                        uiaIns.click(contentDesc='输入邀请码')
-                        uiaIns.click(text='请输入邀请码')
-                        adbIns.inputText(self.iCode)
-                        uiaIns.click(contentDesc='提交')
+                        self.doWorkWhenInputICode(adbIns, uiaIns)
                         continue
                     elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
                         uiaIns.click(contentDesc='确定')
                         uiaIns.tap((484, 925))  # 点击【我的】
                         adbIns.pressBackKey()  # 从【保存凭据】返回
                         uiaIns.click(contentDesc='账号设置')
-                        uiaIns.click(contentDesc='输入邀请码')
-                        uiaIns.click(text='请输入邀请码')
-                        adbIns.inputText(self.iCode)
-                        uiaIns.click(contentDesc='提交')
+                        self.doWorkWhenInputICode(adbIns, uiaIns)
                         continue
                     adbIns.getCurrentFocus()
                     uiaIns.getScreen()
