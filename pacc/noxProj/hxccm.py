@@ -69,21 +69,17 @@ class HXCCM(NoxProj):
     def runApp(self):
         NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
 
-    def quitAll(self):
-        for i in range(self.noxStep):
-            NoxConsole(self.startIndex - 5 + i).quit()
-
     def mainLoop(self):
         print('初始化中，请耐心等待')
         NoxConsole.quitAll()
         print('初始化完毕\n')
         while True:
             print(datetime.now())
+            NoxConsole.quitAll()
             for i in range(self.noxStep):
                 self.startIndex += 1
                 self.runApp()
-            self.quitAll()
-            sleep(30)
+            sleep(20)
             onlineDevices = getOnlineDevices()
             while True:
                 # print(onlineDevices)
