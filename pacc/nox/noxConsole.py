@@ -10,6 +10,8 @@ class NoxConsole:
         os.system(cmd)
         print(cmd)
         sleep(13)
+        r = os.popen('tasklist | findstr "Nox.exe"').read()
+        print('【%s】' % r, len(r))
 
     def __init__(self, noxIndex):
         self.noxIndex = noxIndex
