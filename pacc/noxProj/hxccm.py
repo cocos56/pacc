@@ -13,52 +13,52 @@ class Activity:
     MainActivity = root + 'MainActivity'  # 程序入口（广告页）
 
 
-def doWork(deviceIP):
-    try:
-        adbIns = NoxADB(deviceIP)
-        while Activity.MainActivity not in adbIns.getCurrentFocus():
-            sleep(5, False, False)
-        uiaIns = NoxUIAutomator(deviceIP)
-        uiaIns.getCurrentUIHierarchy()
-        isConfirmed = False
-        hasMy = False
-        while not uiaIns.click(contentDesc='跳过', offset_y=20):
-            uiaIns.click(contentDesc='重新检测')
-            if uiaIns.click(contentDesc='确定'):
-                isConfirmed = True
-                break
-            if uiaIns.click(contentDesc='我的'):
-                hasMy = True
-                break
-            sleep(5, False, False)
-        while not uiaIns.click(contentDesc='确定'):
-            if isConfirmed:
-                break
-            elif hasMy:
-                break
-            elif uiaIns.click(contentDesc='我的'):
-                break
-            sleep(5, False, False)
-        uiaIns.tap((484, 925))  # 点击【我的】
-        adbIns.pressBackKey()  # 从【保存凭据】返回
-        uiaIns.click(contentDesc='账号设置')
-        uiaIns.click(contentDesc='输入邀请码')
-        uiaIns.click(text='请输入邀请码')
-        adbIns.inputText('19JLGP')
-        uiaIns.click(contentDesc='提交')
-        uiaIns.click(contentDesc='提交')
-        uiaIns.getScreen()
-        adbIns.getCurrentFocus()
-        uiaIns.getCurrentUIHierarchy()
-    except FileNotFoundError as e:
-        print(e)
-
-
 class HXCCM(NoxProj):
-    def __init__(self, startIndex, noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+    def __init__(self, startIndex, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+        self.startIndex = startIndex
+        self.iCode = iCode
         super(HXCCM, self).__init__(noxWorkPath)
         self.noxStep = noxStep
-        self.startIndex = startIndex
+        self.lastOnlineDevices = []
+
+    def doWork(self, deviceIP):
+        try:
+            adbIns = NoxADB(deviceIP)
+            while Activity.MainActivity not in adbIns.getCurrentFocus():
+                sleep(5, False, False)
+            uiaIns = NoxUIAutomator(deviceIP)
+            uiaIns.getCurrentUIHierarchy()
+            isConfirmed = False
+            hasMy = False
+            while not uiaIns.click(contentDesc='跳过', offset_y=20):
+                uiaIns.click(contentDesc='重新检测')
+                if uiaIns.click(contentDesc='确定'):
+                    isConfirmed = True
+                    break
+                if uiaIns.click(contentDesc='我的'):
+                    hasMy = True
+                    break
+                sleep(5, False, False)
+            while not uiaIns.click(contentDesc='确定'):
+                if isConfirmed:
+                    break
+                elif hasMy:
+                    break
+                elif uiaIns.click(contentDesc='我的'):
+                    break
+                sleep(5, False, False)
+            uiaIns.tap((484, 925))  # 点击【我的】
+            adbIns.pressBackKey()  # 从【保存凭据】返回
+            uiaIns.click(contentDesc='账号设置')
+            uiaIns.click(contentDesc='输入邀请码')
+            uiaIns.click(text='请输入邀请码')
+            adbIns.inputText(self.iCode)
+            uiaIns.click(contentDesc='提交')
+            uiaIns.getScreen()
+            adbIns.getCurrentFocus()
+            uiaIns.getCurrentUIHierarchy()
+        except FileNotFoundError as e:
+            print(e)
 
     def runApp(self):
         NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
@@ -77,12 +77,21 @@ class HXCCM(NoxProj):
                 self.startIndex += 1
                 self.runApp()
             self.quitAll()
-            sleep(20)
+            sleep(30)
             onlineDevices = getOnlineDevices()
-            while not len(onlineDevices) == self.noxStep:
+            while True:
                 # print(onlineDevices)
                 sleep(5, False, False)
+                for i in onlineDevices:
+                    if i in self.lastOnlineDevices:
+                        continue
+                if len(onlineDevices) == self.noxStep:
+                    break
                 onlineDevices = getOnlineDevices()
+            self.lastOnlineDevices = onlineDevices
             print(onlineDevices)
-            runThreadsWithArgsList(doWork, onlineDevices)
+            runThreadsWithArgsList(self.doWork, onlineDevices)
+            for i in onlineDevices:
+                if not NoxUIAutomator(i).getDict(contentDesc='您绑定的邀请码为：'):
+                    pass
             input('按Enter键以继续\n')
