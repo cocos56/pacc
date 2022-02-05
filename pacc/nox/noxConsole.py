@@ -11,7 +11,11 @@ class NoxConsole:
         print(cmd)
         sleep(13)
         r = os.popen('tasklist | findstr "Nox.exe"').read()
-        print('【%s】' % r, len(r))
+        if r:
+            cmd = 'taskkill /IM Nox.exe'
+            print(cmd)
+            os.system(cmd)
+            sleep(15)
 
     def __init__(self, noxIndex):
         self.noxIndex = noxIndex
