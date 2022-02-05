@@ -92,5 +92,11 @@ class HXCCM(NoxProj):
             print(onlineDevices)
             runThreadsWithArgsList(self.doWork, onlineDevices)
             for i in onlineDevices:
-                if not NoxUIAutomator(i).getDict(contentDesc='您绑定的邀请码为：'):
+                uiaIns = NoxUIAutomator(i)
+                if not uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                    self.cleanUIAFiles()
+                    adbIns = NoxADB(i)
+                    adbIns.getCurrentFocus()
+                    uiaIns.getScreen()
+                    uiaIns.getCurrentUIHierarchy()
                     input('结束页错误，请按Enter键以继续\n')
