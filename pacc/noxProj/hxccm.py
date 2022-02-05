@@ -115,6 +115,10 @@ class HXCCM(NoxProj):
                         adbIns.pressBackKey()
                         uiaIns.click(contentDesc='账号设置')
                         self.doWorkWhenInputICode(adbIns, uiaIns)
+                        continue
+                    elif uiaIns.click(contentDesc='账号设置'):
+                        self.doWorkWhenInputICode(adbIns, uiaIns)
+                        continue
                     elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
                         uiaIns.click(contentDesc='确定')
                         uiaIns.tap((484, 925))  # 点击【我的】
