@@ -110,11 +110,13 @@ class HXCCM(NoxProj):
                         uiaIns.click(text='请输入邀请码')
                         adbIns.inputText(self.iCode)
                         uiaIns.click(contentDesc='提交')
+                        continue
                     elif uiaIns.getDict(contentDesc='输入邀请码'):
                         uiaIns.click(contentDesc='输入邀请码')
                         uiaIns.click(text='请输入邀请码')
                         adbIns.inputText(self.iCode)
                         uiaIns.click(contentDesc='提交')
+                        continue
                     elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
                         uiaIns.click(contentDesc='确定')
                         uiaIns.tap((484, 925))  # 点击【我的】
@@ -124,6 +126,7 @@ class HXCCM(NoxProj):
                         uiaIns.click(text='请输入邀请码')
                         adbIns.inputText(self.iCode)
                         uiaIns.click(contentDesc='提交')
+                        continue
                     adbIns.getCurrentFocus()
                     uiaIns.getScreen()
                     uiaIns.getCurrentUIHierarchy()
