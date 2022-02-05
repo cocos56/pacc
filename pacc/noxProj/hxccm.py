@@ -111,6 +111,10 @@ class HXCCM(NoxProj):
                     elif uiaIns.getDict(contentDesc='输入邀请码'):
                         self.doWorkWhenInputICode(adbIns, uiaIns)
                         continue
+                    elif uiaIns.getDict(text='请输入12位激活码'):
+                        adbIns.pressBackKey()
+                        uiaIns.click(contentDesc='账号设置')
+                        self.doWorkWhenInputICode(adbIns, uiaIns)
                     elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
                         uiaIns.click(contentDesc='确定')
                         uiaIns.tap((484, 925))  # 点击【我的】

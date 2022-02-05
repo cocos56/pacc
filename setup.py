@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pacc',  # 包名
-    version='0.0.337',  # 版本
+    version='0.0.338',  # 版本
     packages=find_packages(),  # 目录下所有文件
     description="""Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或
                     WLAN（基于IPv4的无线局域网）对Android手机集群（包含模拟器，目前支持夜神模拟器）的控制提供支持""",  # 描述信息
@@ -14,7 +14,8 @@ setup(
     3. 夜神模拟器（Nox.exe、NoxConsole.exe、nox_adb.exe）
     已实现的中央监控系统如下：\n
     1. 淘宝/拼多多全自动远程刷单app中央控制系统\n
-    2. 汉字大英雄全自动看广告脚本app中央控制系统\n
+    2. HXCCM拉新（全自动拉人头）中央控制系统\n
+    3. 汉字大英雄全自动看广告脚本app中央控制系统\n
     待实现的中央监控系统如下：\n
     1. 欢友全自动聊天、评论、接打视频脚本app中央监控系统\n
     已实现的中央控制脚本如下：\n
