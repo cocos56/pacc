@@ -93,5 +93,4 @@ class HXCCM(NoxProj):
             runThreadsWithArgsList(self.doWork, onlineDevices)
             for i in onlineDevices:
                 if not NoxUIAutomator(i).getDict(contentDesc='您绑定的邀请码为：'):
-                    pass
-            input('按Enter键以继续\n')
+                    input('结束页错误，请按Enter键以继续\n')
