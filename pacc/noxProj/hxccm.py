@@ -97,6 +97,11 @@ class HXCCM(NoxProj):
                     self.cleanUIAFiles()
                     if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
                         continue
+                    elif uiaIns.getDict(contentDesc='输入邀请码'):
+                        uiaIns.click(contentDesc='输入邀请码')
+                        uiaIns.click(text='请输入邀请码')
+                        adbIns.inputText(self.iCode)
+                        uiaIns.click(contentDesc='提交')
                     adbIns = NoxADB(i)
                     adbIns.getCurrentFocus()
                     uiaIns.getScreen()
