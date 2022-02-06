@@ -5,6 +5,7 @@ from pacc.nox.noxUIA import NoxUIAutomator
 from datetime import datetime
 from pacc.tools import sleep
 from pacc.multi.thread import runThreadsWithArgsList
+from xml.parsers.expat import ExpatError
 
 root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
 
@@ -100,7 +101,9 @@ class HXCCM(NoxProj):
             runThreadsWithArgsList(self.doWork, onlineDevices)
             for i in onlineDevices:
                 uiaIns = NoxUIAutomator(i)
-                if not uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                try:
+                    if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                        continue
                     self.cleanUIAFiles()
                     adbIns = NoxADB(i)
                     if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
@@ -131,7 +134,5 @@ class HXCCM(NoxProj):
                         adbIns.start(Activity.MainActivity)
                         self.doAllWork(i)
                         continue
-                    # adbIns.getCurrentFocus()
-                    # uiaIns.getScreen()
-                    # uiaIns.getCurrentUIHierarchy()
-                    # input('结束页错误，请按Enter键以继续\n')
+                except ExpatError as e:
+                    print(e)
