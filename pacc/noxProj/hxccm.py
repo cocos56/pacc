@@ -85,7 +85,7 @@ class HXCCM(NoxProj):
             for i in range(self.noxStep):
                 self.startIndex += 1
                 self.runApp()
-            sleep(35)
+            sleep(45)
             onlineDevices = getOnlineDevices()
             while True:
                 # print(onlineDevices)
