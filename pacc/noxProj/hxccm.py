@@ -47,7 +47,7 @@ class HXCCM(NoxProj):
         uiaIns.getCurrentUIHierarchy()
         isConfirmed = False
         hasMy = False
-        while not uiaIns.click(contentDesc='跳过', offset_y=20):
+        while not uiaIns.click(contentDesc='跳过', offset_y=20, interval=3):
             uiaIns.click(contentDesc='重新检测')
             if uiaIns.click(contentDesc='确定'):
                 isConfirmed = True

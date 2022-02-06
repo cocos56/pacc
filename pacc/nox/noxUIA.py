@@ -126,7 +126,8 @@ class NoxUIAutomator:
         os.system('adb -s %s shell input tap %d %d' % (self.ip, x, y))
         sleep(interval, False, False)
 
-    def click(self, resourceID='', text='', contentDesc='', xml='', bounds='', Class='', offset_x=0, offset_y=0):
+    def click(self, resourceID='', text='', contentDesc='', xml='', bounds='', Class='',
+              offset_x=0, offset_y=0, interval=1):
         cP = self.getCP(resourceID, text, contentDesc, xml, bounds, Class)
         if cP and text:
             print('检测到【%s】' % text)
@@ -139,7 +140,7 @@ class NoxUIAutomator:
             return False
         x, y = cP
         cP = x+offset_x, y+offset_y
-        self.tap(cP)
+        self.tap(cP, interval)
         return True
 
     def getCurrentUIHierarchy(self):
