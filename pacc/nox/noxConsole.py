@@ -15,8 +15,8 @@ class NoxConsole:
         startTime = datetime.now()
         for i in range(1, num+1):
             iTime = datetime.now()
-            print('正在复制第%05d个' % i)
-            system('NoxConsole.exe copy -name:HXC%05d -from:HXC' % i, False)
+            print('正在复制第%04d个' % i)
+            system('NoxConsole.exe copy -name:HXC%04d -from:HXC' % i, False)
             print('复制已完成，本次用时%s，总用时%s\n' % (
                 (datetime.now()-iTime), (datetime.now()-startTime)))
 
