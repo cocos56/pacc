@@ -134,5 +134,5 @@ class HXCCM(NoxProj):
                         adbIns.start(Activity.MainActivity)
                         self.doAllWork(i)
                         continue
-                except ExpatError as e:
+                except (ExpatError, FileNotFoundError) as e:
                     print(e)
