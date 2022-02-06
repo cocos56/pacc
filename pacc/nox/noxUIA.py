@@ -1,7 +1,7 @@
-import xmltodict
-from html import unescape
-from collections import OrderedDict
 import os
+from collections import OrderedDict
+from html import unescape
+import xmltodict
 from pacc.tools import createDir, prettyXML, sleep, findAllNumsWithRe, average
 
 

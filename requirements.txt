@@ -1,3 +1,4 @@
+opencv-python
 wheel
 twine
 urlextract
@@ -7,5 +8,4 @@ cryptography
 xmltodict
 setuptools
 mysql-connector-python
-Pillow
 numpy

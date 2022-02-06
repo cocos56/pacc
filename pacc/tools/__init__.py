@@ -3,12 +3,10 @@ from .sleep import sleep
 from .email import EMail
 from .dir import createDir
 from .xml import prettyXML, getXML
-from .math import average
-from .url import getURLsFromString
-from .ocr import getTextsFromPic
 from .dt import showDatetime
 from .captcha import SliderCaptcha
 from .file import File
+from .tools import getTextsFromPic, system, getURLsFromString, average, system
 
 __all__ = [
     "findAllWithRe",
@@ -23,5 +21,6 @@ __all__ = [
     'getTextsFromPic',
     'showDatetime',
     'SliderCaptcha',
-    'File'
+    'File',
+    'system'
 ]

@@ -1,11 +1,11 @@
-from .noxProj import NoxProj
-from pacc.nox.noxConsole import NoxConsole
-from pacc.nox.noxADB import getOnlineDevices, NoxADB
-from pacc.nox.noxUIA import NoxUIAutomator
 from datetime import datetime
-from pacc.tools import sleep
-from pacc.multi.thread import runThreadsWithArgsList
 from xml.parsers.expat import ExpatError
+from ..multi.thread import runThreadsWithArgsList
+from ..nox.noxADB import getOnlineDevices, NoxADB
+from ..nox.noxConsole import NoxConsole
+from ..nox.noxUIA import NoxUIAutomator
+from ..tools import sleep
+from .noxProj import NoxProj
 
 root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
 
