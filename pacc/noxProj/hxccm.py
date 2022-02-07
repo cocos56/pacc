@@ -18,6 +18,7 @@ class Activity:
 class HXCCM(NoxProj):
     def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
         self.startIndex = startIndex
+        self.noxNum = NoxConsole.getNumber()
         self.iCode = iCode
         super(HXCCM, self).__init__(noxWorkPath)
         self.noxStep = noxStep
@@ -85,10 +86,11 @@ class HXCCM(NoxProj):
             for i in range(self.noxStep):
                 self.startIndex += 1
                 self.runApp()
+            if self.startIndex > self.noxNum:
+                break
             sleep(45)
             onlineDevices = getOnlineDevices()
             while True:
-                # print(onlineDevices)
                 sleep(5, False, False)
                 for i in onlineDevices:
                     if i in self.lastOnlineDevices:
