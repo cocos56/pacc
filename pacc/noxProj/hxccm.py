@@ -85,59 +85,59 @@ class HXCCM(NoxProj):
         for i in range(self.noxStep):
             self.startIndex += 1
             self.runApp()
+        sleep(45)
+        onlineDevices = getOnlineDevices()
+        while True:
+            sleep(5, False, False)
+            for i in onlineDevices:
+                if i in self.lastOnlineDevices:
+                    continue
+            if len(onlineDevices) == self.noxStep:
+                break
+            onlineDevices = getOnlineDevices()
+        self.lastOnlineDevices = onlineDevices
+        print(onlineDevices)
+        runThreadsWithArgsList(self.doWork, onlineDevices)
+        for i in onlineDevices:
+            uiaIns = NoxUIAutomator(i)
+            try:
+                if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                    continue
+                self.cleanUIAFiles()
+                adbIns = NoxADB(i)
+                if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                    continue
+                elif uiaIns.getDict(text='请输入邀请码'):
+                    adbIns.pressBackKey()
+                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    continue
+                elif uiaIns.getDict(contentDesc='输入邀请码'):
+                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    continue
+                elif uiaIns.getDict(text='请输入12位激活码'):
+                    adbIns.pressBackKey()
+                    uiaIns.click(contentDesc='账号设置')
+                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    continue
+                elif uiaIns.click(contentDesc='账号设置'):
+                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    continue
+                elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
+                    uiaIns.click(contentDesc='确定')
+                    uiaIns.tap((484, 925))  # 点击【我的】
+                    adbIns.pressBackKey()  # 从【保存凭据】返回
+                    uiaIns.click(contentDesc='账号设置')
+                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    continue
+                elif Activity.Launcher in adbIns.getCurrentFocus():
+                    adbIns.start(Activity.MainActivity)
+                    self.doAllWork(i)
+                    continue
+            except (ExpatError, FileNotFoundError) as e:
+                print(e)
 
     def mainLoop(self):
         while True:
-            self.launchAllByStep()
-            if self.startIndex > self.noxNum:
+            if self.startIndex+3 > self.noxNum:
                 break
-            sleep(45)
-            onlineDevices = getOnlineDevices()
-            while True:
-                sleep(5, False, False)
-                for i in onlineDevices:
-                    if i in self.lastOnlineDevices:
-                        continue
-                if len(onlineDevices) == self.noxStep:
-                    break
-                onlineDevices = getOnlineDevices()
-            self.lastOnlineDevices = onlineDevices
-            print(onlineDevices)
-            runThreadsWithArgsList(self.doWork, onlineDevices)
-            for i in onlineDevices:
-                uiaIns = NoxUIAutomator(i)
-                try:
-                    if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
-                        continue
-                    self.cleanUIAFiles()
-                    adbIns = NoxADB(i)
-                    if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
-                        continue
-                    elif uiaIns.getDict(text='请输入邀请码'):
-                        adbIns.pressBackKey()
-                        self.doWorkWhenInputICode(adbIns, uiaIns)
-                        continue
-                    elif uiaIns.getDict(contentDesc='输入邀请码'):
-                        self.doWorkWhenInputICode(adbIns, uiaIns)
-                        continue
-                    elif uiaIns.getDict(text='请输入12位激活码'):
-                        adbIns.pressBackKey()
-                        uiaIns.click(contentDesc='账号设置')
-                        self.doWorkWhenInputICode(adbIns, uiaIns)
-                        continue
-                    elif uiaIns.click(contentDesc='账号设置'):
-                        self.doWorkWhenInputICode(adbIns, uiaIns)
-                        continue
-                    elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
-                        uiaIns.click(contentDesc='确定')
-                        uiaIns.tap((484, 925))  # 点击【我的】
-                        adbIns.pressBackKey()  # 从【保存凭据】返回
-                        uiaIns.click(contentDesc='账号设置')
-                        self.doWorkWhenInputICode(adbIns, uiaIns)
-                        continue
-                    elif Activity.Launcher in adbIns.getCurrentFocus():
-                        adbIns.start(Activity.MainActivity)
-                        self.doAllWork(i)
-                        continue
-                except (ExpatError, FileNotFoundError) as e:
-                    print(e)
+            self.launchAllByStep()
