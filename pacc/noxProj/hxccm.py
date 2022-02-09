@@ -17,10 +17,10 @@ class Activity:
 
 class HXCCM(NoxProj):
     def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+        super(HXCCM, self).__init__(noxWorkPath)
         self.startIndex = startIndex
         self.noxNum = NoxConsole.getNumber()
         self.iCode = iCode
-        super(HXCCM, self).__init__(noxWorkPath)
         self.noxStep = noxStep
         self.lastOnlineDevices = []
 
