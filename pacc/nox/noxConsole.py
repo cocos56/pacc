@@ -20,7 +20,7 @@ class NoxConsole:
 
     @classmethod
     def copy(cls, num):
-        if num < 1:
+        if num <= cls.getNumber():
             return
         startTime = datetime.now()
         for i in range(1, num+1):
