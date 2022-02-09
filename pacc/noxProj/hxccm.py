@@ -138,6 +138,6 @@ class HXCCM(NoxProj):
 
     def mainLoop(self):
         while True:
-            if self.startIndex+3 > self.noxNum:
+            if self.startIndex > self.noxNum:
                 break
             self.launchAllByStep()
