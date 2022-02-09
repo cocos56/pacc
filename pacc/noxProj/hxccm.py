@@ -79,13 +79,16 @@ class HXCCM(NoxProj):
     def runApp(self):
         NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
 
+    def launchAllByStep(self):
+        print(datetime.now())
+        NoxConsole.quitAll()
+        for i in range(self.noxStep):
+            self.startIndex += 1
+            self.runApp()
+
     def mainLoop(self):
         while True:
-            print(datetime.now())
-            NoxConsole.quitAll()
-            for i in range(self.noxStep):
-                self.startIndex += 1
-                self.runApp()
+            self.launchAllByStep()
             if self.startIndex > self.noxNum:
                 break
             sleep(45)

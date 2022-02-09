@@ -20,10 +20,11 @@ class NoxConsole:
 
     @classmethod
     def copy(cls, num):
-        if num <= cls.getNumber():
+        noxNum = cls.getNumber()
+        if num <= noxNum:
             return
         startTime = datetime.now()
-        for i in range(1, num+1):
+        for i in range(noxNum + 1, num+1):
             iTime = datetime.now()
             print('正在复制第%04d个' % i)
             system('NoxConsole.exe copy -name:HXC%04d -from:HXC' % i, False)
