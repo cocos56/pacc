@@ -21,6 +21,7 @@ class NoxConsole:
     @classmethod
     def copy(cls, num):
         noxNum = cls.getNumber()
+        num = num - num % 3
         if num <= noxNum:
             return
         startTime = datetime.now()
