@@ -95,6 +95,7 @@ class HXCCM(NoxProj):
             self.runApp()
         sleep(45)
         onlineDevices = getOnlineDevices()
+        errCnt = 0
         while True:
             sleep(5, False, False)
             for i in onlineDevices:
@@ -102,6 +103,9 @@ class HXCCM(NoxProj):
                     continue
             if len(onlineDevices) == self.noxStep:
                 break
+            if errCnt >= 9:
+                break
+            errCnt += 1
             onlineDevices = getOnlineDevices()
         self.lastOnlineDevices = onlineDevices
         print(onlineDevices)
