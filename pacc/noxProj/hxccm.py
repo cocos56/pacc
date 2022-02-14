@@ -57,7 +57,7 @@ class HXCCM(NoxProj):
             if uiaIns.click(contentDesc='我的'):
                 hasMy = True
                 break
-            if errCnt >= 5:
+            if errCnt >= 9:
                 break
             sleep(5, False, False)
             errCnt += 1
