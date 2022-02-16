@@ -38,7 +38,7 @@ class HD(NoxProj):
         isConfirmed = False
         hasMy = False
         errCnt = 0
-        while not uiaIns.click(contentDesc='跳过', offset_y=20, interval=3):
+        while not uiaIns.click(contentDesc='进入', interval=3):
             uiaIns.click(contentDesc='重新检测')
             if uiaIns.click(contentDesc='确定'):
                 isConfirmed = True
@@ -62,7 +62,8 @@ class HD(NoxProj):
                 break
             sleep(5, False, False)
             errCnt += 1
-        uiaIns.tap((484, 925))  # 点击【我的】
+        adbIns.pressBackKey()
+        uiaIns.tap((810, 1522))  # 点击【我的】
         adbIns.pressBackKey()  # 从【保存凭据】返回
         uiaIns.click(contentDesc='账号设置')
         self.doWorkWhenInputICode(adbIns, uiaIns)
