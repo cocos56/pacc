@@ -124,13 +124,6 @@ class HD(NoxProj):
                 elif uiaIns.click(contentDesc='账号设置'):
                     self.doWorkWhenInputICode(adbIns, uiaIns)
                     continue
-                elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
-                    uiaIns.click(contentDesc='确定')
-                    uiaIns.tap((484, 925))  # 点击【我的】
-                    adbIns.pressBackKey()  # 从【保存凭据】返回
-                    uiaIns.click(contentDesc='账号设置')
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
-                    continue
                 elif Activity.Launcher in adbIns.getCurrentFocus():
                     adbIns.start(Activity.MainActivity)
                     self.doAllWork(i)
@@ -141,6 +134,7 @@ class HD(NoxProj):
     def mainLoop(self):
         while True:
             if self.startIndex >= self.noxNum:
+                NoxConsole.quitAll()
                 break
             self.launchAllByStep()
 
