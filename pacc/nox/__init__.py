@@ -1,7 +1,8 @@
-from .noxADB import NoxADB
+from .noxADB import NoxADB, getOnlineDevices
 from .noxConsole import NoxConsole
 
 __all__ = [
     'NoxADB',
-    'NoxConsole'
+    'NoxConsole',
+    'getOnlineDevices'
 ]
