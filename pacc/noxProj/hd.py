@@ -5,7 +5,7 @@ from ..nox import getOnlineDevices, NoxADB, NoxConsole, NoxUIAutomator
 from ..tools import sleep
 from .noxProj import NoxProj
 
-root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
+root = 'com.ldphryqw/com.dgsqwza.dgsqwza.MainActivity'
 
 
 class Activity:
@@ -13,11 +13,11 @@ class Activity:
     Launcher = 'com.android.launcher3/com.android.launcher3.launcher3.Launcher'
 
 
-class HXCCM(NoxProj):
-    def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+class HD(NoxProj):
+    def __init__(self, startIndex=0, iCode='H2RPRL', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
         self.startIndex = startIndex
         self.iCode = iCode
-        super(HXCCM, self).__init__(noxWorkPath)
+        super(HD, self).__init__(noxWorkPath)
         self.noxStep = noxStep
         self.noxNum = NoxConsole.getNumber()
         self.lastOnlineDevices = []
@@ -74,7 +74,7 @@ class HXCCM(NoxProj):
             print(e)
 
     def runApp(self):
-        NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
+        NoxConsole(self.startIndex).runApp('com.ldphryqw')
 
     def launchAllByStep(self):
         print(datetime.now())
@@ -142,3 +142,4 @@ class HXCCM(NoxProj):
             if self.startIndex >= self.noxNum:
                 break
             self.launchAllByStep()
+
