@@ -19,7 +19,7 @@ class NoxConsole:
             system('NoxConsole.exe remove -index:%d' % i)
 
     @classmethod
-    def copy(cls, num):
+    def copy(cls, num, noxName='HXC'):
         noxNum = cls.getNumber()
         num = num - num % 3
         if num <= noxNum:
@@ -28,7 +28,7 @@ class NoxConsole:
         for i in range(noxNum + 1, num+1):
             iTime = datetime.now()
             print('正在复制第%04d个' % i)
-            system('NoxConsole.exe copy -name:HXC%04d -from:HXC' % i, False)
+            system('NoxConsole.exe copy -name:%s%04d -from:%s' % (noxName, i, noxName), False)
             print('复制已完成，本次用时%s，总用时%s\n' % ((datetime.now()-iTime), (datetime.now()-startTime)))
 
     @classmethod
