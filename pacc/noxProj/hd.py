@@ -75,7 +75,7 @@ class HD(NoxProj):
             print(e)
 
     def runApp(self):
-        NoxConsole(self.startIndex).runApp('com.ldphryqw')
+        NoxConsole(self.startIndex).runApp('com.lmjejpbo')
 
     def launchAllByStep(self):
         print(datetime.now())
