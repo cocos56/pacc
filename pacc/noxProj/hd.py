@@ -5,7 +5,7 @@ from ..nox import getOnlineDevices, NoxADB, NoxConsole, NoxUIAutomator
 from ..tools import sleep
 from .noxProj import NoxProj
 
-root = 'com.ldphryqw/com.dgsqwza.dgsqwza.'
+root = 'com.lmjejpbo/com.mzfrjol.mzfrjol.'
 
 
 class Activity:
