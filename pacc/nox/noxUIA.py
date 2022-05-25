@@ -1,5 +1,4 @@
 import os
-from collections import OrderedDict
 from html import unescape
 import xmltodict
 from pacc.tools import createDir, prettyXML, sleep, findAllNumsWithRe, average
@@ -75,7 +74,7 @@ class NoxUIAutomator:
         return False
 
     def depthFirstSearch(self, dic):
-        if type(dic) == OrderedDict:
+        if type(dic) == dict:
             if self.isTargetNode(dic):
                 return dic
             for i in dic.keys():
