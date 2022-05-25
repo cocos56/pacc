@@ -5,7 +5,7 @@ from ..nox import getOnlineDevices, NoxADB, NoxConsole, NoxUIAutomator
 from ..tools import sleep
 from .noxProj import NoxProj
 
-root = 'com.vbzWSioa.vmNksMrCYo/com.a4XytlcZMv.oYB40hzBgv.'
+root = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
 
 
 class Activity:
@@ -74,7 +74,7 @@ class HXCCM(NoxProj):
             print(e)
 
     def runApp(self):
-        NoxConsole(self.startIndex).runApp('com.vbzWSioa.vmNksMrCYo')
+        NoxConsole(self.startIndex).runApp('com.o77d33143cca.xbf0768683dz')
 
     def launchAllByStep(self):
         print(datetime.now())
