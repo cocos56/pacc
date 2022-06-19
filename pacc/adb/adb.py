@@ -1,5 +1,5 @@
 """
-安卓调试桥
+安卓调试桥模块
 """
 from os import popen, system
 import base64
@@ -17,42 +17,43 @@ def get_online_devices():
     """
     res = popen('adb devices').read()
     res = findAllWithRe(res, r'(.+)\tdevice')
-    for i in range(len(res)):
+    for i, v in enumerate(res):
         res[i] = res[i].replace(':5555', '')
     return res
 
 
 class ADB:
+    """
+    安卓调试桥类
+    """
     rebootPerHourRecord = [-1]
 
-    def __init__(self, deviceSN, offlineCnt=1):
-        """
-        :param deviceSN:
-        """
+    def __init__(self, device_SN, offlineCnt=1):
         system('adb reconnect offline')
-        self.device = RetrieveBaseInfo(deviceSN)
+        self.device = RetrieveBaseInfo(device_SN)
         if self.device.ID not in get_online_devices():
             if not offlineCnt % 20:
                 EMail(self.device.SN).sendOfflineError()
             print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
-            self.__init__(deviceSN, offlineCnt+1)
+            self.__init__(device_SN, offlineCnt+1)
         self.cmd = 'adb -s %s ' % self.device.ID
         if not self.getIPv4Address():
             print(self.getIPv4Address())
             sleep(3)
-            self.__init__(deviceSN)
+            self.__init__(device_SN)
         if not self.getIPv4Address() == self.device.IP:
-            UpdateBaseInfo(deviceSN).updateIP(self.getIPv4Address())
-            self.device = RetrieveBaseInfo(deviceSN)
+            UpdateBaseInfo(device_SN).updateIP(self.getIPv4Address())
+            self.device = RetrieveBaseInfo(device_SN)
         if not Config.debug:
             self.reconnect()
         self.cmd = 'adb -s %s ' % self.device.IP
-        self.uIA = UIAutomator(deviceSN)
+        self.uIA = UIAutomator(device_SN)
         if not self.getModel() == self.device.Model:
-            UpdateBaseInfo(deviceSN).updateModel(self.getModel())
-            self.device = RetrieveBaseInfo(deviceSN)
-        if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in self.getCurrentFocus():
+            UpdateBaseInfo(device_SN).updateModel(self.getModel())
+            self.device = RetrieveBaseInfo(device_SN)
+        if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
+                self.getCurrentFocus():
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.pressBackKey(6)
 
