@@ -19,20 +19,22 @@ class NoxConsole:
             system('NoxConsole.exe remove -index:%d' % i)
 
     @classmethod
-    def copy(cls, num, noxName='HXC'):
-        noxNum = cls.getNumber()
+    def copy(cls, num, nox_name='HXC'):
+        nox_num = cls.getNumber()
         num = num - num % 3
-        if num <= noxNum:
+        if num <= nox_num:
             return
-        startTime = datetime.now()
-        for i in range(noxNum + 1, num+1):
-            iTime = datetime.now()
-            print('正在复制第%04d个' % i)
-            system('NoxConsole.exe copy -name:%s%04d -from:%s' % (noxName, i, noxName), False)
-            print('复制已完成，本次用时%s，总用时%s\n' % ((datetime.now()-iTime), (datetime.now()-startTime)))
+        start_time = datetime.now()
+        for i in range(nox_num + 1, num+1):
+            i_time = datetime.now()
+            print('正在复制第%04d/%04d个' % (i, num))
+            system('NoxConsole.exe copy -name:%s%04d -from:%s' % (nox_name, i, nox_name), False)
+            end_time = datetime.now()
+            print(f'复制已完成，本次用时{end_time-i_time}，总用时{end_time-start_time}，'
+                  f'预计还需{(end_time-start_time)/i*(num-i)}\n')
 
     @classmethod
-    def quitAll(cls):
+    def quit_all(cls):
         system('NoxConsole.exe quitall')
         sleep(13)
         if popen('tasklist | findstr "Nox.exe"').read():

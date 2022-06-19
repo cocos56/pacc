@@ -78,7 +78,7 @@ class HXCCM(NoxProj):
 
     def launchAllByStep(self):
         print(datetime.now())
-        NoxConsole.quitAll()
+        NoxConsole.quit_all()
         for i in range(self.noxStep):
             self.startIndex += 1
             self.runApp()
