@@ -17,7 +17,7 @@ def get_online_devices():
     """
     res = popen('adb devices').read()
     res = findAllWithRe(res, r'(.+)\tdevice')
-    for i, v in enumerate(res):
+    for i, _ in enumerate(res):
         res[i] = res[i].replace(':5555', '')
     return res
 
