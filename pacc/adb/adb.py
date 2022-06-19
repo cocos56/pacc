@@ -53,7 +53,7 @@ class ADB:
         if not Config.debug:
             self.reconnect()
         self.cmd = 'adb -s %s ' % self.device.IP
-        self.uIA = UIAutomator(device_sn)
+        self.uia = UIAutomator(device_sn)
         if not self.getModel() == self.device.Model:
             UpdateBaseInfo(device_sn).updateModel(self.getModel())
             self.device = RetrieveBaseInfo(device_sn)
@@ -173,7 +173,7 @@ class ADB:
     def taps(self, instructions):
         for x, y, interval, tip in instructions:
             print(tip)
-            self.uIA.tap(x, y, interval)
+            self.uia.tap(x, y, interval)
 
     def start(self, Activity, wait=True):
         cmd = 'shell am start '
