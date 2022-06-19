@@ -28,30 +28,35 @@ class ADB:
     """
     rebootPerHourRecord = [-1]
 
-    def __init__(self, device_SN, offlineCnt=1):
+    def __init__(self, device_sn, offline_cnt=1):
+        """
+        构造函数：初始化安卓调试桥类的对象
+        :param device_sn: 设备序列号
+        :param offline_cnt: 离线次数计数器
+        """
         system('adb reconnect offline')
-        self.device = RetrieveBaseInfo(device_SN)
+        self.device = RetrieveBaseInfo(device_sn)
         if self.device.ID not in get_online_devices():
-            if not offlineCnt % 20:
+            if not offline_cnt % 20:
                 EMail(self.device.SN).sendOfflineError()
             print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
-            self.__init__(device_SN, offlineCnt+1)
+            self.__init__(device_sn, offline_cnt+1)
         self.cmd = 'adb -s %s ' % self.device.ID
         if not self.getIPv4Address():
             print(self.getIPv4Address())
             sleep(3)
-            self.__init__(device_SN)
+            self.__init__(device_sn)
         if not self.getIPv4Address() == self.device.IP:
-            UpdateBaseInfo(device_SN).updateIP(self.getIPv4Address())
-            self.device = RetrieveBaseInfo(device_SN)
+            UpdateBaseInfo(device_sn).updateIP(self.getIPv4Address())
+            self.device = RetrieveBaseInfo(device_sn)
         if not Config.debug:
             self.reconnect()
         self.cmd = 'adb -s %s ' % self.device.IP
-        self.uIA = UIAutomator(device_SN)
+        self.uIA = UIAutomator(device_sn)
         if not self.getModel() == self.device.Model:
-            UpdateBaseInfo(device_SN).updateModel(self.getModel())
-            self.device = RetrieveBaseInfo(device_SN)
+            UpdateBaseInfo(device_sn).updateModel(self.getModel())
+            self.device = RetrieveBaseInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.getCurrentFocus():
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
