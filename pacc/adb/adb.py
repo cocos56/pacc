@@ -1,3 +1,6 @@
+"""
+安卓调试桥
+"""
 from os import popen, system
 import base64
 from random import randint
@@ -8,7 +11,10 @@ from ..mysql import RetrieveBaseInfo, UpdateBaseInfo
 from .uia import UIAutomator
 
 
-def getOnlineDevices():
+def get_online_devices():
+    """
+    获取所有在线设备
+    """
     res = popen('adb devices').read()
     res = findAllWithRe(res, r'(.+)\tdevice')
     for i in range(len(res)):
@@ -25,7 +31,7 @@ class ADB:
         """
         system('adb reconnect offline')
         self.device = RetrieveBaseInfo(deviceSN)
-        if self.device.ID not in getOnlineDevices():
+        if self.device.ID not in get_online_devices():
             if not offlineCnt % 20:
                 EMail(self.device.SN).sendOfflineError()
             print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
@@ -138,7 +144,7 @@ class ADB:
         system('adb connect %s' % self.device.IP)
         sleep(6)
         system('adb connect %s' % self.device.IP)
-        if self.device.IP not in getOnlineDevices():
+        if self.device.IP not in get_online_devices():
             self.rebootByID()
 
     def disconnect(self):
@@ -155,7 +161,7 @@ class ADB:
         self.connect()
 
     def keepOnline(self):
-        if self.device.IP not in getOnlineDevices():
+        if self.device.IP not in get_online_devices():
             self.__init__(self.device.SN)
 
     def taps(self, instructions):
@@ -210,7 +216,7 @@ class ADB:
         self.rebootByCMD('adb -s ' + self.device.ID + ' reboot')
 
     def rebootByIP(self):
-        if self.device.IP not in getOnlineDevices():
+        if self.device.IP not in get_online_devices():
             self.__init__(self.device.SN)
         self.rebootByCMD('adb -s ' + self.device.IP + ' reboot')
 
