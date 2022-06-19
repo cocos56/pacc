@@ -105,7 +105,7 @@ class HXCCM(NoxProj):
             try:
                 if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
                     continue
-                self.cleanUIAFiles()
+                self.clean_uia_files()
                 adbIns = NoxADB(i)
                 if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
                     continue
