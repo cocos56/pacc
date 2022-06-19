@@ -1,3 +1,6 @@
+"""
+快手极速版程序入口
+"""
 from pacc.project import KSJSB
 from pacc.config import Config
 

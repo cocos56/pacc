@@ -1,3 +1,6 @@
+"""
+夜神模拟器程序入口
+"""
 from pacc.noxProj import HXCCM
 from pacc.nox import NoxConsole, getOnlineDevices, NoxADB, NoxUIAutomator
 

@@ -1,3 +1,6 @@
+"""
+拼多多程序入口
+"""
 from pacc.project import PDD
 from pacc.config import Config
 

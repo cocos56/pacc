@@ -1,3 +1,6 @@
+"""
+含羞草传媒程序入口
+"""
 from pacc.noxProj import HXCCM
 from pacc.nox import NoxConsole
 from random import randint

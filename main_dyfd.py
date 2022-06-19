@@ -1,3 +1,6 @@
+"""
+抖音福袋程序入口
+"""
 from pacc.config import Config
 from pacc.project import DYFD
 

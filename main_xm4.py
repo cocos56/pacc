@@ -1,3 +1,6 @@
+"""
+小米4程序入口
+"""
 from pacc.config import Config
 from pacc.device import XM4
 

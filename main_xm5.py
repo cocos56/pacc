@@ -1,3 +1,6 @@
+"""
+小米5程序入口
+"""
 from pacc.device import XM5
 
 
