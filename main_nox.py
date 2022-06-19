@@ -2,6 +2,7 @@
 夜神模拟器程序入口
 """
 from pacc.noxProj import HXCCM
+# pylint: disable=W0611
 from pacc.nox import NoxConsole, getOnlineDevices, NoxADB, NoxUIAutomator
 
 # HXCCM(1).runApp()
