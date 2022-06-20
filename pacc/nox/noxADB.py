@@ -37,6 +37,6 @@ class NoxADB:
     def getCurrentFocus(self):
         cmd = 'adb -s %s shell dumpsys window | findstr mCurrentFocus' % self.ip
         r = os.popen(cmd).read()[2:-2]
-        # print(cmd)
-        # print(r)
+        print(cmd)
+        print(r)
         return r
