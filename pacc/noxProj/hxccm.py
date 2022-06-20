@@ -15,32 +15,32 @@ ROOT = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
 
 # pylint: disable=R0903
 class Activity:
-    """
-    安卓的活动名
-    """
+    """安卓的活动名"""
     MainActivity = ROOT + 'MainActivity'  # 程序入口（广告页）
     Launcher = 'com.android.launcher3/com.android.launcher3.launcher3.Launcher'
 
 
 class HXCCM(NoxProj):
-    """
-    含羞草传媒模块
-    """
+    """含羞草传媒模块"""
     def __init__(self, start_index=0, i_code='F3GWZN', nox_work_path=r'D:\Program Files\Nox\bin',
                  nox_step=3):
         self.start_index = start_index
         self.i_code = i_code
-        super(HXCCM, self).__init__(nox_work_path)
+        super().__init__(nox_work_path)
         self.nox_step = nox_step
         self.nox_num = NoxConsole.getNumber()
         self.last_online_devices = []
 
-    def doWorkWhenInputICode(self, adbIns, uiaIns):
-        uiaIns.click(contentDesc='输入邀请码')
-        uiaIns.click(text='请输入邀请码')
-        adbIns.inputText(self.i_code)
-        uiaIns.click(contentDesc='提交')
-        pass
+    def do_work_when_input_i_code(self, adb_ins, uia_ins):
+        """进入输入邀请码界面输入邀请码并提交
+
+        :param adb_ins: 安卓调试桥类的实例
+        :param uia_ins: UI自动化测试类的实例
+        """
+        uia_ins.click(contentDesc='输入邀请码')
+        uia_ins.click(text='请输入邀请码')
+        adb_ins.inputText(self.i_code)
+        uia_ins.click(contentDesc='提交')
 
     def doAllWork(self, deviceIP):
         adbIns = NoxADB(deviceIP)
@@ -79,7 +79,7 @@ class HXCCM(NoxProj):
         uiaIns.tap((484, 925))  # 点击【我的】
         adbIns.pressBackKey()  # 从【保存凭据】返回
         uiaIns.click(contentDesc='账号设置')
-        self.doWorkWhenInputICode(adbIns, uiaIns)
+        self.do_work_when_input_i_code(adbIns, uiaIns)
 
     def doWork(self, deviceIP):
         try:
@@ -124,25 +124,25 @@ class HXCCM(NoxProj):
                     continue
                 elif uiaIns.getDict(text='请输入邀请码'):
                     adbIns.pressBackKey()
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    self.do_work_when_input_i_code(adbIns, uiaIns)
                     continue
                 elif uiaIns.getDict(contentDesc='输入邀请码'):
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    self.do_work_when_input_i_code(adbIns, uiaIns)
                     continue
                 elif uiaIns.getDict(text='请输入12位激活码'):
                     adbIns.pressBackKey()
                     uiaIns.click(contentDesc='账号设置')
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    self.do_work_when_input_i_code(adbIns, uiaIns)
                     continue
                 elif uiaIns.click(contentDesc='账号设置'):
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    self.do_work_when_input_i_code(adbIns, uiaIns)
                     continue
                 elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
                     uiaIns.click(contentDesc='确定')
                     uiaIns.tap((484, 925))  # 点击【我的】
                     adbIns.pressBackKey()  # 从【保存凭据】返回
                     uiaIns.click(contentDesc='账号设置')
-                    self.doWorkWhenInputICode(adbIns, uiaIns)
+                    self.do_work_when_input_i_code(adbIns, uiaIns)
                     continue
                 elif Activity.Launcher in adbIns.getCurrentFocus():
                     adbIns.start(Activity.MainActivity)
