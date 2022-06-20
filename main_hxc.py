@@ -1,4 +1,5 @@
 """含羞草传媒程序入口"""
+# pylint: disable=W0611
 from random import randint
 
 from pacc.nox import NoxConsole
