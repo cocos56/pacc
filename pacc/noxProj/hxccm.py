@@ -42,117 +42,126 @@ class HXCCM(NoxProj):
         adb_ins.inputText(self.i_code)
         uia_ins.click(contentDesc='提交')
 
-    def doAllWork(self, deviceIP):
-        adbIns = NoxADB(deviceIP)
-        while Activity.MainActivity not in adbIns.getCurrentFocus():
-            sleep(5, False, False)
-        uiaIns = NoxUIAutomator(deviceIP)
-        uiaIns.getCurrentUIHierarchy()
-        isConfirmed = False
-        hasMy = False
-        errCnt = 0
-        uiaIns.click(text='关闭应用')
-        while not uiaIns.click(contentDesc='跳过', offset_y=20, interval=3):
-            uiaIns.click(contentDesc='重新检测')
-            if uiaIns.click(contentDesc='确定'):
-                isConfirmed = True
-                break
-            if uiaIns.click(contentDesc='我的'):
-                hasMy = True
-                break
-            if errCnt >= 9:
-                break
-            sleep(5, False, False)
-            errCnt += 1
-        errCnt = 0
-        while not uiaIns.click(contentDesc='确定'):
-            if isConfirmed:
-                break
-            elif hasMy:
-                break
-            elif uiaIns.click(contentDesc='我的'):
-                break
-            if errCnt >= 5:
-                break
-            sleep(5, False, False)
-            errCnt += 1
-        uiaIns.tap((484, 925))  # 点击【我的】
-        adbIns.pressBackKey()  # 从【保存凭据】返回
-        uiaIns.click(contentDesc='账号设置')
-        self.do_work_when_input_i_code(adbIns, uiaIns)
+    def do_all_work(self, device_ip):
+        """执行所有的操作步骤
 
-    def doWork(self, deviceIP):
+        :param device_ip: 设备IP
+        """
+        adb_ins = NoxADB(device_ip)
+        while Activity.MainActivity not in adb_ins.getCurrentFocus():
+            sleep(5, False, False)
+        uia_ins = NoxUIAutomator(device_ip)
+        uia_ins.getCurrentUIHierarchy()
+        is_confirmed = False
+        has_my = False
+        err_cnt = 0
+        uia_ins.click(text='关闭应用')
+        while not uia_ins.click(contentDesc='跳过', offset_y=20, interval=3):
+            uia_ins.click(contentDesc='重新检测')
+            if uia_ins.click(contentDesc='确定'):
+                is_confirmed = True
+                break
+            if uia_ins.click(contentDesc='我的'):
+                has_my = True
+                break
+            if err_cnt >= 9:
+                break
+            sleep(5, False, False)
+            err_cnt += 1
+        err_cnt = 0
+        while not uia_ins.click(contentDesc='确定'):
+            if is_confirmed:
+                break
+            elif has_my:
+                break
+            elif uia_ins.click(contentDesc='我的'):
+                break
+            if err_cnt >= 5:
+                break
+            sleep(5, False, False)
+            err_cnt += 1
+        uia_ins.tap((484, 925))  # 点击【我的】
+        adb_ins.pressBackKey()  # 从【保存凭据】返回
+        uia_ins.click(contentDesc='账号设置')
+        self.do_work_when_input_i_code(adb_ins, uia_ins)
+
+    def do_work(self, device_ip):
+        """执行操作步骤
+
+        :param device_ip: 设备IP
+        """
         try:
-            self.doAllWork(deviceIP)
+            self.do_all_work(device_ip)
         except FileNotFoundError as e:
             print(e)
 
-    def runApp(self):
+    def run_app(self):
         NoxConsole(self.start_index).runApp('com.o77d33143cca.xbf0768683dz')
 
-    def launchAllByStep(self):
+    def launch_all_by_step(self):
+        """按照步骤启动所有的"""
         print(datetime.now())
         NoxConsole.quit_all()
         for i in range(self.nox_step):
             self.start_index += 1
-            self.runApp()
+            self.run_app()
         sleep(45)
-        onlineDevices = getOnlineDevices()
-        errCnt = 0
+        online_devices = getOnlineDevices()
+        err_cnt = 0
         while True:
             sleep(5, False, False)
-            for i in onlineDevices:
+            for i in online_devices:
                 if i in self.last_online_devices:
                     continue
-            if len(onlineDevices) == self.nox_step:
+            if len(online_devices) == self.nox_step:
                 break
-            if errCnt >= 9:
+            if err_cnt >= 9:
                 break
-            errCnt += 1
-            onlineDevices = getOnlineDevices()
-        self.last_online_devices = onlineDevices
-        print(onlineDevices)
-        runThreadsWithArgsList(self.doWork, onlineDevices)
-        for i in onlineDevices:
-            uiaIns = NoxUIAutomator(i)
+            err_cnt += 1
+            online_devices = getOnlineDevices()
+        self.last_online_devices = online_devices
+        print(online_devices)
+        runThreadsWithArgsList(self.do_work, online_devices)
+        for i in online_devices:
+            uia_ins = NoxUIAutomator(i)
             try:
-                if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                if uia_ins.getDict(contentDesc='您绑定的邀请码为：'):
                     continue
                 self.clean_uia_files()
-                adbIns = NoxADB(i)
-                if uiaIns.getDict(contentDesc='您绑定的邀请码为：'):
+                adb_ins = NoxADB(i)
+                if uia_ins.getDict(contentDesc='您绑定的邀请码为：'):
                     continue
-                elif uiaIns.getDict(text='请输入邀请码'):
-                    adbIns.pressBackKey()
-                    self.do_work_when_input_i_code(adbIns, uiaIns)
+                elif uia_ins.getDict(text='请输入邀请码'):
+                    adb_ins.pressBackKey()
+                    self.do_work_when_input_i_code(adb_ins, uia_ins)
                     continue
-                elif uiaIns.getDict(contentDesc='输入邀请码'):
-                    self.do_work_when_input_i_code(adbIns, uiaIns)
+                elif uia_ins.getDict(contentDesc='输入邀请码'):
+                    self.do_work_when_input_i_code(adb_ins, uia_ins)
                     continue
-                elif uiaIns.getDict(text='请输入12位激活码'):
-                    adbIns.pressBackKey()
-                    uiaIns.click(contentDesc='账号设置')
-                    self.do_work_when_input_i_code(adbIns, uiaIns)
+                elif uia_ins.getDict(text='请输入12位激活码'):
+                    adb_ins.pressBackKey()
+                    uia_ins.click(contentDesc='账号设置')
+                    self.do_work_when_input_i_code(adb_ins, uia_ins)
                     continue
-                elif uiaIns.click(contentDesc='账号设置'):
-                    self.do_work_when_input_i_code(adbIns, uiaIns)
+                elif uia_ins.click(contentDesc='账号设置'):
+                    self.do_work_when_input_i_code(adb_ins, uia_ins)
                     continue
-                elif uiaIns.getDict(contentDesc='——·含羞草公告·——'):
-                    uiaIns.click(contentDesc='确定')
-                    uiaIns.tap((484, 925))  # 点击【我的】
-                    adbIns.pressBackKey()  # 从【保存凭据】返回
-                    uiaIns.click(contentDesc='账号设置')
-                    self.do_work_when_input_i_code(adbIns, uiaIns)
+                elif uia_ins.getDict(contentDesc='——·含羞草公告·——'):
+                    uia_ins.click(contentDesc='确定')
+                    uia_ins.tap((484, 925))  # 点击【我的】
+                    adb_ins.pressBackKey()  # 从【保存凭据】返回
+                    uia_ins.click(contentDesc='账号设置')
+                    self.do_work_when_input_i_code(adb_ins, uia_ins)
                     continue
-                elif Activity.Launcher in adbIns.getCurrentFocus():
-                    adbIns.start(Activity.MainActivity)
-                    self.doAllWork(i)
+                elif Activity.Launcher in adb_ins.getCurrentFocus():
+                    adb_ins.start(Activity.MainActivity)
+                    self.do_all_work(i)
                     continue
             except (ExpatError, FileNotFoundError) as e:
                 print(e)
 
-    def mainLoop(self):
+    def mainloop(self):
         while True:
             if self.start_index >= self.nox_num:
                 break
-            self.launchAllByStep()
+            self.launch_all_by_step()
