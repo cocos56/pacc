@@ -1,14 +1,13 @@
-"""
-安卓调试桥模块
-"""
-from os import popen, system
+"""安卓调试桥模块"""
 import base64
-from random import randint
 from datetime import datetime
-from ..config import Config
-from ..tools import findAllWithRe, sleep, EMail
-from ..mysql import RetrieveBaseInfo, UpdateBaseInfo
+from os import popen, system
+from random import randint
+
 from .uia import UIAutomator
+from ..config import Config
+from ..mysql import RetrieveBaseInfo, UpdateBaseInfo
+from ..tools import findAllWithRe, sleep, EMail
 
 
 def get_online_devices():

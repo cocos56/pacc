@@ -1,6 +1,4 @@
-"""
-蝴蝶
-"""
+"""蝴蝶"""
 from datetime import datetime
 from xml.parsers.expat import ExpatError
 
@@ -18,12 +16,13 @@ class Activity:
 
 
 class HD(NoxProj):
-    def __init__(self, startIndex=0, iCode='H2RPRL', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+    def __init__(self, startIndex=0, iCode='H2RPRL', noxWorkPath=r'D:\Program Files\Nox\bin',
+                 noxStep=3):
         self.startIndex = startIndex
         self.iCode = iCode
         super(HD, self).__init__(noxWorkPath)
         self.noxStep = noxStep
-        self.noxNum = NoxConsole.getNumber()
+        self.noxNum = NoxConsole.get_number()
         self.lastOnlineDevices = []
 
     def doWorkWhenInputICode(self, adbIns, uiaIns):
@@ -79,7 +78,7 @@ class HD(NoxProj):
             print(e)
 
     def runApp(self):
-        NoxConsole(self.startIndex).runApp('com.lmjejpbo')
+        NoxConsole(self.startIndex).run_app('com.lmjejpbo')
 
     def launchAllByStep(self):
         print(datetime.now())

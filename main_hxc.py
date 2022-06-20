@@ -1,13 +1,11 @@
-"""
-含羞草传媒程序入口
-"""
+"""含羞草传媒程序入口"""
 from random import randint
 
 from pacc.nox import NoxConsole
 from pacc.noxProj import HXCCM
 
 HXCCM(-1)
-NoxConsole.removeAll()
+NoxConsole.remove_all()
 # NoxConsole.copy(randint(140, 180))
 
 # HXCCM(0, '6BIJ4R').mainLoop()

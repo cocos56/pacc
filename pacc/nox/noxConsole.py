@@ -1,15 +1,16 @@
-from os import popen
 from datetime import datetime
+from os import popen
+
 from ..tools import sleep, system
 
 
 class NoxConsole:
 
     @classmethod
-    def getNumber(cls): return popen('NoxConsole.exe list"').read().count('\n') - 1
+    def get_number(cls): return popen('NoxConsole.exe list"').read().count('\n') - 1
 
     @classmethod
-    def removeAll(cls): cls.remove(cls.getNumber())
+    def remove_all(cls): cls.remove(cls.get_number())
 
     @classmethod
     def remove(cls, stopIndex):
@@ -20,7 +21,7 @@ class NoxConsole:
 
     @classmethod
     def copy(cls, num, nox_name='HXC'):
-        nox_num = cls.getNumber()
+        nox_num = cls.get_number()
         num = num - num % 3
         if num <= nox_num:
             return
@@ -44,7 +45,7 @@ class NoxConsole:
     def __init__(self, noxIndex):
         self.noxIndex = noxIndex
 
-    def runApp(self, packagename):
+    def run_app(self, packagename):
         cmd = 'NoxConsole.exe runapp -index:%d -packagename:%s' % (self.noxIndex, packagename)
         print(cmd)
         popen(cmd)

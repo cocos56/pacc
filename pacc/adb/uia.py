@@ -1,8 +1,11 @@
-import xmltodict
+"""UI自动化测试类"""
+from collections import OrderedDict
 from html import unescape
 from os import system, remove
 from os.path import exists
-from collections import OrderedDict
+
+import xmltodict
+
 from ..config import Config
 from ..mysql import RetrieveBaseInfo
 from ..tools import createDir, prettyXML, getXML, sleep, findAllNumsWithRe, average, getTextsFromPic

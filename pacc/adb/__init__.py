@@ -1,6 +1,4 @@
-"""
-安卓调试桥
-"""
+"""安卓调试桥包"""
 from .adb import ADB
 from .uia import UIAutomator
 

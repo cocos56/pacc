@@ -1,6 +1,4 @@
-"""
-含羞草传媒模块
-"""
+"""含羞草传媒模块"""
 # pylint: disable=R0801
 from datetime import datetime
 from xml.parsers.expat import ExpatError
@@ -28,7 +26,7 @@ class HXCCM(NoxProj):
         self.i_code = i_code
         super().__init__(nox_work_path)
         self.nox_step = nox_step
-        self.nox_num = NoxConsole.getNumber()
+        self.nox_num = NoxConsole.get_number()
         self.last_online_devices = []
 
     def do_work_when_input_i_code(self, adb_ins, uia_ins):
@@ -96,7 +94,7 @@ class HXCCM(NoxProj):
             print(e)
 
     def run_app(self):
-        NoxConsole(self.start_index).runApp('com.o77d33143cca.xbf0768683dz')
+        NoxConsole(self.start_index).run_app('com.o77d33143cca.xbf0768683dz')
 
     def launch_all_by_step(self):
         """按照步骤启动所有的"""
