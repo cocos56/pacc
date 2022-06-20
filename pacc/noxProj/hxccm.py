@@ -13,7 +13,11 @@ from ..tools import sleep
 ROOT = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
 
 
+# pylint: disable=R0903
 class Activity:
+    """
+    安卓的活动名
+    """
     MainActivity = ROOT + 'MainActivity'  # 程序入口（广告页）
     Launcher = 'com.android.launcher3/com.android.launcher3.launcher3.Launcher'
 
@@ -24,17 +28,17 @@ class HXCCM(NoxProj):
     """
     def __init__(self, start_index=0, i_code='F3GWZN', nox_work_path=r'D:\Program Files\Nox\bin',
                  nox_step=3):
-        self.startIndex = start_index
-        self.iCode = i_code
+        self.start_index = start_index
+        self.i_code = i_code
         super(HXCCM, self).__init__(nox_work_path)
-        self.noxStep = nox_step
-        self.noxNum = NoxConsole.getNumber()
-        self.lastOnlineDevices = []
+        self.nox_step = nox_step
+        self.nox_num = NoxConsole.getNumber()
+        self.last_online_devices = []
 
     def doWorkWhenInputICode(self, adbIns, uiaIns):
         uiaIns.click(contentDesc='输入邀请码')
         uiaIns.click(text='请输入邀请码')
-        adbIns.inputText(self.iCode)
+        adbIns.inputText(self.i_code)
         uiaIns.click(contentDesc='提交')
         pass
 
@@ -84,13 +88,13 @@ class HXCCM(NoxProj):
             print(e)
 
     def runApp(self):
-        NoxConsole(self.startIndex).runApp('com.o77d33143cca.xbf0768683dz')
+        NoxConsole(self.start_index).runApp('com.o77d33143cca.xbf0768683dz')
 
     def launchAllByStep(self):
         print(datetime.now())
         NoxConsole.quit_all()
-        for i in range(self.noxStep):
-            self.startIndex += 1
+        for i in range(self.nox_step):
+            self.start_index += 1
             self.runApp()
         sleep(45)
         onlineDevices = getOnlineDevices()
@@ -98,15 +102,15 @@ class HXCCM(NoxProj):
         while True:
             sleep(5, False, False)
             for i in onlineDevices:
-                if i in self.lastOnlineDevices:
+                if i in self.last_online_devices:
                     continue
-            if len(onlineDevices) == self.noxStep:
+            if len(onlineDevices) == self.nox_step:
                 break
             if errCnt >= 9:
                 break
             errCnt += 1
             onlineDevices = getOnlineDevices()
-        self.lastOnlineDevices = onlineDevices
+        self.last_online_devices = onlineDevices
         print(onlineDevices)
         runThreadsWithArgsList(self.doWork, onlineDevices)
         for i in onlineDevices:
@@ -149,6 +153,6 @@ class HXCCM(NoxProj):
 
     def mainLoop(self):
         while True:
-            if self.startIndex >= self.noxNum:
+            if self.start_index >= self.nox_num:
                 break
             self.launchAllByStep()
