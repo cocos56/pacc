@@ -42,7 +42,7 @@ class ADB:
             sleep(30)
             # pylint: disable=W0233
             self.__init__(device_sn, offline_cnt+1)
-        self.cmd = 'adb -s %s ' % self.device.ID
+        self.cmd = f'adb -s {self.device.ID} '
         if not self.getIPv4Address():
             print(self.getIPv4Address())
             sleep(3)
@@ -52,7 +52,7 @@ class ADB:
             self.device = RetrieveBaseInfo(device_sn)
         if not Config.debug:
             self.reconnect()
-        self.cmd = 'adb -s %s ' % self.device.IP
+        self.cmd = f'adb -s {self.device.IP} '
         self.uia = UIAutomator(device_sn)
         if not self.getModel() == self.device.Model:
             UpdateBaseInfo(device_sn).updateModel(self.getModel())
