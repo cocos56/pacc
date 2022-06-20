@@ -19,12 +19,15 @@ class Activity:
 
 
 class HXCCM(NoxProj):
-    def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin',
-                 noxStep=3):
-        self.startIndex = startIndex
-        self.iCode = iCode
-        super(HXCCM, self).__init__(noxWorkPath)
-        self.noxStep = noxStep
+    """
+    含羞草传媒模块
+    """
+    def __init__(self, start_index=0, i_code='F3GWZN', nox_work_path=r'D:\Program Files\Nox\bin',
+                 nox_step=3):
+        self.startIndex = start_index
+        self.iCode = i_code
+        super(HXCCM, self).__init__(nox_work_path)
+        self.noxStep = nox_step
         self.noxNum = NoxConsole.getNumber()
         self.lastOnlineDevices = []
 
