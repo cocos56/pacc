@@ -1,3 +1,6 @@
+"""
+含羞草传媒模块
+"""
 # pylint: disable=R0801
 from datetime import datetime
 from xml.parsers.expat import ExpatError
@@ -7,16 +10,17 @@ from ..multi.thread import runThreadsWithArgsList
 from ..nox import getOnlineDevices, NoxADB, NoxConsole, NoxUIAutomator
 from ..tools import sleep
 
-root = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
+ROOT = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
 
 
 class Activity:
-    MainActivity = root + 'MainActivity'  # 程序入口（广告页）
+    MainActivity = ROOT + 'MainActivity'  # 程序入口（广告页）
     Launcher = 'com.android.launcher3/com.android.launcher3.launcher3.Launcher'
 
 
 class HXCCM(NoxProj):
-    def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin', noxStep=3):
+    def __init__(self, startIndex=0, iCode='F3GWZN', noxWorkPath=r'D:\Program Files\Nox\bin',
+                 noxStep=3):
         self.startIndex = startIndex
         self.iCode = iCode
         super(HXCCM, self).__init__(noxWorkPath)
