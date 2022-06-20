@@ -1,9 +1,11 @@
+# pylint: disable=R0801
 from datetime import datetime
 from xml.parsers.expat import ExpatError
+
+from .noxProj import NoxProj
 from ..multi.thread import runThreadsWithArgsList
 from ..nox import getOnlineDevices, NoxADB, NoxConsole, NoxUIAutomator
 from ..tools import sleep
-from .noxProj import NoxProj
 
 root = 'com.o77d33143cca.xbf0768683dz/com.aF1HrwA52uEd.ovSxbQjBF7Av.'
 
