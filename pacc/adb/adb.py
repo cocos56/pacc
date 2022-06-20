@@ -28,8 +28,8 @@ class ADB:
     rebootPerHourRecord = [-1]
 
     def __init__(self, device_sn, offline_cnt=1):
-        """
-        构造函数：初始化安卓调试桥类的对象
+        """构造函数：初始化安卓调试桥类的对象
+
         :param device_sn: 设备序列号
         :param offline_cnt: 离线次数计数器
         """
@@ -40,6 +40,7 @@ class ADB:
                 EMail(self.device.SN).sendOfflineError()
             print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
+            # pylint: disable=W0233
             self.__init__(device_sn, offline_cnt+1)
         self.cmd = 'adb -s %s ' % self.device.ID
         if not self.getIPv4Address():
