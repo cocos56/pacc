@@ -7,7 +7,6 @@ from pacc.noxProj import HJCM
 
 HJCM(-1)
 NoxConsole.remove_all()
-NoxConsole.copy(3, nox_name='HJCM')
-# NoxConsole.copy(randint(140, 180))
+# NoxConsole.copy(randint(400, 450))
 
-HJCM(0, 'N7T7ET').mainloop()
+# HJCM(0, 'CT74TA').mainloop()
