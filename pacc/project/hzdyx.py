@@ -20,7 +20,7 @@ class HZDYX(Project):
         cls.instances.append(HZDYX('202'))
         while True:
             for i in cls.instances:
-                if i.adbIns.rebootPerHour():
+                if i.adbIns.reboot_per_hour():
                     i.adbIns.start(cls.scriptName)
                     sleep(6)
                     if i.adbIns.device.Model == 'M2007J22C':

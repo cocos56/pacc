@@ -19,7 +19,7 @@ class DYFD(Project):
             (441, 591, 1, '启动'),
         ]
         while True:
-            if self.adbIns.rebootPerHour():
+            if self.adbIns.reboot_per_hour():
                 self.adbIns.taps(instructions)
             sleep(1200)
 

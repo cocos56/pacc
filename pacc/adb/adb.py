@@ -153,7 +153,7 @@ class ADB:
         sleep(6)
         system('adb connect %s' % self.device.IP)
         if self.device.IP not in get_online_devices():
-            self.rebootByID()
+            self.reboot_by_id()
 
     def disconnect(self):
         """
@@ -212,23 +212,23 @@ class ADB:
         self.swipe(x, y, x, y, duration)
 
     def reboot(self):
-        self.rebootByIP()
+        self.reboot_by_ip()
 
-    def rebootByCMD(self, cmd):
+    def reboot_by_cmd(self, cmd):
         popen(cmd)
         print('已向设备%s下达重启指令' % self.device.SN)
         sleep(69)
         self.__init__(self.device.SN)
 
-    def rebootByID(self):
-        self.rebootByCMD('adb -s ' + self.device.ID + ' reboot')
+    def reboot_by_id(self):
+        self.reboot_by_cmd('adb -s ' + self.device.ID + ' reboot')
 
-    def rebootByIP(self):
+    def reboot_by_ip(self):
         if self.device.IP not in get_online_devices():
             self.__init__(self.device.SN)
-        self.rebootByCMD('adb -s ' + self.device.IP + ' reboot')
+        self.reboot_by_cmd('adb -s ' + self.device.IP + ' reboot')
 
-    def rebootPerHour(self, tip='小时'):
+    def reboot_per_hour(self, tip='小时'):
         if not datetime.now().hour == self.rebootPerHourRecord[0]:
             self.rebootPerHourRecord = [datetime.now().hour]
         if self.device.SN not in self.rebootPerHourRecord:
@@ -240,7 +240,7 @@ class ADB:
 
     def rebootPerDay(self, hours=[0]):
         if datetime.now().hour in hours:
-            self.rebootPerHour(tip='天')
+            self.reboot_per_hour(tip='天')
             return True
         return False
 

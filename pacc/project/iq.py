@@ -17,6 +17,6 @@ class IQ(Project):
     def mainloop(self):
         while True:
             self.setTheMediaVolumeToZero()
-            if self.adbIns.rebootPerHour():
+            if self.adbIns.reboot_per_hour():
                 self.uIAIns.click(ResourceID.icon_icon, contentDesc='新自阅')
             sleep(1200)
