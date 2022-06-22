@@ -193,7 +193,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         for x_coordinate, y_coordinate, interval, tip in instructions:
             print(tip)
-            self.uia.tap(x_coordinate, y_coordinate, interval)
+            self.uia.tap([x_coordinate, y_coordinate], interval)
 
     def start(self, activity, wait=True):
         """启动
