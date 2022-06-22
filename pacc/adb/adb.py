@@ -92,7 +92,7 @@ class ADB:
         print(cmd)
         system(cmd)
 
-    def get_model(self):
+    def get_model(self):  # pylint: disable=R1710
         """获取手机型号信息
 
         :return:手机型号信息
