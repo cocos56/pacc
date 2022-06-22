@@ -59,7 +59,7 @@ class ADB:
             UpdateBaseInfo(device_sn).updateModel(self.get_model())
             self.device = RetrieveBaseInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
-                self.getCurrentFocus():
+                self.get_current_focus():
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.pressBackKey(6)
 
@@ -93,10 +93,14 @@ class ADB:
         system(cmd)
 
     def get_model(self):
-        """获取手机型号信息"""
+        """获取手机型号信息
+
+        :return:手机型号信息
+        """
         res = popen(f'{self.cmd}shell getprop ro.product.model').read()[:-1]
         if not res:
             self.reconnect()
+            # pylint: disable=C2801
             self.__init__(self.device.SN)
             return
         while res[-1] == '\n':
