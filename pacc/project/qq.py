@@ -13,5 +13,5 @@ class QQ(Project):
     def sendMsg(self, msg):
         self.uIAIns.click(ResourceID.input)
 
-        self.adbIns.inputTextWithB64(msg)
+        self.adbIns.input_text_with_b64(msg)
         self.uIAIns.click(ResourceID.fun_btn)

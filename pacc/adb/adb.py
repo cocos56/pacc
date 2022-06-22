@@ -25,7 +25,7 @@ class ADB:
     """
     安卓调试桥类
     """
-    rebootPerHourRecord = [-1]
+    reboot_per_hour_record = [-1]
 
     def __init__(self, device_sn, offline_cnt=1):
         """构造函数：初始化安卓调试桥类的对象
@@ -74,10 +74,11 @@ class ADB:
             return self.get_data_from_clipboard()
         return data
 
-    def inputTextWithB64(self, text):
-        system(self.cmd + 'shell ime set com.android.adbkeyboard/.AdbIME')
-        charsb64 = str(base64.b64encode(text.encode('utf-8')))[1:]
-        cmd = self.cmd + "shell am broadcast -a ADB_INPUT_B64 --es msg %s" % charsb64
+    def input_text_with_b64(self, text):
+        """使用Base64编码输入文本"""
+        system(f'{self.cmd}shell ime set com.android.adbkeyboard/.AdbIME')
+        chars_b64 = str(base64.b64encode(text.encode('utf-8')))[1:]
+        cmd = f"{self.cmd}shell am broadcast -a ADB_INPUT_B64 --es msg {chars_b64}"
         print(cmd)
         system(cmd)
 
@@ -228,12 +229,12 @@ class ADB:
         self.reboot_by_cmd('adb -s ' + self.device.IP + ' reboot')
 
     def reboot_per_hour(self, tip='小时'):
-        if not datetime.now().hour == self.rebootPerHourRecord[0]:
-            self.rebootPerHourRecord = [datetime.now().hour]
-        if self.device.SN not in self.rebootPerHourRecord:
+        if not datetime.now().hour == self.reboot_per_hour_record[0]:
+            self.reboot_per_hour_record = [datetime.now().hour]
+        if self.device.SN not in self.reboot_per_hour_record:
             print('按每' + tip + '重启一次的计划重启' + self.device.SN)
             self.reboot()
-            self.rebootPerHourRecord.append(self.device.SN)
+            self.reboot_per_hour_record.append(self.device.SN)
             return True
         return False
 
