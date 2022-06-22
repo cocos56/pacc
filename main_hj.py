@@ -10,3 +10,4 @@ NoxConsole.remove_all()
 # NoxConsole.copy(randint(400, 450))
 
 # HJCM(0, 'CT74TA').mainloop()
+# HJCM(0, '37BFKK').mainloop()
