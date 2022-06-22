@@ -34,7 +34,7 @@ class PDDSJB(Project):
 
     def decryptCaptcha(self):
         errCnt = 1
-        while Activity.TransparentFullscreenWebActivity in self.adbIns.getCurrentFocus():
+        while Activity.TransparentFullscreenWebActivity in self.adbIns.get_current_focus():
             # self.qIns.sendMsg("采集器于%s碰到验证码，正在尝试第%d次破解" % (datetime.now(), errCnt))
             x = SliderCaptcha.getX(self.uIAIns.getScreen())
             self.adbIns.swipe(226, 1108, x+160, 1108, 3000)

@@ -32,7 +32,7 @@ class PDD(Project):
             sleep(10)
 
     def sendQuestion(self):
-        if Activity.NewPageActivity not in self.adbIns.getCurrentFocus():
+        if Activity.NewPageActivity not in self.adbIns.get_current_focus():
             return
         self.uIAIns.click(text='请描述下您遇到的问题～')
         self.adbIns.input_text('210901-646667386383208超时发货好几天了，但是一直没有收到赔付，麻烦看一下怎么回事儿')

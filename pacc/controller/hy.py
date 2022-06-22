@@ -31,7 +31,7 @@ class HY(Project):
         self.uIAIns.tap([56, 126])
         if reopen:
             self.reopenApp()
-        currentFocus = self.adbIns.getCurrentFocus()
+        currentFocus = self.adbIns.get_current_focus()
         if 'com.sh.shuihulu.kiwi' not in currentFocus:
             self.uIAIns.tap([56, 126])
             self.mainloop(True)

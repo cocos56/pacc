@@ -85,10 +85,10 @@ class Project:
         except FileNotFoundError as e:
             print(e)
             self.freeMemory()
-        currentFocus = self.adbIns.getCurrentFocus()
+        currentFocus = self.adbIns.get_current_focus()
         if Activity.RecentsActivity in currentFocus:
             self.adbIns.pressHomeKey()
-            currentFocus = self.adbIns.getCurrentFocus()
+            currentFocus = self.adbIns.get_current_focus()
         if Activity.Launcher not in currentFocus:
             self.adbIns.reboot()
             self.freeMemory()

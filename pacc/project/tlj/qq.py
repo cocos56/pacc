@@ -22,7 +22,7 @@ class QQ(Project):
     def getUnreadMsg(self):
         self.reopenApp()
         if self.uIAIns.click(ResourceID.unreadmsg, offset_x=-200):
-            if Activity.ChatActivity not in self.adbIns.getCurrentFocus():
+            if Activity.ChatActivity not in self.adbIns.get_current_focus():
                 self.getUnreadMsg()
                 return
             print(self.getLatestMsg())

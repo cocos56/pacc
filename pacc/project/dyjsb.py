@@ -57,10 +57,10 @@ class DYJSB(Project):
 
     def afterEnterAdsInterface(self):
         sleep(20)
-        if Activity.ExcitingVideoActivity in self.adbIns.getCurrentFocus():
+        if Activity.ExcitingVideoActivity in self.adbIns.get_current_focus():
             sleep(60)
             self.adbIns.pressBackKey()
-        if Activity.ExcitingVideoActivity in self.adbIns.getCurrentFocus() and self.uIAIns.click(
+        if Activity.ExcitingVideoActivity in self.adbIns.get_current_focus() and self.uIAIns.click(
                 contentDesc='再看一个获取'):
             sleep(60)
             self.adbIns.pressBackKey()

@@ -28,7 +28,7 @@ class SD(Project):
         try:
             self.uIAIns.click(ResourceID.button2)
             dic = self.uIAIns.getDict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
-            currentFocus = self.adbIns.getCurrentFocus()
+            currentFocus = self.adbIns.get_current_focus()
             if dic and dic['@text'] == '正在连接服务器...':
                 self.reopenApp()
             elif not dic and Activity.MainActivity in currentFocus:

@@ -55,8 +55,8 @@ class ADB:
             self.reconnect()
         self.cmd = f'adb -s {self.device.IP} '
         self.uia = UIAutomator(device_sn)
-        if not self.getModel() == self.device.Model:
-            UpdateBaseInfo(device_sn).updateModel(self.getModel())
+        if not self.get_model() == self.device.Model:
+            UpdateBaseInfo(device_sn).updateModel(self.get_model())
             self.device = RetrieveBaseInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.getCurrentFocus():
@@ -83,14 +83,18 @@ class ADB:
         system(cmd)
 
     def input_text(self, text):
-        """输入文本"""
+        """输入文本
+
+        :param text: 文本内容
+        """
         system(f'{self.cmd}shell ime set com.android.adbkeyboard/.AdbIME')
         cmd = f"{self.cmd}shell am broadcast -a ADB_INPUT_TEXT --es msg '{text}'"
         print(cmd)
         system(cmd)
 
-    def getModel(self):
-        res = popen(self.cmd + 'shell getprop ro.product.model').read()[:-1]
+    def get_model(self):
+        """获取手机型号信息"""
+        res = popen(f'{self.cmd}shell getprop ro.product.model').read()[:-1]
         if not res:
             self.reconnect()
             self.__init__(self.device.SN)
@@ -99,33 +103,40 @@ class ADB:
             res = res[:-1]
         return res
 
-    def getCurrentFocus(self):
+    def get_current_focus(self):
+        """获取当前界面的Activity"""
         r = popen(self.cmd + 'shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
         print(r)
         if r.count('mCurrentFocus=Window{') > 1:
             self.reboot()
         return r
 
-    def pressKey(self, keycode, sleepTime=1):
-        print('正在让%s按%s' % (self.device.SN, keycode))
-        system(self.cmd + 'shell input keyevent ' + keycode)
-        sleep(sleepTime, False, False)
+    def press_key(self, keycode, sleep_time=1):
+        """按键
+
+        :param keycode: 按键代码
+        :param sleep_time: 休息时间
+        """
+        print(f'正在让{self.device.SN}按{keycode}')
+        system(f'{self.cmd}shell input keyevent {keycode}')
+        sleep(sleep_time, False, False)
 
     def pressHomeKey(self):
+        """按起始键"""
         self.keepOnline()
-        self.pressKey('KEYCODE_HOME')
+        self.press_key('KEYCODE_HOME')
 
     def pressMenuKey(self):
-        self.pressKey('KEYCODE_MENU')
+        self.press_key('KEYCODE_MENU')
 
     def pressBackKey(self, sleepTime=1):
-        self.pressKey('KEYCODE_BACK', sleepTime)
+        self.press_key('KEYCODE_BACK', sleepTime)
 
     def pressPowerKey(self):
-        self.pressKey('KEYCODE_POWER')
+        self.press_key('KEYCODE_POWER')
 
     def pressEnterKey(self):
-        self.pressKey('KEYCODE_ENTER')
+        self.press_key('KEYCODE_ENTER')
 
     def usb(self, timeout=2):
         """

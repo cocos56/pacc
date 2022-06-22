@@ -28,7 +28,7 @@ class HZDYX(Project):
                         i.adbIns.tap(287, 1492)
                     elif i.adbIns.device.Model == 'JAT-TL00':
                         i.adbIns.tap(161, 1084)
-                if 'com.ruiqugames.chinesechar' not in i.adbIns.getCurrentFocus():
+                if 'com.ruiqugames.chinesechar' not in i.adbIns.get_current_focus():
                     i.adbIns.start(cls.programName)
             sleep(1200)
 
