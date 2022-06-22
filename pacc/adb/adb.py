@@ -21,7 +21,7 @@ def get_online_devices():
     return res
 
 
-class ADB:
+class ADB:  # pylint: disable=too-many-public-methods
     """
     安卓调试桥类
     """
