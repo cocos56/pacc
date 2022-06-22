@@ -96,7 +96,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         res = popen(f'{self.cmd}shell getprop ro.product.model').read()[:-1]
         if not res:
             self.reconnect()
-            # pylint: disable=C2801
+            # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.SN)
             return
         while res[-1] == '\n':
@@ -183,6 +183,7 @@ class ADB:  # pylint: disable=too-many-public-methods
     def keep_online(self):
         """保持在线"""
         if self.device.IP not in get_online_devices():
+            # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.SN)
 
     def taps(self, instructions):
@@ -190,9 +191,9 @@ class ADB:  # pylint: disable=too-many-public-methods
 
         :param instructions: 指令集
         """
-        for x, y, interval, tip in instructions:
+        for x_coordinate, y_coordinate, interval, tip in instructions:
             print(tip)
-            self.uia.tap(x, y, interval)
+            self.uia.tap(x_coordinate, y_coordinate, interval)
 
     def start(self, activity, wait=True):
         """启动
