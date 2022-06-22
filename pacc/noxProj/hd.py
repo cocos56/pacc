@@ -28,7 +28,7 @@ class HD(NoxProj):
     def doWorkWhenInputICode(self, adbIns, uiaIns):
         uiaIns.click(contentDesc='输入邀请码')
         uiaIns.click(text='请输入邀请码')
-        adbIns.inputText(self.iCode)
+        adbIns.input_text(self.iCode)
         uiaIns.click(contentDesc='提交')
         pass
 

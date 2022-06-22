@@ -37,7 +37,7 @@ class HJCM(NoxProj):
         """
         uia_ins.click(contentDesc='输入邀请码')
         uia_ins.click(text='请输入邀请码')
-        adb_ins.inputText(self.i_code)
+        adb_ins.input_text(self.i_code)
         uia_ins.click(contentDesc='提交')
 
     def do_all_work(self, device_ip):

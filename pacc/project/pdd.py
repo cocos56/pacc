@@ -35,7 +35,7 @@ class PDD(Project):
         if Activity.NewPageActivity not in self.adbIns.getCurrentFocus():
             return
         self.uIAIns.click(text='请描述下您遇到的问题～')
-        self.adbIns.inputText('210901-646667386383208超时发货好几天了，但是一直没有收到赔付，麻烦看一下怎么回事儿')
+        self.adbIns.input_text('210901-646667386383208超时发货好几天了，但是一直没有收到赔付，麻烦看一下怎么回事儿')
         self.uIAIns.click(text='发送')
 
     def contactHumanService(self):
@@ -43,7 +43,7 @@ class PDD(Project):
         if not self.uIAIns.getDict(text='当前人工客服繁忙，你已进入排队，请耐心等待'):
             while not self.uIAIns.click(text='联系人工客服'):
                 self.uIAIns.click(text='请描述下您遇到的问题～', xml=self.uIAIns.xml)
-                self.adbIns.inputText('人工服务')
+                self.adbIns.input_text('人工服务')
                 self.uIAIns.click(text='发送')
         self.uIAIns.click(text='以上都不是')
         self.uIAIns.click(text='非订单问题，点此直接进入人工客服')

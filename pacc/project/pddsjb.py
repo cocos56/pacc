@@ -87,7 +87,7 @@ class PDDSJB(Project):
         self.uIAIns.getCurrentUIHierarchy()
         self.uIAIns.click(Class=Class.EditText)
         self.uIAIns.click(Class=Class.EditText)
-        self.adbIns.inputText(keyword)
+        self.adbIns.input_text(keyword)
         self.adbIns.pressEnterKey()
         self.uIAIns.click(text='价格')
 

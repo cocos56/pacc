@@ -47,7 +47,7 @@ class MM(Project):
         self.reopenApp()
         self.uIAIns.click(ResourceID.fzg)
         self.uIAIns.click(ResourceID.auj)
-        self.adbIns.inputText(url)
+        self.adbIns.input_text(url)
         self.uIAIns.click(ResourceID.ay5)
 
     def exitApp(self):

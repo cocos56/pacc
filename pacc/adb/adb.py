@@ -82,9 +82,10 @@ class ADB:
         print(cmd)
         system(cmd)
 
-    def inputText(self, text):
-        system(self.cmd + 'shell ime set com.android.adbkeyboard/.AdbIME')
-        cmd = self.cmd + "shell am broadcast -a ADB_INPUT_TEXT --es msg '%s'" % text
+    def input_text(self, text):
+        """输入文本"""
+        system(f'{self.cmd}shell ime set com.android.adbkeyboard/.AdbIME')
+        cmd = f"{self.cmd}shell am broadcast -a ADB_INPUT_TEXT --es msg '{text}'"
         print(cmd)
         system(cmd)
 
