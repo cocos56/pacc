@@ -69,8 +69,8 @@ class ADB:
         cmd = self.cmd + 'shell am broadcast -a clipper.get'
         try:
             data = findAllWithRe(popen(cmd).read(), '.+data="(.+)"')[0]
-        except IndexError as e:
-            print(e)
+        except IndexError as error:
+            print(error)
             return self.get_data_from_clipboard()
         return data
 
@@ -192,7 +192,6 @@ class ADB:
         :param x2:
         :param y2:
         :param duration: the default duration is a random integer from 300 to 500
-        :return:
         """
         if duration == -1:
             duration = randint(500, 600)
