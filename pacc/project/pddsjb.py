@@ -110,7 +110,7 @@ class PDDSJB(Project):
     def getURLFromProductDetailPage(self, productInfo):
         self.uIAIns.click(bounds='[936,72][1032,204]')
         self.uIAIns.click(text='复制链接')
-        data = findAllWithRe(self.adbIns.getDataFromClipboard(), '(.+)&type=.+')[0]
+        data = findAllWithRe(self.adbIns.get_data_from_clipboard(), '(.+)&type=.+')[0]
         print(data)
         index, name, price, discountInformation = productInfo
         self.qIns.sendMsg("索引号：%s\n商品名：%s\n价格：%s\n最大折扣：≥%s件 %s折\n商品链接：%s\n声明：%s" % (

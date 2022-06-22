@@ -46,6 +46,7 @@ class ADB:
         if not self.getIPv4Address():
             print(self.getIPv4Address())
             sleep(3)
+            # pylint: disable=W0233
             self.__init__(device_sn)
         if not self.getIPv4Address() == self.device.IP:
             UpdateBaseInfo(device_sn).updateIP(self.getIPv4Address())
@@ -62,14 +63,15 @@ class ADB:
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.pressBackKey(6)
 
-    def getDataFromClipboard(self):
+    def get_data_from_clipboard(self):
+        """从粘贴板获取数据"""
         system(self.cmd + 'shell am startservice ca.zgrs.clipper/.ClipboardService')
         cmd = self.cmd + 'shell am broadcast -a clipper.get'
         try:
             data = findAllWithRe(popen(cmd).read(), '.+data="(.+)"')[0]
         except IndexError as e:
             print(e)
-            return self.getDataFromClipboard()
+            return self.get_data_from_clipboard()
         return data
 
     def inputTextWithB64(self, text):
