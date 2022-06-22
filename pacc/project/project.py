@@ -67,19 +67,19 @@ class Project:
     def reopenApp(self):
         self.freeMemory()
         if not Config.debug and 'MI 4' in self.adbIns.device.Model:
-            self.adbIns.pressPowerKey()
+            self.adbIns.press_power_key()
             sleep(60)
-        self.adbIns.pressHomeKey()
+        self.adbIns.press_home_key()
         self.openApp()
 
     def openApp(self, activity):
-        self.adbIns.pressHomeKey()
+        self.adbIns.press_home_key()
         self.adbIns.start(activity)
 
     def freeMemory(self):
-        self.adbIns.pressHomeKey()
-        self.adbIns.pressHomeKey()
-        self.adbIns.pressMenuKey()
+        self.adbIns.press_home_key()
+        self.adbIns.press_home_key()
+        self.adbIns.press_menu_key()
         try:
             self.tapFreeButton()
         except FileNotFoundError as e:
@@ -87,7 +87,7 @@ class Project:
             self.freeMemory()
         currentFocus = self.adbIns.get_current_focus()
         if Activity.RecentsActivity in currentFocus:
-            self.adbIns.pressHomeKey()
+            self.adbIns.press_home_key()
             currentFocus = self.adbIns.get_current_focus()
         if Activity.Launcher not in currentFocus:
             self.adbIns.reboot()

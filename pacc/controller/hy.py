@@ -37,7 +37,7 @@ class HY(Project):
             self.mainloop(True)
             return
         elif Activity.KiwiPicturePreviewActivity in currentFocus:
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
         try:
             # if self.uIAIns.click(ResourceID.iv_tippopu_close):
             #     self.uIAIns.xml = ''

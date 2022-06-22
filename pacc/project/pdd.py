@@ -16,7 +16,7 @@ class PDD(Project):
         super(PDD, self).__init__(deviceSN)
 
     def openApp(self):
-        self.adbIns.pressHomeKey()
+        self.adbIns.press_home_key()
         self.uIAIns.click(ResourceID.icon_icon, contentDesc='拼多多')
 
     def enterHumanServiceInterface(self):

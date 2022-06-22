@@ -53,7 +53,7 @@ class MM(Project):
     def exitApp(self):
         self.openApp(1)
         while Activity.Launcher not in self.adbIns.get_current_focus():
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
 
     def reopenApp(self):
         self.exitApp()

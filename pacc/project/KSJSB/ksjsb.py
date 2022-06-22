@@ -32,7 +32,7 @@ class KSJSB(Project):
             if self.uIAIns.click(text='开宝箱得金币', xml=self.uIAIns.xml):
                 if self.uIAIns.clickByXMLTexts(['去看视频再赚', '看精彩视频赚更多', '金币看视频就赚']):
                     sleep(60)
-                    self.adbIns.pressBackKey()
+                    self.adbIns.press_back_key()
                     self.uIAIns.click(resourceID.award_video_close_dialog_abandon_button)
                 self.uIAIns.xml = ''
         except FileNotFoundError:
@@ -73,10 +73,10 @@ class KSJSB(Project):
             self.reopenApp()
             self.exitLiveCnt = 0
             return
-        self.adbIns.pressBackKey()
+        self.adbIns.press_back_key()
         cf = self.adbIns.get_current_focus()
         if activity.AwardFeedFlowActivity in cf:
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
         if activity.PhotoDetailActivity not in cf:
             return
         try:
@@ -102,7 +102,7 @@ class KSJSB(Project):
                 elif self.uIAIns.clickByXMLTexts(['观看广告单日最高可得',
                                                   '每次100金币，每天1000金币']):
                     sleep(50)
-                    self.adbIns.pressBackKey()
+                    self.adbIns.press_back_key()
                     if activity.HomeActivity not in self.adbIns.get_current_focus():
                         self.enterWealthInterface()
                         print('等待看广告')
@@ -133,7 +133,7 @@ class KSJSB(Project):
             self.uIAIns.xml = ''
         elif self.uIAIns.click('', '看广告再得', xml=self.uIAIns.xml):
             sleep(60)
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
             self.uIAIns.xml = ''
         if self.uIAIns.getDict(text='邀请好友赚更多'):
             self.enterWealthInterface()
@@ -208,7 +208,7 @@ class KSJSB(Project):
                 self.uIAIns.xml = ''
             if self.uIAIns.click(resourceID.tv_upgrade_now, xml=self.uIAIns.xml):
                 self.uIAIns.xml = ''
-                self.adbIns.pressBackKey()
+                self.adbIns.press_back_key()
             while not self.uIAIns.getDict(resourceID.red_packet_anim, xml=self.uIAIns.xml):
                 if activity.HomeActivity not in self.adbIns.get_current_focus():
                     self.reopenApp()
@@ -247,7 +247,7 @@ class KSJSB(Project):
                     self.signIn()
                     self.updateWealth()
                     self.freeMemory()
-                    self.adbIns.pressPowerKey()
+                    self.adbIns.press_power_key()
                     self.startDay = (datetime.now() + timedelta(days=1)).day
                     return
             currentFocus = self.adbIns.get_current_focus()
@@ -255,9 +255,9 @@ class KSJSB(Project):
                 self.exitLive()
                 self.randomSwipe(True)
             elif activity.UserProfileActivity in currentFocus:
-                self.adbIns.pressBackKey()
+                self.adbIns.press_back_key()
             elif activity.KwaiYodaWebViewActivity in currentFocus:
-                self.adbIns.pressBackKey()
+                self.adbIns.press_back_key()
             elif activity.SearchActivity in currentFocus:
                 self.reopenApp()
             self.uIAIns.click(resourceID.button2, xml=self.uIAIns.xml)

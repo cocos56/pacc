@@ -59,11 +59,11 @@ class DYJSB(Project):
         sleep(20)
         if Activity.ExcitingVideoActivity in self.adbIns.get_current_focus():
             sleep(60)
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
         if Activity.ExcitingVideoActivity in self.adbIns.get_current_focus() and self.uIAIns.click(
                 contentDesc='再看一个获取'):
             sleep(60)
-            self.adbIns.pressBackKey()
+            self.adbIns.press_back_key()
 
     def openApp(self):
         super(DYJSB, self).openApp(Activity.SplashActivity)
@@ -86,7 +86,7 @@ class DYJSB(Project):
     def watchVideo(self):
         if datetime.now().hour == 23 and datetime.now().day == self.startDay:
             self.freeMemory()
-            self.adbIns.pressPowerKey()
+            self.adbIns.press_power_key()
             self.startDay = (datetime.now() + timedelta(days=1)).day
             return
         try:

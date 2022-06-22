@@ -61,7 +61,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
-                self.pressBackKey(6)
+                self.press_back_key(6)
 
     def get_data_from_clipboard(self):
         """从粘贴板获取数据"""
@@ -109,11 +109,11 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def get_current_focus(self):
         """获取当前界面的Activity"""
-        r = popen(self.cmd + 'shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
-        print(r)
-        if r.count('mCurrentFocus=Window{') > 1:
+        res = popen(self.cmd + 'shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
+        print(res)
+        if res.count('mCurrentFocus=Window{') > 1:
             self.reboot()
-        return r
+        return res
 
     def press_key(self, keycode, sleep_time=1):
         """按键
@@ -125,21 +125,28 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(f'{self.cmd}shell input keyevent {keycode}')
         sleep(sleep_time, False, False)
 
-    def pressHomeKey(self):
+    def press_home_key(self):
         """按起始键"""
         self.keepOnline()
         self.press_key('KEYCODE_HOME')
 
-    def pressMenuKey(self):
+    def press_menu_key(self):
+        """按菜单键"""
         self.press_key('KEYCODE_MENU')
 
-    def pressBackKey(self, sleepTime=1):
-        self.press_key('KEYCODE_BACK', sleepTime)
+    def press_back_key(self, sleep_time=1):
+        """按返回键
 
-    def pressPowerKey(self):
+        :param sleep_time: 休息时间
+        """
+        self.press_key('KEYCODE_BACK', sleep_time)
+
+    def press_power_key(self):
+        """按电源键"""
         self.press_key('KEYCODE_POWER')
 
-    def pressEnterKey(self):
+    def press_enter_key(self):
+        """按回车键"""
         self.press_key('KEYCODE_ENTER')
 
     def usb(self, timeout=2):

@@ -37,7 +37,7 @@ class PDDSJB(Project):
         while Activity.TransparentFullscreenWebActivity in self.adbIns.get_current_focus():
             # self.qIns.sendMsg("采集器于%s碰到验证码，正在尝试第%d次破解" % (datetime.now(), errCnt))
             x = SliderCaptcha.getX(self.uIAIns.getScreen())
-            self.adbIns.swipe(226, 1108, x+160, 1108, 3000)
+            self.adbIns.swipe(226, 1108, x + 160, 1108, 3000)
             sleep(6)
             errCnt += 1
             if self.uIAIns.click(text='立即刷新'):
@@ -54,7 +54,7 @@ class PDDSJB(Project):
                 print(e)
 
     def loop(self):
-        keyword = keywords[randint(0, len(keywords)-1)]
+        keyword = keywords[randint(0, len(keywords) - 1)]
         # self.qIns.sendMsg("正在扫描关键词【%s】，开始扫描时间%s" % (keyword, datetime.now()))
         self.search(keyword)
         while True:
@@ -88,11 +88,12 @@ class PDDSJB(Project):
         self.uIAIns.click(Class=Class.EditText)
         self.uIAIns.click(Class=Class.EditText)
         self.adbIns.input_text(keyword)
-        self.adbIns.pressEnterKey()
+        self.adbIns.press_enter_key()
         self.uIAIns.click(text='价格')
 
     def getValidItems(self):
-        rd = self.uIAIns.getDict(index='0', Class='android.view.View', bounds='[0,-1][1080,1920]')['node']
+        rd = self.uIAIns.getDict(index='0', Class='android.view.View', bounds='[0,-1][1080,1920]')[
+            'node']
         rawItems = [i for i in rd if 'node' in i]
         validItems = []
         for i in rawItems:
@@ -133,9 +134,9 @@ class PDDSJB(Project):
         if discountInformation[0] <= 10 and discountInformation[1] <= 2:
             self.getURLFromProductDetailPage((index, name, price, discountInformation))
             self.succeededCnt += 1
-        self.adbIns.pressBackKey()
-        # if self.walkedCnt % 50 == 0:
-        #     self.qIns.sendMsg('状态报告：已遍历%d条，共发现%d条链接，当前时间：%s' % (self.walkedCnt, self.succeededCnt, datetime.now()))
+        self.adbIns.press_back_key()
+        # if self.walkedCnt % 50 == 0: self.qIns.sendMsg('状态报告：已遍历%d条，共发现%d条链接，当前时间：
+        # %s' % (self.walkedCnt, self.succeededCnt, datetime.now()))
         self.walkedCnt += 1
 
     def clickByBoundsSafely(self, bounds):
