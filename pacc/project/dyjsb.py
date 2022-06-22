@@ -95,7 +95,7 @@ class DYJSB(Project):
         except (FileNotFoundError, ExpatError) as e:
             print(e)
         if self.reopenAppPerHour(False):
-            self.adbIns.keepOnline()
+            self.adbIns.keep_online()
             self.openTreasureBox()
             self.viewAds()
             self.reopenApp()

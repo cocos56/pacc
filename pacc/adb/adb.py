@@ -11,9 +11,7 @@ from ..tools import findAllWithRe, sleep, EMail
 
 
 def get_online_devices():
-    """
-    获取所有在线设备
-    """
+    """获取所有在线设备"""
     res = popen('adb devices').read()
     res = findAllWithRe(res, r'(.+)\tdevice')
     for i, _ in enumerate(res):
@@ -22,9 +20,7 @@ def get_online_devices():
 
 
 class ADB:  # pylint: disable=too-many-public-methods
-    """
-    安卓调试桥类
-    """
+    """安卓调试桥类"""
     reboot_per_hour_record = [-1]
 
     def __init__(self, device_sn, offline_cnt=1):
@@ -127,7 +123,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def press_home_key(self):
         """按起始键"""
-        self.keepOnline()
+        self.keep_online()
         self.press_key('KEYCODE_HOME')
 
     def press_menu_key(self):
@@ -150,9 +146,9 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.press_key('KEYCODE_ENTER')
 
     def usb(self, timeout=2):
-        """
-        restart adbd listening on USB
-        :return:
+        """restart adbd listening on USB
+
+        :param timeout: 超时
         """
         cmd = self.cmd + 'usb'
         system(cmd)
@@ -160,62 +156,65 @@ class ADB:  # pylint: disable=too-many-public-methods
         sleep(timeout)
 
     def tcpip(self):
-        """
-        restart adbd listening on TCP on PORT
-        :return:
-        """
-        system('adb -s %s tcpip 5555' % self.device.ID)
+        """restart adbd listening on TCP on PORT"""
+        system(f'adb -s {self.device.ID} tcpip 5555')
         sleep(1, False, False)
 
     def connect(self):
-        """
-        connect to a device via TCP/IP [default port=5555]
-        :return:
-        """
+        """connect to a device via TCP/IP [default port=5555]"""
         self.tcpip()
-        system('adb connect %s' % self.device.IP)
+        system(f'adb connect {self.device.IP}')
         sleep(6)
-        system('adb connect %s' % self.device.IP)
+        system(f'adb connect {self.device.IP}')
         if self.device.IP not in get_online_devices():
             self.reboot_by_id()
 
     def disconnect(self):
-        """
-        disconnect from given TCP/IP device [default port=5555], or all
-        :return:
-        """
-        system('adb disconnect %s' % self.device.IP)
+        """disconnect from given TCP/IP device [default port=5555], or all"""
+        system(f'adb disconnect {self.device.IP}')
         sleep(2, False, False)
 
     def reconnect(self):
+        """重新连接掉线的设备"""
         system('adb reconnect offline')
         self.disconnect()
         self.connect()
 
-    def keepOnline(self):
+    def keep_online(self):
+        """保持在线"""
         if self.device.IP not in get_online_devices():
             self.__init__(self.device.SN)
 
     def taps(self, instructions):
+        """点击
+
+        :param instructions: 指令集
+        """
         for x, y, interval, tip in instructions:
             print(tip)
             self.uia.tap(x, y, interval)
 
-    def start(self, Activity, wait=True):
+    def start(self, activity, wait=True):
+        """启动
+
+        :param activity: 活动名
+        :param wait: 是否等待
+        """
         cmd = 'shell am start '
         if wait:
             cmd += '-W '
-        cmd = self.cmd + cmd + Activity
+        cmd = self.cmd + cmd + activity
         system(cmd)
         print(cmd)
 
     def swipe(self, x1, y1, x2, y2, duration=-1):
-        """
-        :param x1:
-        :param y1:
-        :param x2:
-        :param y2:
-        :param duration: the default duration is a random integer from 300 to 500
+        """滑动
+
+        :param x1: 起点的x轴坐标值
+        :param y1: 起点的y轴坐标值
+        :param x2: 终点的x轴坐标值
+        :param y2: 终点的y轴坐标值
+        :param duration: the default duration is a random integer from 500 to 600
         """
         if duration == -1:
             duration = randint(500, 600)
@@ -223,23 +222,28 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(cmd)
         print(self.device.SN, cmd)
 
-    def longPress(self, x, y, duration=-1):
-        """
-        :param x:
-        :param y:
+    def long_press(self, x, y, duration=-1):
+        """长按
+
+        :param x: 点的x轴坐标值
+        :param y: 点的y轴坐标值
         :param duration: the default duration is a random integer from 1000 to 1500
-        :return:
         """
         if duration == -1:
             duration = randint(1000, 1500)
         self.swipe(x, y, x, y, duration)
 
     def reboot(self):
+        """重启设备"""
         self.reboot_by_ip()
 
     def reboot_by_cmd(self, cmd):
+        """通过CMD指令重启设备
+
+        :param cmd: CMD指令
+        """
         popen(cmd)
-        print('已向设备%s下达重启指令' % self.device.SN)
+        print(f'已向设备{self.device.SN}下达重启指令')
         sleep(69)
         self.__init__(self.device.SN)
 

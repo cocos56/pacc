@@ -235,7 +235,7 @@ class KSJSB(Project):
 
     def watchVideo(self):
         if self.reopenAppPerHour(False):
-            self.adbIns.keepOnline()
+            self.adbIns.keep_online()
             self.openTreasureBox()
             self.reopenApp()
         try:

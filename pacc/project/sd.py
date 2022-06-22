@@ -24,7 +24,7 @@ class SD(Project):
         super(SD, self).__init__(SN)
 
     def check(self):
-        self.adbIns.keepOnline()
+        self.adbIns.keep_online()
         try:
             self.uIAIns.click(ResourceID.button2)
             dic = self.uIAIns.getDict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
