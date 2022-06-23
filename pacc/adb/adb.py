@@ -39,13 +39,13 @@ class ADB:  # pylint: disable=too-many-public-methods
             # pylint: disable=W0233
             self.__init__(device_sn, offline_cnt+1)
         self.cmd = f'adb -s {self.device.ID} '
-        if not self.getIPv4Address():
-            print(self.getIPv4Address())
+        if not self.get_ipv4_address():
+            print(self.get_ipv4_address())
             sleep(3)
             # pylint: disable=W0233
             self.__init__(device_sn)
-        if not self.getIPv4Address() == self.device.IP:
-            UpdateBaseInfo(device_sn).updateIP(self.getIPv4Address())
+        if not self.get_ipv4_address() == self.device.IP:
+            UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
             self.device = RetrieveBaseInfo(device_sn)
         if not Config.debug:
             self.reconnect()
@@ -219,7 +219,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         if duration == -1:
             duration = randint(500, 600)
-        cmd = self.cmd + 'shell input swipe %d %d %d %d %d' % (x1, y1, x2, y2, duration)
+        cmd = f'{self.cmd}shell input swipe {x1} {y1} {x2} {y2} {duration}'
         system(cmd)
         print(self.device.SN, cmd)
 
@@ -249,43 +249,55 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.__init__(self.device.SN)
 
     def reboot_by_id(self):
-        self.reboot_by_cmd('adb -s ' + self.device.ID + ' reboot')
+        """通过ID重启指定的设备"""
+        self.reboot_by_cmd(f'adb -s {self.device.ID} reboot')
 
     def reboot_by_ip(self):
+        """通过IP重启指定的设备"""
         if self.device.IP not in get_online_devices():
             self.__init__(self.device.SN)
-        self.reboot_by_cmd('adb -s ' + self.device.IP + ' reboot')
+        self.reboot_by_cmd(f'adb -s {self.device.IP} reboot')
 
     def reboot_per_hour(self, tip='小时'):
+        """每小时重启一次设备
+
+        :param tip: 该函数可能每天重启一次设备被复用，相应的tip值也应该改变
+        """
         if not datetime.now().hour == self.reboot_per_hour_record[0]:
             self.reboot_per_hour_record = [datetime.now().hour]
         if self.device.SN not in self.reboot_per_hour_record:
-            print('按每' + tip + '重启一次的计划重启' + self.device.SN)
+            print(f'按每{tip}重启一次的计划重启{self.device.SN}')
             self.reboot()
             self.reboot_per_hour_record.append(self.device.SN)
             return True
         return False
 
-    def rebootPerDay(self, hours=[0]):
+    def reboot_per_day(self, hours=[0]):
+        """每天固定点重启一次设备
+
+        :param hours: 重启的时
+        """
         if datetime.now().hour in hours:
             self.reboot_per_hour(tip='天')
             return True
         return False
 
-    def getIPv4Address(self):
+    def get_ipv4_address(self):
+        """获取设备的IPv4地址"""
         rd = popen(self.cmd + 'shell ifconfig wlan0').read()
-        IPv4Address = findAllWithRe(rd, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
-        if len(IPv4Address) == 1:
-            IPv4Address = IPv4Address[0]
-        return IPv4Address
+        ipv4_address = findAllWithRe(rd, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
+        if len(ipv4_address) == 1:
+            ipv4_address = ipv4_address[0]
+        return ipv4_address
 
-    def getIPv6Address(self):
+    def get_ipv6_address(self):
+        """获取设备的IPv6地址"""
         rd = popen(self.cmd + 'shell ifconfig wlan0').read()
-        IPv6Address = findAllWithRe(rd, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
-        if 0 < len(IPv6Address) <= 2:
-            IPv6Address = IPv6Address[0]
-            print('设备%s的公网IPv6地址为：%s' % (self.device, IPv6Address))
+        ipv6_address = findAllWithRe(rd, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
+        if 0 < len(ipv6_address) <= 2:
+            ipv6_address = ipv6_address[0]
+            print('设备%s的公网IPv6地址为：%s' % (self.device, ipv6_address))
         else:
             print('%s的公网IPv6地址数大于2或小于0，正在尝试重新获取')
             self.reboot()
-            self.getIPv6Address()
+            self.get_ipv6_address()
