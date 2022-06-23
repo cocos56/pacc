@@ -1,5 +1,5 @@
 """含羞草传媒程序入口"""
-# pylint: disable=
+# pylint: disable=unused-import
 from random import randint
 
 from pacc.nox import NoxConsole
