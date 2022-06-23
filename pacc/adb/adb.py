@@ -208,31 +208,33 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(cmd)
         print(cmd)
 
-    def swipe(self, x1, y1, x2, y2, duration=-1):
+    # pylint: disable=too-many-arguments
+    def swipe(self, x1_coordinate, y1_coordinate, x2_coordinate, y2_coordinate, duration=-1):
         """滑动
 
-        :param x1: 起点的x轴坐标值
-        :param y1: 起点的y轴坐标值
-        :param x2: 终点的x轴坐标值
-        :param y2: 终点的y轴坐标值
+        :param x1_coordinate: 起点的x轴坐标值
+        :param y1_coordinate: 起点的y轴坐标值
+        :param x2_coordinate: 终点的x轴坐标值
+        :param y2_coordinate: 终点的y轴坐标值
         :param duration: the default duration is a random integer from 500 to 600
         """
         if duration == -1:
             duration = randint(500, 600)
-        cmd = f'{self.cmd}shell input swipe {x1} {y1} {x2} {y2} {duration}'
+        cmd = f'{self.cmd}shell input swipe {x1_coordinate} {y1_coordinate} ' \
+              f'{x2_coordinate} {y2_coordinate} {duration}'
         system(cmd)
         print(self.device.SN, cmd)
 
-    def long_press(self, x, y, duration=-1):
+    def long_press(self, x_coordinate, y_coordinate, duration=-1):
         """长按
 
-        :param x: 点的x轴坐标值
-        :param y: 点的y轴坐标值
+        :param x_coordinate: 点的x轴坐标值
+        :param y_coordinate: 点的y轴坐标值
         :param duration: the default duration is a random integer from 1000 to 1500
         """
         if duration == -1:
             duration = randint(1000, 1500)
-        self.swipe(x, y, x, y, duration)
+        self.swipe(x_coordinate, y_coordinate, x_coordinate, y_coordinate, duration)
 
     def reboot(self):
         """重启设备"""
@@ -246,6 +248,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         popen(cmd)
         print(f'已向设备{self.device.SN}下达重启指令')
         sleep(69)
+        # pylint: disable=unnecessary-dunder-call
         self.__init__(self.device.SN)
 
     def reboot_by_id(self):
@@ -255,6 +258,7 @@ class ADB:  # pylint: disable=too-many-public-methods
     def reboot_by_ip(self):
         """通过IP重启指定的设备"""
         if self.device.IP not in get_online_devices():
+            # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.SN)
         self.reboot_by_cmd(f'adb -s {self.device.IP} reboot')
 
