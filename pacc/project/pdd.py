@@ -51,6 +51,6 @@ class PDD(Project):
             self.continueToConsulting()
         except FileNotFoundError as e:
             print(e)
-            self.uIAIns.clickByScreenText('继续咨询')
+            self.uIAIns.click_by_screen_text('继续咨询')
             self.continueToConsulting()
         self.sendQuestion()

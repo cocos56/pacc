@@ -38,21 +38,21 @@ class DYJSB(Project):
             return
         sleep(20)
         print('已进入财富界面')
-        if self.uIAIns.clickByScreenText('立即签到'):
+        if self.uIAIns.click_by_screen_text('立即签到'):
             if self.uIAIns.click_by_screen_texts(['看广告视频再赚', '打开签到提醒']):
                 self.afterEnterAdsInterface()
             self.uIAIns.txt = ''
 
     def openTreasureBox(self):
         self.enterWealthInterface()
-        if self.uIAIns.clickByScreenText('开宝箱得金币', txt=self.uIAIns.txt):
-            if self.uIAIns.clickByScreenText('看广告视频再赚'):
+        if self.uIAIns.click_by_screen_text('开宝箱得金币', txt=self.uIAIns.txt):
+            if self.uIAIns.click_by_screen_text('看广告视频再赚'):
                 self.afterEnterAdsInterface()
 
     def viewAds(self):
         self.enterWealthInterface()
-        if self.uIAIns.clickByScreenText('看广告赚金币', txt=self.uIAIns.txt):
-            self.uIAIns.clickByScreenText('看广告视频再赚')
+        if self.uIAIns.click_by_screen_text('看广告赚金币', txt=self.uIAIns.txt):
+            self.uIAIns.click_by_screen_text('看广告视频再赚')
             self.afterEnterAdsInterface()
 
     def afterEnterAdsInterface(self):

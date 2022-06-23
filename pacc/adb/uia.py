@@ -64,18 +64,25 @@ class UIAutomator:
         """
         self.txt = txt
         for text in texts:
-            if self.clickByScreenText(text, self.txt):
+            if self.click_by_screen_text(text, self.txt):
                 return True
         return False
 
-    def clickByScreenText(self, text, txt=''):
-        cP = self.getCPByScreenText(text, txt)
-        if cP:
-            print('检测到【%s】' % text)
-            self.tap(cP)
+    def click_by_screen_text(self, text, txt=''):
+        """搜索并点击截屏上的文本
+
+        :param text: 待点击的文本
+        :param txt: 截屏上的所有文本
+        :return: 如果查找到文本，则立即点击并返回True，如果没有找到，则返回False
+        """
+        point = self.getCPByScreenText(text, txt)
+        if point:
+            print(f'检测到【{text}】')
+            self.tap(point)
             return True
         else:
-            print('未找到【%s】' % text)
+            print(f'未找到【{text}】')
+            return False
 
     def getCPByScreenText(self, text, txt=''):
         if txt:

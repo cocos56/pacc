@@ -9,8 +9,8 @@ HXCCM(-1)
 NoxConsole.remove_all()
 NoxConsole.copy(randint(160, 200))
 
-
-HXCCM(0, 'Q34J3G').mainloop()
+HXCCM(0, '8FWWAN').mainloop()
+# HXCCM(0, 'Q34J3G').mainloop()
 # HXCCM(0, 'XP2971').mainloop()
 
 # HXCCM(0, '6BIJ4R').mainloop()
