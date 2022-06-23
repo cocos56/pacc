@@ -36,13 +36,13 @@ class ADB:  # pylint: disable=too-many-public-methods
                 EMail(self.device.SN).sendOfflineError()
             print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
-            # pylint: disable=unnecessary-dunder-call
+            # pylint: disable=non-parent-init-called
             self.__init__(device_sn, offline_cnt+1)
         self.cmd = f'adb -s {self.device.ID} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
             sleep(3)
-            # pylint: disable=unnecessary-dunder-call
+            # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
         if not self.get_ipv4_address() == self.device.IP:
             UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
@@ -88,7 +88,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         print(cmd)
         system(cmd)
 
-    def get_model(self):  # pylint: disable=
+    def get_model(self):  # pylint: disable=inconsistent-return-statements
         """获取手机型号信息
 
         :return:手机型号信息
