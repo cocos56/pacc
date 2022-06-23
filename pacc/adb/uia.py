@@ -11,8 +11,10 @@ from ..mysql import RetrieveBaseInfo
 from ..tools import createDir, prettyXML, getXML, sleep, findAllNumsWithRe, average, getTextsFromPic
 
 
+# pylint: disable=too-few-public-methods
 class Node:
     """节点类"""
+    # pylint: disable=too-many-arguments
     def __init__(self, resource_id='', text='', content_desc='', bounds='', class_='', index=''):
         self.resource_id = resource_id
         self.text = text
