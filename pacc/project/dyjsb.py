@@ -33,13 +33,13 @@ class DYJSB(Project):
 
     def enterWealthInterface(self):
         self.reopenApp()
-        if not self.uIAIns.clickByScreenTexts(['来赚钱', '金币']):
+        if not self.uIAIns.click_by_screen_texts(['来赚钱', '金币']):
             self.enterWealthInterface()
             return
         sleep(20)
         print('已进入财富界面')
         if self.uIAIns.clickByScreenText('立即签到'):
-            if self.uIAIns.clickByScreenTexts(['看广告视频再赚', '打开签到提醒']):
+            if self.uIAIns.click_by_screen_texts(['看广告视频再赚', '打开签到提醒']):
                 self.afterEnterAdsInterface()
             self.uIAIns.txt = ''
 

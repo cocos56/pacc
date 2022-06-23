@@ -50,16 +50,23 @@ class UIAutomator:
         :param point: 点的x和y坐标
         :param interval: 停顿时间
         """
-        x, y = point
-        print(f'正在让{self.device.SN}点击({x},{y})')
-        system(f'{self.cmd}shell input tap {x} {y}')
+        x_coordinate, y_coordinate = point
+        print(f'正在让{self.device.SN}点击({x_coordinate},{y_coordinate})')
+        system(f'{self.cmd}shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
-    def clickByScreenTexts(self, texts, txt=''):
+    def click_by_screen_texts(self, texts, txt=''):
+        """依次搜索并点击截屏上的多个文本
+
+        :param texts: 多个文本
+        :param txt: 截屏上的所有文本
+        :return: 如果查找到一条文本，则立即点击并返回True，如果都没有找到，则返回False
+        """
         self.txt = txt
         for text in texts:
             if self.clickByScreenText(text, self.txt):
                 return True
+        return False
 
     def clickByScreenText(self, text, txt=''):
         cP = self.getCPByScreenText(text, txt)

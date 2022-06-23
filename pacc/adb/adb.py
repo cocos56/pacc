@@ -60,7 +60,10 @@ class ADB:  # pylint: disable=too-many-public-methods
                 self.press_back_key(6)
 
     def get_data_from_clipboard(self):
-        """从粘贴板获取数据"""
+        """从粘贴板获取数据
+
+        :return: 粘贴板上最新的一条数据
+        """
         system(self.cmd + 'shell am startservice ca.zgrs.clipper/.ClipboardService')
         cmd = self.cmd + 'shell am broadcast -a clipper.get'
         try:
@@ -91,7 +94,7 @@ class ADB:  # pylint: disable=too-many-public-methods
     def get_model(self):  # pylint: disable=inconsistent-return-statements
         """获取手机型号信息
 
-        :return:手机型号信息
+        :return: 手机型号信息
         """
         res = popen(f'{self.cmd}shell getprop ro.product.model').read()[:-1]
         if not res:
