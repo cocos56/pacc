@@ -276,7 +276,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             return True
         return False
 
-    def reboot_per_day(self, hours=[0]):
+    def reboot_per_day(self, hours=tuple([0])):
         """每天固定点重启一次设备
 
         :param hours: 重启的时
@@ -288,20 +288,20 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def get_ipv4_address(self):
         """获取设备的IPv4地址"""
-        rd = popen(self.cmd + 'shell ifconfig wlan0').read()
-        ipv4_address = findAllWithRe(rd, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
+        res = popen(f'{self.cmd}shell ifconfig wlan0').read()
+        ipv4_address = findAllWithRe(res, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
         if len(ipv4_address) == 1:
             ipv4_address = ipv4_address[0]
         return ipv4_address
 
     def get_ipv6_address(self):
         """获取设备的IPv6地址"""
-        rd = popen(self.cmd + 'shell ifconfig wlan0').read()
-        ipv6_address = findAllWithRe(rd, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
+        res = popen(f'{self.cmd}shell ifconfig wlan0').read()
+        ipv6_address = findAllWithRe(res, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
         if 0 < len(ipv6_address) <= 2:
             ipv6_address = ipv6_address[0]
-            print('设备%s的公网IPv6地址为：%s' % (self.device, ipv6_address))
+            print(f'设备{self.device}的公网IPv6地址为：{ipv6_address}')
         else:
-            print('%s的公网IPv6地址数大于2或小于0，正在尝试重新获取')
+            print(f'设备{self.device}的公网IPv6地址数大于2或小于0，正在尝试重新获取')
             self.reboot()
             self.get_ipv6_address()
