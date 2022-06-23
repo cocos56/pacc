@@ -12,12 +12,13 @@ from ..tools import createDir, prettyXML, getXML, sleep, findAllNumsWithRe, aver
 
 
 class Node:
-    def __init__(self, resourceID='', text='', contentDesc='', bounds='', Class='', index=''):
-        self.resourceID = resourceID
+    """节点类"""
+    def __init__(self, resource_id='', text='', content_desc='', bounds='', class_='', index=''):
+        self.resource_id = resource_id
         self.text = text
-        self.contentDesc = contentDesc
+        self.content_desc = content_desc
         self.bounds = bounds
-        self.Class = Class
+        self.class_ = class_
         self.index = index
 
 
@@ -83,8 +84,9 @@ class UIAutomator:
             if self.click(text=text, xml=self.xml):
                 return True
 
-    def click(self, resourceID='', text='', contentDesc='', xml='', bounds='', Class='', offset_x=0, offset_y=0):
-        cP = self.getCP(resourceID, text, contentDesc, xml, bounds, Class)
+    def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+              offset_x=0, offset_y=0):
+        cP = self.getCP(resource_id, text, content_desc, xml, bounds, class_)
         if cP and text:
             print('检测到【%s】' % text)
         if not cP:
@@ -98,14 +100,14 @@ class UIAutomator:
         cP = self.getCPFromTPs(findAllNumsWithRe(bounds))
         self.tap(cP)
 
-    def getCP(self, resourceID='', text='', contentDesc='', xml='', bounds='', Class=''):
-        bounds = self.getBounds(resourceID, text, contentDesc, xml, bounds, Class)
+    def getCP(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
+        bounds = self.getBounds(resource_id, text, content_desc, xml, bounds, class_)
         if not bounds:
             return False
         return self.getCPFromTPs(findAllNumsWithRe(bounds))
 
-    def getBounds(self, resourceID, text='', contentDesc='', xml='', bounds='', Class=''):
-        dic = self.getDict(resourceID, text, contentDesc, xml, bounds, Class)
+    def getBounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
+        dic = self.getDict(resource_id, text, content_desc, xml, bounds, class_)
         if dic:
             return dic['@bounds']
         return False
@@ -117,8 +119,9 @@ class UIAutomator:
             if dic:
                 return dic
 
-    def getDict(self, resourceID='', text='', contentDesc='', xml='', bounds='', Class='', index=''):
-        self.node = Node(resourceID, text, contentDesc, bounds, Class, index)
+    def getDict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+                index=''):
+        self.node = Node(resource_id, text, content_desc, bounds, class_, index)
         if xml:
             self.xml = xml
         else:
@@ -128,9 +131,9 @@ class UIAutomator:
             dic.update({'@text': unescape(dic['@text'])})
         return dic
 
-    def getDicts(self, resourceID='', text='', contentDesc='', xml='', bounds=''):
+    def getDicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
         self.dicts = []
-        self.node = Node(resourceID, text, contentDesc, bounds)
+        self.node = Node(resource_id, text, content_desc, bounds)
         if xml:
             self.xml = xml
         else:
@@ -145,19 +148,19 @@ class UIAutomator:
             return False
         if self.node.index:
             if self.node.index == dic['@index']:
-                if self.node.Class and dic['@class'] == self.node.Class:
+                if self.node.class_ and dic['@class'] == self.node.class_:
                     if self.node.bounds and self.isTargetBounds(self.node.bounds, dic['@bounds']):
-                        if dic['@resource-id'] == self.node.resourceID:
+                        if dic['@resource-id'] == self.node.resource_id:
                             return True
             return False
-        elif self.node.resourceID:
-            if dic['@resource-id'] == self.node.resourceID:
+        elif self.node.resource_id:
+            if dic['@resource-id'] == self.node.resource_id:
                 if self.node.text:
                     if self.node.text in unescape(dic['@text']):
                         return True
                     return False
-                elif self.node.contentDesc:
-                    if unescape(dic['@content-desc']) == self.node.contentDesc:
+                elif self.node.content_desc:
+                    if unescape(dic['@content-desc']) == self.node.content_desc:
                         return True
                     return False
                 return True
@@ -169,12 +172,12 @@ class UIAutomator:
             if self.isTargetBounds(self.node.bounds, dic['@bounds']):
                 return True
             return False
-        elif self.node.contentDesc:
-            if self.node.contentDesc in unescape(dic['@content-desc']):
+        elif self.node.content_desc:
+            if self.node.content_desc in unescape(dic['@content-desc']):
                 return True
             return False
-        elif self.node.Class:
-            if dic['@class'] == self.node.Class:
+        elif self.node.class_:
+            if dic['@class'] == self.node.class_:
                 return True
             return False
         return False
