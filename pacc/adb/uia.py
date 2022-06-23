@@ -1,4 +1,4 @@
-"""UI自动化测试类"""
+"""UI自动化测试模块"""
 from collections import OrderedDict
 from html import unescape
 from os import system, remove
@@ -25,23 +25,34 @@ class Node:
 
 
 class UIAutomator:
-    def __init__(self, deviceSN):
-        self.device = RetrieveBaseInfo(deviceSN)
-        self.cmd = 'adb -s %s ' % self.device.IP
+    """UI自动化测试类"""
+    def __init__(self, device_sn):
+        """构造函数
+
+        :param device_sn: 设备编号
+        """
+        self.device = RetrieveBaseInfo(device_sn)
+        self.cmd = f'adb -s {self.device.IP} '
         self.node = Node()
         self.xml = ''
         self.txt = ''
         self.dicts = []
 
-    def getScreen(self):
-        pngPath = 'CurrentUIHierarchy/%s.png' % self.device.SN
-        system(self.cmd + 'exec-out screencap -p > %s' % pngPath)
-        return pngPath
+    def get_screen(self):
+        """获取屏幕（截屏）"""
+        png_path = f'CurrentUIHierarchy/{self.device.SN}.png'
+        system(f'{self.cmd}exec-out screencap -p > {png_path}')
+        return png_path
 
-    def tap(self, cP, interval=1):
-        x, y = cP
-        print('正在让%s点击(%d,%d)' % (self.device.SN, x, y))
-        system(self.cmd + 'shell input tap %d %d' % (x, y))
+    def tap(self, point, interval=1):
+        """点击
+
+        :param point: 点的x和y坐标
+        :param interval: 停顿时间
+        """
+        x, y = point
+        print(f'正在让{self.device.SN}点击({x},{y})')
+        system(f'{self.cmd}shell input tap {x} {y}')
         sleep(interval, Config.debug, Config.debug)
 
     def clickByScreenTexts(self, texts, txt=''):
@@ -63,7 +74,7 @@ class UIAutomator:
         if txt:
             self.txt = txt
         else:
-            self.txt = getTextsFromPic(self.getScreen())
+            self.txt = getTextsFromPic(self.get_screen())
         li = []
         for t in self.txt:
             if text in t[1]:
