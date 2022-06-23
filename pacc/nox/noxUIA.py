@@ -1,3 +1,5 @@
+"""夜神模拟器UI自动化测试模块"""
+# pylint: disable=R0801
 import os
 from html import unescape
 import xmltodict

@@ -1,3 +1,4 @@
+"""安装模块"""
 from setuptools import setup, find_packages
 
 setup(
