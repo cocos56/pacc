@@ -80,9 +80,8 @@ class UIAutomator:
             print(f'检测到【{text}】')
             self.tap(point)
             return True
-        else:
-            print(f'未找到【{text}】')
-            return False
+        print(f'未找到【{text}】')
+        return False
 
     def getCPByScreenText(self, text, txt=''):
         if txt:
