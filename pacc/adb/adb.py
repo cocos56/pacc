@@ -7,13 +7,13 @@ from random import randint
 from .uia import UIAutomator
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateBaseInfo
-from ..tools import findAllWithRe, sleep, EMail
+from ..tools import find_all_with_re, sleep, EMail
 
 
 def get_online_devices():
     """获取所有在线设备"""
     res = popen('adb devices').read()
-    res = findAllWithRe(res, r'(.+)\tdevice')
+    res = find_all_with_re(res, r'(.+)\tdevice')
     for i, _ in enumerate(res):
         res[i] = res[i].replace(':5555', '')
     return res
@@ -67,7 +67,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(self.cmd + 'shell am startservice ca.zgrs.clipper/.ClipboardService')
         cmd = self.cmd + 'shell am broadcast -a clipper.get'
         try:
-            data = findAllWithRe(popen(cmd).read(), '.+data="(.+)"')[0]
+            data = find_all_with_re(popen(cmd).read(), '.+data="(.+)"')[0]
         except IndexError as error:
             print(error)
             return self.get_data_from_clipboard()
@@ -292,7 +292,7 @@ class ADB:  # pylint: disable=too-many-public-methods
     def get_ipv4_address(self):
         """获取设备的IPv4地址"""
         res = popen(f'{self.cmd}shell ifconfig wlan0').read()
-        ipv4_address = findAllWithRe(res, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
+        ipv4_address = find_all_with_re(res, r'inet addr:(\d+.\d+.\d+.\d+)  Bcast:.+')
         if len(ipv4_address) == 1:
             ipv4_address = ipv4_address[0]
         return ipv4_address
@@ -300,7 +300,7 @@ class ADB:  # pylint: disable=too-many-public-methods
     def get_ipv6_address(self):
         """获取设备的IPv6地址"""
         res = popen(f'{self.cmd}shell ifconfig wlan0').read()
-        ipv6_address = findAllWithRe(res, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
+        ipv6_address = find_all_with_re(res, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
         if 0 < len(ipv6_address) <= 2:
             ipv6_address = ipv6_address[0]
             print(f'设备{self.device}的公网IPv6地址为：{ipv6_address}')

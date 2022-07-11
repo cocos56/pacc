@@ -8,7 +8,7 @@ import xmltodict
 
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from ..tools import create_dir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average, \
+from ..tools import create_dir, get_pretty_xml, get_xml, sleep, find_all_ints_with_re, average, \
     get_texts_from_pic
 
 
@@ -131,11 +131,24 @@ class UIAutomator:
                 return True
         return False
 
+    # pylint: disable=too-many-arguments
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               offset_x=0, offset_y=0):
+        """点击目标点
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param xml: 目标用户界面上元素的层次布局信息
+        :param bounds: 范围
+        :param class_: 类名
+        :param offset_x: x轴坐标的偏移量
+        :param offset_y: y轴坐标的偏移量
+        :return: 找到后立即点击并返回True，未找到返回False
+        """
         point = self.get_point(resource_id, text, content_desc, xml, bounds, class_)
         if point and text:
-            print('检测到【%s】' % text)
+            print(f'检测到【{text}】')
         if not point:
             return False
         x, y = point
@@ -144,14 +157,14 @@ class UIAutomator:
         return True
 
     def click_by_bounds(self, bounds):
-        point = self.get_point_from_two_points(findAllNumsWithRe(bounds))
+        point = self.get_point_from_two_points(find_all_ints_with_re(bounds))
         self.tap(point)
 
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
         bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_)
         if not bounds:
             return False
-        return self.get_point_from_two_points(findAllNumsWithRe(bounds))
+        return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
         dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_)
@@ -231,8 +244,8 @@ class UIAutomator:
 
     @classmethod
     def is_target_bounds(cls, targetBounds, srcBounds):
-        x1, y1, x2, y2 = findAllNumsWithRe(targetBounds)
-        x3, y3, x4, y4 = findAllNumsWithRe(srcBounds)
+        x1, y1, x2, y2 = find_all_ints_with_re(targetBounds)
+        x3, y3, x4, y4 = find_all_ints_with_re(srcBounds)
         return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
 
     def depth_first_search(self, dic):
