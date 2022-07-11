@@ -4,3 +4,4 @@ build/
 .idea/
 pacc.egg-info/
 setup.bat
+CurrentUIHierarchy

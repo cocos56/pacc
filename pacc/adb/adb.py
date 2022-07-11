@@ -6,7 +6,7 @@ from random import randint
 
 from .uia import UIAutomator
 from ..config import Config
-from ..mysql import RetrieveBaseInfo, UpdateBaseInfo
+from ..mysql import RetrieveMobileInfo, UpdateBaseInfo
 from ..tools import findAllWithRe, sleep, EMail
 
 
@@ -30,7 +30,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param offline_cnt: 离线次数计数器
         """
         system('adb reconnect offline')
-        self.device = RetrieveBaseInfo(device_sn)
+        self.device = RetrieveMobileInfo(device_sn)
         if self.device.ID not in get_online_devices():
             if not offline_cnt % 20:
                 EMail(self.device.SN).sendOfflineError()
@@ -46,14 +46,14 @@ class ADB:  # pylint: disable=too-many-public-methods
             self.__init__(device_sn)
         if not self.get_ipv4_address() == self.device.IP:
             UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
-            self.device = RetrieveBaseInfo(device_sn)
+            self.device = RetrieveMobileInfo(device_sn)
         if not Config.debug:
             self.reconnect()
         self.cmd = f'adb -s {self.device.IP} '
         self.uia = UIAutomator(device_sn)
         if not self.get_model() == self.device.Model:
             UpdateBaseInfo(device_sn).updateModel(self.get_model())
-            self.device = RetrieveBaseInfo(device_sn)
+            self.device = RetrieveMobileInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
             if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
@@ -120,7 +120,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param keycode: 按键代码
         :param sleep_time: 休息时间
         """
-        print(f'正在让{self.device.SN}按{keycode}')
+        print(f'正在让{self.device.sn}按{keycode}')
         system(f'{self.cmd}shell input keyevent {keycode}')
         sleep(sleep_time, False, False)
 
@@ -187,7 +187,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """保持在线"""
         if self.device.IP not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.SN)
+            self.__init__(self.device.sn)
 
     def taps(self, instructions):
         """点击

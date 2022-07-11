@@ -1,8 +1,9 @@
 from datetime import datetime
 from random import randint
 from time import time
-from ..config import Config
+
 from ..adb import ADB, UIAutomator
+from ..config import Config
 from ..multi import threadLock
 from ..tools import sleep
 

@@ -3,19 +3,47 @@ from .mysql import query
 
 
 class Retrieve:
-    """MySQL数据库包的查模块的查类"""
-    def __init__(self, device_sn):
-        """构造函数：初始化安卓调试桥类的对象
+    """查类"""
 
-        :param device_sn: 设备序列号
+    def __init__(self, sn):
+        """构造函数：初始化查类的对象
+
+        :param sn: 设备序列号
         """
-        self.device_sn = device_sn
+        self.sn = sn
 
     def query(self, table, field):
-        res = query('select `%s` from `%s` where `SN` = %s' % (field, table, self.device_sn))
+        """查询函数：查询数据
+
+        :param table: 表名
+        :param field: 字段名
+        :return: 查询到的结果（单条）
+        """
+        res = query('select `%s` from `%s` where `SN` = %s' % (field, table, self.sn))
         if len(res) == 1:
             res = res[0]
         return res
+
+
+class RetrieveMobileInfo(Retrieve):
+    """查询手机信息类"""
+    def __init__(self, device_sn):
+        """构造函数：初始化查类的对象
+
+        :param device_sn: 设备序列号
+        """
+        super(RetrieveMobileInfo, self).__init__(device_sn)
+        self.IP = self.query('IP')
+        self.ID = self.query('ID')
+        self.Model = self.query('Model')
+
+    def query(self, field):
+        """查询函数：查询数据
+
+        :param field: 字段名
+        :return: 查询到的结果（单条）
+        """
+        return super(RetrieveMobileInfo, self).query('mobile_info', field)
 
 
 class RetrieveKSJSB(Retrieve):
@@ -26,14 +54,3 @@ class RetrieveKSJSB(Retrieve):
 
     def query(self, field):
         return super(RetrieveKSJSB, self).query('KSJSB', field)
-
-
-class RetrieveBaseInfo(Retrieve):
-    def __init__(self, SN):
-        super(RetrieveBaseInfo, self).__init__(SN)
-        self.IP = self.query('IP')
-        self.ID = self.query('ID')
-        self.Model = self.query('Model')
-
-    def query(self, field):
-        return super(RetrieveBaseInfo, self).query('mobile_info', field)
