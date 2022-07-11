@@ -33,8 +33,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.device = RetrieveMobileInfo(device_sn)
         if self.device.ID not in get_online_devices():
             if not offline_cnt % 20:
-                EMail(self.device.SN).sendOfflineError()
-            print(self.device.SN, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
+                EMail(self.device.sn).sendOfflineError()
+            print(self.device.sn, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn, offline_cnt+1)
@@ -100,7 +100,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if not res:
             self.reconnect()
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.SN)
+            self.__init__(self.device.sn)
             return
         while res[-1] == '\n':
             res = res[:-1]

@@ -4,6 +4,14 @@ from xml.parsers.expat import ExpatError
 from .project import Project
 from ..tools import sleep, showDatetime
 
+ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
+
+
+class Activity:
+    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
+    MainActivity = f'{ROOT}MainActivity'
+    LoginActivity = f'{ROOT}LoginActivity'  # 登录
+
 
 class ResourceID:
     """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
@@ -13,12 +21,6 @@ class ResourceID:
     mec_connect_state = 'com.dd.rclient:id/mec_connect_state'  # 正在连接服务器...
     btn_exit_app = 'com.dd.rclient:id/btn_exit_app'  # 退出程序
     icon_title = 'com.miui.home:id/icon_title'  # 桌面图标
-
-
-class Activity:
-    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
-    MainActivity = 'com.dd.rclient/com.dd.rclient.ui.activity.MainActivity'
-    LoginActivity = 'com.dd.rclient/com.dd.rclient.ui.activity.LoginActivity'  # 登录
 
 
 class SD(Project):
