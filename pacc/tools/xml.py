@@ -22,6 +22,6 @@ def get_pretty_xml(file_path):
     xml = minidom.parseString(xml)
     xml = xml.toprettyxml()
     xml = unescape(xml)
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.writelines(xml)
+    with open(file_path, 'w', encoding='utf-8') as file_stream:
+        file_stream.writelines(xml)
     return xml
