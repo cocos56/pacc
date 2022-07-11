@@ -26,48 +26,54 @@ class ResourceID:
 
 
 class SD(Project):
+    """刷单类"""
+
     instances = []
 
-    def __init__(self, SN):
-        super(SD, self).__init__(SN)
+    def __init__(self, device_sn):
+        """构造函数
+
+        :param device_sn: 设备编号
+        """
+        super(SD, self).__init__(device_sn)
 
     def check(self):
         self.adbIns.keep_online()
         try:
             self.uIAIns.click(ResourceID.button2)
             dic = self.uIAIns.getDict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
-            currentFocus = self.adbIns.get_current_focus()
+            current_focus = self.adbIns.get_current_focus()
             if dic and dic['@text'] == '正在连接服务器...':
                 self.reopenApp()
-            elif not dic and Activity.MainActivity in currentFocus:
+            elif not dic and Activity.MainActivity in current_focus:
                 self.reopenApp()
-            elif Activity.LoginActivity in currentFocus:
+            elif Activity.LoginActivity in current_focus:
                 self.adbIns.reboot()
-                self.openApp()
+                self.open_app()
         except (FileNotFoundError, ExpatError) as e:
             print(e)
             sleep(60)
             self.check()
 
-    def reopenApp(self):
-        self.exitApp()
+    def reopen_app(self):
+        self.exit_app()
         self.openApp()
 
-    def openApp(self):
+    def open_app(self):
         self.freeMemory()
         self.uIAIns.click(ResourceID.icon_title, '滴滴助手')
         sleep(12)
         self.uIAIns.click(ResourceID.auto_wait_btn)
         self.uIAIns.click(ResourceID.button1)
 
-    def exitApp(self):
+    def exit_app(self):
         self.uIAIns.click(ResourceID.btn_exit_app, xml=self.uIAIns.xml)
         self.uIAIns.click(ResourceID.button2)
 
     @classmethod
-    def mainloop(cls, devicesSN):
-        for deviceSN in devicesSN:
-            cls.instances.append(cls(deviceSN))
+    def mainloop(cls, devices_sn):
+        for device_sn in devices_sn:
+            cls.instances.append(cls(device_sn))
         while True:
             for i in cls.instances:
                 i.check()
