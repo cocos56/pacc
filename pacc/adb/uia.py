@@ -113,10 +113,10 @@ class UIAutomator:
         :param values_list: 两点的坐标值构成的列表，应为：[x1, y1, x2, y2]
         :return: 中心点的坐标(x, y)
         """
-        x1, y1, x2, y2 = values_list
-        x = average(x1, x2)
-        y = average(y1, y2)
-        return x, y
+        x1_value, y1_value, x2_value, y2_value = values_list
+        x_coordinate = average(x1_value, x2_value)
+        y_coordinate = average(y1_value, y2_value)
+        return x_coordinate, y_coordinate
 
     def click_by_xml_texts(self, texts, xml=''):
         self.xml = xml
