@@ -8,13 +8,14 @@ import xmltodict
 
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from ..tools import create_dir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average,\
+from ..tools import create_dir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average, \
     get_texts_from_pic
 
 
 # pylint: disable=too-few-public-methods
 class Node:
     """节点类"""
+
     # pylint: disable=too-many-arguments
     def __init__(self, resource_id='', text='', content_desc='', bounds='', class_='', index=''):
         self.resource_id = resource_id
@@ -27,6 +28,7 @@ class Node:
 
 class UIAutomator:
     """UI自动化测试类"""
+
     def __init__(self, device_sn):
         """构造函数
 
@@ -95,28 +97,28 @@ class UIAutomator:
             self.txt = txt
         else:
             self.txt = get_texts_from_pic(self.get_screen())
-        li = []
-        for t in self.txt:
-            if text in t[1]:
-                li = t[0]
+        points_list = []
+        for temp_txt in self.txt:
+            if text in temp_txt[1]:
+                points_list = temp_txt[0]
                 break
-        if not len(li) == 4:
+        if not len(points_list) == 4:
             return False
-        return self.get_point_from_two_points(li[0] + li[2])
+        return self.get_point_from_two_points(points_list[0] + points_list[2])
 
     @classmethod
-    def get_point_from_two_points(cls, li):
+    def get_point_from_two_points(cls, values_list):
         """从矩形对角的两点获取中心点的坐标
 
-        :param li: 两点的坐标值构成的列表，应为：[x1, y1, x2, y2]
+        :param values_list: 两点的坐标值构成的列表，应为：[x1, y1, x2, y2]
         :return: 中心点的坐标(x, y)
         """
-        x1, y1, x2, y2 = li
+        x1, y1, x2, y2 = values_list
         x = average(x1, x2)
         y = average(y1, y2)
         return x, y
 
-    def clickByXMLTexts(self, texts, xml=''):
+    def click_by_xml_texts(self, texts, xml=''):
         self.xml = xml
         for text in texts:
             if self.click(text=text, xml=self.xml):
@@ -130,13 +132,13 @@ class UIAutomator:
         if not point:
             return False
         x, y = point
-        point = x+offset_x, y+offset_y
+        point = x + offset_x, y + offset_y
         self.tap(point)
         return True
 
-    def clickByBounds(self, bounds):
-        cP = self.getCPFromTPs(findAllNumsWithRe(bounds))
-        self.tap(cP)
+    def click_by_bounds(self, bounds):
+        point = self.get_point_from_two_points(findAllNumsWithRe(bounds))
+        self.tap(point)
 
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
         bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_)
@@ -150,7 +152,7 @@ class UIAutomator:
             return dic['@bounds']
         return False
 
-    def getDictByXMLTexts(self, texts, xml=''):
+    def get_dict_by_xml_texts(self, texts, xml=''):
         self.xml = xml
         for text in texts:
             dic = self.get_dict(text=text, xml=self.xml)
@@ -158,28 +160,28 @@ class UIAutomator:
                 return dic
 
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                index=''):
+                 index=''):
         self.node = Node(resource_id, text, content_desc, bounds, class_, index)
         if xml:
             self.xml = xml
         else:
             self.xml = self.get_current_ui_hierarchy()
-        dic = self.depthFirstSearch(xmltodict.parse(self.xml))
+        dic = self.depth_first_search(xmltodict.parse(self.xml))
         if dic:
             dic.update({'@text': unescape(dic['@text'])})
         return dic
 
-    def getDicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
+    def get_dicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
         self.dicts = []
         self.node = Node(resource_id, text, content_desc, bounds)
         if xml:
             self.xml = xml
         else:
             self.xml = self.get_current_ui_hierarchy()
-        self.depthFirstSearchDicts(xmltodict.parse(self.xml))
+        self.depth_first_search_dicts(xmltodict.parse(self.xml))
         return self.dicts
 
-    def isTargetNode(self, dic):
+    def is_target_node(self, dic):
         if type(dic) in (str, list):
             return False
         if '@resource-id' not in dic.keys():
@@ -187,7 +189,7 @@ class UIAutomator:
         if self.node.index:
             if self.node.index == dic['@index']:
                 if self.node.class_ and dic['@class'] == self.node.class_:
-                    if self.node.bounds and self.isTargetBounds(self.node.bounds, dic['@bounds']):
+                    if self.node.bounds and self.is_target_bounds(self.node.bounds, dic['@bounds']):
                         if dic['@resource-id'] == self.node.resource_id:
                             return True
             return False
@@ -207,7 +209,7 @@ class UIAutomator:
                 return True
             return False
         elif self.node.bounds:
-            if self.isTargetBounds(self.node.bounds, dic['@bounds']):
+            if self.is_target_bounds(self.node.bounds, dic['@bounds']):
                 return True
             return False
         elif self.node.content_desc:
@@ -221,40 +223,40 @@ class UIAutomator:
         return False
 
     @classmethod
-    def isTargetBounds(cls, targetBounds, srcBounds):
+    def is_target_bounds(cls, targetBounds, srcBounds):
         x1, y1, x2, y2 = findAllNumsWithRe(targetBounds)
         x3, y3, x4, y4 = findAllNumsWithRe(srcBounds)
         return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
 
-    def depthFirstSearch(self, dic):
+    def depth_first_search(self, dic):
         if type(dic) == dict:
-            if self.isTargetNode(dic):
+            if self.is_target_node(dic):
                 return dic
             for i in dic.keys():
-                if self.isTargetNode(dic[i]):
+                if self.is_target_node(dic[i]):
                     return dic[i]
-                res = self.depthFirstSearch(dic[i])
+                res = self.depth_first_search(dic[i])
                 if res:
                     return res
         elif type(dic) == list:
             for i in dic:
-                res = self.depthFirstSearch(i)
+                res = self.depth_first_search(i)
                 if res:
                     return res
 
-    def depthFirstSearchDicts(self, dic):
+    def depth_first_search_dicts(self, dic):
         if type(dic) == OrderedDict:
-            if self.isTargetNode(dic):
+            if self.is_target_node(dic):
                 self.dicts.append(dic)
             for i in dic.keys():
-                if self.isTargetNode(dic[i]):
+                if self.is_target_node(dic[i]):
                     self.dicts.append(dic[i])
-                res = self.depthFirstSearchDicts(dic[i])
+                res = self.depth_first_search_dicts(dic[i])
                 if res:
                     return res
         elif type(dic) == list:
             for i in dic:
-                res = self.depthFirstSearchDicts(i)
+                res = self.depth_first_search_dicts(i)
                 if res:
                     self.dicts.append(res)
 
