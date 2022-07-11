@@ -35,7 +35,7 @@ class SD(Project):
 
         :param device_sn: 设备编号
         """
-        super(SD, self).__init__(device_sn)
+        super().__init__(device_sn)
 
     def check(self):
         self.adbIns.keep_online()
