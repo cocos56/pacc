@@ -1,4 +1,4 @@
-from .ksjsb import KSJSB
+from .KSJSB.ksjsb import KSJSB
 from .hzdyx import HZDYX
 from .dyfd import DYFD
 from .iq import IQ
