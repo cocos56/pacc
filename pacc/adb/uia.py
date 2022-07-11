@@ -119,10 +119,17 @@ class UIAutomator:
         return x_coordinate, y_coordinate
 
     def click_by_xml_texts(self, texts, xml=''):
+        """通过用户界面上元素的层次布局信息里的文字来点击目标点
+
+        :param texts: 多个目标文本构成的列表
+        :param xml: 目标用户界面上元素的层次布局信息
+        :return: 找到一个就立即点击并返回True，都未找到返回False
+        """
         self.xml = xml
         for text in texts:
             if self.click(text=text, xml=self.xml):
                 return True
+        return False
 
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               offset_x=0, offset_y=0):
