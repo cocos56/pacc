@@ -76,7 +76,7 @@ class UIAutomator:
         :param txt: 截屏上的所有文本
         :return: 如果查找到文本，则立即点击并返回True，如果没有找到，则返回False
         """
-        point = self.getCPByScreenText(text, txt)
+        point = self.get_point_by_screen_text(text, txt)
         if point:
             print(f'检测到【{text}】')
             self.tap(point)
@@ -84,7 +84,13 @@ class UIAutomator:
         print(f'未找到【{text}】')
         return False
 
-    def getCPByScreenText(self, text, txt=''):
+    def get_point_by_screen_text(self, text, txt=''):
+        """通过屏幕上的文字来获取坐标点
+
+        :param text: 待点击的文本
+        :param txt: 截屏上的所有文本及其坐标信息
+        :return: 如果查找到该文本，则返回该文本的中心点，如果没有找到，则返回False
+        """
         if txt:
             self.txt = txt
         else:
@@ -95,11 +101,16 @@ class UIAutomator:
                 li = t[0]
                 break
         if not len(li) == 4:
-            return
-        return self.getCPFromTPs(li[0] + li[2])
+            return False
+        return self.get_point_from_two_points(li[0] + li[2])
 
     @classmethod
-    def getCPFromTPs(cls, li):
+    def get_point_from_two_points(cls, li):
+        """从矩形对角的两点获取中心点的坐标
+
+        :param li: 两点的坐标值构成的列表，应为：[x1, y1, x2, y2]
+        :return: 中心点的坐标(x, y)
+        """
         x1, y1, x2, y2 = li
         x = average(x1, x2)
         y = average(y1, y2)
