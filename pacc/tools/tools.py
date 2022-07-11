@@ -1,3 +1,4 @@
+"""工具模块"""
 import os
 
 import easyocr
