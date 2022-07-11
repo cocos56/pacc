@@ -59,7 +59,7 @@ class SD(Project):
     def reopen_app(self):
         """重新打开APP"""
         self.exit_app()
-        self.openApp()
+        self.open_app()
 
     def open_app(self):
         """打开APP"""
