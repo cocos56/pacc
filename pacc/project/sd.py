@@ -38,6 +38,7 @@ class SD(Project):
         super().__init__(device_sn)
 
     def check(self):
+        """检查"""
         self.adbIns.keep_online()
         try:
             self.uIAIns.click(ResourceID.button2)
@@ -50,16 +51,18 @@ class SD(Project):
             elif Activity.LoginActivity in current_focus:
                 self.adbIns.reboot()
                 self.open_app()
-        except (FileNotFoundError, ExpatError) as e:
-            print(e)
+        except (FileNotFoundError, ExpatError) as err:
+            print(err)
             sleep(60)
             self.check()
 
     def reopen_app(self):
+        """重新打开APP"""
         self.exit_app()
         self.openApp()
 
     def open_app(self):
+        """打开APP"""
         self.freeMemory()
         self.uIAIns.click(ResourceID.icon_title, '滴滴助手')
         sleep(12)
@@ -67,11 +70,16 @@ class SD(Project):
         self.uIAIns.click(ResourceID.button1)
 
     def exit_app(self):
+        """退出APP"""
         self.uIAIns.click(ResourceID.btn_exit_app, xml=self.uIAIns.xml)
         self.uIAIns.click(ResourceID.button2)
 
     @classmethod
     def mainloop(cls, devices_sn):
+        """主循环函数
+
+        :param devices_sn: 多个设备的编号
+        """
         for device_sn in devices_sn:
             cls.instances.append(cls(device_sn))
         while True:
