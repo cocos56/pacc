@@ -8,7 +8,7 @@ import xmltodict
 
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from ..tools import createDir, prettyXML, getXML, sleep, findAllNumsWithRe, average, getTextsFromPic
+from ..tools import createDir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average, getTextsFromPic
 
 
 # pylint: disable=too-few-public-methods
@@ -151,7 +151,7 @@ class UIAutomator:
         if xml:
             self.xml = xml
         else:
-            self.xml = self.getCurrentUIHierarchy()
+            self.xml = self.get_current_ui_hierarchy()
         dic = self.depthFirstSearch(xmltodict.parse(self.xml))
         if dic:
             dic.update({'@text': unescape(dic['@text'])})
@@ -163,7 +163,7 @@ class UIAutomator:
         if xml:
             self.xml = xml
         else:
-            self.xml = self.getCurrentUIHierarchy()
+            self.xml = self.get_current_ui_hierarchy()
         self.depthFirstSearchDicts(xmltodict.parse(self.xml))
         return self.dicts
 
@@ -246,19 +246,20 @@ class UIAutomator:
                 if res:
                     self.dicts.append(res)
 
-    def getCurrentUIHierarchy(self, pretty=False):
-        system(self.cmd + 'shell rm /sdcard/window_dump.xml')
-        cmd = self.cmd + 'shell uiautomator dump /sdcard/window_dump.xml'
+    def get_current_ui_hierarchy(self):
+        """获取当前的用户界面上的元素的层次布局信息"""
+        system(f'{self.cmd}shell rm /sdcard/window_dump.xml')
+        cmd = f'{self.cmd}shell uiautomator dump /sdcard/window_dump.xml'
         if Config.debug:
             print(cmd)
         system(cmd)
-        dirName = 'CurrentUIHierarchy'
-        createDir(dirName)
-        filePath = '%s/%s.xml' % (dirName, self.device.sn)
-        print(filePath)
-        if exists(filePath):
-            remove(filePath)
-        system('%spull /sdcard/window_dump.xml %s' % (self.cmd, filePath))
-        if pretty:
-            return prettyXML(filePath)
-        return getXML(filePath)
+        dir_name = 'CurrentUIHierarchy'
+        createDir(dir_name)
+        file_path = f'{dir_name}/{self.device.sn}.xml'
+        print(file_path)
+        if exists(file_path):
+            remove(file_path)
+        system(f'{self.cmd}pull /sdcard/window_dump.xml {file_path}')
+        if Config.debug:
+            return get_pretty_xml(file_path)
+        return get_xml(file_path)

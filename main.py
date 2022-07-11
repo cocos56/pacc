@@ -6,3 +6,4 @@ Config.setDebug(True)
 device_sn = '001001001'
 adb_ins = ADB(device_sn)
 uia_ins = UIAutomator(device_sn)
+uia_ins.get_current_ui_hierarchy()

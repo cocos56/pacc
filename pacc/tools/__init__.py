@@ -1,26 +1,26 @@
+from .captcha import SliderCaptcha
+from .dir import createDir
+from .dt import showDatetime
+from .email import EMail
+from .file import File
 from .regular import findAllWithRe, findAllNumsWithRe
 from .sleep import sleep
-from .email import EMail
-from .dir import createDir
-from .xml import prettyXML, getXML
-from .dt import showDatetime
-from .captcha import SliderCaptcha
-from .file import File
-from .tools import getTextsFromPic, system, getURLsFromString, average, system
+from .tools import average, getURLsFromString, getTextsFromPic, system
+from .xml import get_pretty_xml, get_xml
 
 __all__ = [
+    'SliderCaptcha',
+    'createDir',
+    'showDatetime',
+    'EMail',
+    'File',
     "findAllWithRe",
     'findAllNumsWithRe',
     "sleep",
-    'EMail',
-    'createDir',
-    'prettyXML',
-    'getXML',
     'average',
-    'getURLsFromString',
     'getTextsFromPic',
-    'showDatetime',
-    'SliderCaptcha',
-    'File',
-    'system'
+    'getURLsFromString',
+    'system',
+    'get_pretty_xml',
+    'get_xml',
 ]
