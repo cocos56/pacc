@@ -140,7 +140,7 @@ class UIAutomator:
         :param text: 文本
         :param content_desc: 描述
         :param xml: 目标用户界面上元素的层次布局信息
-        :param bounds: 范围
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param offset_x: x轴坐标的偏移量
         :param offset_y: y轴坐标的偏移量
@@ -151,12 +151,16 @@ class UIAutomator:
             print(f'检测到【{text}】')
         if not point:
             return False
-        x, y = point
-        point = x + offset_x, y + offset_y
+        x_coordinate, y_coordinate = point
+        point = x_coordinate + offset_x, y_coordinate + offset_y
         self.tap(point)
         return True
 
     def click_by_bounds(self, bounds):
+        """通过边界值来点击
+
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        """
         point = self.get_point_from_two_points(find_all_ints_with_re(bounds))
         self.tap(point)
 
