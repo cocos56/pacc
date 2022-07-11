@@ -1,3 +1,4 @@
+"""MySQL数据库包的改模块"""
 from .mysql import query, commit
 
 

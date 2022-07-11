@@ -1,12 +1,18 @@
+"""MySQL数据库包的查模块"""
 from .mysql import query
 
 
 class Retrieve:
-    def __init__(self, SN):
-        self.SN = SN
+    """MySQL数据库包的查模块的查类"""
+    def __init__(self, device_sn):
+        """构造函数：初始化安卓调试桥类的对象
+
+        :param device_sn: 设备序列号
+        """
+        self.device_sn = device_sn
 
     def query(self, table, field):
-        res = query('select `%s` from `%s` where `SN` = %s' % (field, table, self.SN))
+        res = query('select `%s` from `%s` where `SN` = %s' % (field, table, self.device_sn))
         if len(res) == 1:
             res = res[0]
         return res
@@ -30,4 +36,4 @@ class RetrieveBaseInfo(Retrieve):
         self.Model = self.query('Model')
 
     def query(self, field):
-        return super(RetrieveBaseInfo, self).query('BaseInfo', field)
+        return super(RetrieveBaseInfo, self).query('mobile_info', field)

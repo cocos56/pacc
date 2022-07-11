@@ -1,5 +1,8 @@
+"""MySQL数据库模块"""
+from os import getenv
+
 from pymysql import connect, OperationalError
-import os
+
 from ..multi import threadLock
 from ..tools import sleep
 
@@ -8,8 +11,8 @@ class Config:
     conn = None
     cs = None
 
-    def __init__(self, host='10.1.1.1', port=3306, database='acdb', user='root',
-                 password=os.getenv('MySQLPW'), charset='utf8'):
+    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='m', user='root',
+                 password=getenv('MySQL_PW'), charset='utf8'):
         Config.conn = connect(host=host, port=port, database=database,
                               user=user, password=password, charset=charset)
         Config.cs = Config.conn.cursor()
