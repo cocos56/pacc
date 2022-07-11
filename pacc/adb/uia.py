@@ -9,7 +9,7 @@ import xmltodict
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
 from ..tools import createDir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average,\
-    getTextsFromPic
+    get_texts_from_pic
 
 
 # pylint: disable=too-few-public-methods
@@ -94,7 +94,7 @@ class UIAutomator:
         if txt:
             self.txt = txt
         else:
-            self.txt = getTextsFromPic(self.get_screen())
+            self.txt = get_texts_from_pic(self.get_screen())
         li = []
         for t in self.txt:
             if text in t[1]:
