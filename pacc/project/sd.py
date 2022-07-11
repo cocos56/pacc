@@ -7,12 +7,14 @@ from ..tools import sleep, showDatetime
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 
 
+# pylint: disable=too-few-public-methods
 class Activity:
     """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
     MainActivity = f'{ROOT}MainActivity'
     LoginActivity = f'{ROOT}LoginActivity'  # 登录
 
 
+# pylint: disable=too-few-public-methods
 class ResourceID:
     """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
     button2 = 'android:id/button2'  # 确定（联机业务异常，请重新联机）、立即连接（连接异常,正在重新连接......）
