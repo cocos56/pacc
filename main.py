@@ -3,7 +3,7 @@ from pacc.adb import ADB, UIAutomator
 from pacc.config import Config
 
 Config.setDebug(True)
-device_sn = '001001001'
-adb_ins = ADB(device_sn)
-uia_ins = UIAutomator(device_sn)
+DEVICE_SN = '001001001'
+adb_ins = ADB(DEVICE_SN)
+uia_ins = UIAutomator(DEVICE_SN)
 uia_ins.get_current_ui_hierarchy()

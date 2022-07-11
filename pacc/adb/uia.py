@@ -8,7 +8,8 @@ import xmltodict
 
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from ..tools import createDir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average, getTextsFromPic
+from ..tools import createDir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average,\
+    getTextsFromPic
 
 
 # pylint: disable=too-few-public-methods
