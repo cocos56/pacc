@@ -40,7 +40,7 @@ class UIAutomator:
 
     def get_screen(self):
         """获取屏幕（截屏）"""
-        png_path = f'CurrentUIHierarchy/{self.device.SN}.png'
+        png_path = f'CurrentUIHierarchy/{self.device.sn}.png'
         system(f'{self.cmd}exec-out screencap -p > {png_path}')
         return png_path
 
@@ -51,7 +51,7 @@ class UIAutomator:
         :param interval: 停顿时间
         """
         x_coordinate, y_coordinate = point
-        print(f'正在让{self.device.SN}点击({x_coordinate},{y_coordinate})')
+        print(f'正在让{self.device.sn}点击({x_coordinate},{y_coordinate})')
         system(f'{self.cmd}shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
