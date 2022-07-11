@@ -1,5 +1,5 @@
 from .captcha import SliderCaptcha
-from .dir import createDir
+from .dir import create_dir
 from .dt import showDatetime
 from .email import EMail
 from .file import File
@@ -10,7 +10,7 @@ from .xml import get_pretty_xml, get_xml
 
 __all__ = [
     'SliderCaptcha',
-    'createDir',
+    'create_dir',
     'showDatetime',
     'EMail',
     'File',

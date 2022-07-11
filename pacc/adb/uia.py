@@ -8,7 +8,7 @@ import xmltodict
 
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from ..tools import createDir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average,\
+from ..tools import create_dir, get_pretty_xml, get_xml, sleep, findAllNumsWithRe, average,\
     get_texts_from_pic
 
 
@@ -124,28 +124,28 @@ class UIAutomator:
 
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               offset_x=0, offset_y=0):
-        cP = self.getCP(resource_id, text, content_desc, xml, bounds, class_)
-        if cP and text:
+        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_)
+        if point and text:
             print('检测到【%s】' % text)
-        if not cP:
+        if not point:
             return False
-        x, y = cP
-        cP = x+offset_x, y+offset_y
-        self.tap(cP)
+        x, y = point
+        point = x+offset_x, y+offset_y
+        self.tap(point)
         return True
 
     def clickByBounds(self, bounds):
         cP = self.getCPFromTPs(findAllNumsWithRe(bounds))
         self.tap(cP)
 
-    def getCP(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
-        bounds = self.getBounds(resource_id, text, content_desc, xml, bounds, class_)
+    def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
+        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_)
         if not bounds:
             return False
-        return self.getCPFromTPs(findAllNumsWithRe(bounds))
+        return self.get_point_from_two_points(findAllNumsWithRe(bounds))
 
-    def getBounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
-        dic = self.getDict(resource_id, text, content_desc, xml, bounds, class_)
+    def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
+        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_)
         if dic:
             return dic['@bounds']
         return False
@@ -153,11 +153,11 @@ class UIAutomator:
     def getDictByXMLTexts(self, texts, xml=''):
         self.xml = xml
         for text in texts:
-            dic = self.getDict(text=text, xml=self.xml)
+            dic = self.get_dict(text=text, xml=self.xml)
             if dic:
                 return dic
 
-    def getDict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+    def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                 index=''):
         self.node = Node(resource_id, text, content_desc, bounds, class_, index)
         if xml:
@@ -227,7 +227,7 @@ class UIAutomator:
         return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
 
     def depthFirstSearch(self, dic):
-        if type(dic) == OrderedDict:
+        if type(dic) == dict:
             if self.isTargetNode(dic):
                 return dic
             for i in dic.keys():
@@ -266,7 +266,7 @@ class UIAutomator:
             print(cmd)
         system(cmd)
         dir_name = 'CurrentUIHierarchy'
-        createDir(dir_name)
+        create_dir(dir_name)
         file_path = f'{dir_name}/{self.device.sn}.xml'
         print(file_path)
         if exists(file_path):

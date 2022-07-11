@@ -42,12 +42,12 @@ class SD(Project):
         self.adbIns.keep_online()
         try:
             self.uIAIns.click(ResourceID.button2)
-            dic = self.uIAIns.getDict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
+            dic = self.uIAIns.get_dict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
             current_focus = self.adbIns.get_current_focus()
             if dic and dic['@text'] == '正在连接服务器...':
-                self.reopenApp()
+                self.reopen_app()
             elif not dic and Activity.MainActivity in current_focus:
-                self.reopenApp()
+                self.reopen_app()
             elif Activity.LoginActivity in current_focus:
                 self.adbIns.reboot()
                 self.open_app()
@@ -63,7 +63,7 @@ class SD(Project):
 
     def open_app(self):
         """打开APP"""
-        self.freeMemory()
+        self.free_memory()
         self.uIAIns.click(ResourceID.icon_title, '滴滴助手')
         sleep(12)
         self.uIAIns.click(ResourceID.auto_wait_btn)
