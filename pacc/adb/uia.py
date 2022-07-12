@@ -197,14 +197,32 @@ class UIAutomator:
         return False
 
     def get_dict_by_xml_texts(self, texts, xml=''):
+        """从层次布局信息中获取texts中某个text的字典信息
+
+        :param texts: 由多个待搜索的文本构成的列表
+        :param xml: 目标用户界面上元素的层次布局信息
+        :return: 遍历文本列表，若找到一个符合条件的文本立即返回其所在的字典信息，遍历后均未找到返回False
+        """
         self.xml = xml
         for text in texts:
             dic = self.get_dict(text=text, xml=self.xml)
             if dic:
                 return dic
+        return False
 
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                  index=''):
+        """获取目标对象的字典信息
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param xml: 目标用户界面上元素的层次布局信息
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        :param class_: 类名
+        :param index: 索引值
+        :return: 返回通过深度优先方式获取到的字典信息（若找不到目标则返回的字典信息的值为False）
+        """
         self.node = Node(resource_id, text, content_desc, bounds, class_, index)
         if xml:
             self.xml = xml
@@ -216,6 +234,15 @@ class UIAutomator:
         return dic
 
     def get_dicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
+        """获取符合目标对象特征的多个字典信息
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param xml: 目标用户界面上元素的层次布局信息
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        :return: 返回通过深度优先方式获取到的所有字典信息（若找不到目标则返回的字典信息列表的值为[]）
+        """
         self.dicts = []
         self.node = Node(resource_id, text, content_desc, bounds)
         if xml:
@@ -226,6 +253,11 @@ class UIAutomator:
         return self.dicts
 
     def is_target_node(self, dic):
+        """通过字典信息判断是否是目标点
+
+        :param dic: 待比对点的字典信息
+        :return: 比对成功返回True，否则返回False
+        """
         if type(dic) in (str, list):
             return False
         if '@resource-id' not in dic.keys():
@@ -267,12 +299,23 @@ class UIAutomator:
         return False
 
     @classmethod
-    def is_target_bounds(cls, targetBounds, srcBounds):
-        x1, y1, x2, y2 = find_all_ints_with_re(targetBounds)
-        x3, y3, x4, y4 = find_all_ints_with_re(srcBounds)
+    def is_target_bounds(cls, target_bounds, src_bounds):
+        """判断源边界是否是目标边界
+
+        :param target_bounds: 源边界
+        :param src_bounds: 目标边界
+        :return: 比对成功返回True，否则返回False
+        """
+        x1, y1, x2, y2 = find_all_ints_with_re(target_bounds)
+        x3, y3, x4, y4 = find_all_ints_with_re(src_bounds)
         return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
 
     def depth_first_search(self, dic):
+        """通过深度优先来搜索目标对象
+
+        :param dic: 待搜索对象的字典信息
+        :return: 搜索到返回目标对象，否则返回False
+        """
         if type(dic) == dict:
             if self.is_target_node(dic):
                 return dic
@@ -287,8 +330,14 @@ class UIAutomator:
                 res = self.depth_first_search(i)
                 if res:
                     return res
+        return False
 
     def depth_first_search_dicts(self, dic):
+        """通过深度优先来搜索目标字典所对应的对象
+
+        :param dic: 待搜索对象的字典信息
+        :return: 若搜索到，返回第一个匹配到的对象，否则返回False
+        """
         if type(dic) == OrderedDict:
             if self.is_target_node(dic):
                 self.dicts.append(dic)
