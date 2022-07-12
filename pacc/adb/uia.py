@@ -252,7 +252,7 @@ class UIAutomator:
         self.depth_first_search_dicts(xmltodict.parse(self.xml))
         return self.dicts
 
-    # pylint: disable=too-many-return-statements, too-many-branches
+    # pylint: disable=too-many-return-statements,too-many-branches
     def is_target_node(self, dic):
         """通过字典信息判断是否是目标点
 
