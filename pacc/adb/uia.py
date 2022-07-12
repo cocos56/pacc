@@ -308,9 +308,10 @@ class UIAutomator:
         :return: 比对成功返回True，否则返回False
         """
         # pylint: disable=unbalanced-tuple-unpacking
-        x1, y1, x2, y2 = find_all_ints_with_re(target_bounds)
-        x3, y3, x4, y4 = find_all_ints_with_re(src_bounds)
-        return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
+        x1_value, y1_value, x2_value, y2_value = find_all_ints_with_re(target_bounds)
+        x3_value, y3_value, x4_value, y4_value = find_all_ints_with_re(src_bounds)
+        return x1_value in (-1, x3_value) and y1_value in (-1, y3_value) and x2_value in (
+            -1, x4_value) and y2_value in (-1, y4_value)
 
     def depth_first_search(self, dic):
         """通过深度优先来搜索目标对象
@@ -318,7 +319,7 @@ class UIAutomator:
         :param dic: 待搜索对象的字典信息
         :return: 搜索到返回目标对象，否则返回False
         """
-        if type(dic) == dict:
+        if isinstance(dic, dict):
             if self.is_target_node(dic):
                 return dic
             for i in dic.keys():
@@ -327,7 +328,7 @@ class UIAutomator:
                 res = self.depth_first_search(dic[i])
                 if res:
                     return res
-        elif type(dic) == list:
+        elif isinstance(dic, list):
             for i in dic:
                 res = self.depth_first_search(i)
                 if res:
@@ -354,6 +355,7 @@ class UIAutomator:
                 res = self.depth_first_search_dicts(i)
                 if res:
                     self.dicts.append(res)
+        return False
 
     def get_current_ui_hierarchy(self):
         """获取当前的用户界面上的元素的层次布局信息"""
