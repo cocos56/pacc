@@ -165,12 +165,32 @@ class UIAutomator:
         self.tap(point)
 
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
+        """获取目标点的坐标
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param xml: 目标用户界面上元素的层次布局信息
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        :param class_: 类名
+        :return: 找到后返回目标点的坐标，未找到返回False
+        """
         bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_)
         if not bounds:
             return False
         return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
+        """获取目标点所在的边界的斜对角两点的坐标
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param xml: 目标用户界面上元素的层次布局信息
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        :param class_: 类名
+        :return: 找到后返回目边界的斜对角两点的坐标，未找到返回False
+        """
         dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_)
         if dic:
             return dic['@bounds']
