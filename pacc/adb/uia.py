@@ -1,5 +1,4 @@
 """UI自动化测试模块"""
-from collections import OrderedDict
 from html import unescape
 from os import system, remove
 from os.path import exists
