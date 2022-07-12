@@ -269,30 +269,30 @@ class UIAutomator:
                         if dic['@resource-id'] == self.node.resource_id:
                             return True
             return False
-        elif self.node.resource_id:
+        if self.node.resource_id:
             if dic['@resource-id'] == self.node.resource_id:
                 if self.node.text:
                     if self.node.text in unescape(dic['@text']):
                         return True
                     return False
-                elif self.node.content_desc:
+                if self.node.content_desc:
                     if unescape(dic['@content-desc']) == self.node.content_desc:
                         return True
                     return False
                 return True
-        elif self.node.text:
+        if self.node.text:
             if self.node.text in unescape(dic['@text']):
                 return True
             return False
-        elif self.node.bounds:
+        if self.node.bounds:
             if self.is_target_bounds(self.node.bounds, dic['@bounds']):
                 return True
             return False
-        elif self.node.content_desc:
+        if self.node.content_desc:
             if self.node.content_desc in unescape(dic['@content-desc']):
                 return True
             return False
-        elif self.node.class_:
+        if self.node.class_:
             if dic['@class'] == self.node.class_:
                 return True
             return False
