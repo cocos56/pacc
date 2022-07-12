@@ -341,7 +341,7 @@ class UIAutomator:
         :param dic: 待搜索对象的字典信息
         :return: 若搜索到，返回第一个匹配到的对象，否则返回False
         """
-        if type(dic) == OrderedDict:
+        if isinstance(dic, dict):
             if self.is_target_node(dic):
                 self.dicts.append(dic)
             for i in dic.keys():
@@ -350,7 +350,7 @@ class UIAutomator:
                 res = self.depth_first_search_dicts(dic[i])
                 if res:
                     return res
-        elif type(dic) == list:
+        elif isinstance(dic, list):
             for i in dic:
                 res = self.depth_first_search_dicts(i)
                 if res:
