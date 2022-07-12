@@ -307,6 +307,7 @@ class UIAutomator:
         :param src_bounds: 目标边界
         :return: 比对成功返回True，否则返回False
         """
+        # pylint: disable=unbalanced-tuple-unpacking
         x1, y1, x2, y2 = find_all_ints_with_re(target_bounds)
         x3, y3, x4, y4 = find_all_ints_with_re(src_bounds)
         return x1 in (-1, x3) and y1 in (-1, y3) and x2 in (-1, x4) and y2 in (-1, y4)
