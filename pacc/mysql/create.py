@@ -1,5 +1,5 @@
 """MySQL数据库包的增模块"""
-from .mysql import query, commit
+from .mysql import M
 
 
 class Create:
@@ -10,8 +10,8 @@ class Create:
     def query(cls, table, fields, values):
         cmd = 'insert into `%s` %s values %s' % (table, str(fields).replace("'", '`'), str(values))
         print(cmd)
-        res = query(cmd)
-        commit()
+        res = M.query(cmd)
+        M.commit()
         return res
 
 
@@ -23,4 +23,4 @@ class CreateKSJSB(Create):
         self.query('KSJSB', ('SN', 'goldCoins', 'cashCoupons'), (SN, 0, 0))
 
     @property
-    def exist(self): return query('select 1 from `KSJSB` where `SN` = %s limit 1' % self.SN) == (1,)
+    def exist(self): return M.query('select 1 from `KSJSB` where `SN` = %s limit 1' % self.SN) == (1,)

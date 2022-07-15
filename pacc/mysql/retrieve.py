@@ -1,5 +1,5 @@
 """MySQL数据库包的查模块"""
-from .mysql import query
+from .mysql import M
 
 
 class Retrieve:
@@ -19,7 +19,7 @@ class Retrieve:
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        res = query('select `%s` from `%s` where `SN` = %s' % (field, table, self.sn))
+        res = M.query('select `%s` from `%s` where `SN` = %s' % (field, table, self.sn))
         if len(res) == 1:
             res = res[0]
         return res

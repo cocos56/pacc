@@ -1,3 +1,4 @@
+"""多线程模块"""
 import threading
 from ...tools import sleep
 
@@ -5,19 +6,30 @@ threadLock = threading.Lock()
 
 
 class Thread:
+    """多线程类"""
     instances = []
 
-    def __init__(self, function, args='', tag=''):
+    def __init__(self, function, args=''):
+        """构造函数：初始化多线程类的对象
+
+        :param function: 函数
+        :param args: 不定参数
+        """
         self.function = function
         self.args = args
-        self.tag = tag
         self.instances.append(self)
 
     def __del__(self):
+        """构造函数：销毁多线程类的对象"""
         if self in self.instances:
             self.instances.remove(self)
 
-    def runThread(self, delay=1):
+    def run_thread(self, delay=1):
+        """运行线程
+
+        :param delay: 延迟执行
+        :return : 线程对象
+        """
         sleep(delay, False, False)
         if self.args:
             t = threading.Thread(target=self.function, args=self.args)
@@ -37,6 +49,7 @@ class Thread:
 
 def runThreadsWithFunctions(functions, timeout=None):
     threads = []
+
     for function in functions:
         t = runThread(function)
         threads.append(t)

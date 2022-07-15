@@ -1,5 +1,5 @@
 """MySQL数据库包的改模块"""
-from .mysql import query, commit
+from .mysql import M
 
 
 class Update:
@@ -22,8 +22,8 @@ class Update:
         """
         cmd = 'update `%s` set `%s` = "%s" where `SN` = "%s"' % (table, field, value, self.device_sn)
         print(cmd)
-        res = query(cmd)
-        commit()
+        res = M.query(cmd)
+        M.commit()
         return res
 
 
