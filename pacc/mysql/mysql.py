@@ -13,8 +13,15 @@ class Config:
 
     def __init__(self, host=getenv('MySQL_Host'), port=3306, database='m', user='root',
                  password=getenv('MySQL_PW'), charset='utf8'):
-        Config.conn = connect(host=host, port=port, database=database,
-                              user=user, password=password, charset=charset)
+        try:
+            Config.conn = connect(host=host, port=port, database=database,
+                                  user=user, password=password, charset=charset)
+        except OperationalError as error:
+            print(error)
+            sleep(30)
+            self.__init__(host=host, port=port, database=database,
+                          user=user, password=password, charset=charset)
+            return
         Config.cs = Config.conn.cursor()
 
 
