@@ -91,4 +91,3 @@ def run_threads_with_functions(functions, timeout=None):
         threads.append(thread)
     for thread in threads:
         thread.join(timeout)
-
