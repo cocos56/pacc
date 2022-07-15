@@ -1,8 +1,8 @@
 """多路并发的初始化模块"""
-from .thread import runThreadsWithArgsList, runThreadsWithFunctions, threadLock
+from .thread import run_threads_with_args_list, run_threads_with_functions, threadLock
 
 __all__ = [
-    'runThreadsWithArgsList',
-    'runThreadsWithFunctions',
+    'run_threads_with_args_list',
+    'run_threads_with_functions',
     'threadLock'
 ]

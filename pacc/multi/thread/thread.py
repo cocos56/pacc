@@ -47,26 +47,14 @@ class Thread:
     #         t.join()
 
 
-def runThreadsWithFunctions(functions, timeout=None):
-    threads = []
+def run_thread(function, args=(), delay=1):
+    """开启一个线程
 
-    for function in functions:
-        t = runThread(function)
-        threads.append(t)
-    for t in threads:
-        t.join(timeout)
-
-
-def runThreadsWithArgsList(function, argsList):
-    threads = []
-    for args in argsList:
-        t = runThread(function, (args,))
-        threads.append(t)
-    for t in threads:
-        t.join()
-
-
-def runThread(function, args=(), delay=1):
+    :param function: 方法
+    :param args: 不定参数
+    :param delay: 延迟执行时间（秒）
+    :return : 线程对象
+    """
     sleep(delay, False, False)
     if args:
         t = threading.Thread(target=function, args=args)
@@ -74,3 +62,33 @@ def runThread(function, args=(), delay=1):
         t = threading.Thread(target=function)
     t.start()
     return t
+
+
+def run_threads_with_args_list(function, args_list):
+    """使用多个不定参数构成的列表开启多个线程
+
+    :param function: 方法
+    :param args_list: 不定参数构成的列表
+    """
+    threads = []
+    for args in args_list:
+        t = run_thread(function, (args,))
+        threads.append(t)
+    for t in threads:
+        t.join()
+
+
+def run_threads_with_functions(functions, timeout=None):
+    """使用多个函数构成的列表开启多个线程
+
+    :param functions: 多个函数构成的列表
+    :param timeout: 延迟执行时间（秒）
+    """
+    threads = []
+
+    for function in functions:
+        t = run_thread(function)
+        threads.append(t)
+    for t in threads:
+        t.join(timeout)
+
