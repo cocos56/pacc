@@ -32,11 +32,11 @@ class Thread:
         """
         sleep(delay, False, False)
         if self.args:
-            t = threading.Thread(target=self.function, args=self.args)
+            thread = threading.Thread(target=self.function, args=self.args)
         else:
-            t = threading.Thread(target=self.function)
-        t.start()
-        return t
+            thread = threading.Thread(target=self.function)
+        thread.start()
+        return thread
 
     # def runThreads(self):
     #     threads = []
@@ -57,11 +57,11 @@ def run_thread(function, args=(), delay=1):
     """
     sleep(delay, False, False)
     if args:
-        t = threading.Thread(target=function, args=args)
+        thread = threading.Thread(target=function, args=args)
     else:
-        t = threading.Thread(target=function)
-    t.start()
-    return t
+        thread = threading.Thread(target=function)
+    thread.start()
+    return thread
 
 
 def run_threads_with_args_list(function, args_list):
@@ -72,10 +72,10 @@ def run_threads_with_args_list(function, args_list):
     """
     threads = []
     for args in args_list:
-        t = run_thread(function, (args,))
-        threads.append(t)
-    for t in threads:
-        t.join()
+        thread = run_thread(function, (args,))
+        threads.append(thread)
+    for thread in threads:
+        thread.join()
 
 
 def run_threads_with_functions(functions, timeout=None):
@@ -87,8 +87,8 @@ def run_threads_with_functions(functions, timeout=None):
     threads = []
 
     for function in functions:
-        t = run_thread(function)
-        threads.append(t)
-    for t in threads:
-        t.join(timeout)
+        thread = run_thread(function)
+        threads.append(thread)
+    for thread in threads:
+        thread.join(timeout)
 
