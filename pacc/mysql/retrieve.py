@@ -34,8 +34,8 @@ class RetrieveMobileInfo(Retrieve):
         :param serial_number: 设备序列号
         """
         super().__init__(serial_number)
-        self.ip = self.query('IP')
-        self.id = self.query('ID')
+        self.ipv4_addr = self.query('IP')
+        self.id_num = self.query('ID')
         self.model = self.query('Model')
 
     # pylint: disable=arguments-differ
