@@ -16,7 +16,7 @@ class Activity:
 
 # pylint: disable=too-few-public-methods
 class ResourceID:
-    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
+    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的资源的鉴别码类"""
     button2 = 'android:id/button2'  # 确定（联机业务异常，请重新联机）、立即连接（连接异常,正在重新连接......）
     button1 = 'android:id/button1'  # 取消
     auto_wait_btn = 'com.dd.rclient:id/auto_wait_btn'

@@ -1,3 +1,4 @@
+"""自动远程控制手机APP中央控制系统工程模块"""
 from datetime import datetime
 from random import randint
 from time import time
@@ -8,28 +9,31 @@ from ..multi import threadLock
 from ..tools import sleep
 
 
-class ResourceID:
-    clearAnimView = 'com.android.systemui:id/clearAnimView'  # 内存清理图标
-    clearAnimView2 = 'com.miui.home:id/clearAnimView'  # 内存清理图标
-
-
 class Activity:
+    """活动名类"""
     Launcher = 'com.miui.home/com.miui.home.launcher.Launcher'
     RecentsActivity = 'com.android.systemui/com.android.systemui.recents.RecentsActivity'
 
 
+class ResourceID:
+    """资源的鉴别码类"""
+    clearAnimView = 'com.android.systemui:id/clearAnimView'  # 内存清理图标
+    clearAnimView2 = 'com.miui.home:id/clearAnimView'  # 内存清理图标
+
+
 class Project:
+    """工程类"""
     instances = []
     startTime = datetime.now()
 
-    def __init__(self, device_sn, add_flag=True):
+    def __init__(self, serial_num, add_flag=True):
         """构造函数
 
-        :param device_sn: 设备编号
+        :param serial_num: 设备编号
         :param add_flag: 是否将此对象追加到实例列表中，默认会自动追加
         """
-        self.adbIns = ADB(device_sn)
-        self.uIAIns = UIAutomator(device_sn)
+        self.adbIns = ADB(serial_num)
+        self.uIAIns = UIAutomator(serial_num)
         self.lastReopenHour = -1
         self.restTime = 0
         self.lastTime = time()
@@ -54,6 +58,10 @@ class Project:
         self.restTime += randint(3, 15)
 
     def reopen_app_per_hour(self, execute=True):
+        """每小时重启一下APP
+
+        :param execute: 是否执行重启APP
+        """
         if self.lastReopenHour == datetime.now().hour:
             return False
         self.lastReopenHour = datetime.now().hour
@@ -82,7 +90,10 @@ class Project:
         self.open_app()
 
     def open_app(self, activity):
-        """打开APP"""
+        """打开APP
+
+        param activity: 活动
+        """
         self.adbIns.press_home_key()
         self.adbIns.start(activity)
 
