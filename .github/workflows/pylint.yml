@@ -21,6 +21,7 @@ jobs:
         pip install xmltodict
         pip install easyocr
         pip install urlextract
+        pip install pymysql
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
