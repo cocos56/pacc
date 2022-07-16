@@ -12,6 +12,7 @@ class MySQL:
     conn = None
     cs = None
 
+    # pylint: disable=too-many-arguments
     def __init__(self, host=getenv('MySQL_Host'), port=3306, database='m', user='root',
                  password=getenv('MySQL_PW'), charset='utf8'):
         """构造函数：初始化增类的对象
@@ -29,6 +30,7 @@ class MySQL:
         except OperationalError as error:
             print(error)
             sleep(30)
+            # pylint: disable=non-parent-init-called
             self.__init__(host=host, port=port, database=database, user=user, password=password,
                           charset=charset)
             return
@@ -60,8 +62,8 @@ class MySQL:
         """提交之前的操作，如果之前已经之执行过多次的execute，那么就都进行提交"""
         try:
             cls.conn.commit()
-        except OperationalError as e:
-            print('commit', e)
+        except OperationalError as error:
+            print('commit', error)
             sleep(30)
             cls()
             cls.commit()
