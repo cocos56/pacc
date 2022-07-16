@@ -41,7 +41,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.cmd = f'adb -s {self.device.ID} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
-            sleep(6)
+            sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
         if not self.get_ipv4_address() == self.device.IP:
