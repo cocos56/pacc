@@ -34,7 +34,7 @@ class UIAutomator:
         :param device_sn: 设备编号
         """
         self.device = RetrieveMobileInfo(device_sn)
-        self.cmd = f'adb -s {self.device.ip} '
+        self.cmd = f'adb -s {self.device.ipv4_addr} '
         self.node = Node()
         self.xml = ''
         self.txt = ''

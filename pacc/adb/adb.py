@@ -31,25 +31,25 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         system('adb reconnect offline')
         self.device = RetrieveMobileInfo(device_sn)
-        if self.device.id not in get_online_devices():
+        if self.device.id_num not in get_online_devices():
             if not offline_cnt % 20:
                 EMail(self.device.serial_number).sendOfflineError()
-            print(self.device.serial_number, '不在线，该设备的ID为：', self.device.id, '，请核对！', sep='')
+            print(self.device.serial_number, '不在线，该设备的ID为：', self.device.id_num, '，请核对！', sep='')
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn, offline_cnt+1)
-        self.cmd = f'adb -s {self.device.id} '
+        self.cmd = f'adb -s {self.device.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
-        if not self.get_ipv4_address() == self.device.ip:
+        if not self.get_ipv4_address() == self.device.ipv4_addr:
             UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
             self.device = RetrieveMobileInfo(device_sn)
         if not Config.debug:
             self.reconnect()
-        self.cmd = f'adb -s {self.device.ip} '
+        self.cmd = f'adb -s {self.device.ipv4_addr} '
         self.uia = UIAutomator(device_sn)
         if not self.get_model() == self.device.model:
             UpdateBaseInfo(device_sn).updateModel(self.get_model())
@@ -160,21 +160,21 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def tcpip(self):
         """restart adbd listening on TCP on PORT"""
-        system(f'adb -s {self.device.id} tcpip 5555')
+        system(f'adb -s {self.device.id_num} tcpip 5555')
         sleep(1, False, False)
 
     def connect(self):
         """connect to a device via TCP/IP [default port=5555]"""
         self.tcpip()
-        system(f'adb connect {self.device.ip}')
+        system(f'adb connect {self.device.ipv4_addr}')
         sleep(6)
-        system(f'adb connect {self.device.ip}')
-        if self.device.ip not in get_online_devices():
+        system(f'adb connect {self.device.ipv4_addr}')
+        if self.device.ipv4_addr not in get_online_devices():
             self.reboot_by_id()
 
     def disconnect(self):
         """disconnect from given TCP/IP device [default port=5555], or all"""
-        system(f'adb disconnect {self.device.ip}')
+        system(f'adb disconnect {self.device.ipv4_addr}')
         sleep(2, False, False)
 
     def reconnect(self):
@@ -185,7 +185,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self):
         """保持在线"""
-        if self.device.ip not in get_online_devices():
+        if self.device.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_number)
 
@@ -256,14 +256,14 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def reboot_by_id(self):
         """通过ID重启指定的设备"""
-        self.reboot_by_cmd(f'adb -s {self.device.id} reboot')
+        self.reboot_by_cmd(f'adb -s {self.device.id_num} reboot')
 
     def reboot_by_ip(self):
         """通过IP重启指定的设备"""
-        if self.device.ip not in get_online_devices():
+        if self.device.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_number)
-        self.reboot_by_cmd(f'adb -s {self.device.ip} reboot')
+        self.reboot_by_cmd(f'adb -s {self.device.ipv4_addr} reboot')
 
     def reboot_per_hour(self, tip='小时'):
         """每小时重启一次设备

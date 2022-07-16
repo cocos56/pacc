@@ -2,6 +2,7 @@
 from .mysql import Mobile
 
 
+# pylint: disable=too-few-public-methods
 class Update:
     """MySQL数据库包的改模块的改类"""
 
@@ -20,7 +21,7 @@ class Update:
         :param value: 新值（用于替换原有的旧值）
         :return: 修改的结果
         """
-        cmd = 'update `%s` set `%s` = "%s" where `SN` = "%s"' % (table, field, value, self.device_sn)
+        cmd = f'update `{table}` set `{field}` = "{value}" where `SN` = "{self.device_sn}"'
         print(cmd)
         res = Mobile.query(cmd)
         Mobile.commit()
