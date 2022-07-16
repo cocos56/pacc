@@ -41,8 +41,8 @@ class SD(Project):
         """检查"""
         self.adb_ins.keep_online()
         try:
-            self.uIAIns.click(ResourceID.button2)
-            dic = self.uIAIns.get_dict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
+            self.uia_ins.click(ResourceID.button2)
+            dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
             current_focus = self.adb_ins.get_current_focus()
             if dic and dic['@text'] == '正在连接服务器...':
                 self.reopen_app()
@@ -64,15 +64,15 @@ class SD(Project):
     def open_app(self):
         """打开APP"""
         self.free_memory()
-        self.uIAIns.click(ResourceID.icon_title, '滴滴助手')
+        self.uia_ins.click(ResourceID.icon_title, '滴滴助手')
         sleep(12)
-        self.uIAIns.click(ResourceID.auto_wait_btn)
-        self.uIAIns.click(ResourceID.button1)
+        self.uia_ins.click(ResourceID.auto_wait_btn)
+        self.uia_ins.click(ResourceID.button1)
 
     def exit_app(self):
         """退出APP"""
-        self.uIAIns.click(ResourceID.btn_exit_app, xml=self.uIAIns.xml)
-        self.uIAIns.click(ResourceID.button2)
+        self.uia_ins.click(ResourceID.btn_exit_app, xml=self.uia_ins.xml)
+        self.uia_ins.click(ResourceID.button2)
 
     @classmethod
     def mainloop(cls, devices_sn):

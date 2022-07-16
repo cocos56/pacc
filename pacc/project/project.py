@@ -35,10 +35,10 @@ class Project:
         :param add_flag: 是否将此对象追加到实例列表中，默认会自动追加
         """
         self.adb_ins = ADB(serial_num)
-        self.uIAIns = UIAutomator(serial_num)
-        self.lastReopenHour = -1
-        self.restTime = 0
-        self.lastTime = time()
+        self.uia_ins = UIAutomator(serial_num)
+        self.last_reopen_hour = -1
+        self.rest_time = 0
+        self.last_time = time()
         if add_flag:
             threadLock.acquire()
             self.instances.append(self)
@@ -51,22 +51,22 @@ class Project:
             self.instances.remove(self)
         threadLock.release()
 
-    def random_swipe(self, xA, xB, xC, xD, yA, yB, yC, yD, initRestTime=False):
-        if initRestTime and self.restTime > 0:
-            self.restTime = 0
-        elif self.restTime > 0:
+    def random_swipe(self, xA, xB, xC, xD, yA, yB, yC, yD, init_rest_time=False):
+        if init_rest_time and self.rest_time > 0:
+            self.rest_time = 0
+        elif self.rest_time > 0:
             return
-        self.adbIns.swipe(randint(xA, xB), randint(yA, yB), randint(xC, xD), randint(yC, yD))
-        self.restTime += randint(3, 15)
+        self.adb_ins.swipe(randint(xA, xB), randint(yA, yB), randint(xC, xD), randint(yC, yD))
+        self.rest_time += randint(3, 15)
 
     def reopen_app_per_hour(self, execute=True):
         """每小时重启一下APP
 
         :param execute: 是否执行重启APP
         """
-        if self.lastReopenHour == datetime.now().hour:
+        if self.last_reopen_hour == datetime.now().hour:
             return False
-        self.lastReopenHour = datetime.now().hour
+        self.last_reopen_hour = datetime.now().hour
         if execute:
             self.reopen_app()
         return True
@@ -74,13 +74,13 @@ class Project:
     def tap_free_button(self):
         """点击清理按钮"""
         if 'MI 4' in self.adb_ins.device.model:
-            self.uIAIns.click(ResourceID.clearAnimView)
+            self.uia_ins.click(ResourceID.clearAnimView)
         elif 'MI 5' in self.adb_ins.device.model:
-            self.uIAIns.click(ResourceID.clearAnimView)
+            self.uia_ins.click(ResourceID.clearAnimView)
         elif 'MI 6' in self.adb_ins.device.model:
-            self.uIAIns.click(ResourceID.clearAnimView)
+            self.uia_ins.click(ResourceID.clearAnimView)
         elif 'Redmi K20' in self.adb_ins.device.model:
-            self.uIAIns.click(ResourceID.clearAnimView2)
+            self.uia_ins.click(ResourceID.clearAnimView2)
 
     def reopen_app(self):
         """重新打开APP"""
@@ -94,7 +94,7 @@ class Project:
     def open_app(self, activity):
         """打开APP
 
-        param activity: 活动
+        param activity: 活动名
         """
         self.adb_ins.press_home_key()
         self.adb_ins.start(activity)
@@ -106,8 +106,8 @@ class Project:
         self.adb_ins.press_menu_key()
         try:
             self.tap_free_button()
-        except FileNotFoundError as e:
-            print(e)
+        except FileNotFoundError as error:
+            print(error)
             self.free_memory()
         current_focus = self.adb_ins.get_current_focus()
         if Activity.RecentsActivity in current_focus:
