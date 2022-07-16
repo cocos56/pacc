@@ -101,6 +101,7 @@ class Project:
             self.adb_ins.press_power_key()
             sleep(60)
         self.adb_ins.press_home_key()
+        # pylint: disable=no-value-for-parameter
         self.open_app()
 
     def open_app(self, activity):
