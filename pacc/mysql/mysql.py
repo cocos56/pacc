@@ -8,11 +8,21 @@ from ..tools import sleep
 
 
 class MySQL:
+    """MySQL数据库类"""
     conn = None
     cs = None
 
     def __init__(self, host=getenv('MySQL_Host'), port=3306, database='m', user='root',
                  password=getenv('MySQL_PW'), charset='utf8'):
+        """构造函数：初始化增类的对象
+
+        :param host: 主机，从Windows系统变量中获取
+        :param port: 端口号
+        :param database: 数据库名
+        :param user: 用户名
+        :param password: 用户密码
+        :param charset: 编码
+        """
         try:
             self.__class__.conn = connect(host=host, port=port, database=database, user=user,
                                           password=password, charset=charset)
@@ -26,13 +36,17 @@ class MySQL:
 
     @classmethod
     def query(cls, cmd):
+        """查询函数：执行查询语句
+
+        :param cmd: 待执行的查询语句
+        """
         threadLock.acquire()
         try:
             cls.cs.execute(cmd)
             res = cls.cs.fetchall()
-        except OperationalError as e:
+        except OperationalError as error:
             threadLock.release()
-            print('query', e)
+            print('query', error)
             sleep(30)
             cls()
             return cls.query(cmd)
@@ -43,7 +57,7 @@ class MySQL:
 
     @classmethod
     def commit(cls):
-        # 提交之前的操作，如果之前已经之执行过多次的execute，那么就都进行提交
+        """提交之前的操作，如果之前已经之执行过多次的execute，那么就都进行提交"""
         try:
             cls.conn.commit()
         except OperationalError as e:
@@ -54,8 +68,8 @@ class MySQL:
 
 
 class M(MySQL):
-    def __init__(self):
-        super().__init__()
+    """MySQL中名为m的数据库"""
+    pass
 
 
 M()
