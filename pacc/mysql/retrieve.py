@@ -2,6 +2,7 @@
 from .mysql import Mobile
 
 
+# pylint: disable=too-few-public-methods
 class Retrieve:
     """查类"""
 

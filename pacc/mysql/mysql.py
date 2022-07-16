@@ -72,7 +72,6 @@ class MySQL:
 
 class Mobile(MySQL):
     """MySQL中名为mobile的数据库"""
-    pass
 
 
 Mobile()
