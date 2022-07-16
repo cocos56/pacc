@@ -22,6 +22,7 @@ jobs:
         pip install easyocr
         pip install urlextract
         pip install pymysql
+        pip install opencv-python
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
