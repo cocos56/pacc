@@ -13,7 +13,7 @@ class MySQL:
     cs = None
 
     # pylint: disable=too-many-arguments
-    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='m', user='root',
+    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
                  password=getenv('MySQL_PW'), charset='utf8'):
         """构造函数：初始化增类的对象
 
@@ -42,6 +42,7 @@ class MySQL:
 
         :param cmd: 待执行的查询语句
         """
+        # pylint: disable=consider-using-with
         threadLock.acquire()
         try:
             cls.cs.execute(cmd)
@@ -69,9 +70,9 @@ class MySQL:
             cls.commit()
 
 
-class M(MySQL):
-    """MySQL中名为m的数据库"""
+class Mobile(MySQL):
+    """MySQL中名为mobile的数据库"""
     pass
 
 
-M()
+Mobile()

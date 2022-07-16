@@ -1,5 +1,5 @@
 """MySQL数据库包的查模块"""
-from .mysql import M
+from .mysql import Mobile
 
 
 class Retrieve:
@@ -19,7 +19,7 @@ class Retrieve:
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        res = M.query(f'select `{field}` from `{table}` where `SN` = {self.serial_number}')
+        res = Mobile.query(f'select `{field}` from `{table}` where `SN` = {self.serial_number}')
         if len(res) == 1:
             res = res[0]
         return res

@@ -1,5 +1,5 @@
 """MySQL数据库包的增模块"""
-from .mysql import M
+from .mysql import Mobile
 
 
 # pylint: disable=too-few-public-methods
@@ -24,8 +24,8 @@ class Create:
         """
         cmd = f'insert into `{table}` %s values {str(values)}' % str(fields).replace("'", '`')
         print(cmd)
-        res = M.query(cmd)
-        M.commit()
+        res = Mobile.query(cmd)
+        Mobile.commit()
         return res
 
 
@@ -44,4 +44,4 @@ class CreateKSJSB(Create):
     @property
     def exist(self):
         """创建只读属性exist，该属性用于判断是否存在快手极速版数据库中存在指定设备的数据"""
-        return M.query(f'select 1 from `KSJSB` where `SN` = {self.device_sn} limit 1') == (1,)
+        return Mobile.query(f'select 1 from `KSJSB` where `SN` = {self.device_sn} limit 1') == (1,)
