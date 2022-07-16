@@ -9,12 +9,14 @@ from ..multi import threadLock
 from ..tools import sleep
 
 
+# pylint: disable=too-few-public-methods
 class Activity:
     """活动名类"""
     Launcher = 'com.miui.home/com.miui.home.launcher.Launcher'
     RecentsActivity = 'com.android.systemui/com.android.systemui.recents.RecentsActivity'
 
 
+# pylint: disable=too-few-public-methods
 class ResourceID:
     """资源的鉴别码类"""
     clearAnimView = 'com.android.systemui:id/clearAnimView'  # 内存清理图标
