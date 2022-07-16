@@ -41,7 +41,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.cmd = f'adb -s {self.device.ID} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
-            sleep(3)
+            sleep(6)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
         if not self.get_ipv4_address() == self.device.IP:
@@ -250,7 +250,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         popen(cmd)
         print(f'已向设备{self.device.serial_number}下达重启指令')
-        sleep(69)
+        sleep(96)
         # pylint: disable=unnecessary-dunder-call
         self.__init__(self.device.serial_number)
 
