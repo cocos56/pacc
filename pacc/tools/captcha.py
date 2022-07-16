@@ -20,8 +20,10 @@ class SliderCaptcha:
         hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsvImg, lowerb=np.array([0, 0, 46]), upperb=np.array([180, 43, 220]))
         # 4. 图像腐蚀。消除图像边缘小的部分
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))  # 设置kernel卷积核为 3*3 正方形，8位uchar型，全1结构元素
-        mask = cv2.erode(mask, kernel, 15)  # 原型为：dst=cv2.erode(src表示原图像,kernel表示卷积核,iterations表示迭代次数)
+        # 设置kernel卷积核为 3*3 正方形，8位uchar型，全1结构元素
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        # 原型为：dst=cv2.erode(src表示原图像,kernel表示卷积核,iterations表示迭代次数)
+        mask = cv2.erode(mask, kernel, 15)
         # 5. 查找轮廓。
         contours = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[0]
         # 6. 轮廓值排序
@@ -33,4 +35,3 @@ class SliderCaptcha:
         x = cv2.minAreaRect(contours[randint(0, 1)])[0][0]
         print('8. x is', x)
         return x
-

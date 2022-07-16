@@ -1,3 +1,4 @@
+"""工具包的初始化模块"""
 from .captcha import SliderCaptcha
 from .dir import create_dir
 from .dt import showDatetime
