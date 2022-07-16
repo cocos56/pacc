@@ -33,8 +33,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.device = RetrieveMobileInfo(device_sn)
         if self.device.ID not in get_online_devices():
             if not offline_cnt % 20:
-                EMail(self.device.sn).sendOfflineError()
-            print(self.device.sn, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
+                EMail(self.device.serial_number).sendOfflineError()
+            print(self.device.serial_number, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn, offline_cnt+1)
@@ -100,7 +100,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if not res:
             self.reconnect()
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.sn)
+            self.__init__(self.device.serial_number)
             return
         while res[-1] == '\n':
             res = res[:-1]
@@ -120,7 +120,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param keycode: 按键代码
         :param sleep_time: 休息时间
         """
-        print(f'正在让{self.device.sn}按{keycode}')
+        print(f'正在让{self.device.serial_number}按{keycode}')
         system(f'{self.cmd}shell input keyevent {keycode}')
         sleep(sleep_time, False, False)
 
@@ -187,7 +187,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """保持在线"""
         if self.device.IP not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.sn)
+            self.__init__(self.device.serial_number)
 
     def taps(self, instructions):
         """点击
@@ -226,7 +226,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         cmd = f'{self.cmd}shell input swipe {x1_coordinate} {y1_coordinate} ' \
               f'{x2_coordinate} {y2_coordinate} {duration}'
         system(cmd)
-        print(self.device.sn, cmd)
+        print(self.device.serial_number, cmd)
 
     def long_press(self, x_coordinate, y_coordinate, duration=-1):
         """长按
@@ -249,10 +249,10 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param cmd: CMD指令
         """
         popen(cmd)
-        print(f'已向设备{self.device.sn}下达重启指令')
+        print(f'已向设备{self.device.serial_number}下达重启指令')
         sleep(69)
         # pylint: disable=unnecessary-dunder-call
-        self.__init__(self.device.sn)
+        self.__init__(self.device.serial_number)
 
     def reboot_by_id(self):
         """通过ID重启指定的设备"""
@@ -262,7 +262,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """通过IP重启指定的设备"""
         if self.device.IP not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.sn)
+            self.__init__(self.device.serial_number)
         self.reboot_by_cmd(f'adb -s {self.device.IP} reboot')
 
     def reboot_per_hour(self, tip='小时'):
@@ -272,10 +272,10 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         if not datetime.now().hour == self.reboot_per_hour_record[0]:
             self.reboot_per_hour_record = [datetime.now().hour]
-        if self.device.sn not in self.reboot_per_hour_record:
-            print(f'按每{tip}重启一次的计划重启{self.device.sn}')
+        if self.device.serial_number not in self.reboot_per_hour_record:
+            print(f'按每{tip}重启一次的计划重启{self.device.serial_number}')
             self.reboot()
-            self.reboot_per_hour_record.append(self.device.sn)
+            self.reboot_per_hour_record.append(self.device.serial_number)
             return True
         return False
 

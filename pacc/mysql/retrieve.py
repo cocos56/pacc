@@ -5,12 +5,12 @@ from .mysql import M
 class Retrieve:
     """查类"""
 
-    def __init__(self, device_sn):
+    def __init__(self, serial_number):
         """构造函数：初始化查类的对象
 
-        :param device_sn: 设备序列号
+        :param serial_number: 设备序列号
         """
-        self.device_sn = device_sn
+        self.serial_number = serial_number
 
     def query(self, table, field):
         """查询函数：查询数据
@@ -19,7 +19,7 @@ class Retrieve:
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        res = M.query(f'select `{field}` from `{table}` where `SN` = {self.device_sn}')
+        res = M.query(f'select `{field}` from `{table}` where `SN` = {self.serial_number}')
         if len(res) == 1:
             res = res[0]
         return res
@@ -48,8 +48,8 @@ class RetrieveMobileInfo(Retrieve):
 
 class RetrieveKSJSB(Retrieve):
     """查询快手极速版数据类"""
-    def __init__(self, device_sn):
-        super().__init__(device_sn)
+    def __init__(self, serial_number):
+        super().__init__(serial_number)
         self.goldCoins = self.query('goldCoins')
         self.cashCoupons = self.query('cashCoupons')
 
