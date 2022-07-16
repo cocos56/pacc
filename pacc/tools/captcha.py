@@ -6,9 +6,10 @@ from .file import File
 
 
 class SliderCaptcha:
+    """滑块验证码处理模块"""
 
     @classmethod
-    def getX(cls, pngFile):
+    def get_x(cls, pngFile):
         # 1. 图片剪切
         croppedImg = cv2.imread(pngFile)[622:914, 166:914]  # 裁剪坐标为[y0:y1, x0:x1]
         cv2.imwrite(File(pngFile).dirPathAndFName + '_cropped.png', croppedImg)

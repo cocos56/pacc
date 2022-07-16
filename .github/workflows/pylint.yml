@@ -25,4 +25,5 @@ jobs:
         pip install opencv-python
     - name: Analysing the code with pylint
       run: |
+        extension-pkg-whitelist=cv2
         pylint $(git ls-files '*.py')
