@@ -6,7 +6,7 @@ from random import randint
 
 from .uia import UIAutomator
 from ..config import Config
-from ..mysql import RetrieveMobileInfo, UpdateBaseInfo
+from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
 from ..tools import find_all_with_re, sleep, EMail
 
 
@@ -45,14 +45,14 @@ class ADB:  # pylint: disable=too-many-public-methods
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
         if not self.get_ipv4_address() == self.device.ipv4_addr:
-            UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
+            UpdateMobileInfo(device_sn).update_ipv4_addr(self.get_ipv4_address())
             self.device = RetrieveMobileInfo(device_sn)
         if not Config.debug:
             self.reconnect()
         self.cmd = f'adb -s {self.device.ipv4_addr} '
         self.uia = UIAutomator(device_sn)
         if not self.get_model() == self.device.model:
-            UpdateBaseInfo(device_sn).updateModel(self.get_model())
+            UpdateMobileInfo(device_sn).updateModel(self.get_model())
             self.device = RetrieveMobileInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
