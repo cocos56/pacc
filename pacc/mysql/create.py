@@ -6,6 +6,13 @@ from .mysql import M
 class Create:
     """增类：往数据库中新增数据"""
 
+    def __init__(self, device_sn):
+        """构造函数：初始化增类的对象
+
+        :param device_sn: 设备序列号
+        """
+        self.device_sn = device_sn
+
     @classmethod
     def query(cls, table, fields, values):
         """查询函数：新增数据
@@ -29,6 +36,7 @@ class CreateKSJSB(Create):
 
         :param device_sn: 设备序列号
         """
+        super().__init__(device_sn)
         if self.exist:
             return
         self.query('KSJSB', ('SN', 'goldCoins', 'cashCoupons'), (device_sn, 0, 0))
