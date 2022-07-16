@@ -52,7 +52,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.cmd = f'adb -s {self.device.ipv4_addr} '
         self.uia = UIAutomator(device_sn)
         if not self.get_model() == self.device.model:
-            UpdateMobileInfo(device_sn).updateModel(self.get_model())
+            UpdateMobileInfo(device_sn).update_model(self.get_model())
             self.device = RetrieveMobileInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():

@@ -31,6 +31,7 @@ class Update:
 class UpdateMobileInfo(Update):
     """更改手机信息类"""
 
+    # pylint: disable=arguments-differ
     def query(self, field, value):
         """查询函数：修改数据
 
@@ -58,6 +59,7 @@ class UpdateMobileInfo(Update):
 class UpdateKSJSB(Update):
     """更改快手极速版信息类"""
 
+    # pylint: disable=arguments-differ
     def query(self, field, value):
         """查询函数：修改数据
 
