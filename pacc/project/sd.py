@@ -39,17 +39,17 @@ class SD(Project):
 
     def check(self):
         """检查"""
-        self.adbIns.keep_online()
+        self.adb_ins.keep_online()
         try:
             self.uIAIns.click(ResourceID.button2)
             dic = self.uIAIns.get_dict(ResourceID.mec_connect_state, xml=self.uIAIns.xml)
-            current_focus = self.adbIns.get_current_focus()
+            current_focus = self.adb_ins.get_current_focus()
             if dic and dic['@text'] == '正在连接服务器...':
                 self.reopen_app()
             elif not dic and Activity.MainActivity in current_focus:
                 self.reopen_app()
             elif Activity.LoginActivity in current_focus:
-                self.adbIns.reboot()
+                self.adb_ins.reboot()
                 self.open_app()
         except (FileNotFoundError, ExpatError) as err:
             print(err)

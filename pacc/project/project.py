@@ -34,7 +34,7 @@ class Project:
         :param serial_num: 设备编号
         :param add_flag: 是否将此对象追加到实例列表中，默认会自动追加
         """
-        self.adbIns = ADB(serial_num)
+        self.adb_ins = ADB(serial_num)
         self.uIAIns = UIAutomator(serial_num)
         self.lastReopenHour = -1
         self.restTime = 0
@@ -73,22 +73,22 @@ class Project:
 
     def tap_free_button(self):
         """点击清理按钮"""
-        if 'MI 4' in self.adbIns.device.model:
+        if 'MI 4' in self.adb_ins.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'MI 5' in self.adbIns.device.model:
+        elif 'MI 5' in self.adb_ins.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'MI 6' in self.adbIns.device.model:
+        elif 'MI 6' in self.adb_ins.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'Redmi K20' in self.adbIns.device.model:
+        elif 'Redmi K20' in self.adb_ins.device.model:
             self.uIAIns.click(ResourceID.clearAnimView2)
 
     def reopen_app(self):
         """重新打开APP"""
         self.free_memory()
-        if not Config.debug and 'MI 4' in self.adbIns.device.model:
-            self.adbIns.press_power_key()
+        if not Config.debug and 'MI 4' in self.adb_ins.device.model:
+            self.adb_ins.press_power_key()
             sleep(60)
-        self.adbIns.press_home_key()
+        self.adb_ins.press_home_key()
         self.open_app()
 
     def open_app(self, activity):
@@ -96,23 +96,23 @@ class Project:
 
         param activity: 活动
         """
-        self.adbIns.press_home_key()
-        self.adbIns.start(activity)
+        self.adb_ins.press_home_key()
+        self.adb_ins.start(activity)
 
     def free_memory(self):
         """清理内存"""
-        self.adbIns.press_home_key()
-        self.adbIns.press_home_key()
-        self.adbIns.press_menu_key()
+        self.adb_ins.press_home_key()
+        self.adb_ins.press_home_key()
+        self.adb_ins.press_menu_key()
         try:
             self.tap_free_button()
         except FileNotFoundError as e:
             print(e)
             self.free_memory()
-        current_focus = self.adbIns.get_current_focus()
+        current_focus = self.adb_ins.get_current_focus()
         if Activity.RecentsActivity in current_focus:
-            self.adbIns.press_home_key()
-            current_focus = self.adbIns.get_current_focus()
+            self.adb_ins.press_home_key()
+            current_focus = self.adb_ins.get_current_focus()
         if Activity.Launcher not in current_focus:
-            self.adbIns.reboot()
+            self.adb_ins.reboot()
             self.free_memory()
