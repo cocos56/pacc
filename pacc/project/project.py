@@ -40,16 +40,14 @@ class Project:
         self.rest_time = 0
         self.last_time = time()
         if add_flag:
-            threadLock.acquire()
-            self.instances.append(self)
-            threadLock.release()
+            with threadLock:
+                self.instances.append(self)
 
     def __del__(self):
         """析构函数"""
-        threadLock.acquire()
-        if self in self.instances:
-            self.instances.remove(self)
-        threadLock.release()
+        with threadLock:
+            if self in self.instances:
+                self.instances.remove(self)
 
     def random_swipe(self, xA, xB, xC, xD, yA, yB, yC, yD, init_rest_time=False):
         if init_rest_time and self.rest_time > 0:

@@ -42,21 +42,19 @@ class MySQL:
 
         :param cmd: 待执行的查询语句
         """
-        # pylint: disable=consider-using-with
-        threadLock.acquire()
-        try:
-            cls.cs.execute(cmd)
-            res = cls.cs.fetchall()
-        except OperationalError as error:
-            threadLock.release()
-            print('query', error)
-            sleep(30)
-            cls()
-            return cls.query(cmd)
-        if len(res) == 1:
-            res = res[0]
-        threadLock.release()
-        return res
+        with threadLock:
+            try:
+                cls.cs.execute(cmd)
+                res = cls.cs.fetchall()
+            except OperationalError as error:
+                threadLock.release()
+                print('query', error)
+                sleep(30)
+                cls()
+                return cls.query(cmd)
+            if len(res) == 1:
+                res = res[0]
+            return res
 
     @classmethod
     def commit(cls):
