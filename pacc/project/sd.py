@@ -61,6 +61,7 @@ class SD(Project):
         self.exit_app()
         self.open_app()
 
+    # pylint: disable=arguments-differ
     def open_app(self):
         """打开APP"""
         self.free_memory()
