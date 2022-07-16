@@ -1,3 +1,4 @@
+"""发送邮件模块"""
 import os
 import smtplib
 from smtplib import SMTPDataError

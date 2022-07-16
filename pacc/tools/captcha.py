@@ -1,3 +1,4 @@
+"""验证码处理模块"""
 import cv2
 import numpy as np
 from random import randint
