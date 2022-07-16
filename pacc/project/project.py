@@ -49,6 +49,7 @@ class Project:
             if self in self.instances:
                 self.instances.remove(self)
 
+    # pylint: disable=too-many-arguments
     def random_swipe(self, x_a, xB, xC, xD, yA, yB, yC, yD, init_rest_time=False):
         """随机滑动一段长度
 
