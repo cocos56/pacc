@@ -31,32 +31,32 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         system('adb reconnect offline')
         self.device = RetrieveMobileInfo(device_sn)
-        if self.device.ID not in get_online_devices():
+        if self.device.id not in get_online_devices():
             if not offline_cnt % 20:
                 EMail(self.device.serial_number).sendOfflineError()
-            print(self.device.serial_number, '不在线，该设备的ID为：', self.device.ID, '，请核对！', sep='')
+            print(self.device.serial_number, '不在线，该设备的ID为：', self.device.id, '，请核对！', sep='')
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn, offline_cnt+1)
-        self.cmd = f'adb -s {self.device.ID} '
+        self.cmd = f'adb -s {self.device.id} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
-        if not self.get_ipv4_address() == self.device.IP:
+        if not self.get_ipv4_address() == self.device.ip:
             UpdateBaseInfo(device_sn).updateIP(self.get_ipv4_address())
             self.device = RetrieveMobileInfo(device_sn)
         if not Config.debug:
             self.reconnect()
-        self.cmd = f'adb -s {self.device.IP} '
+        self.cmd = f'adb -s {self.device.ip} '
         self.uia = UIAutomator(device_sn)
-        if not self.get_model() == self.device.Model:
+        if not self.get_model() == self.device.model:
             UpdateBaseInfo(device_sn).updateModel(self.get_model())
             self.device = RetrieveMobileInfo(device_sn)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
-            if self.device.Model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
+            if self.device.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6)
 
     def get_data_from_clipboard(self):
@@ -160,21 +160,21 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def tcpip(self):
         """restart adbd listening on TCP on PORT"""
-        system(f'adb -s {self.device.ID} tcpip 5555')
+        system(f'adb -s {self.device.id} tcpip 5555')
         sleep(1, False, False)
 
     def connect(self):
         """connect to a device via TCP/IP [default port=5555]"""
         self.tcpip()
-        system(f'adb connect {self.device.IP}')
+        system(f'adb connect {self.device.ip}')
         sleep(6)
-        system(f'adb connect {self.device.IP}')
-        if self.device.IP not in get_online_devices():
+        system(f'adb connect {self.device.ip}')
+        if self.device.ip not in get_online_devices():
             self.reboot_by_id()
 
     def disconnect(self):
         """disconnect from given TCP/IP device [default port=5555], or all"""
-        system(f'adb disconnect {self.device.IP}')
+        system(f'adb disconnect {self.device.ip}')
         sleep(2, False, False)
 
     def reconnect(self):
@@ -185,7 +185,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self):
         """保持在线"""
-        if self.device.IP not in get_online_devices():
+        if self.device.ip not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_number)
 
@@ -256,14 +256,14 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def reboot_by_id(self):
         """通过ID重启指定的设备"""
-        self.reboot_by_cmd(f'adb -s {self.device.ID} reboot')
+        self.reboot_by_cmd(f'adb -s {self.device.id} reboot')
 
     def reboot_by_ip(self):
         """通过IP重启指定的设备"""
-        if self.device.IP not in get_online_devices():
+        if self.device.ip not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_number)
-        self.reboot_by_cmd(f'adb -s {self.device.IP} reboot')
+        self.reboot_by_cmd(f'adb -s {self.device.ip} reboot')
 
     def reboot_per_hour(self, tip='小时'):
         """每小时重启一次设备

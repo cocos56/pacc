@@ -28,16 +28,17 @@ class Retrieve:
 
 class RetrieveMobileInfo(Retrieve):
     """查询手机信息类"""
-    def __init__(self, device_sn):
+    def __init__(self, serial_number):
         """构造函数：初始化查类的对象
 
-        :param device_sn: 设备序列号
+        :param serial_number: 设备序列号
         """
-        super(RetrieveMobileInfo, self).__init__(device_sn)
-        self.IP = self.query('IP')
-        self.ID = self.query('ID')
-        self.Model = self.query('Model')
+        super().__init__(serial_number)
+        self.ip = self.query('IP')
+        self.id = self.query('ID')
+        self.model = self.query('Model')
 
+    # pylint: disable=arguments-differ
     def query(self, field):
         """查询函数：查询数据
 
@@ -50,9 +51,19 @@ class RetrieveMobileInfo(Retrieve):
 class RetrieveKSJSB(Retrieve):
     """查询快手极速版数据类"""
     def __init__(self, serial_number):
-        super().__init__(serial_number)
-        self.goldCoins = self.query('goldCoins')
-        self.cashCoupons = self.query('cashCoupons')
+        """构造函数：初始化查类的对象
 
+        :param serial_number: 设备序列号
+        """
+        super().__init__(serial_number)
+        self.gold_coins = self.query('goldCoins')
+        self.cash_coupons = self.query('cashCoupons')
+
+    # pylint: disable=arguments-differ
     def query(self, field):
+        """查询函数：查询数据
+
+        :param field: 字段名
+        :return: 查询到的结果（单条）
+        """
         return super().query('KSJSB', field)

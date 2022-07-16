@@ -63,19 +63,19 @@ class Project:
 
     def tap_free_button(self):
         """点击清理按钮"""
-        if 'MI 4' in self.adbIns.device.Model:
+        if 'MI 4' in self.adbIns.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'MI 5' in self.adbIns.device.Model:
+        elif 'MI 5' in self.adbIns.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'MI 6' in self.adbIns.device.Model:
+        elif 'MI 6' in self.adbIns.device.model:
             self.uIAIns.click(ResourceID.clearAnimView)
-        elif 'Redmi K20' in self.adbIns.device.Model:
+        elif 'Redmi K20' in self.adbIns.device.model:
             self.uIAIns.click(ResourceID.clearAnimView2)
 
     def reopen_app(self):
         """重新打开APP"""
         self.free_memory()
-        if not Config.debug and 'MI 4' in self.adbIns.device.Model:
+        if not Config.debug and 'MI 4' in self.adbIns.device.model:
             self.adbIns.press_power_key()
             sleep(60)
         self.adbIns.press_home_key()
