@@ -50,24 +50,25 @@ class Project:
                 self.instances.remove(self)
 
     # pylint: disable=too-many-arguments
-    def random_swipe(self, x_a, xB, xC, xD, yA, yB, yC, yD, init_rest_time=False):
+    def random_swipe(self, a_x, b_x, c_x, d_x, a_y, b_y, c_y, d_y, init_rest_time=False):
         """随机滑动一段长度
 
-        :param x_a: A点的X轴坐标
-        :param xB: 是否执行重启APP
-        :param xC: 是否执行重启APP
-        :param xD: 是否执行重启APP
-        :param yA: 是否执行重启APP
-        :param yB: 是否执行重启APP
-        :param yC: 是否执行重启APP
-        :param yD: 是否执行重启APP
-        :param init_rest_time: 是否执行重启APP
+        :param a_x: A点的X轴坐标
+        :param b_x: B点的X轴坐标
+        :param c_x: C点的X轴坐标
+        :param d_x: D点的X轴坐标
+        :param a_y: A点的Y轴坐标
+        :param b_y: B点的Y轴坐标
+        :param c_y: C点的Y轴坐标
+        :param d_y: D点的Y轴坐标
+        :param init_rest_time: 是否初始化剩余时间
         """
         if init_rest_time and self.rest_time > 0:
             self.rest_time = 0
         elif self.rest_time > 0:
             return
-        self.adb_ins.swipe(randint(x_a, xB), randint(yA, yB), randint(xC, xD), randint(yC, yD))
+        self.adb_ins.swipe(randint(a_x, b_x), randint(a_y, b_y), randint(c_x, d_x),
+                           randint(c_y, d_y))
         self.rest_time += randint(3, 15)
 
     def reopen_app_per_hour(self, execute=True):
