@@ -1,7 +1,9 @@
 """验证码处理模块"""
-from cv2 import cv2
-import numpy as np
 from random import randint
+
+import numpy as np
+from cv2 import cv2
+
 from .file import File
 
 
