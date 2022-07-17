@@ -22,10 +22,10 @@ class SliderCaptcha:
         cv2.imwrite(File(png_file).dirPathAndFName + '_cropped.png', cropped_img)
         # 2. 阴影提取
         shadow_img = np.where(np.sum(cropped_img, axis=2) < 250, np.std(cropped_img), 255)
-        shadowPng = File(png_file).dirPathAndFName + '_shadow.png'
-        cv2.imwrite(shadowPng, shadow_img.astype(np.uint8))
+        shadow_png = File(png_file).dirPathAndFName + '_shadow.png'
+        cv2.imwrite(shadow_png, shadow_img.astype(np.uint8))
         # 3. 灰色部分提取
-        image = cv2.imread(shadowPng)
+        image = cv2.imread(shadow_png)
         hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsvImg, lowerb=np.array([0, 0, 46]), upperb=np.array([180, 43, 220]))
         # 4. 图像腐蚀。消除图像边缘小的部分
