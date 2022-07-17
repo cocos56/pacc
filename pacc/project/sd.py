@@ -2,7 +2,7 @@
 from xml.parsers.expat import ExpatError
 
 from .project import Project
-from ..tools import sleep, showDatetime
+from ..tools import sleep, show_datetime
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 
@@ -87,4 +87,4 @@ class SD(Project):
             for i in cls.instances:
                 i.check()
             sleep(600)
-            showDatetime('mainloop')
+            show_datetime('mainloop')

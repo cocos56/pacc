@@ -2,14 +2,17 @@
 from datetime import datetime
 
 
+# pylint: disable=too-few-public-methods
 class Datetime:
     """时间类"""
-    startTime = datetime.now()
+    start_time = datetime.now()
 
     @classmethod
-    def getRunTime(cls):
-        return datetime.now() - cls.startTime
+    def get_run_time(cls):
+        """获取程序自启动以来已运行的时间"""
+        return datetime.now() - cls.start_time
 
 
-def showDatetime(text):
-    print("现在是：%s，正在执行%s，已运行%s\n" % (datetime.now(), text, Datetime.getRunTime()))
+def show_datetime(text):
+    """打印程序自启动以来已运行的时间"""
+    print(f"现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}\n")
