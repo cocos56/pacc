@@ -2,7 +2,7 @@
 from random import randint
 
 import numpy as np
-from cv2 import cv2
+import cv2
 
 from .file import File
 
@@ -26,8 +26,8 @@ class SliderCaptcha:
         cv2.imwrite(shadow_png, shadow_img.astype(np.uint8))
         # 3. 灰色部分提取
         image = cv2.imread(shadow_png)
-        hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        mask = cv2.inRange(hsvImg, lowerb=np.array([0, 0, 46]), upperb=np.array([180, 43, 220]))
+        hsv_img = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        mask = cv2.inRange(hsv_img, lowerb=np.array([0, 0, 46]), upperb=np.array([180, 43, 220]))
         # 4. 图像腐蚀。消除图像边缘小的部分
         # 设置kernel卷积核为 3*3 正方形，8位uchar型，全1结构元素
         kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
