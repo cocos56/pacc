@@ -150,7 +150,6 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def usb(self, timeout=2):
         """restart adbd listening on USB
-
         :param timeout: 超时
         """
         cmd = f'{self.cmd}usb'
@@ -214,7 +213,6 @@ class ADB:  # pylint: disable=too-many-public-methods
     # pylint: disable=too-many-arguments
     def swipe(self, x1_coordinate, y1_coordinate, x2_coordinate, y2_coordinate, duration=-1):
         """滑动
-
         :param x1_coordinate: 起点的x轴坐标值
         :param y1_coordinate: 起点的y轴坐标值
         :param x2_coordinate: 终点的x轴坐标值
@@ -230,7 +228,6 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def long_press(self, x_coordinate, y_coordinate, duration=-1):
         """长按
-
         :param x_coordinate: 点的x轴坐标值
         :param y_coordinate: 点的y轴坐标值
         :param duration: the default duration is a random integer from 1000 to 1500

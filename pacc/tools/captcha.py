@@ -7,6 +7,7 @@ import cv2
 from .file import File
 
 
+# pylint: disable=too-few-public-methods
 class SliderCaptcha:
     """滑块验证码处理模块"""
 
@@ -41,6 +42,6 @@ class SliderCaptcha:
         # 7. 筛选出轮廓最长和次长项
         contours = [i for i in contours if cv2.arcLength(i, True) >= lengths[1]]
         # 8. 输出x
-        x = cv2.minAreaRect(contours[randint(0, 1)])[0][0]
-        print('8. x is', x)
-        return x
+        x_coordinate = cv2.minAreaRect(contours[randint(0, 1)])[0][0]
+        print('8. x is', x_coordinate)
+        return x_coordinate
