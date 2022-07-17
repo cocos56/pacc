@@ -24,4 +24,4 @@ jobs:
         pip install pymysql
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2
+        pylint $(git ls-files '*.py')

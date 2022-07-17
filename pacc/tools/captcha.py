@@ -21,9 +21,9 @@ class SliderCaptcha:
         cropped_img = cv2.imread(png_file)[622:914, 166:914]  # 裁剪坐标为[y0:y1, x0:x1]
         cv2.imwrite(File(png_file).dirPathAndFName + '_cropped.png', cropped_img)
         # 2. 阴影提取
-        shadowImg = np.where(np.sum(cropped_img, axis=2) < 250, np.std(cropped_img), 255)
+        shadow_img = np.where(np.sum(cropped_img, axis=2) < 250, np.std(cropped_img), 255)
         shadowPng = File(png_file).dirPathAndFName + '_shadow.png'
-        cv2.imwrite(shadowPng, shadowImg.astype(np.uint8))
+        cv2.imwrite(shadowPng, shadow_img.astype(np.uint8))
         # 3. 灰色部分提取
         image = cv2.imread(shadowPng)
         hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
