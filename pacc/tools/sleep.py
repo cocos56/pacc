@@ -2,15 +2,21 @@
 import time
 
 
-def sleep(seconds, showProcess=True, showResult=True):
-    if not showProcess:
+def sleep(seconds, show_process=True, show_result=True):
+    """睡眠
+
+    :param seconds: 睡眠的秒数
+    :param show_process: 是否显示睡眠时等待的过程
+    :param show_result: 是否显示睡眠的结果
+    """
+    if not show_process:
         time.sleep(seconds)
     else:
         s = seconds
         while s > 0:
-            print('还剩%s秒' % s, end="")
+            print(f'还剩{s}秒', end="")
             time.sleep(1)
             print("\r", end="", flush=True)
             s -= 1
-    if showResult:
-        print('已完成%s秒的休息' % seconds)
+    if show_result:
+        print(f'已完成{seconds}秒的休息')
