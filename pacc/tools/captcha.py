@@ -15,6 +15,7 @@ class SliderCaptcha:
         """获取滑块中心点的x轴坐标
 
         :param png_file: 图片路径
+        :return: 滑块中心点的x轴坐标
         """
         # 1. 图片剪切
         cropped_img = cv2.imread(png_file)[622:914, 166:914]  # 裁剪坐标为[y0:y1, x0:x1]

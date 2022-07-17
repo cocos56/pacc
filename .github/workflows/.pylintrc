@@ -3,3 +3,4 @@
 # run arbitrary code.
 extension-pkg-whitelist=cv2
 generated-members=numpy.*
+generated-members=cv2.*
