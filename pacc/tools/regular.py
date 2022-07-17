@@ -1,5 +1,5 @@
 """正则模块"""
-from re import compile
+import re
 
 
 def find_all_with_re(data, pattern):
@@ -9,7 +9,7 @@ def find_all_with_re(data, pattern):
     :param pattern: 正则表达式
     :return: 所有符合条件的数据
     """
-    return compile(pattern).findall(data)
+    return re.compile(pattern).findall(data)
 
 
 def find_all_ints_with_re(data):
@@ -18,8 +18,4 @@ def find_all_ints_with_re(data):
     :param data: 待搜索的数据
     :return: 数据中的所有整数
     """
-    r = find_all_with_re(data, r'\-?\d+')
-    res = []
-    for i in r:
-        res.append(int(i))
-    return res
+    return [int(i) for i in find_all_with_re(data, r'\-?\d+')]
