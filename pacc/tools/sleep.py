@@ -12,11 +12,11 @@ def sleep(seconds, show_process=True, show_result=True):
     if not show_process:
         time.sleep(seconds)
     else:
-        s = seconds
-        while s > 0:
-            print(f'还剩{s}秒', end="")
+        rest_seconds = seconds
+        while rest_seconds > 0:
+            print(f'还剩{rest_seconds}秒', end="")
             time.sleep(1)
             print("\r", end="", flush=True)
-            s -= 1
+            rest_seconds -= 1
     if show_result:
         print(f'已完成{seconds}秒的休息')
