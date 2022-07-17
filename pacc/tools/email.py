@@ -37,7 +37,8 @@ class EMail:
         server.quit()  # 关闭连接
         sleep(30)
 
-    def sendOfflineError(self):
+    def send_offline_error(self):
+        """发送掉线提醒"""
         msg = MIMEText(f'感知到{self.serial_num}于{datetime.now()}已掉线', 'plain', 'utf-8')
         msg['From'] = formataddr(("掉线感知中枢", self.user))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
         msg['To'] = formataddr(("Coco56", self.receiver))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
@@ -45,7 +46,8 @@ class EMail:
         print(f'正在发送{self.serial_num}的掉线感知邮件')
         self.send_email(msg)
 
-    def sendVerificationCodeAlarm(self):
+    def send_verification_code_alarm(self):
+        """发送出现验证码提醒"""
         msg = MIMEText(f'感知到{self.serial_num}于{datetime.now()}出现验证码', 'plain', 'utf-8')
         msg['From'] = formataddr(("验证码感知中枢", self.user))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
         msg['To'] = formataddr(("Coco56", self.receiver))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
