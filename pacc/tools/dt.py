@@ -3,6 +3,7 @@ from datetime import datetime
 
 
 class Datetime:
+    """时间类"""
     startTime = datetime.now()
 
     @classmethod
