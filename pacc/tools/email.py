@@ -1,12 +1,12 @@
 """发送邮件模块"""
-import os
 import smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from smtplib import SMTPDataError
 
-from .sleep import sleep
+from ..base import sleep, print_error
+from ..mysql import RetrieveEmail
 
 
 class EMail:
@@ -16,9 +16,8 @@ class EMail:
 
         :param serial_num: 设备编号
         """
-        # self.user = '3039991689@qq.com'
-        self.user = 'coco10069@qq.com'
-        self.password = os.getenv(self.user)
+        self.user = '1679026015@qq.com'
+        self.password = RetrieveEmail(self.user).auth_code
         self.receiver = 'zj175@139.com'
         self.serial_num = serial_num
 
@@ -33,7 +32,7 @@ class EMail:
             # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
             server.sendmail(self.user, [self.receiver, ], msg.as_string())
         except SMTPDataError as error:
-            print(error)
+            print_error(error)
         server.quit()  # 关闭连接
         sleep(30)
 

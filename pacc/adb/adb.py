@@ -5,9 +5,10 @@ from os import popen, system
 from random import randint
 
 from .uia import UIAutomator
+from ..base import print_error, sleep
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
-from ..tools import find_all_with_re, sleep, EMail
+from ..tools import find_all_with_re, EMail
 
 
 def get_online_devices():
@@ -64,8 +65,8 @@ class ADB:  # pylint: disable=too-many-public-methods
 
         :return: 粘贴板上最新的一条数据
         """
-        system(self.cmd + 'shell am startservice ca.zgrs.clipper/.ClipboardService')
-        cmd = self.cmd + 'shell am broadcast -a clipper.get'
+        system(f'{self.cmd}shell am startservice ca.zgrs.clipper/.ClipboardService')
+        cmd = f'{self.cmd}shell am broadcast -a clipper.get'
         try:
             data = find_all_with_re(popen(cmd).read(), '.+data="(.+)"')[0]
         except IndexError as error:
@@ -108,7 +109,12 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def get_current_focus(self):
         """获取当前界面的Activity"""
-        res = popen(self.cmd + 'shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
+        try:
+            res = popen(f'{self.cmd}shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
+        except UnicodeDecodeError as error:
+            print_error(f'{self.device.serial_num} {error}')
+            self.reboot()
+            return self.get_current_focus()
         print(res)
         if res.count('mCurrentFocus=Window{') > 1:
             self.reboot()

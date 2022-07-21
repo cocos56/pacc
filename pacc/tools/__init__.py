@@ -5,7 +5,6 @@ from .dt import show_datetime
 from .email import EMail
 from .file import File
 from .regular import find_all_with_re, find_all_ints_with_re
-from .sleep import sleep
 from .tools import average, get_texts_from_pic, get_urls_from_string, system
 from .xml import get_pretty_xml, get_xml
 
@@ -17,7 +16,6 @@ __all__ = [
     'File',
     "find_all_with_re",
     'find_all_ints_with_re',
-    "sleep",
     'average',
     'get_texts_from_pic',
     'get_urls_from_string',

@@ -4,9 +4,9 @@ from random import randint
 from time import time
 
 from ..adb import ADB, UIAutomator
+from ..base import sleep
 from ..config import Config
 from ..multi import threadLock
-from ..tools import sleep
 
 
 # pylint: disable=too-few-public-methods
