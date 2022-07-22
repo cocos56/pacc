@@ -1,7 +1,6 @@
 """工具包的初始化模块"""
 from .captcha import SliderCaptcha
 from .dir import create_dir
-from .dt import show_datetime
 from .email import EMail
 from .file import File
 from .regular import find_all_with_re, find_all_ints_with_re
@@ -11,7 +10,6 @@ from .xml import get_pretty_xml, get_xml
 __all__ = [
     'SliderCaptcha',
     'create_dir',
-    'show_datetime',
     'EMail',
     'File',
     "find_all_with_re",

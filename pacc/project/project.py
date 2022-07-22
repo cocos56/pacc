@@ -18,7 +18,7 @@ class Activity:
 
 # pylint: disable=too-few-public-methods
 class ResourceID:
-    """资源的鉴别码类"""
+    """资源的ID类"""
     clearAnimView = 'com.android.systemui:id/clearAnimView'  # 内存清理图标
     clearAnimView2 = 'com.miui.home:id/clearAnimView'  # 内存清理图标
 

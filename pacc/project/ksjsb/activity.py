@@ -1,3 +1,4 @@
+"""快手极速版工程包的活动模块"""
 root = 'com.kuaishou.nebula/com.'
 
 AwardFeedFlowActivity = root + 'yxcorp.gifshow.ad.award.flow.AwardFeedFlowActivity'
@@ -11,4 +12,3 @@ TopicDetailActivity = root + 'yxcorp.plugin.tag.topic.TopicDetailActivity'  # �
 MiniAppActivity0 = root + 'mini.app.activity.MiniAppActivity0'  # 小程序
 KRT1Activity = root + 'kwai.frog.game.engine.adapter.engine.base.KRT1Activity'  # 拯救小金鱼游戏
 SearchActivity = 'com.android.quicksearchbox/com.android.quicksearchbox.SearchActivity'
-

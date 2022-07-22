@@ -15,9 +15,17 @@ from ..tools import create_dir, get_pretty_xml, get_xml, find_all_ints_with_re, 
 # pylint: disable=too-few-public-methods
 class Node:
     """节点类"""
-
     # pylint: disable=too-many-arguments
     def __init__(self, resource_id='', text='', content_desc='', bounds='', class_='', index=''):
+        """构造函数
+
+        :param resource_id: 资源的ID
+        :param text: 文本
+        :param content_desc: 描述
+        :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
+        :param class_: 类名
+        :param index: 索引值
+        """
         self.resource_id = resource_id
         self.text = text
         self.content_desc = content_desc

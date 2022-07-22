@@ -1,3 +1,4 @@
+"""快手极速版工程包的资源ID模块"""
 root = 'com.kuaishou.nebula:id/'
 
 award_title_prefix = root + 'award_title_prefix'  # 观看精彩直播，可领
