@@ -170,7 +170,7 @@ class KSJSB(Project):
             sleep(sleep_time)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.enter_wealth_interface(sleep_time=sleep_time + 6)
-            self.uia_ins.getCurrentUIHierarchy()
+            self.uia_ins.get_current_ui_hierarchy()
             print('已进入财富界面')
             if self.uia_ins.click(text='立即领取今日现金'):
                 self.uia_ins.xml = ''
@@ -185,7 +185,7 @@ class KSJSB(Project):
             print_err(err)
             self.enter_wealth_interface(False)
 
-    def enterMyWealthInterface(self, reopen=True):
+    def enter_my_wealth_interface(self, reopen=True):
         """进入我的财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -194,43 +194,43 @@ class KSJSB(Project):
         self.uia_ins.click_by_xml_texts(texts=['可用抵用金(张)', '可用抵用金（张）'])
         sleep(9)
 
-    def updateWealth(self, reopen=True):
+    def update_wealth(self, reopen=True):
         """更新财富值
 
         param reopen: 是否需要重启快手极速版APP
         """
         print('更新财富值')
-        self.enterMyWealthInterface(reopen)
+        self.enter_my_wealth_interface(reopen)
         try:
-            goldCoins, cashCoupons = self.getWealth()
-            if not goldCoins == self.dbr.goldCoins:
-                UpdateKSJSB(self.adb_ins.device.SN).updateGoldCoins(goldCoins)
-            if not cashCoupons == self.dbr.cashCoupons:
-                UpdateKSJSB(self.adb_ins.device.SN).updateCashCoupons(cashCoupons)
+            gold_coins, cash_coupons = self.get_wealth()
+            if not gold_coins == self.dbr.gold_coins:
+                UpdateKSJSB(self.adb_ins.device.SN).update_gold_coins(gold_coins)
+            if not cash_coupons == self.dbr.cash_coupons:
+                UpdateKSJSB(self.adb_ins.device.SN).update_cash_coupons(cash_coupons)
         except FileNotFoundError as err:
             print_err(err)
-            self.updateWealth(False)
+            self.update_wealth(False)
 
-    def getWealth(self):
+    def get_wealth(self):
         """获取财富值"""
         dics = self.uia_ins.getDicts(bounds='[-1,351][-1,459]')
         # print(dics)
-        goldCoins = dics[0]['@text']
-        if 'w' in goldCoins:
-            goldCoins = 10000 * float(goldCoins[:-1])
+        gold_coins = dics[0]['@text']
+        if 'w' in gold_coins:
+            gold_coins = 10000 * float(gold_coins[:-1])
         else:
-            goldCoins = float(goldCoins)
-        cashCoupons = float(dics[1]['@text'])
-        # print(goldCoins, cashCoupons)
-        return goldCoins, cashCoupons
+            gold_coins = float(gold_coins)
+        cash_coupons = float(dics[1]['@text'])
+        # print(gold_coins, cash_coupons)
+        return gold_coins, cash_coupons
 
-    def openApp(self, reopen=True):
+    def open_app(self, reopen=True):
         """打开快手极速版APP
 
         param reopen: 是否需要重启快手极速版APP
         """
         if reopen:
-            super(KSJSB, self).openApp(Activity.HomeActivity)
+            super().open_app(Activity.HomeActivity)
             sleep(19)
         try:
             if self.uia_ins.click(ResourceID.close):
@@ -254,7 +254,7 @@ class KSJSB(Project):
             sleep(6)
             self.reopen_app()
 
-    def initSleepTime(self):
+    def init_sleep_time(self):
         """初始化睡眠时间"""
         print(f'restTime={self.rest_time}')
         if self.rest_time <= 0:
@@ -269,7 +269,7 @@ class KSJSB(Project):
 
     def watch_video(self):
         """看视频"""
-        if self.reopenAppPerHour(False):
+        if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
             self.open_treasure_box()
             self.reopen_app()
@@ -280,7 +280,7 @@ class KSJSB(Project):
                     self.watch_live()
                     self.open_treasure_box()
                     self.sign_in()
-                    self.updateWealth()
+                    self.update_wealth()
                     self.freeMemory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
@@ -296,7 +296,7 @@ class KSJSB(Project):
             elif Activity.SearchActivity in current_focus:
                 self.reopen_app()
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
-            self.initSleepTime()
+            self.init_sleep_time()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.random_swipe(True)
