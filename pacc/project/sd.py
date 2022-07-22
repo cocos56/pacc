@@ -2,8 +2,7 @@
 from xml.parsers.expat import ExpatError
 
 from .project import Project
-from ..base import sleep
-from ..tools import show_datetime
+from ..base import show_datetime, sleep
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 
