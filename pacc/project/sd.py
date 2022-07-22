@@ -17,11 +17,12 @@ class Activity:
 
 # pylint: disable=too-few-public-methods
 class ResourceID:
-    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的资源的鉴别码类"""
+    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的资源ID类"""
     button2 = 'android:id/button2'  # 确定（联机业务异常，请重新联机）、立即连接（连接异常,正在重新连接......）
     button1 = 'android:id/button1'  # 取消
     auto_wait_btn = 'com.dd.rclient:id/auto_wait_btn'
-    mec_connect_state = 'com.dd.rclient:id/mec_connect_state'  # 正在连接服务器...
+    # 连接状态信息：【正在连接服务器...】、【已连接到服务器,等待控制端连接】
+    mec_connect_state = 'com.dd.rclient:id/mec_connect_state'
     btn_exit_app = 'com.dd.rclient:id/btn_exit_app'  # 退出程序
     icon_title = 'com.miui.home:id/icon_title'  # 桌面图标
 
