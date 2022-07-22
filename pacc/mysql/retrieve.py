@@ -7,7 +7,7 @@ class Retrieve:
     """该类用于从MySQL数据库中查询数据"""
 
     # pylint: disable=too-many-arguments
-    def query(self, table, field, aimed_field, value, database=MySQL):
+    def query(self, table, field, aimed_field=1, value=1, database=MySQL):
         """查询函数：查询数据
 
         :param database: 数据库名
@@ -35,7 +35,6 @@ class RetrieveMobile(Retrieve):
         """
         self.serial_num = serial_num
 
-    # pylint: disable=arguments-differ
     def query(self, table, field):
         """查询函数：查询数据
 
