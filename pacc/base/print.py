@@ -1,7 +1,7 @@
 """打印模块"""
 
 
-def print_error(info):
+def print_err(info):
     """打印错误信息
 
     :param info: 待打印的信息

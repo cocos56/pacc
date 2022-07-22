@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 from smtplib import SMTPDataError
 
-from ..base import sleep, print_error
+from ..base import sleep, print_err
 from ..mysql import RetrieveEmail
 
 
@@ -31,8 +31,8 @@ class EMail:
         try:
             # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
             server.sendmail(self.user, [self.receiver, ], msg.as_string())
-        except SMTPDataError as error:
-            print_error(error)
+        except SMTPDataError as err:
+            print_err(err)
         server.quit()  # 关闭连接
         sleep(30)
 

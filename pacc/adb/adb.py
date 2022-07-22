@@ -5,7 +5,7 @@ from os import popen, system
 from random import randint
 
 from .uia import UIAutomator
-from ..base import print_error, sleep
+from ..base import print_err, sleep
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
 from ..tools import find_all_with_re, EMail
@@ -111,8 +111,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         """获取当前界面的Activity"""
         try:
             res = popen(f'{self.cmd}shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
-        except UnicodeDecodeError as error:
-            print_error(f'{self.device.serial_num} {error}')
+        except UnicodeDecodeError as err:
+            print_err(f'{self.device.serial_num} {err}')
             self.reboot()
             return self.get_current_focus()
         print(res)

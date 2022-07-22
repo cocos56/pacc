@@ -4,6 +4,7 @@ ROOT = 'com.kuaishou.nebula/com.'
 
 # pylint: disable=too-few-public-methods
 class Activity:
+    """快手极速版活动名类"""
     AwardFeedFlowActivity = f'{ROOT}yxcorp.gifshow.ad.award.flow.AwardFeedFlowActivity'
     HomeActivity = f'{ROOT}yxcorp.gifshow.HomeActivity'  # 主界面
     PhotoDetailActivity = f'{ROOT}yxcorp.gifshow.detail.PhotoDetailActivity'  # 直播
