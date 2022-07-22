@@ -1,11 +1,9 @@
-"""
-快手极速版程序入口
-"""
+"""快手极速版程序入口模块"""
 from pacc.project import KSJSB
 from pacc.config import Config
 
 
-Config.setDebug(True)
+Config.set_debug(True)
 KSJSB('003001002').enterWealthInterface()
 # KSJSB('003001001').signIn()
 # KSJSB('003001001').getWealth()
