@@ -203,17 +203,17 @@ class KSJSB(Project):
         self.enter_my_wealth_interface(reopen)
         try:
             gold_coins, cash_coupons = self.get_wealth()
-            if not gold_coins == self.dbr.gold_coins:
-                UpdateKSJSB(self.adb_ins.device.SN).update_gold_coins(gold_coins)
-            if not cash_coupons == self.dbr.cash_coupons:
-                UpdateKSJSB(self.adb_ins.device.SN).update_cash_coupons(cash_coupons)
+            if gold_coins != self.dbr.gold_coins:
+                UpdateKSJSB(self.adb_ins.device.serial_num).update_gold_coins(gold_coins)
+            if cash_coupons != self.dbr.cash_coupons:
+                UpdateKSJSB(self.adb_ins.device.serial_num).update_cash_coupons(cash_coupons)
         except FileNotFoundError as err:
             print_err(err)
             self.update_wealth(False)
 
     def get_wealth(self):
         """获取财富值"""
-        dics = self.uia_ins.getDicts(bounds='[-1,351][-1,459]')
+        dics = self.uia_ins.get_dicts(bounds='[-1,351][-1,459]')
         # print(dics)
         gold_coins = dics[0]['@text']
         if 'w' in gold_coins:
@@ -224,6 +224,7 @@ class KSJSB(Project):
         # print(gold_coins, cash_coupons)
         return gold_coins, cash_coupons
 
+    # pylint: disable=arguments-renamed
     def open_app(self, reopen=True):
         """打开快手极速版APP
 
@@ -259,7 +260,7 @@ class KSJSB(Project):
         print(f'restTime={self.rest_time}')
         if self.rest_time <= 0:
             return
-        elif self.uia_ins.get_dict(ResourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
+        if self.uia_ins.get_dict(ResourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
             pass
         elif self.uia_ins.get_dict(ResourceID.open_long_atlas, xml=self.uia_ins.xml):
             pass
@@ -281,7 +282,7 @@ class KSJSB(Project):
                     self.open_treasure_box()
                     self.sign_in()
                     self.update_wealth()
-                    self.freeMemory()
+                    self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
