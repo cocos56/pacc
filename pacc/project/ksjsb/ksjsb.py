@@ -71,14 +71,15 @@ class KSJSB(Project):
                         self.watch_live()
                         return
                     sleep(89)
-                    self.exitLive()
+                    self.exit_live()
                 else:
                     break
             except FileNotFoundError as err:
                 print_err(err)
                 self.watch_live()
 
-    def exitLive(self):
+    def exit_live(self):
+        """退出直播界面"""
         print(f'exit_live_cnt={self.exit_live_cnt}')
         self.exit_live_cnt += 1
         if self.exit_live_cnt >= 10:
@@ -97,36 +98,37 @@ class KSJSB(Project):
             self.uia_ins.click(ResourceID.exit_btn, xml=self.uia_ins.xml)
         except FileNotFoundError as err:
             print_err(err)
-            self.exitLive()
+            self.exit_live()
         if Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
-            self.exitLive()
+            self.exit_live()
         self.exit_live_cnt = 0
 
-    def viewAds(self):
+    def view_ads(self):
+        """看广告"""
         self.enterWealthInterface()
         self.randomSwipe(True)
         print('看广告')
         while True:
             try:
                 if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                    self.viewAds()
+                    self.view_ads()
                     return
-                elif self.uia_ins.clickByXMLTexts(['观看广告单日最高可得',
-                                                   '每次100金币，每天1000金币']):
+                elif self.uia_ins.clickByXMLTexts(['观看广告单日最高可得', '每次100金币，每天1000金币']):
                     sleep(50)
                     self.adb_ins.press_back_key()
                     if Activity.HomeActivity not in self.adb_ins.get_current_focus():
                         self.enterWealthInterface()
                         print('等待看广告')
                         sleep(1200)
-                        self.viewAds()
+                        self.view_ads()
                 else:
                     break
             except FileNotFoundError as err:
                 print_err(err)
-                self.viewAds()
+                self.view_ads()
 
-    def signIn(self):
+    def sign_in(self):
+        """签到"""
         self.enterWealthInterface()
         print('签到')
         if not self.uia_ins.getDict(text='今天签到可领'):
@@ -135,12 +137,13 @@ class KSJSB(Project):
             while self.uia_ins.getCP(text='今天签到可领') == (0, 0):
                 self.randomSwipe(True)
             self.uia_ins.click(text='今天签到可领')
-            self.afterSignIn()
+            self.after_sign_in()
         except FileNotFoundError as err:
             print_err(err)
-            self.signIn()
+            self.sign_in()
 
-    def afterSignIn(self):
+    def after_sign_in(self):
+        """执行签到之后"""
         if self.uia_ins.click('', '打开签到提醒'):  # 需要授权
             self.uia_ins.xml = ''
         elif self.uia_ins.click('', '看广告再得', xml=self.uia_ins.xml):
@@ -170,7 +173,7 @@ class KSJSB(Project):
                 return
             if self.uia_ins.clickByXMLTexts(texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
-                self.afterSignIn()
+                self.after_sign_in()
             if self.uia_ins.click(bounds=Bounds.closeCongratulations, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
@@ -234,8 +237,8 @@ class KSJSB(Project):
             self.reopenApp()
 
     def initSleepTime(self):
-        print(f'restTime={self.restTime}')
-        if self.restTime <= 0:
+        print(f'restTime={self.rest_time}')
+        if self.rest_time <= 0:
             return
         elif self.uia_ins.getDict(ResourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
             pass
@@ -243,7 +246,7 @@ class KSJSB(Project):
             pass
         else:
             return
-        self.restTime = 0
+        self.rest_time = 0
 
     def watchVideo(self):
         if self.reopenAppPerHour(False):
@@ -253,44 +256,45 @@ class KSJSB(Project):
         try:
             if datetime.now().hour > 5 and self.uia_ins.getDict(ResourceID.red_packet_anim):
                 if not self.uia_ins.getDict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
-                    self.viewAds()
+                    self.view_ads()
                     self.watch_live()
                     self.open_treasure_box()
-                    self.signIn()
+                    self.sign_in()
                     self.updateWealth()
                     self.freeMemory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
-            currentFocus = self.adb_ins.get_current_focus()
-            if Activity.PhotoDetailActivity in currentFocus:
-                self.exitLive()
+            current_focus = self.adb_ins.get_current_focus()
+            if Activity.PhotoDetailActivity in current_focus:
+                self.exit_live()
                 self.randomSwipe(True)
-            elif Activity.UserProfileActivity in currentFocus:
+            elif Activity.UserProfileActivity in current_focus:
                 self.adb_ins.press_back_key()
-            elif Activity.KwaiYodaWebViewActivity in currentFocus:
+            elif Activity.KwaiYodaWebViewActivity in current_focus:
                 self.adb_ins.press_back_key()
-            elif Activity.SearchActivity in currentFocus:
+            elif Activity.SearchActivity in current_focus:
                 self.reopenApp()
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             self.initSleepTime()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.randomSwipe(True)
-        self.restTime = self.restTime + self.lastTime - time()
-        self.lastTime = time()
+        self.rest_time = self.rest_time + self.last_time - time()
+        self.last_time = time()
         self.randomSwipe()
         self.uia_ins.xml = ''
 
-    def randomSwipe(self, initRestTime=False):
-        super().randomSwipe(360, 390, 360, 390, 1160, 1190, 260, 290, initRestTime)
+    def randomSwipe(self, init_rest_time=False):
+        super().random_swipe(360, 390, 360, 390, 1160, 1190, 260, 290, init_rest_time)
 
     def mainloop(self):
+        """主循环"""
         while True:
             if datetime.now().day == self.start_day:
                 self.watchVideo()
             else:
                 self.open_treasure_box()
-                self.viewAds()
+                self.view_ads()
                 break
             show_datetime('ksjsb.mainloop')
