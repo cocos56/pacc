@@ -3,7 +3,9 @@ from datetime import datetime, timedelta
 from time import time
 from xml.parsers.expat import ExpatError
 
-from . import resourceID, activity, bounds
+from .activity import Activity
+from .bounds import Bounds
+from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKSJSB, UpdateKSJSB
@@ -16,12 +18,13 @@ class KSJSB(Project):
 
         :param serial_num: 设备编号
         """
-        super(KSJSB, self).__init__(serial_num)
+        super().__init__(serial_num)
         self.start_day = datetime.now().day
         self.dbr = RetrieveKSJSB(serial_num)
         self.exit_live_cnt = 0
 
     def shopping(self):
+        """逛街"""
         self.enterWealthInterface()
         print('逛街')
         try:
@@ -30,7 +33,8 @@ class KSJSB(Project):
             print_err(err)
             self.shopping()
 
-    def openTreasureBox(self):
+    def open_treasure_box(self):
+        """开宝箱"""
         # 60*5, 60*9, 1200
         self.enterWealthInterface()
         print('开宝箱')
@@ -39,13 +43,14 @@ class KSJSB(Project):
                 if self.uia_ins.clickByXMLTexts(['去看视频再赚', '看精彩视频赚更多', '金币看视频就赚']):
                     sleep(60)
                     self.adb_ins.press_back_key()
-                    self.uia_ins.click(resourceID.award_video_close_dialog_abandon_button)
+                    self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
                 self.uia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
-            self.openTreasureBox()
+            self.open_treasure_box()
 
-    def watchLive(self):
+    def watch_live(self):
+        """看直播"""
         self.enterWealthInterface()
         self.randomSwipe(True)
         print('看直播')
@@ -54,16 +59,16 @@ class KSJSB(Project):
                 while self.uia_ins.getCP(text='live_activity_download') == (0, 0):
                     self.randomSwipe(True)
                 if not self.uia_ins.getDict(text='live_activity_download', xml=self.uia_ins.xml):
-                    self.watchLive()
+                    self.watch_live()
                     return
                 if self.uia_ins.clickByXMLTexts(['观看精彩直播得110金币', '每次110金币'],
                                                 xml=self.uia_ins.xml):
                     sleep(6)
-                    if self.uia_ins.getDict(resourceID.award_title_prefix):
-                        self.uia_ins.click(resourceID.nick)
+                    if self.uia_ins.getDict(ResourceID.award_title_prefix):
+                        self.uia_ins.click(ResourceID.nick)
                     sleep(20)
-                    if activity.PhotoDetailActivity not in self.adb_ins.get_current_focus():
-                        self.watchLive()
+                    if Activity.PhotoDetailActivity not in self.adb_ins.get_current_focus():
+                        self.watch_live()
                         return
                     sleep(89)
                     self.exitLive()
@@ -71,7 +76,7 @@ class KSJSB(Project):
                     break
             except FileNotFoundError as err:
                 print_err(err)
-                self.watchLive()
+                self.watch_live()
 
     def exitLive(self):
         print(f'exit_live_cnt={self.exit_live_cnt}')
@@ -82,18 +87,18 @@ class KSJSB(Project):
             return
         self.adb_ins.press_back_key()
         cf = self.adb_ins.get_current_focus()
-        if activity.AwardFeedFlowActivity in cf:
+        if Activity.AwardFeedFlowActivity in cf:
             self.adb_ins.press_back_key()
-        if activity.PhotoDetailActivity not in cf:
+        if Activity.PhotoDetailActivity not in cf:
             return
         try:
-            if self.uia_ins.click(resourceID.live_exit_button):
+            if self.uia_ins.click(ResourceID.live_exit_button):
                 self.uia_ins.xml = ''
-            self.uia_ins.click(resourceID.exit_btn, xml=self.uia_ins.xml)
+            self.uia_ins.click(ResourceID.exit_btn, xml=self.uia_ins.xml)
         except FileNotFoundError as err:
             print_err(err)
             self.exitLive()
-        if activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
+        if Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
             self.exitLive()
         self.exit_live_cnt = 0
 
@@ -103,14 +108,14 @@ class KSJSB(Project):
         print('看广告')
         while True:
             try:
-                if activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+                if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                     self.viewAds()
                     return
                 elif self.uia_ins.clickByXMLTexts(['观看广告单日最高可得',
                                                    '每次100金币，每天1000金币']):
                     sleep(50)
                     self.adb_ins.press_back_key()
-                    if activity.HomeActivity not in self.adb_ins.get_current_focus():
+                    if Activity.HomeActivity not in self.adb_ins.get_current_focus():
                         self.enterWealthInterface()
                         print('等待看广告')
                         sleep(1200)
@@ -149,13 +154,13 @@ class KSJSB(Project):
         if reopen:
             self.reopenApp()
         try:
-            if not self.uia_ins.click(resourceID.red_packet_anim, xml=self.uia_ins.xml) and \
-                    activity.MiniAppActivity0 in self.adb_ins.get_current_focus():
+            if not self.uia_ins.click(ResourceID.red_packet_anim, xml=self.uia_ins.xml) and \
+                    Activity.MiniAppActivity0 in self.adb_ins.get_current_focus():
                 self.randomSwipe(True)
                 self.enterWealthInterface(False)
                 return
             sleep(sleepTime)
-            if activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+            if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.enterWealthInterface(sleepTime=sleepTime + 6)
             self.uia_ins.getCurrentUIHierarchy()
             print('已进入财富界面')
@@ -166,7 +171,7 @@ class KSJSB(Project):
             if self.uia_ins.clickByXMLTexts(texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.afterSignIn()
-            if self.uia_ins.click(bounds=bounds.closeCongratulations, xml=self.uia_ins.xml):
+            if self.uia_ins.click(bounds=Bounds.closeCongratulations, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
@@ -204,20 +209,20 @@ class KSJSB(Project):
 
     def openApp(self, reopen=True):
         if reopen:
-            super(KSJSB, self).openApp(activity.HomeActivity)
+            super(KSJSB, self).openApp(Activity.HomeActivity)
             sleep(19)
         try:
-            if self.uia_ins.click(resourceID.close):
+            if self.uia_ins.click(ResourceID.close):
                 self.uia_ins.xml = ''
-            if self.uia_ins.click(resourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
+            if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
-            if self.uia_ins.click(resourceID.positive, xml=self.uia_ins.xml):
+            if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
-            if self.uia_ins.click(resourceID.tv_upgrade_now, xml=self.uia_ins.xml):
+            if self.uia_ins.click(ResourceID.tv_upgrade_now, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.adb_ins.press_back_key()
-            while not self.uia_ins.getDict(resourceID.red_packet_anim, xml=self.uia_ins.xml):
-                if activity.HomeActivity not in self.adb_ins.get_current_focus():
+            while not self.uia_ins.getDict(ResourceID.red_packet_anim, xml=self.uia_ins.xml):
+                if Activity.HomeActivity not in self.adb_ins.get_current_focus():
                     self.reopenApp()
                     return
                 self.randomSwipe(True)
@@ -232,9 +237,9 @@ class KSJSB(Project):
         print(f'restTime={self.restTime}')
         if self.restTime <= 0:
             return
-        elif self.uia_ins.getDict(resourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
+        elif self.uia_ins.getDict(ResourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
             pass
-        elif self.uia_ins.getDict(resourceID.open_long_atlas, xml=self.uia_ins.xml):
+        elif self.uia_ins.getDict(ResourceID.open_long_atlas, xml=self.uia_ins.xml):
             pass
         else:
             return
@@ -243,14 +248,14 @@ class KSJSB(Project):
     def watchVideo(self):
         if self.reopenAppPerHour(False):
             self.adb_ins.keep_online()
-            self.openTreasureBox()
+            self.open_treasure_box()
             self.reopenApp()
         try:
-            if datetime.now().hour > 5 and self.uia_ins.getDict(resourceID.red_packet_anim):
-                if not self.uia_ins.getDict(resourceID.cycle_progress, xml=self.uia_ins.xml):
+            if datetime.now().hour > 5 and self.uia_ins.getDict(ResourceID.red_packet_anim):
+                if not self.uia_ins.getDict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.viewAds()
-                    self.watchLive()
-                    self.openTreasureBox()
+                    self.watch_live()
+                    self.open_treasure_box()
                     self.signIn()
                     self.updateWealth()
                     self.freeMemory()
@@ -258,16 +263,16 @@ class KSJSB(Project):
                     self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
             currentFocus = self.adb_ins.get_current_focus()
-            if activity.PhotoDetailActivity in currentFocus:
+            if Activity.PhotoDetailActivity in currentFocus:
                 self.exitLive()
                 self.randomSwipe(True)
-            elif activity.UserProfileActivity in currentFocus:
+            elif Activity.UserProfileActivity in currentFocus:
                 self.adb_ins.press_back_key()
-            elif activity.KwaiYodaWebViewActivity in currentFocus:
+            elif Activity.KwaiYodaWebViewActivity in currentFocus:
                 self.adb_ins.press_back_key()
-            elif activity.SearchActivity in currentFocus:
+            elif Activity.SearchActivity in currentFocus:
                 self.reopenApp()
-            self.uia_ins.click(resourceID.button2, xml=self.uia_ins.xml)
+            self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             self.initSleepTime()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
@@ -285,7 +290,7 @@ class KSJSB(Project):
             if datetime.now().day == self.start_day:
                 self.watchVideo()
             else:
-                self.openTreasureBox()
+                self.open_treasure_box()
                 self.viewAds()
                 break
             show_datetime('ksjsb.mainloop')
