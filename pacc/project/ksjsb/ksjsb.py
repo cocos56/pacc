@@ -5,7 +5,7 @@ from xml.parsers.expat import ExpatError
 
 from . import resourceID, activity, bounds
 from ..project import Project
-from ...base import sleep, show_datetime
+from ...base import sleep, show_datetime, print_error
 from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 
@@ -63,8 +63,8 @@ class KSJSB(Project):
                     self.exitLive()
                 else:
                     break
-            except FileNotFoundError as e:
-                print(e)
+            except FileNotFoundError as error:
+                print_error(error)
                 self.watchLive()
 
     def exitLive(self):
@@ -84,8 +84,8 @@ class KSJSB(Project):
             if self.uia_ins.click(resourceID.live_exit_button):
                 self.uia_ins.xml = ''
             self.uia_ins.click(resourceID.exit_btn, xml=self.uia_ins.xml)
-        except FileNotFoundError as e:
-            print(e)
+        except FileNotFoundError as error:
+            print_error(error)
             self.exitLive()
         if activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
             self.exitLive()
@@ -111,8 +111,8 @@ class KSJSB(Project):
                         self.viewAds()
                 else:
                     break
-            except FileNotFoundError as e:
-                print(e)
+            except FileNotFoundError as error:
+                print_error(error)
                 self.viewAds()
 
     def signIn(self):
@@ -125,8 +125,8 @@ class KSJSB(Project):
                 self.randomSwipe(True)
             self.uia_ins.click(text='今天签到可领')
             self.afterSignIn()
-        except FileNotFoundError as e:
-            print(e)
+        except FileNotFoundError as error:
+            print_error(error)
             self.signIn()
 
     def afterSignIn(self):
@@ -162,8 +162,8 @@ class KSJSB(Project):
                 self.afterSignIn()
             if self.uia_ins.click(bounds=bounds.closeCongratulations, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
-        except (FileNotFoundError, ExpatError) as e:
-            print(e)
+        except (FileNotFoundError, ExpatError) as error:
+            print_error(error)
             self.enterWealthInterface(False)
 
     def enterMyWealthInterface(self, reopen=True):
@@ -180,8 +180,8 @@ class KSJSB(Project):
                 UpdateKSJSB(self.adb_ins.device.SN).updateGoldCoins(goldCoins)
             if not cashCoupons == self.dbr.cashCoupons:
                 UpdateKSJSB(self.adb_ins.device.SN).updateCashCoupons(cashCoupons)
-        except FileNotFoundError as e:
-            print(e)
+        except FileNotFoundError as error:
+            print_error(error)
             self.updateWealth(False)
 
     def getWealth(self):
@@ -216,14 +216,14 @@ class KSJSB(Project):
                     return
                 self.randomSwipe(True)
                 self.uia_ins.xml = ''
-        except (FileNotFoundError, ExpatError) as e:
-            print(e)
+        except (FileNotFoundError, ExpatError) as error:
+            print_error(error)
             self.randomSwipe(True)
             sleep(6)
             self.reopenApp()
 
     def initSleepTime(self):
-        print('restTime=%s' % self.restTime)
+        print(f'restTime={self.restTime}')
         if self.restTime <= 0:
             return
         elif self.uia_ins.getDict(resourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
@@ -263,8 +263,8 @@ class KSJSB(Project):
                 self.reopenApp()
             self.uia_ins.click(resourceID.button2, xml=self.uia_ins.xml)
             self.initSleepTime()
-        except (FileNotFoundError, ExpatError) as e:
-            print(e)
+        except (FileNotFoundError, ExpatError) as error:
+            print_error(error)
             self.randomSwipe(True)
         self.restTime = self.restTime + self.lastTime - time()
         self.lastTime = time()
