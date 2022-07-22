@@ -3,6 +3,7 @@ from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import show_datetime, sleep
+from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 
@@ -30,12 +31,13 @@ class SD(Project):
 
     instances = []
 
-    def __init__(self, device_sn):
+    def __init__(self, serial_num):
         """构造函数
 
-        :param device_sn: 设备编号
+        :param serial_num: 设备编号
         """
-        super().__init__(device_sn)
+        self.serial_num = serial_num
+        super().__init__(serial_num)
 
     def check(self):
         """检查"""
@@ -51,6 +53,8 @@ class SD(Project):
             elif Activity.LoginActivity in current_focus:
                 self.adb_ins.reboot()
                 self.open_app()
+                if Activity.LoginActivity in self.adb_ins.get_current_focus():
+                    EMail(self.serial_num).send_offline_error()
         except (FileNotFoundError, ExpatError) as err:
             print(err)
             sleep(60)

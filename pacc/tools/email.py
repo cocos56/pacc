@@ -53,3 +53,12 @@ class EMail:
         msg['Subject'] = f"{self.serial_num}出现验证码，请处理"  # 邮件的主题，也可以说是标题
         print(f'正在发送{self.serial_num}的验证码感知邮件')
         self.send_email(msg)
+
+    def send_login_alarm(self):
+        """发送出现登录界面提醒"""
+        msg = MIMEText(f'感知到{self.serial_num}于{datetime.now()}出现登录界面', 'plain', 'utf-8')
+        msg['From'] = formataddr(("登录界面感知中枢", self.user))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+        msg['To'] = formataddr(("Coco56", self.receiver))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
+        msg['Subject'] = f"{self.serial_num}出现登录界面，请处理"  # 邮件的主题，也可以说是标题
+        print(f'正在发送{self.serial_num}的登录界面感知邮件')
+        self.send_email(msg)
