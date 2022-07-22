@@ -55,6 +55,7 @@ class SD(Project):
                 self.open_app()
                 if Activity.LoginActivity in self.adb_ins.get_current_focus():
                     EMail(self.serial_num).send_offline_error()
+                    sleep(600)
         except (FileNotFoundError, ExpatError) as err:
             print(err)
             sleep(60)
