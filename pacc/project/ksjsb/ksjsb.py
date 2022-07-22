@@ -286,6 +286,7 @@ class KSJSB(Project):
         self.random_swipe()
         self.uia_ins.xml = ''
 
+    # pylint: disable=arguments-differ
     def random_swipe(self, init_rest_time=False):
         """随机滑动一段长度
 

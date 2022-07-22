@@ -2,7 +2,9 @@
 ROOT = 'com.kuaishou.nebula:id/'
 
 
+# pylint: disable=too-few-public-methods
 class ResourceID:
+    """快手极速版的安卓资源ID类"""
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     # 放弃奖励
     award_video_close_dialog_abandon_button = f'{ROOT}award_video_close_dialog_abandon_button'
