@@ -17,10 +17,9 @@ class KSJSB(Project):
         :param serial_num: 设备编号
         """
         super(KSJSB, self).__init__(serial_num)
-        self.startDay = datetime.now().day
+        self.start_day = datetime.now().day
         self.dbr = RetrieveKSJSB(serial_num)
-        self.currentFocus = ''
-        self.exitLiveCnt = 0
+        self.exit_live_cnt = 0
 
     def shopping(self):
         self.enterWealthInterface()
@@ -75,11 +74,11 @@ class KSJSB(Project):
                 self.watchLive()
 
     def exitLive(self):
-        print('exitLiveCnt=%d' % self.exitLiveCnt)
-        self.exitLiveCnt += 1
-        if self.exitLiveCnt >= 10:
+        print(f'exit_live_cnt={self.exit_live_cnt}')
+        self.exit_live_cnt += 1
+        if self.exit_live_cnt >= 10:
             self.reopenApp()
-            self.exitLiveCnt = 0
+            self.exit_live_cnt = 0
             return
         self.adb_ins.press_back_key()
         cf = self.adb_ins.get_current_focus()
@@ -96,7 +95,7 @@ class KSJSB(Project):
             self.exitLive()
         if activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
             self.exitLive()
-        self.exitLiveCnt = 0
+        self.exit_live_cnt = 0
 
     def viewAds(self):
         self.enterWealthInterface()
@@ -256,7 +255,7 @@ class KSJSB(Project):
                     self.updateWealth()
                     self.freeMemory()
                     self.adb_ins.press_power_key()
-                    self.startDay = (datetime.now() + timedelta(days=1)).day
+                    self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
             currentFocus = self.adb_ins.get_current_focus()
             if activity.PhotoDetailActivity in currentFocus:
@@ -283,7 +282,7 @@ class KSJSB(Project):
 
     def mainloop(self):
         while True:
-            if datetime.now().day == self.startDay:
+            if datetime.now().day == self.start_day:
                 self.watchVideo()
             else:
                 self.openTreasureBox()
