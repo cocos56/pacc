@@ -6,7 +6,8 @@ from .mysql import MySQL, Mobile, Account
 class Retrieve:
     """该类用于从MySQL数据库中查询数据"""
 
-    def query(self, database=MySQL, table='', field='', aimed_field='', value=''):
+    # pylint: disable=too-many-arguments
+    def query(self, table, field, aimed_field, value, database=MySQL):
         """查询函数：查询数据
 
         :param database: 数据库名
@@ -34,6 +35,7 @@ class RetrieveMobile(Retrieve):
         """
         self.serial_num = serial_num
 
+    # pylint: disable=arguments-differ
     def query(self, table, field):
         """查询函数：查询数据
 
@@ -41,7 +43,7 @@ class RetrieveMobile(Retrieve):
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        return super().query(Mobile, table, field, 'SN', self.serial_num)
+        return super().query(table, field, 'SN', self.serial_num, Mobile)
 
 
 class RetrieveMobileInfo(RetrieveMobile):
@@ -97,6 +99,7 @@ class RetrieveAccount(Retrieve):
         """
         self.username = username
 
+    # pylint: disable=arguments-differ
     def query(self, table, field):
         """查询函数：查询数据
 
@@ -104,7 +107,7 @@ class RetrieveAccount(Retrieve):
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        return super().query(Account, table, field, 'username', f"'{self.username}'")
+        return super().query(table, field, 'username', f"'{self.username}'", Account)
 
 
 class RetrieveEmail(RetrieveAccount):
