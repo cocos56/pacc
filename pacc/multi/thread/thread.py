@@ -1,5 +1,6 @@
 """多线程模块"""
 import threading
+
 from ...base import sleep
 
 threadLock = threading.Lock()
