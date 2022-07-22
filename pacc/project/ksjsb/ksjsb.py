@@ -10,6 +10,7 @@ from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 
 class KSJSB(Project):
+    """快手极速版类"""
     def __init__(self, deviceSN):
         super(KSJSB, self).__init__(deviceSN)
         self.startDay = datetime.now().day
