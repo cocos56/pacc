@@ -11,10 +11,14 @@ from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 class KSJSB(Project):
     """快手极速版类"""
-    def __init__(self, deviceSN):
-        super(KSJSB, self).__init__(deviceSN)
+    def __init__(self, serial_num):
+        """构造函数
+
+        :param serial_num: 设备编号
+        """
+        super(KSJSB, self).__init__(serial_num)
         self.startDay = datetime.now().day
-        self.dbr = RetrieveKSJSB(deviceSN)
+        self.dbr = RetrieveKSJSB(serial_num)
         self.currentFocus = ''
         self.exitLiveCnt = 0
 
