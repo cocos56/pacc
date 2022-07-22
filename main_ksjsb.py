@@ -4,7 +4,7 @@ from pacc.config import Config
 
 
 Config.set_debug(True)
-KSJSB('003001002').enterWealthInterface()
+KSJSB('003001002').enter_wealth_interface()
 # KSJSB('003001001').signIn()
 # KSJSB('003001001').getWealth()
 # KSJSB('003001002').getWealth()

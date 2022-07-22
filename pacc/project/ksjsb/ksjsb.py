@@ -25,7 +25,7 @@ class KSJSB(Project):
 
     def shopping(self):
         """逛街"""
-        self.enterWealthInterface()
+        self.enter_wealth_interface()
         print('逛街')
         try:
             self.uia_ins.click(text='浏览低价商品领金币')
@@ -36,7 +36,7 @@ class KSJSB(Project):
     def open_treasure_box(self):
         """开宝箱"""
         # 60*5, 60*9, 1200
-        self.enterWealthInterface()
+        self.enter_wealth_interface()
         print('开宝箱')
         try:
             if self.uia_ins.click(text='开宝箱得金币', xml=self.uia_ins.xml):
@@ -51,7 +51,7 @@ class KSJSB(Project):
 
     def watch_live(self):
         """看直播"""
-        self.enterWealthInterface()
+        self.enter_wealth_interface()
         self.random_swipe(True)
         print('看直播')
         while True:
@@ -105,7 +105,7 @@ class KSJSB(Project):
 
     def view_ads(self):
         """看广告"""
-        self.enterWealthInterface()
+        self.enter_wealth_interface()
         self.random_swipe(True)
         print('看广告')
         while True:
@@ -117,7 +117,7 @@ class KSJSB(Project):
                     sleep(50)
                     self.adb_ins.press_back_key()
                     if Activity.HomeActivity not in self.adb_ins.get_current_focus():
-                        self.enterWealthInterface()
+                        self.enter_wealth_interface()
                         print('等待看广告')
                         sleep(1200)
                         self.view_ads()
@@ -129,7 +129,7 @@ class KSJSB(Project):
 
     def sign_in(self):
         """签到"""
-        self.enterWealthInterface()
+        self.enter_wealth_interface()
         print('签到')
         if not self.uia_ins.get_dict(text='今天签到可领'):
             return
@@ -151,25 +151,30 @@ class KSJSB(Project):
             self.adb_ins.press_back_key()
             self.uia_ins.xml = ''
         if self.uia_ins.get_dict(text='邀请好友赚更多'):
-            self.enterWealthInterface()
+            self.enter_wealth_interface()
 
-    def enterWealthInterface(self, reopen=True, sleepTime=16):
+    def enter_wealth_interface(self, reopen=True, sleep_time=16):
+        """进入财富界面
+
+        param reopen: 是否需要重启快手极速版APP
+        param sleep_time: 睡眠时间
+        """
         if reopen:
             self.reopen_app()
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim, xml=self.uia_ins.xml) and \
                     Activity.MiniAppActivity0 in self.adb_ins.get_current_focus():
                 self.random_swipe(True)
-                self.enterWealthInterface(False)
+                self.enter_wealth_interface(False)
                 return
-            sleep(sleepTime)
+            sleep(sleep_time)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                self.enterWealthInterface(sleepTime=sleepTime + 6)
+                self.enter_wealth_interface(sleep_time=sleep_time + 6)
             self.uia_ins.getCurrentUIHierarchy()
             print('已进入财富界面')
             if self.uia_ins.click(text='立即领取今日现金'):
                 self.uia_ins.xml = ''
-                self.enterWealthInterface()
+                self.enter_wealth_interface()
                 return
             if self.uia_ins.click_by_xml_texts(texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
@@ -178,14 +183,22 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            self.enterWealthInterface(False)
+            self.enter_wealth_interface(False)
 
     def enterMyWealthInterface(self, reopen=True):
-        self.enterWealthInterface(reopen)
+        """进入我的财富界面
+
+        param reopen: 是否需要重启快手极速版APP
+        """
+        self.enter_wealth_interface(reopen)
         self.uia_ins.click_by_xml_texts(texts=['可用抵用金(张)', '可用抵用金（张）'])
         sleep(9)
 
     def updateWealth(self, reopen=True):
+        """更新财富值
+
+        param reopen: 是否需要重启快手极速版APP
+        """
         print('更新财富值')
         self.enterMyWealthInterface(reopen)
         try:
@@ -199,6 +212,7 @@ class KSJSB(Project):
             self.updateWealth(False)
 
     def getWealth(self):
+        """获取财富值"""
         dics = self.uia_ins.getDicts(bounds='[-1,351][-1,459]')
         # print(dics)
         goldCoins = dics[0]['@text']
@@ -211,6 +225,10 @@ class KSJSB(Project):
         return goldCoins, cashCoupons
 
     def openApp(self, reopen=True):
+        """打开快手极速版APP
+
+        param reopen: 是否需要重启快手极速版APP
+        """
         if reopen:
             super(KSJSB, self).openApp(Activity.HomeActivity)
             sleep(19)
@@ -237,6 +255,7 @@ class KSJSB(Project):
             self.reopen_app()
 
     def initSleepTime(self):
+        """初始化睡眠时间"""
         print(f'restTime={self.rest_time}')
         if self.rest_time <= 0:
             return
