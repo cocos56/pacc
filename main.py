@@ -1,6 +1,7 @@
 """程序入口模块"""
 from pacc.adb import ADB, UIAutomator
 from pacc.config import Config
+# pylint: disable=unused-import
 from pacc.tools import EMail
 
 Config.set_debug(True)
