@@ -8,4 +8,4 @@ DEVICE_SN = '001001005'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 # uia_ins.get_current_ui_hierarchy()
-print(EMail(DEVICE_SN).password)
+EMail(DEVICE_SN).send_login_alarm()
