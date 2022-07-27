@@ -5,6 +5,9 @@ ROOT = 'com.kuaishou.nebula:id/'
 # pylint: disable=too-few-public-methods
 class ResourceID:
     """快手极速版的安卓资源ID类"""
+    # 【观看视频页面】
+    item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
+
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     # 放弃奖励
     award_video_close_dialog_abandon_button = f'{ROOT}award_video_close_dialog_abandon_button'
@@ -17,7 +20,7 @@ class ResourceID:
     dialog_close = f'{ROOT}dialog_close'  # 关闭电商购物优惠券
     description = f'{ROOT}description'  # 网络连接失败，请稍后重试
     left_btn = f'{ROOT}left_btn'  # 主界面左上角菜单项
-    negative = 'com.kuaishou.nebula:id/negative'  # 忽略（打开推送通知，对方有更新时，第一时间获得提醒。）
+    negative = f'{ROOT}negative'  # 忽略（打开推送通知，对方有更新时，第一时间获得提醒。）
     nick = f'{ROOT}nick'  # 看直播页面主播昵称
     red_packet_anim = f'{ROOT}red_packet_anim'  # 主界面右上方红包图标
     gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋

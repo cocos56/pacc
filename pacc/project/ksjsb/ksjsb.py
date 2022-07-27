@@ -213,15 +213,18 @@ class KSJSB(Project):
 
     def get_wealth(self):
         """获取财富值"""
-        dics = self.uia_ins.get_dicts(bounds='[-1,351][-1,459]')
+        print('正在获取财富值')
+        dics = self.uia_ins.get_dict(index='0', text='我的收益')['node']
         # print(dics)
-        gold_coins = dics[0]['@text']
+        # for i, v in enumerate(dics):
+        #     print(i, v)
+        gold_coins = dics[2]['@text']
         if 'w' in gold_coins:
             gold_coins = 10000 * float(gold_coins[:-1])
         else:
             gold_coins = float(gold_coins)
-        cash_coupons = float(dics[1]['@text'])
-        # print(gold_coins, cash_coupons)
+        cash_coupons = float(dics[7]['@text'])
+        print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
         return gold_coins, cash_coupons
 
     # pylint: disable=arguments-renamed

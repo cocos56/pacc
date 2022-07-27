@@ -273,6 +273,8 @@ class UIAutomator:
             return False
         if self.node.index:
             if self.node.index == dic['@index']:
+                if self.node.text and self.node.text in unescape(dic['@text']):
+                    return True
                 if self.node.class_ and dic['@class'] == self.node.class_:
                     if self.node.bounds and self.is_target_bounds(self.node.bounds, dic['@bounds']):
                         if dic['@resource-id'] == self.node.resource_id:
