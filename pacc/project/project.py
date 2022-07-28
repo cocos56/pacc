@@ -96,6 +96,7 @@ class Project:
 
     def reopen_app(self):
         """重新打开APP"""
+        print('重新打开APP')
         self.free_memory()
         if not Config.debug and 'MI 4' in self.adb_ins.device.model:
             self.adb_ins.press_power_key()

@@ -7,6 +7,11 @@ class ResourceID:
     """快手极速版的安卓资源ID类"""
     # 【观看视频页面】
     item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
+    circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
+
+    # 【观看广告页面】
+    # 看完视频广告后关闭按钮
+    video_countdown_end_icon = 'com.kuaishou.nebula.neo_video:id/video_countdown_end_icon'
 
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     # 放弃奖励

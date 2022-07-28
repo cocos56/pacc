@@ -40,14 +40,18 @@ class KSJSB(Project):
         print('开宝箱')
         try:
             if self.uia_ins.click(text='开宝箱得金币', xml=self.uia_ins.xml):
-                if self.uia_ins.click_by_xml_texts(['去看视频再赚', '看精彩视频赚更多', '金币看视频就赚']):
+                self.uia_ins.tap((530, 1330), 3)
+                if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                     sleep(60)
                     self.adb_ins.press_back_key()
-                    self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+                # if self.uia_ins.click_by_xml_texts(['去看视频再赚', '看精彩视频赚更多', '金币看视频就赚']):
+                #     sleep(60)
+                #     self.adb_ins.press_back_key()
+                #     self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
                 self.uia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
-            self.open_treasure_box()
+            # self.open_treasure_box()
 
     def watch_live(self):
         """看直播"""
@@ -153,7 +157,7 @@ class KSJSB(Project):
         if self.uia_ins.get_dict(text='邀请好友赚更多'):
             self.enter_wealth_interface()
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=16):
+    def enter_wealth_interface(self, reopen=True, sleep_time=26):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -161,8 +165,9 @@ class KSJSB(Project):
         """
         if reopen:
             self.reopen_app()
+        print('准备进入财富界面')
         try:
-            if not self.uia_ins.click(ResourceID.red_packet_anim, xml=self.uia_ins.xml) and \
+            if not self.uia_ins.click(ResourceID.red_packet_anim) and \
                     Activity.MiniAppActivity0 in self.adb_ins.get_current_focus():
                 self.random_swipe(True)
                 self.enter_wealth_interface(False)
@@ -172,6 +177,8 @@ class KSJSB(Project):
                 self.enter_wealth_interface(sleep_time=sleep_time + 6)
             self.uia_ins.get_current_ui_hierarchy()
             print('已进入财富界面')
+            # 滑动到新手任务那里
+            self.adb_ins.swipe(500, 1530, 500, 500)
             if self.uia_ins.click(text='立即领取今日现金'):
                 self.uia_ins.xml = ''
                 self.enter_wealth_interface()
@@ -183,7 +190,7 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            self.enter_wealth_interface(False)
+            # self.enter_wealth_interface(False)
 
     def enter_my_wealth_interface(self, reopen=True):
         """进入我的财富界面
@@ -224,7 +231,7 @@ class KSJSB(Project):
         else:
             gold_coins = float(gold_coins)
         cash_coupons = float(dics[7]['@text'])
-        print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
+        # print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
         return gold_coins, cash_coupons
 
     # pylint: disable=arguments-renamed
@@ -275,14 +282,14 @@ class KSJSB(Project):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
-            self.open_treasure_box()
+            # self.open_treasure_box()
             self.reopen_app()
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.view_ads()
                     self.watch_live()
-                    self.open_treasure_box()
+                    # self.open_treasure_box()
                     self.sign_in()
                     self.update_wealth()
                     self.free_memory()
@@ -304,6 +311,7 @@ class KSJSB(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.random_swipe(True)
+            self.adb_ins.press_back_key()
         self.rest_time = self.rest_time + self.last_time - time()
         self.last_time = time()
         self.random_swipe()
@@ -323,7 +331,7 @@ class KSJSB(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
-                self.open_treasure_box()
+                # self.open_treasure_box()
                 self.view_ads()
                 break
             show_datetime('ksjsb.mainloop')
