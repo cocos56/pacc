@@ -53,7 +53,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.cmd = f'adb -s {self.device.ipv4_addr} '
         self.uia = UIAutomator(device_sn)
         model = self.get_model()
-        # print(model, self.device.model)
+        print(model, self.device.model)
         if not model == self.device.model:
             UpdateMobileInfo(device_sn).update_model(model)
             self.device = RetrieveMobileInfo(device_sn)

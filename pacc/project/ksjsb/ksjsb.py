@@ -238,16 +238,25 @@ class KSJSB(Project):
 
     def change_money(self):
         """把金币兑换钱"""
-        # self.enter_my_wealth_interface()
-        # self.uia_ins.click(text='领现金')
+        self.enter_my_wealth_interface()
+        self.uia_ins.click(text='领现金')
         webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
-        cash = webview_dic['node'][0]['node'][1]['@text']
-        print(cash)
-        dic = webview_dic['node'][1]['node']
-        for d in dic:
-            if d['@text'] == '兑换快币':
+        cash = float(webview_dic['node'][0]['node'][1]['@text'])
+        # print(cash)
+        dics = webview_dic['node'][1]['node']
+        for dic in dics[4:0:-1]:
+            dic = dic['node']
+            if isinstance(dic, list):
+                dic = dic[0]
+            money = float(dic['@text'][:-1])
+            # print(dic)
+            if cash >= money:
+                print(money)
+                self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
-        print(dic)
+        self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
+        self.uia_ins.tap((536, 1706), 3)
+        self.uia_ins.click(text='立即提现')
 
     # pylint: disable=arguments-renamed
     def open_app(self, reopen=True):

@@ -2,6 +2,7 @@
 from pacc.adb import ADB, UIAutomator
 from pacc.base import print_err
 from pacc.config import Config
+# pylint: disable=unused-import
 from pacc.tools import get_texts_from_pic
 
 Config.set_debug(True)
