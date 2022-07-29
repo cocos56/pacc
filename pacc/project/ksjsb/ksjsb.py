@@ -357,6 +357,9 @@ class KSJSB(Project):
             if Activity.PhotoDetailActivity in current_focus:
                 self.exit_live()
                 self.random_swipe(True)
+            elif Activity.LiveSlideActivity in current_focus:
+                self.exit_live()
+                self.random_swipe(True)
             elif Activity.UserProfileActivity in current_focus:
                 self.adb_ins.press_back_key()
             elif Activity.KwaiYodaWebViewActivity in current_focus:

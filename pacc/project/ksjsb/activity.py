@@ -8,6 +8,7 @@ class Activity:
     AwardFeedFlowActivity = f'{ROOT}yxcorp.gifshow.ad.award.flow.AwardFeedFlowActivity'
     HomeActivity = f'{ROOT}yxcorp.gifshow.HomeActivity'  # 主界面
     PhotoDetailActivity = f'{ROOT}yxcorp.gifshow.detail.PhotoDetailActivity'  # 直播
+    LiveSlideActivity = f'{ROOT}kuaishou.live.core.basic.activity.LiveSlideActivity'  # 游戏直播
     UserProfileActivity = f'{ROOT}yxcorp.gifshow.profile.activity.UserProfileActivity'  # 用户主页
     AdYodaActivity = f'{ROOT}yxcorp.gifshow.ad.webview.AdYodaActivity'  # 广告（看视频时出现）
     # 看广告界面（由财富界面->开宝箱转入）

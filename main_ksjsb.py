@@ -5,6 +5,7 @@ from pacc.config import Config
 
 Config.set_debug(True)
 KSJSB('003001002').mainloop()
+# KSJSB('003001002').exit_live()
 # KSJSB('003001002').is_same_video()
 # KSJSB('003001002').open_app()
 # KSJSB('003001002').open_treasure_box()
