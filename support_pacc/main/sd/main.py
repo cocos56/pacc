@@ -1,4 +1,5 @@
 """淘宝/拼多多全自动远程刷单程序入口"""
+# pylint: disable=Similar lines in 2 files
 from pacc.project import SD
 from pacc.config import Config
 

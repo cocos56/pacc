@@ -9,15 +9,15 @@ import time
 
 
 def on_message(ws, message):
-    print(message)
+    print(f'{ws} {message}')
 
 
 def on_error(ws, error):
-    print(error)
+    print(f'{ws} {error}')
 
 
 def on_close(ws):
-    print("### closed ###")
+    print(f"{ws} closed")
 
 
 def on_open(ws):
