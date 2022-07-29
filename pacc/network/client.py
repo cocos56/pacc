@@ -8,6 +8,10 @@ except ImportError:
 import time
 
 
+class Client:
+    """客户器端类"""
+
+
 def on_message(ws, message):
     """Callback function which is called when received data."""
     print(f'{ws} {message}')

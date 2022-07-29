@@ -2,19 +2,23 @@
 from websocket_server import WebsocketServer
 
 
-# Called for every client connecting (after handshake)
+class Server:
+    """服务器端类"""
+
+
 def new_client(client, server):
+    """Called for every client connecting (after handshake)"""
     print(f"New client connected and was given id {client['id']}")
     server.send_message_to_all("Hey all, a new client has joined us")
 
 
-# Called for every client disconnecting
 def client_left(client, server):
+    """Called for every client disconnecting"""
     print(f"Client{client['id']} disconnected")
 
 
-# Called when a client sends a message
 def message_received(client, server, message):
+    """Called when a client sends a message"""
     if len(message) > 200:
         message = message[:200] + '..'
     print(f"Client({client['id']}) said: {message}")
