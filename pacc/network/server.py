@@ -25,13 +25,16 @@ def message_received(client, server, message):
 # pylint: disable=too-few-public-methods
 class Server:
     """服务器端类"""
+    server_ins = WebsocketServer('0.0.0.0', 56)
+    server_ins.shutdown()
+
     def __init__(self):
-        ws_server = WebsocketServer('0.0.0.0', 56)
-        ws_server.set_fn_new_client(new_client)
-        ws_server.set_fn_client_left(client_left)
-        ws_server.set_fn_message_received(message_received)
+        self.__class__.server_ins = WebsocketServer('0.0.0.0', 56)
+        self.__class__.server_ins.set_fn_new_client(new_client)
+        self.__class__.server_ins.set_fn_client_left(client_left)
+        self.__class__.server_ins.set_fn_message_received(message_received)
         print("启动成功")
-        ws_server.run_forever()
+        self.__class__.server_ins.run_forever()
 
 
 if __name__ == "__main__":
