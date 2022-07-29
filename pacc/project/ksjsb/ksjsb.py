@@ -365,6 +365,7 @@ class KSJSB(Project):
             elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
             elif self.is_same_video() and self.not_same_video_cnt >= 5:
+                print('由于视频连续相同五次而重启APP')
                 self.reopen_app()
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             self.init_sleep_time()
