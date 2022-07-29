@@ -10,27 +10,25 @@ except ImportError:
 
 
 # pylint: disable=too-few-public-methods
-class Client:
-    """客户器端类"""
-
-
 def on_message(client, message):
     """Callback function which is called when received data."""
-    print(f'{message} {client}')
+    print(f'on_message {message} {client}')
 
 
 def on_error(client, error):
     """Callback function which is called when we get error."""
-    print(f'{error} {client}')
+    print(f'on_error {error} {client}')
 
 
-def on_close(client):
+def on_close(client, close_status_code, close_msg):
     """Callback function which is called when connection is closed."""
-    print(f"{client} closed")
+    print(f"on_close {client} closed"
+          f"close_status_code is {close_status_code} close_msg is {close_msg}")
 
 
 def on_open(client):
     """Callback function which is called at opening websocket."""
+
     # pylint: disable=unused-argument
     def run(*args):
         for i in range(3):
@@ -39,12 +37,20 @@ def on_open(client):
         time.sleep(1)
         client.close()
         print("thread terminating...")
+
     thread.start_new_thread(run, ())
 
 
+class Client:
+    """客户器端类"""
+
+    def __init__(self):
+        # websocket.enableTrace(True)
+        ws_client = websocket.WebSocketApp(
+            "ws://127.0.0.1:56/", on_open=on_open, on_message=on_message, on_error=on_error,
+            on_close=on_close)
+        ws_client.run_forever()
+
+
 if __name__ == "__main__":
-    websocket.enableTrace(True)
-    ws_client = websocket.WebSocketApp(
-        "ws://127.0.0.1:56/", on_open=on_open, on_message=on_message, on_error=on_error,
-        on_close=on_close)
-    ws_client.run_forever()
+    Client()
