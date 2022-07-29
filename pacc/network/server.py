@@ -1,3 +1,4 @@
+"""服务器端模块"""
 from websocket_server import WebsocketServer
 
 

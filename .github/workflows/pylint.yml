@@ -22,6 +22,8 @@ jobs:
         pip install easyocr
         pip install urlextract
         pip install pymysql
+        pip install websocket_client
+        pip install websocket-server
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2
