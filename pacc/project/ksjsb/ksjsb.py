@@ -11,6 +11,7 @@ from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 
+# pylint: disable=too-many-instance-attributes
 class KSJSB(Project):
     """快手极速版类"""
 
