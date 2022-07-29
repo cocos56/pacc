@@ -1,11 +1,12 @@
 """客户端模块"""
+import time
+
 import websocket
 
 try:
     import thread
 except ImportError:
     import _thread as thread
-import time
 
 
 class Client:
