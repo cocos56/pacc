@@ -177,8 +177,6 @@ class KSJSB(Project):
                 self.enter_wealth_interface(sleep_time=sleep_time + 6)
             self.uia_ins.get_current_ui_hierarchy()
             print('已进入财富界面')
-            # 滑动到新手任务那里
-            self.adb_ins.swipe(500, 1530, 500, 500)
             if self.uia_ins.click(text='立即领取今日现金'):
                 self.uia_ins.xml = ''
                 self.enter_wealth_interface()
@@ -198,7 +196,11 @@ class KSJSB(Project):
         param reopen: 是否需要重启快手极速版APP
         """
         self.enter_wealth_interface(reopen)
-        self.uia_ins.click_by_xml_texts(texts=['可用抵用金(张)', '可用抵用金（张）'])
+        try:
+            self.uia_ins.click_by_xml_texts(texts=['可用抵用金(张)', '可用抵用金（张）'])
+        except FileNotFoundError as err:
+            print_err(err)
+            self.uia_ins.tap((668, 360))
         sleep(9)
 
     def update_wealth(self, reopen=True):
@@ -233,6 +235,19 @@ class KSJSB(Project):
         cash_coupons = float(dics[7]['@text'])
         # print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
         return gold_coins, cash_coupons
+
+    def change_money(self):
+        """把金币兑换钱"""
+        # self.enter_my_wealth_interface()
+        # self.uia_ins.click(text='领现金')
+        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
+        cash = webview_dic['node'][0]['node'][1]['@text']
+        print(cash)
+        dic = webview_dic['node'][1]['node']
+        for d in dic:
+            if d['@text'] == '兑换快币':
+                break
+        print(dic)
 
     # pylint: disable=arguments-renamed
     def open_app(self, reopen=True):
@@ -306,6 +321,8 @@ class KSJSB(Project):
                 self.adb_ins.press_back_key()
             elif Activity.SearchActivity in current_focus:
                 self.reopen_app()
+            elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
+                self.adb_ins.press_back_key()
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             self.init_sleep_time()
         except (FileNotFoundError, ExpatError) as err:

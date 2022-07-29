@@ -8,10 +8,14 @@ class ResourceID:
     # 【观看视频页面】
     item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
     circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
+    positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
 
     # 【观看广告页面】
     # 看完视频广告后关闭按钮
     video_countdown_end_icon = 'com.kuaishou.nebula.neo_video:id/video_countdown_end_icon'
+
+    # 【分享领现金页面】
+    WebView = 'android.webkit.WebView'
 
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     # 放弃奖励
@@ -30,7 +34,6 @@ class ResourceID:
     red_packet_anim = f'{ROOT}red_packet_anim'  # 主界面右上方红包图标
     gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋
     iv_close_common_dialog = f'{ROOT}iv_close_common_dialog'  # 主界面右上方关闭奥运夺冠瞬间界面
-    positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
     tab_text = f'{ROOT}tab_text'  # 详细信息/评论
     live_follow_guide_card_button = f'{ROOT}live_follow_guide_card_button'  # 立即关注（财富界面进入）
     live_exit_button = f'{ROOT}live_exit_button'  # 直接退出（直播）
