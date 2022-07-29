@@ -9,18 +9,22 @@ import time
 
 
 def on_message(ws, message):
+    """Callback function which is called when received data."""
     print(f'{ws} {message}')
 
 
 def on_error(ws, error):
+    """Callback function which is called when we get error."""
     print(f'{ws} {error}')
 
 
 def on_close(ws):
+    """Callback function which is called when connection is closed."""
     print(f"{ws} closed")
 
 
 def on_open(ws):
+    """Callback function which is called at opening websocket."""
     def run(*args):
         for i in range(3):
             time.sleep(1)
