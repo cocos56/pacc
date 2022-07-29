@@ -9,3 +9,5 @@ xmltodict
 setuptools
 mysql-connector-python
 numpy
+websocket_client
+websocket-server
