@@ -302,6 +302,9 @@ class KSJSB(Project):
             return
         self.rest_time = 0
 
+    def is_same_video(self):
+        """判断当前和上一次是否是同一视频"""
+
     def watch_video(self):
         """看视频"""
         if self.reopen_app_per_hour(False):

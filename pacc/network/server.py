@@ -2,6 +2,7 @@
 from websocket_server import WebsocketServer
 
 
+# pylint: disable=too-few-public-methods
 class Server:
     """服务器端类"""
 
@@ -12,11 +13,13 @@ def new_client(client, server):
     server.send_message_to_all("Hey all, a new client has joined us")
 
 
+# pylint: disable=unused-argument
 def client_left(client, server):
     """Called for every client disconnecting"""
     print(f"Client{client['id']} disconnected")
 
 
+# pylint: disable=unused-argument
 def message_received(client, server, message):
     """Called when a client sends a message"""
     if len(message) > 200:

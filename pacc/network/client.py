@@ -9,35 +9,36 @@ except ImportError:
     import _thread as thread
 
 
+# pylint: disable=too-few-public-methods
 class Client:
     """客户器端类"""
 
 
-def on_message(ws, message):
+def on_message(client, message):
     """Callback function which is called when received data."""
-    print(f'{ws} {message}')
+    print(f'{message} {client}')
 
 
-def on_error(ws, error):
+def on_error(client, error):
     """Callback function which is called when we get error."""
-    print(f'{ws} {error}')
+    print(f'{error} {client}')
 
 
-def on_close(ws):
+def on_close(client):
     """Callback function which is called when connection is closed."""
-    print(f"{ws} closed")
+    print(f"{client} closed")
 
 
-def on_open(ws):
+def on_open(client):
     """Callback function which is called at opening websocket."""
+    # pylint: disable=unused-argument
     def run(*args):
         for i in range(3):
             time.sleep(1)
-            ws.send(f"Hello {i}")
+            client.send(f"Hello {i}")
         time.sleep(1)
-        ws.close()
+        client.close()
         print("thread terminating...")
-
     thread.start_new_thread(run, ())
 
 
