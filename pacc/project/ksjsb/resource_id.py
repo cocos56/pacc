@@ -6,9 +6,9 @@ ROOT = 'com.kuaishou.nebula:id/'
 class ResourceID:
     """快手极速版的安卓资源ID类"""
     # 【观看视频页面】
-    user_name_text_view = 'com.kuaishou.nebula:id/user_name_text_view'  # 用户名
-    caption_scroll_container = 'com.kuaishou.nebula:id/caption_scroll_container'  # 视频描述
-    music_textview = 'com.kuaishou.nebula:id/music_textview'  # 背景音乐
+    user_name_text_view = f'{ROOT}user_name_text_view'  # 用户名
+    caption_scroll_container = f'{ROOT}caption_scroll_container'  # 视频描述
+    music_textview = f'{ROOT}music_textview'  # 背景音乐
     item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
     circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
     positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了

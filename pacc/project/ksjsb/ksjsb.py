@@ -13,6 +13,7 @@ from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 class KSJSB(Project):
     """快手极速版类"""
+
     def __init__(self, serial_num):
         """构造函数
 
@@ -22,6 +23,10 @@ class KSJSB(Project):
         self.start_day = datetime.now().day
         self.dbr = RetrieveKSJSB(serial_num)
         self.exit_live_cnt = 0
+        self.last_video_username = ''
+        self.last_video_description = ''
+        self.last_video_music = ''
+        self.not_same_video_cnt = 0
 
     def shopping(self):
         """逛街"""
@@ -117,7 +122,8 @@ class KSJSB(Project):
                 if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                     self.view_ads()
                     return
-                if self.uia_ins.click_by_xml_texts(['观看广告单日最高可得', '每次100金币，每天1000金币']):
+                if self.uia_ins.click_by_xml_texts(
+                        ['观看广告单日最高可得', '每次100金币，每天1000金币']):
                     sleep(50)
                     self.adb_ins.press_back_key()
                     if Activity.HomeActivity not in self.adb_ins.get_current_focus():
@@ -181,7 +187,8 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
                 self.enter_wealth_interface()
                 return
-            if self.uia_ins.click_by_xml_texts(texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
+            if self.uia_ins.click_by_xml_texts(texts=['立即签到', '签到立得'],
+                                               xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.after_sign_in()
             if self.uia_ins.click(bounds=Bounds.closeCongratulations, xml=self.uia_ins.xml):
@@ -238,8 +245,8 @@ class KSJSB(Project):
 
     def change_money(self):
         """把金币兑换钱"""
-        self.enter_my_wealth_interface()
-        self.uia_ins.click(text='领现金')
+        self.enter_wealth_interface()
+        self.uia_ins.tap((866, 349))
         webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
         cash = float(webview_dic['node'][0]['node'][1]['@text'])
         # print(cash)
@@ -255,7 +262,7 @@ class KSJSB(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 3)
+        self.uia_ins.tap((536, 1706), 6)
         self.uia_ins.click(text='立即提现')
 
     # pylint: disable=arguments-renamed
@@ -304,6 +311,28 @@ class KSJSB(Project):
 
     def is_same_video(self):
         """判断当前和上一次是否是同一视频"""
+        last_video_username = self.uia_ins.get_dict(
+            ResourceID.user_name_text_view, xml=self.uia_ins.xml)['@text']
+        try:
+            last_video_description = self.uia_ins.get_dict(
+                ResourceID.caption_scroll_container, xml=self.uia_ins.xml)['node']['@text']
+        except TypeError as err:
+            print_err(err)
+            last_video_description = ''
+        last_video_music = self.uia_ins.get_dict(
+            ResourceID.music_textview, xml=self.uia_ins.xml)['@text']
+        # print(last_video_username, last_video_description, last_video_music)
+        is_same_video_flag = last_video_username == self.\
+            last_video_username and last_video_description == self.\
+            last_video_description and last_video_music == self.last_video_music
+        self.last_video_username = last_video_username
+        self.last_video_description = last_video_description
+        self.last_video_music = last_video_music
+        if is_same_video_flag:
+            self.not_same_video_cnt += 1
+        else:
+            self.not_same_video_cnt = 0
+        return is_same_video_flag
 
     def watch_video(self):
         """看视频"""
@@ -335,6 +364,8 @@ class KSJSB(Project):
                 self.reopen_app()
             elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
+            elif self.is_same_video() and self.not_same_video_cnt >= 5:
+                self.reopen_app()
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             self.init_sleep_time()
         except (FileNotFoundError, ExpatError) as err:
