@@ -7,11 +7,10 @@ from pacc.tools import get_texts_from_pic
 
 Config.set_debug(True)
 DEVICE_SN = '003001002'
-DEVICE_SN = '001001009'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-dic = uia_ins.get_dict('android:id/message')['@text']
-print(dic)
+# dic = uia_ins.get_dict('android:id/message')['@text']
+# print(dic)
 # uia_ins.click('com.kuaishou.nebula:id/positive')
 # uia_ins.click(text='领现金')
 # adb_ins.swipe(500, 300, 500, 1700)

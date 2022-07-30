@@ -46,7 +46,7 @@ class KSJSB(Project):
         print('开宝箱')
         try:
             if self.uia_ins.click(text='开宝箱得金币', xml=self.uia_ins.xml):
-                self.uia_ins.tap((530, 1330), 3)
+                self.uia_ins.tap((530, 1330), 6)
                 if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                     sleep(60)
                     self.adb_ins.press_back_key()

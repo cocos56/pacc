@@ -11,8 +11,10 @@ class Activity:
     LiveSlideActivity = f'{ROOT}kuaishou.live.core.basic.activity.LiveSlideActivity'  # 游戏直播
     UserProfileActivity = f'{ROOT}yxcorp.gifshow.profile.activity.UserProfileActivity'  # 用户主页
     AdYodaActivity = f'{ROOT}yxcorp.gifshow.ad.webview.AdYodaActivity'  # 广告（看视频时出现）
-    # 看广告界面（由财富界面->开宝箱转入）
-    AwardVideoPlayActivity = f'{ROOT}yxcorp.gifshow.ad.award.AwardVideoPlayActivity'
+
+    # 【看广告界面（由财富界面->开宝箱转入）】
+    AwardVideoPlayActivity = f'{ROOT}yxcorp.gifshow.ad.neo.video.award.AwardVideoPlayActivity'
+
     KwaiYodaWebViewActivity = f'{ROOT}yxcorp.gifshow.webview.KwaiYodaWebViewActivity'  # 财富界面
     TopicDetailActivity = f'{ROOT}yxcorp.plugin.tag.topic.TopicDetailActivity'  # 每日书单
     MiniAppActivity0 = f'{ROOT}mini.app.activity.MiniAppActivity0'  # 小程序
