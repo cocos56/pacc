@@ -312,8 +312,12 @@ class KSJSB(Project):
 
     def is_same_video(self):
         """判断当前和上一次是否是同一视频"""
-        last_video_username = self.uia_ins.get_dict(
-            ResourceID.user_name_text_view, xml=self.uia_ins.xml)['@text']
+        try:
+            last_video_username = self.uia_ins.get_dict(
+                ResourceID.user_name_text_view, xml=self.uia_ins.xml)['@text']
+        except TypeError as err:
+            print_err(err)
+            return False
         try:
             last_video_description = self.uia_ins.get_dict(
                 ResourceID.caption_scroll_container, xml=self.uia_ins.xml)['node']['@text']

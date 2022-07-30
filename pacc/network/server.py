@@ -1,5 +1,6 @@
 """服务器端模块"""
 from websocket_server import WebsocketServer
+import json
 
 
 def new_client(client, server):
@@ -17,24 +18,24 @@ def client_left(client, server):
 # pylint: disable=unused-argument
 def message_received(client, server, message):
     """Called when a client sends a message"""
-    if len(message) > 200:
-        message = message[:200] + '..'
+    message = json.loads(message)
+    if len(message) > 100:
+        message = message[:100] + '...'
     print(f"Client({client['id']}) said: {message}")
+    print(type(message))
 
 
 # pylint: disable=too-few-public-methods
 class Server:
     """服务器端类"""
-    server_ins = WebsocketServer('0.0.0.0', 56)
-    server_ins.shutdown()
 
     def __init__(self):
-        self.__class__.server_ins = WebsocketServer('0.0.0.0', 56)
-        self.__class__.server_ins.set_fn_new_client(new_client)
-        self.__class__.server_ins.set_fn_client_left(client_left)
-        self.__class__.server_ins.set_fn_message_received(message_received)
+        server_ins = WebsocketServer('0.0.0.0', 56)
+        server_ins.set_fn_new_client(new_client)
+        server_ins.set_fn_client_left(client_left)
+        server_ins.set_fn_message_received(message_received)
         print("启动成功")
-        self.__class__.server_ins.run_forever()
+        server_ins.run_forever()
 
 
 if __name__ == "__main__":
