@@ -1,6 +1,7 @@
 """服务器端模块"""
-from websocket_server import WebsocketServer
 import json
+
+from websocket_server import WebsocketServer
 
 
 def new_client(client, server):

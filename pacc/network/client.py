@@ -23,6 +23,7 @@ def on_close(client, close_status_code, close_msg):
 
 
 def close(client):
+    """关闭客户端"""
     client.close()
 
 
@@ -39,6 +40,7 @@ class Client:
     msg = 'Client'
 
     def send(self, msg):
+        """发送信息"""
         self.__class__.msg = msg
         ins = websocket.WebSocketApp(
             "ws://127.0.0.1:56/", on_open=on_open, on_message=on_message, on_error=on_error,
@@ -46,8 +48,9 @@ class Client:
         ins.run_forever()
 
     def send_png_file(self, png_path):
-        with open(png_path, "rb") as f:  # 转为二进制格式
-            base64_data = base64.b64encode(f.read())  # 使用base64进行加密
+        """发送图片文件"""
+        with open(png_path, "rb") as file:  # 转为二进制格式
+            base64_data = base64.b64encode(file.read())  # 使用base64进行加密
             json_data = json.dumps(str(base64_data))
             self.send(json_data)
 
