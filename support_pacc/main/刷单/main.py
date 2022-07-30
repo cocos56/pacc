@@ -1,5 +1,5 @@
 """淘宝/拼多多全自动远程刷单程序入口"""
-# pylint: disable=R0801
+# pylint: disable=R0801, fatal
 from pacc.project import SD
 from pacc.config import Config
 
