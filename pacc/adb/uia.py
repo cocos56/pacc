@@ -94,7 +94,8 @@ class UIAutomator:
         print(f'未找到【{text}】')
         return False
 
-    def get_texts_from_pic(self):
+    def get_texts_from_screen(self):
+        """从当前屏幕截图中获取所有文字"""
         self.txt = get_texts_from_pic(self.get_screen())
         return self.txt
 
@@ -108,7 +109,7 @@ class UIAutomator:
         if txt:
             self.txt = txt
         else:
-            self.get_texts_from_pic()
+            self.get_texts_from_screen()
         points_list = []
         for temp_txt in self.txt:
             if text in temp_txt[1]:

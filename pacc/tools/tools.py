@@ -1,10 +1,11 @@
 """工具模块"""
 import os
-
+import warnings
 import easyocr
 from urlextract import URLExtract
 
 extractor = URLExtract()
+warnings.filterwarnings("ignore")
 
 
 def system(cmd, is_print=True):
