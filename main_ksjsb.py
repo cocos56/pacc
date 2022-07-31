@@ -1,7 +1,6 @@
 """快手极速版程序入口模块"""
-from pacc.project import KSJSB
 from pacc.config import Config
-
+from pacc.project import KSJSB
 
 Config.set_debug(True)
 # KSJSB('003001002').mainloop()

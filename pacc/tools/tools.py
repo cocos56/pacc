@@ -1,6 +1,7 @@
 """工具模块"""
 import os
 import warnings
+
 import easyocr
 from urlextract import URLExtract
 
