@@ -44,12 +44,7 @@ class KSJSB(Project):
         # 60*5, 60*9, 1200
         self.enter_wealth_interface()
         print('开宝箱')
-        try:
-            if self.uia_ins.click(text='开宝箱得金币', xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-        except FileNotFoundError as err:
-            print_err(err)
-            self.uia_ins.click_by_screen_text('开宝箱得金币')
+        self.uia_ins.click_by_screen_text('开宝箱得金币')
         self.uia_ins.tap((530, 1330), 6)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             sleep(60)
