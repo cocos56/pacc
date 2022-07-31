@@ -212,6 +212,7 @@ class KSJSB(Project):
                 self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
+            self.enter_wealth_interface()
 
     def open_treasure_box(self):
         """开宝箱得金币"""
@@ -280,7 +281,10 @@ class KSJSB(Project):
         return gold_coins, cash_coupons
 
     def change_money(self):
-        """把金币兑换钱"""
+        """把金币兑换钱
+
+        :return: 兑换成功返回True，否则返回False
+        """
         self.enter_wealth_interface()
         print('正在把金币兑换钱')
         self.uia_ins.tap((866, 349), 6)
@@ -302,6 +306,9 @@ class KSJSB(Project):
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         self.uia_ins.tap((536, 1706), 16)
         self.uia_ins.click(text='立即提现')
+        if self.uia_ins.get_dict(ResourceID.pay_title_tv):
+            return True
+        return False
 
     def init_sleep_time(self):
         """初始化睡眠时间"""
