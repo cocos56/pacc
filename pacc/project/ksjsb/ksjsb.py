@@ -4,7 +4,6 @@ from time import time
 from xml.parsers.expat import ExpatError
 
 from .activity import Activity
-from .bounds import Bounds
 from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err
@@ -176,6 +175,18 @@ class KSJSB(Project):
             print_err(err)
             self.adb_ins.press_back_key()
 
+    def exit_award_video_play_activity(self):
+        """退出奖励视频播放活动页面
+
+        :return: 正常关闭页面返回True，否则返回False
+        """
+        if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
+            return False
+        while not self.uia_ins.click(ResourceID.video_countdown_end_icon):
+            sleep(10)
+        self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+        return True
+
     def enter_wealth_interface(self, reopen=True, sleep_time=29):
         """进入财富界面
 
@@ -189,20 +200,11 @@ class KSJSB(Project):
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
-            if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                self.enter_wealth_interface(sleep_time=sleep_time + 6)
-            self.uia_ins.get_current_ui_hierarchy()
             print('已进入财富界面')
-            if self.uia_ins.click(text='立即领取今日现金'):
-                self.uia_ins.xml = ''
-                self.enter_wealth_interface()
-                return
-            if self.uia_ins.click_by_xml_texts(
-                    texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-                self.after_sign_in()
-            if self.uia_ins.click(bounds=Bounds.closeCongratulations, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
+            if self.uia_ins.click_by_screen_text('立即签到'):
+                sleep(3)
+                self.uia_ins.click_by_screen_text('看广告再得300金币')
+                self.exit_award_video_play_activity()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
 
@@ -213,10 +215,7 @@ class KSJSB(Project):
         print('开宝箱')
         self.uia_ins.click_by_screen_text('开宝箱得金币')
         self.uia_ins.tap((530, 1330), 6)
-        if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
-            sleep(60)
-            self.adb_ins.press_back_key()
-            self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+        self.exit_award_video_play_activity()
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""

@@ -4,4 +4,4 @@
 # pylint: disable=too-few-public-methods
 class Bounds:
     """快手极速版边界值类"""
-    closeCongratulations = '[78,405][174,501]'  # 关闭恭喜获得好友看视频奖励
+    close_congratulations = '[78,405][174,501]'  # 关闭恭喜获得好友看视频奖励
