@@ -40,24 +40,20 @@ class KSJSB(Project):
             self.shopping()
 
     def open_treasure_box(self):
-        """开宝箱"""
+        """开宝箱得金币"""
         # 60*5, 60*9, 1200
         self.enter_wealth_interface()
         print('开宝箱')
         try:
             if self.uia_ins.click(text='开宝箱得金币', xml=self.uia_ins.xml):
-                self.uia_ins.tap((530, 1330), 6)
-                if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
-                    sleep(60)
-                    self.adb_ins.press_back_key()
-                # if self.uia_ins.click_by_xml_texts(['去看视频再赚', '看精彩视频赚更多', '金币看视频就赚']):
-                #     sleep(60)
-                #     self.adb_ins.press_back_key()
-                #     self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
                 self.uia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
-            # self.open_treasure_box()
+            self.uia_ins.click_by_screen_text('开宝箱得金币')
+        self.uia_ins.tap((530, 1330), 6)
+        if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
+            sleep(60)
+            self.adb_ins.press_back_key()
 
     def watch_live(self):
         """看直播"""

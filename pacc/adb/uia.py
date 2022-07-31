@@ -94,9 +94,11 @@ class UIAutomator:
         print(f'未找到【{text}】')
         return False
 
-    def get_texts_from_screen(self):
+    def get_texts_from_screen(self, show_all_texts=False):
         """从当前屏幕截图中获取所有文字"""
         self.txt = get_texts_from_pic(self.get_screen())
+        if show_all_texts:
+            print(self.txt)
         return self.txt
 
     def get_point_by_screen_text(self, text, txt=''):
