@@ -1,5 +1,6 @@
 """快手极速版工程包的资源ID模块"""
 ROOT = 'com.kuaishou.nebula:id/'
+NEO_VIDEO_ROOT = 'com.kuaishou.nebula.neo_video:id/'
 
 
 # pylint: disable=too-few-public-methods
@@ -16,10 +17,11 @@ class ResourceID:
     positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
 
     # 【观看广告页面】
-    # 看完视频广告后关闭按钮
-    video_countdown_end_icon = 'com.kuaishou.nebula.neo_video:id/video_countdown_end_icon'
+    video_countdown = f'{NEO_VIDEO_ROOT}video_countdown'  # 广告视频倒计时
+    # 关闭视频广告按钮
+    video_countdown_end_icon = f'{NEO_VIDEO_ROOT}video_countdown_end_icon'
     # 放弃奖励
-    award_video_close_dialog_abandon_button = f'com.kuaishou.nebula.neo_video:id/' \
+    award_video_close_dialog_abandon_button = f'{NEO_VIDEO_ROOT}' \
                                               f'award_video_close_dialog_abandon_button'
 
     # 【分享领现金页面】

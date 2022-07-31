@@ -182,8 +182,9 @@ class KSJSB(Project):
         """
         if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
             return False
-        while not self.uia_ins.click(ResourceID.video_countdown_end_icon):
+        while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
             sleep(10)
+        self.uia_ins.click(ResourceID.video_countdown_end_icon)
         self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
         return True
 
@@ -200,11 +201,15 @@ class KSJSB(Project):
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
-            print('已进入财富界面')
             if self.uia_ins.click_by_screen_text('立即签到'):
                 sleep(3)
                 self.uia_ins.click_by_screen_text('看广告再得300金币')
                 self.exit_award_video_play_activity()
+                self.uia_ins.txt = ''
+            if self.uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
+                print('已进入财富界面')
+            else:
+                self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
 
@@ -213,7 +218,7 @@ class KSJSB(Project):
         # 60*5, 60*9, 1200
         self.enter_wealth_interface()
         print('开宝箱')
-        self.uia_ins.click_by_screen_text('开宝箱得金币')
+        self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt)
         self.uia_ins.tap((530, 1330), 6)
         self.exit_award_video_play_activity()
 
