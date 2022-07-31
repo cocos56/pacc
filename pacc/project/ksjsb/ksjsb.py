@@ -188,7 +188,7 @@ class KSJSB(Project):
         self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
         return True
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=29):
+    def enter_wealth_interface(self, reopen=True, sleep_time=39):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -219,20 +219,21 @@ class KSJSB(Project):
         # 60*5, 60*9, 1200
         self.enter_wealth_interface()
         print('开宝箱')
-        self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt)
-        self.uia_ins.tap((530, 1330), 6)
-        self.exit_award_video_play_activity()
+        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+            self.uia_ins.tap((530, 1330), 6)
+            self.exit_award_video_play_activity()
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
         self.enter_wealth_interface()
-        try:
-            self.uia_ins.get_current_ui_hierarchy()
-        except FileNotFoundError as err:
-            print_err(err)
-            self.adb_ins.swipe(600, 1830, 600, 1750)
-            # self.uia_ins.click_by_screen_text()
-            print(self.uia_ins.get_texts_from_screen())
+        print('领取专属金币礼包')
+        if not self.uia_ins.get_point_by_screen_text('专属金币礼包', txt=self.uia_ins.txt):
+            print('该账号没有领取专属金币礼包的任务')
+            return
+        self.adb_ins.swipe(600, 1830, 600, 1750)
+        if self.uia_ins.click_by_screen_text('领金币'):
+            self.uia_ins.tap((530, 1200), 6)
+            self.exit_award_video_play_activity()
 
     def enter_my_wealth_interface(self, reopen=True):
         """进入我的财富界面
