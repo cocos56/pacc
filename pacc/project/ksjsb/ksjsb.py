@@ -39,17 +39,6 @@ class KSJSB(Project):
             print_err(err)
             self.shopping()
 
-    def open_treasure_box(self):
-        """开宝箱得金币"""
-        # 60*5, 60*9, 1200
-        self.enter_wealth_interface()
-        print('开宝箱')
-        self.uia_ins.click_by_screen_text('开宝箱得金币')
-        self.uia_ins.tap((530, 1330), 6)
-        if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
-            sleep(60)
-            self.adb_ins.press_back_key()
-
     def watch_live(self):
         """看直播"""
         self.enter_wealth_interface()
@@ -155,6 +144,42 @@ class KSJSB(Project):
         if self.uia_ins.get_dict(text='邀请好友赚更多'):
             self.enter_wealth_interface()
 
+    # pylint: disable=arguments-renamed
+    def open_app(self, reopen=True):
+        """打开快手极速版APP
+
+        param reopen: 是否需要重启快手极速版APP
+        """
+        if reopen:
+            super().open_app(Activity.HomeActivity)
+            sleep(19)
+        try:
+            if self.uia_ins.click(ResourceID.close):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.tv_upgrade_now, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+                self.adb_ins.press_back_key()
+            while not self.uia_ins.get_dict(ResourceID.red_packet_anim, xml=self.uia_ins.xml):
+                if Activity.HomeActivity not in self.adb_ins.get_current_focus():
+                    self.reopen_app()
+                    return
+                if self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
+                    self.uia_ins.xml = ''
+                    self.adb_ins.press_back_key()
+                self.random_swipe(True)
+                self.uia_ins.xml = ''
+        except (FileNotFoundError, ExpatError) as err:
+            print_err(err)
+            self.random_swipe(True)
+            sleep(6)
+            self.reopen_app()
+
     def enter_wealth_interface(self, reopen=True, sleep_time=29):
         """进入财富界面
 
@@ -179,8 +204,8 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
                 self.enter_wealth_interface()
                 return
-            if self.uia_ins.click_by_xml_texts(texts=['立即签到', '签到立得'],
-                                               xml=self.uia_ins.xml):
+            if self.uia_ins.click_by_xml_texts(
+                    texts=['立即签到', '签到立得'], xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.after_sign_in()
             if self.uia_ins.click(bounds=Bounds.closeCongratulations, xml=self.uia_ins.xml):
@@ -188,6 +213,17 @@ class KSJSB(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             # self.enter_wealth_interface(False)
+
+    def open_treasure_box(self):
+        """开宝箱得金币"""
+        # 60*5, 60*9, 1200
+        self.enter_wealth_interface()
+        print('开宝箱')
+        self.uia_ins.click_by_screen_text('开宝箱得金币')
+        self.uia_ins.tap((530, 1330), 6)
+        if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
+            sleep(60)
+            self.adb_ins.press_back_key()
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
@@ -268,39 +304,6 @@ class KSJSB(Project):
         self.uia_ins.tap((536, 1706), 12)
         self.uia_ins.click(text='立即提现')
 
-    # pylint: disable=arguments-renamed
-    def open_app(self, reopen=True):
-        """打开快手极速版APP
-
-        param reopen: 是否需要重启快手极速版APP
-        """
-        if reopen:
-            super().open_app(Activity.HomeActivity)
-            sleep(19)
-        try:
-            if self.uia_ins.click(ResourceID.close):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.tv_upgrade_now, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-                self.adb_ins.press_back_key()
-            while not self.uia_ins.get_dict(ResourceID.red_packet_anim, xml=self.uia_ins.xml):
-                if Activity.HomeActivity not in self.adb_ins.get_current_focus():
-                    self.reopen_app()
-                    return
-                self.random_swipe(True)
-                self.uia_ins.xml = ''
-        except (FileNotFoundError, ExpatError) as err:
-            print_err(err)
-            self.random_swipe(True)
-            sleep(6)
-            self.reopen_app()
-
     def init_sleep_time(self):
         """初始化睡眠时间"""
         print(f'restTime={self.rest_time}')
@@ -347,14 +350,14 @@ class KSJSB(Project):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
-            # self.open_treasure_box()
+            self.open_treasure_box()
             self.reopen_app()
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.view_ads()
                     self.watch_live()
-                    # self.open_treasure_box()
+                    self.open_treasure_box()
                     self.sign_in()
                     self.update_wealth()
                     self.free_memory()
@@ -375,6 +378,7 @@ class KSJSB(Project):
             elif Activity.SearchActivity in current_focus:
                 self.reopen_app()
             elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
                 self.adb_ins.press_back_key()
             elif self.is_same_video() and self.not_same_video_cnt >= 5:
                 print('由于视频连续相同五次而重启APP')
@@ -404,7 +408,7 @@ class KSJSB(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
-                # self.open_treasure_box()
+                self.open_treasure_box()
                 self.view_ads()
                 break
             show_datetime('ksjsb.mainloop')

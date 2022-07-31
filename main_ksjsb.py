@@ -3,11 +3,11 @@ from pacc.config import Config
 from pacc.project import KSJSB
 
 Config.set_debug(True)
-KSJSB('003001002').mainloop()
+# KSJSB('003001002').mainloop()
 # KSJSB('003001002').reopen_app()
 # KSJSB('003001002').exit_live()
 # KSJSB('003001002').is_same_video()
-# KSJSB('003001002').open_treasure_box()
+KSJSB('003001002').open_treasure_box()
 # KSJSB('003001002').change_money()
 # KSJSB('003001002').open_exclusive_gold_coin_gift_pack()
 # KSJSB('003001002').enter_wealth_interface()
