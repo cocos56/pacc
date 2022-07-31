@@ -12,18 +12,20 @@ class ResourceID:
     item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
     click_double = f'{ROOT}click_double'  # 点击翻倍（金币）
     circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
+    gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋
     positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
 
     # 【观看广告页面】
     # 看完视频广告后关闭按钮
     video_countdown_end_icon = 'com.kuaishou.nebula.neo_video:id/video_countdown_end_icon'
+    # 放弃奖励
+    award_video_close_dialog_abandon_button = f'com.kuaishou.nebula.neo_video:id/' \
+                                              f'award_video_close_dialog_abandon_button'
 
     # 【分享领现金页面】
     WebView = 'android.webkit.WebView'
 
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
-    # 放弃奖励
-    award_video_close_dialog_abandon_button = f'{ROOT}award_video_close_dialog_abandon_button'
     button2 = 'android:id/button2'  # 等待按钮（应用长时间无反应）
     animated_image = f'{ROOT}animated_image'  # 主界面左上方关闭奥运福娃按钮
     choose_tv = f'{ROOT}choose_tv'  # 请选择你要进行的操作（不感兴趣、关注）
@@ -36,7 +38,6 @@ class ResourceID:
     negative = f'{ROOT}negative'  # 忽略（打开推送通知，对方有更新时，第一时间获得提醒。）
     nick = f'{ROOT}nick'  # 看直播页面主播昵称
     red_packet_anim = f'{ROOT}red_packet_anim'  # 主界面右上方红包图标
-    gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋
     iv_close_common_dialog = f'{ROOT}iv_close_common_dialog'  # 主界面右上方关闭奥运夺冠瞬间界面
     tab_text = f'{ROOT}tab_text'  # 详细信息/评论
     live_follow_guide_card_button = f'{ROOT}live_follow_guide_card_button'  # 立即关注（财富界面进入）

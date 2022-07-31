@@ -162,6 +162,8 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
                 self.adb_ins.press_back_key()
             while not self.uia_ins.get_dict(ResourceID.red_packet_anim, xml=self.uia_ins.xml):
+                if self.uia_ins.get_dict(ResourceID.gold_egg_anim, xml=self.uia_ins.xml):
+                    break
                 if Activity.HomeActivity not in self.adb_ins.get_current_focus():
                     self.reopen_app()
                     return
@@ -173,9 +175,6 @@ class KSJSB(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.adb_ins.press_back_key()
-            # self.random_swipe(True)
-            # sleep(6)
-            # self.reopen_app()
 
     def enter_wealth_interface(self, reopen=True, sleep_time=29):
         """进入财富界面
@@ -187,11 +186,8 @@ class KSJSB(Project):
             self.reopen_app()
         print('准备进入财富界面')
         try:
-            if not self.uia_ins.click(ResourceID.red_packet_anim) and \
-                    Activity.MiniAppActivity0 in self.adb_ins.get_current_focus():
-                self.random_swipe(True)
-                self.enter_wealth_interface(False)
-                return
+            if not self.uia_ins.click(ResourceID.red_packet_anim):
+                self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.enter_wealth_interface(sleep_time=sleep_time + 6)
@@ -209,7 +205,6 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            # self.enter_wealth_interface(False)
 
     def open_treasure_box(self):
         """开宝箱得金币"""
@@ -221,6 +216,7 @@ class KSJSB(Project):
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             sleep(60)
             self.adb_ins.press_back_key()
+            self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
