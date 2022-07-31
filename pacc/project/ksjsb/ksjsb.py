@@ -282,7 +282,9 @@ class KSJSB(Project):
     def change_money(self):
         """把金币兑换钱"""
         self.enter_wealth_interface()
+        print('正在把金币兑换钱')
         self.uia_ins.tap((866, 349), 6)
+        self.uia_ins.get_current_ui_hierarchy()
         webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
         cash = float(webview_dic['node'][0]['node'][1]['@text'])
         # print(cash)
@@ -298,7 +300,7 @@ class KSJSB(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 12)
+        self.uia_ins.tap((536, 1706), 16)
         self.uia_ins.click(text='立即提现')
 
     def init_sleep_time(self):

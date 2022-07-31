@@ -27,6 +27,9 @@ class ResourceID:
     # 【分享领现金页面】
     WebView = 'android.webkit.WebView'
 
+    # 【提现结果页面】
+    pay_title_tv = 'com.kuaishou.nebula:id/pay_title_tv'  # 提现结果
+
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     button2 = 'android:id/button2'  # 等待按钮（应用长时间无反应）
     animated_image = f'{ROOT}animated_image'  # 主界面左上方关闭奥运福娃按钮
