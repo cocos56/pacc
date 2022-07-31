@@ -74,9 +74,8 @@ class SD(Project):
         self.exit_app()
         self.open_app()
 
-    # pylint: disable=arguments-differ
     def open_app(self):
-        """打开APP"""
+        """打开淘宝/拼多多全自动远程刷单APP"""
         self.free_memory()
         self.uia_ins.click(ResourceID.icon_title, '滴滴助手')
         sleep(12)

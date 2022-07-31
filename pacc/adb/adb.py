@@ -207,6 +207,14 @@ class ADB:  # pylint: disable=too-many-public-methods
             print(tip)
             self.uia.tap([x_coordinate, y_coordinate], interval)
 
+    def open_app(self, activity):
+        """打开APP
+
+        param activity: 活动名
+        """
+        self.press_home_key()
+        self.start(activity)
+
     def start(self, activity, wait=True):
         """启动
 

@@ -144,15 +144,11 @@ class KSJSB(Project):
         if self.uia_ins.get_dict(text='邀请好友赚更多'):
             self.enter_wealth_interface()
 
-    # pylint: disable=arguments-renamed
-    def open_app(self, reopen=True):
-        """打开快手极速版APP
-
-        param reopen: 是否需要重启快手极速版APP
-        """
-        if reopen:
-            super().open_app(Activity.HomeActivity)
-            sleep(19)
+    def open_app(self):
+        """打开快手极速版APP"""
+        print('正在打开快手极速版APP')
+        self.adb_ins.open_app(Activity.HomeActivity)
+        sleep(19)
         try:
             if self.uia_ins.click(ResourceID.close):
                 self.uia_ins.xml = ''
@@ -176,9 +172,10 @@ class KSJSB(Project):
                 self.uia_ins.xml = ''
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            self.random_swipe(True)
-            sleep(6)
-            self.reopen_app()
+            self.adb_ins.press_back_key()
+            # self.random_swipe(True)
+            # sleep(6)
+            # self.reopen_app()
 
     def enter_wealth_interface(self, reopen=True, sleep_time=29):
         """进入财富界面

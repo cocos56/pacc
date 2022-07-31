@@ -102,16 +102,11 @@ class Project:
             self.adb_ins.press_power_key()
             sleep(60)
         self.adb_ins.press_home_key()
-        # pylint: disable=no-value-for-parameter
         self.open_app()
 
-    def open_app(self, activity):
-        """打开APP
-
-        param activity: 活动名
-        """
-        self.adb_ins.press_home_key()
-        self.adb_ins.start(activity)
+    def open_app(self):
+        """打开APP，该方法父类中未实现，需要在子类中实现"""
+        print('打开APP，该方法父类中未实现，需要在子类中实现')
 
     def free_memory(self):
         """清理内存"""
