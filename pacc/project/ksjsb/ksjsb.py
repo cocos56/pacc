@@ -164,7 +164,7 @@ class KSJSB(Project):
         if self.uia_ins.get_dict(text='邀请好友赚更多'):
             self.enter_wealth_interface()
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=26):
+    def enter_wealth_interface(self, reopen=True, sleep_time=29):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -247,7 +247,7 @@ class KSJSB(Project):
     def change_money(self):
         """把金币兑换钱"""
         self.enter_wealth_interface()
-        self.uia_ins.tap((866, 349))
+        self.uia_ins.tap((866, 349), 6)
         webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
         cash = float(webview_dic['node'][0]['node'][1]['@text'])
         # print(cash)
@@ -263,7 +263,7 @@ class KSJSB(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 6)
+        self.uia_ins.tap((536, 1706), 12)
         self.uia_ins.click(text='立即提现')
 
     # pylint: disable=arguments-renamed
@@ -279,6 +279,8 @@ class KSJSB(Project):
             if self.uia_ins.click(ResourceID.close):
                 self.uia_ins.xml = ''
             if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
             if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''

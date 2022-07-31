@@ -10,6 +10,7 @@ class ResourceID:
     caption_scroll_container = f'{ROOT}caption_scroll_container'  # 视频描述
     music_textview = f'{ROOT}music_textview'  # 背景音乐
     item_title = f'{ROOT}item_title'  # 不感兴趣、保存到相册、视频设置、稍后再看
+    click_double = f'{ROOT}click_double'  # 点击翻倍（金币）
     circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
     positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
 
