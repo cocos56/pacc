@@ -9,6 +9,8 @@ Config.set_debug(True)
 DEVICE_SN = '003001002'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
+texts = uia_ins.get_texts_from_pic()
+print(texts)
 # dic = uia_ins.get_dict('android:id/message')['@text']
 # print(dic)
 # uia_ins.click('com.kuaishou.nebula:id/positive')

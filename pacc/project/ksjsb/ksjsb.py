@@ -198,6 +198,17 @@ class KSJSB(Project):
             print_err(err)
             # self.enter_wealth_interface(False)
 
+    def open_exclusive_gold_coin_gift_pack(self):
+        """领取专属金币礼包"""
+        self.enter_wealth_interface()
+        try:
+            self.uia_ins.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(err)
+            self.adb_ins.swipe(600, 1830, 600, 1750)
+            # self.uia_ins.click_by_screen_text()
+            print(self.uia_ins.get_texts_from_pic())
+
     def enter_my_wealth_interface(self, reopen=True):
         """进入我的财富界面
 
@@ -329,9 +340,9 @@ class KSJSB(Project):
         last_video_music = self.uia_ins.get_dict(
             ResourceID.music_textview, xml=self.uia_ins.xml)['@text']
         # print(last_video_username, last_video_description, last_video_music)
-        is_same_video_flag = last_video_username == self.\
-            last_video_username and last_video_description == self.\
-            last_video_description and last_video_music == self.last_video_music
+        is_same_video_flag = last_video_username == self. \
+            last_video_username and last_video_description == self. \
+                                 last_video_description and last_video_music == self.last_video_music
         self.last_video_username = last_video_username
         self.last_video_description = last_video_description
         self.last_video_music = last_video_music
