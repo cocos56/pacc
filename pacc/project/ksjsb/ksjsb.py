@@ -163,7 +163,7 @@ class KSJSB(Project):
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         try:
             self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
         return True
 
@@ -225,8 +225,9 @@ class KSJSB(Project):
         self.uia_ins.click_by_screen_text('去领取')
         sleep(5)
         if self.uia_ins.click(text='领取饭补'):
-            self.uia_ins.tap((530, 1330), 6)
-            self.exit_award_video_play_activity()
+            # self.uia_ins.tap((530, 1330), 6)
+            # self.exit_award_video_play_activity()
+            pass
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
