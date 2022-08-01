@@ -166,11 +166,11 @@ class KSJSB(Project):
         """退出直播页面"""
         print('退出直播页面')
         try:
-            self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
-            self.adb_ins.press_back_key()
-            sleep(3)
-            if self.uia_ins.click(text='退出直播间'):
+            while Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key()
                 sleep(3)
+                if self.uia_ins.click(text='退出直播间'):
+                    sleep(3)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key()
                 sleep(3)
