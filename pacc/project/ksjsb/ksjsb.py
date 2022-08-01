@@ -10,7 +10,7 @@ from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKSJSB, UpdateKSJSB
 
 
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes, too-many-public-methods
 class KSJSB(Project):
     """快手极速版类"""
 
