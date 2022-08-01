@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from pacc.mysql.retrieve import RetrieveSD
 
 
-START_INDEX = 11
+START_INDEX = 20
 
 
 class Spider:
@@ -30,7 +30,7 @@ class Spider:
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
             cls.driver.get('http://47.100.242.194/')
             cls.driver.maximize_window()
-            time.sleep(3)
+            time.sleep(4)
             print(index + 1, username, end=' ')
             password = 'k187397'
             cls.driver.find_element(By.ID, "username").send_keys(username)
