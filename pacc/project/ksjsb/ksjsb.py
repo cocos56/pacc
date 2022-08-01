@@ -178,7 +178,7 @@ class KSJSB(Project):
             return False
         except FileNotFoundError as err:
             print_err(err)
-            self.exit_live()
+            return self.exit_live()
 
     def watch_live(self):
         """看直播"""
