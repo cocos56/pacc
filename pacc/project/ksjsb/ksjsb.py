@@ -162,6 +162,19 @@ class KSJSB(Project):
             sleep(6)
             self.exit_award_video_play_activity()
 
+    def exit_live(self):
+        """退出直播页面"""
+        self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
+        self.adb_ins.press_back_key()
+        sleep(3)
+        self.uia_ins.click(text='退出直播间')
+        sleep(3)
+        self.adb_ins.press_back_key()
+        sleep(3)
+        if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+            return True
+        return False
+
     def watch_live(self):
         """看直播"""
         self.enter_wealth_interface()
@@ -171,13 +184,7 @@ class KSJSB(Project):
             sleep(6)
             self.uia_ins.tap((240, 848))
             sleep(186)
-            self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
-            self.adb_ins.press_back_key()
-            sleep(3)
-            self.uia_ins.click(text='退出直播间')
-            sleep(3)
-            self.adb_ins.press_back_key()
-            sleep(3)
+            self.exit_live()
 
     def open_meal_allowance(self):
         """领饭补"""
@@ -187,9 +194,8 @@ class KSJSB(Project):
         self.uia_ins.click_by_screen_text('去领取')
         sleep(5)
         if self.uia_ins.click(text='领取饭补'):
-            # self.uia_ins.tap((530, 1330), 6)
-            # self.exit_award_video_play_activity()
-            pass
+            self.uia_ins.tap((530, 1220), 6)
+            self.exit_award_video_play_activity()
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""

@@ -31,6 +31,7 @@ class ResourceID:
     pay_title_tv = 'com.kuaishou.nebula:id/pay_title_tv'  # 提现结果
 
     #  【观看直播界面】
+    #  关闭点我抢红包
     live_red_packet_container_close_view = 'com.kuaishou.nebula.live_audience_plugin:id/' \
                                            'live_red_packet_container_close_view'
 
