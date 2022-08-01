@@ -137,7 +137,7 @@ class KSJSB(Project):
                 self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            self.enter_wealth_interface()
+            self.enter_wealth_interface(False)
 
     def open_treasure_box(self):
         """开宝箱得金币"""
@@ -164,16 +164,21 @@ class KSJSB(Project):
 
     def exit_live(self):
         """退出直播页面"""
-        self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
-        self.adb_ins.press_back_key()
-        sleep(3)
-        self.uia_ins.click(text='退出直播间')
-        sleep(3)
-        self.adb_ins.press_back_key()
-        sleep(3)
-        if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
-            return True
-        return False
+        print('退出直播页面')
+        try:
+            self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
+            self.adb_ins.press_back_key()
+            sleep(3)
+            if self.uia_ins.click(text='退出直播间'):
+                sleep(3)
+            if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key()
+                sleep(3)
+                return True
+            return False
+        except FileNotFoundError as err:
+            print_err(err)
+            self.exit_live()
 
     def watch_live(self):
         """看直播"""
@@ -183,7 +188,7 @@ class KSJSB(Project):
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848))
-            sleep(186)
+            sleep(76)
             self.exit_live()
 
     def open_meal_allowance(self):
