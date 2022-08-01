@@ -30,7 +30,7 @@ class Spider:
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
             cls.driver.get('http://47.100.242.194/')
             cls.driver.maximize_window()
-            time.sleep(1)
+            time.sleep(3)
             print(index + 1, username, end=' ')
             password = 'k187397'
             cls.driver.find_element(By.ID, "username").send_keys(username)
