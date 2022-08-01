@@ -93,31 +93,6 @@ class KSJSB(Project):
             self.exit_live()
         self.exit_live_cnt = 0
 
-    def view_ads(self):
-        """看广告"""
-        self.enter_wealth_interface()
-        self.random_swipe(True)
-        print('看广告')
-        while True:
-            try:
-                if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                    self.view_ads()
-                    return
-                if self.uia_ins.click_by_xml_texts(
-                        ['观看广告单日最高可得', '每次100金币，每天1000金币']):
-                    sleep(50)
-                    self.adb_ins.press_back_key()
-                    if Activity.HomeActivity not in self.adb_ins.get_current_focus():
-                        self.enter_wealth_interface()
-                        print('等待看广告')
-                        sleep(1200)
-                        self.view_ads()
-                else:
-                    break
-            except FileNotFoundError as err:
-                print_err(err)
-                self.view_ads()
-
     def sign_in(self):
         """签到"""
         self.enter_wealth_interface()
@@ -186,7 +161,10 @@ class KSJSB(Project):
         while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
             sleep(10)
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
-        self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+        try:
+            self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+        except FileNotFoundError as err:
+            print_err(err)
         return True
 
     def enter_wealth_interface(self, reopen=True, sleep_time=39):
@@ -202,6 +180,7 @@ class KSJSB(Project):
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
+            self.uia_ins.get_current_ui_hierarchy()
             if self.uia_ins.click_by_screen_text('立即签到'):
                 sleep(3)
                 self.uia_ins.click_by_screen_text('看广告再得300金币')
@@ -229,11 +208,20 @@ class KSJSB(Project):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
 
+    def view_ads(self):
+        """看广告"""
+        self.enter_wealth_interface()
+        print('看广告')
+        self.adb_ins.swipe(600, 1800, 600, 630)
+        while self.uia_ins.click_by_screen_text(text='福利'):
+            sleep(6)
+            self.exit_award_video_play_activity()
+
     def open_meal_allowance(self):
         """领饭补"""
-        # self.enter_wealth_interface()
-        # print('领饭补')
-        # self.adb_ins.swipe(600, 1800, 600, 800)
+        self.enter_wealth_interface()
+        print('领饭补')
+        self.adb_ins.swipe(600, 1800, 600, 800)
         self.uia_ins.click_by_screen_text('去领取')
         sleep(5)
         if self.uia_ins.click(text='领取饭补'):
@@ -252,26 +240,15 @@ class KSJSB(Project):
             self.uia_ins.tap((530, 1200), 6)
             self.exit_award_video_play_activity()
 
-    def enter_my_wealth_interface(self, reopen=True):
-        """进入我的财富界面
-
-        param reopen: 是否需要重启快手极速版APP
-        """
-        self.enter_wealth_interface(reopen)
-        try:
-            self.uia_ins.click_by_xml_texts(texts=['可用抵用金(张)', '可用抵用金（张）'])
-        except FileNotFoundError as err:
-            print_err(err)
-            self.uia_ins.tap((668, 360))
-        sleep(9)
-
     def update_wealth(self, reopen=True):
         """更新财富值
 
         param reopen: 是否需要重启快手极速版APP
         """
         print('更新财富值')
-        self.enter_my_wealth_interface(reopen)
+        self.enter_wealth_interface(reopen)
+        self.uia_ins.tap((668, 360))
+        sleep(9)
         try:
             gold_coins, cash_coupons = self.get_wealth()
             if gold_coins != self.dbr.gold_coins:
