@@ -27,6 +27,7 @@ class KSJSB(Project):
         self.last_video_description = ''
         self.last_video_music = ''
         self.not_same_video_cnt = 0
+        self.no_treasure_box_flag = False
 
     def shopping(self):
         """逛街"""
@@ -219,7 +220,23 @@ class KSJSB(Project):
         # 60*5, 60*9, 1200
         self.enter_wealth_interface()
         print('开宝箱')
-        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+        if self.no_treasure_box_flag:
+            print('明天再来')
+        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
+            self.no_treasure_box_flag = True
+            print('明天再来')
+        elif self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+            self.uia_ins.tap((530, 1330), 6)
+            self.exit_award_video_play_activity()
+
+    def open_meal_allowance(self):
+        """领饭补"""
+        # self.enter_wealth_interface()
+        # print('领饭补')
+        # self.adb_ins.swipe(600, 1800, 600, 800)
+        self.uia_ins.click_by_screen_text('去领取')
+        sleep(5)
+        if self.uia_ins.click(text='领取饭补'):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
 
@@ -415,6 +432,7 @@ class KSJSB(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
+                self.no_treasure_box_flag = False
                 self.open_treasure_box()
                 self.view_ads()
                 break
