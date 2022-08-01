@@ -11,3 +11,5 @@ mysql-connector-python
 numpy
 websocket_client
 websocket-server
+selenium
+pyperclip

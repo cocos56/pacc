@@ -2,6 +2,65 @@
 from .mysql import MySQL, Mobile, Account
 
 
+class RetrieveSD:
+    """查询刷单数据类"""
+
+    all_accounts = []
+    all_names = []
+
+    @classmethod
+    def get_all_names(cls):
+        """获取所有账号"""
+        if cls.all_names:
+            return cls.all_names
+        for account in cls.query_all_names():
+            cls.all_names.append(account[0])
+        return cls.all_names
+
+    @classmethod
+    def get_all_accounts(cls):
+        """获取所有账号"""
+        if cls.all_accounts:
+            return cls.all_accounts
+        for account in cls.query_all_accounts():
+            cls.all_accounts.append(account[0])
+        return cls.all_accounts
+
+    @classmethod
+    def query_all_data(cls, field='account', database=Mobile):
+        """查询函数：查询指定列的所有行数据
+
+        :param field: 目标列的字段名
+        :param database: 数据库名
+        :return: 查询到的结果
+        """
+        res = database.query(
+            f'select `{field}` from `sd`')
+        if len(res) == 1:
+            return res[0]
+        return res
+
+    @classmethod
+    def query_all_accounts(cls):
+        """查询函数：查询所有账号
+
+        :return: 查询到的结果
+        """
+        return cls.query_all_data('account')
+
+    @classmethod
+    def query_all_names(cls):
+        """查询函数：查询所有名字
+
+        :return: 查询到的结果
+        """
+        return cls.query_all_data('name')
+
+
+RetrieveSD.get_all_accounts()
+RetrieveSD.get_all_names()
+
+
 # pylint: disable=too-few-public-methods
 class Retrieve:
     """该类用于从MySQL数据库中查询数据"""
@@ -48,6 +107,7 @@ class RetrieveMobile(Retrieve):
 
 class RetrieveMobileInfo(RetrieveMobile):
     """查询手机信息类"""
+
     def __init__(self, serial_num):
         """构造函数
 
@@ -70,6 +130,7 @@ class RetrieveMobileInfo(RetrieveMobile):
 
 class RetrieveKSJSB(RetrieveMobile):
     """查询快手极速版数据类"""
+
     def __init__(self, serial_num):
         """构造函数
 
@@ -112,6 +173,7 @@ class RetrieveAccount(Retrieve):
 
 class RetrieveEmail(RetrieveAccount):
     """查询邮箱账号类"""
+
     def __init__(self, username):
         """构造函数
 
