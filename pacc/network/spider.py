@@ -7,40 +7,58 @@ from selenium.webdriver.common.by import By
 
 from pacc.mysql.retrieve import RetrieveSD
 
-driver = webdriver.Chrome()
+
+start_index = 7
 
 
-def open_url_in_new_window(url='', chrome_driver=driver):
-    js = f"window.open('{url}')"
-    chrome_driver.execute_script(js)
+class Spider:
+    driver = webdriver.Chrome()
+
+    @classmethod
+    def open_url_in_new_window(cls, url=''):
+        js = f"window.open('{url}')"
+        cls.driver.execute_script(js)
+
+    @classmethod
+    def main(cls):
+        RetrieveSD.all_names = RetrieveSD.all_names[start_index:]
+        for index, username in enumerate(RetrieveSD.all_accounts[start_index:]):
+            cls.driver.get('http://47.100.242.194/')
+            cls.driver.maximize_window()
+            time.sleep(1)
+            print(index + 1, username, end=' ')
+            password = 'k187397'
+            cls.driver.find_element(By.ID, "username").send_keys(username)
+            cls.driver.find_element(By.ID, "password").send_keys(password)
+            cls.driver.find_element(
+                By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span'
+            ).click()
+            time.sleep(3)
+            cls.open_url_in_new_window('http://47.100.242.194/record/linked')
+            cls.open_url_in_new_window('http://47.100.242.194/record/trades/')
+            cls.open_url_in_new_window('http://47.100.242.194/account/buyers')
+            cls.open_url_in_new_window('http://47.100.242.194/account/wallet')
+            cls.driver.switch_to.window(cls.driver.window_handles[1])
+            time.sleep(10)
+            cls.driver.find_element(By.XPATH, '//*[@class="ant-btn ant-btn-primary"]/span').click()
+            cls.driver.find_element(By.ID, "amount").send_keys('9999')
+            cls.driver.find_element(By.ID, "tradeWayNo").send_keys('18739776523@qq.com')
+            value = cls.driver.find_element(By.ID, "amount").get_attribute("value")
+            print(RetrieveSD.all_names[index], value)
+            cls.driver.find_element(By.ID, "realName").send_keys('徐可可')
+            if float(value) >= 20:
+                cls.driver.find_element(By.ID, "password").send_keys(password)
+                cls.driver.find_element(
+                    By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]'
+                ).click()
+                pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
+                time.sleep(2)
+                cls.driver.refresh()
+            input()
+            cls.driver.quit()
+            if not index == len(RetrieveSD.all_accounts) - 1:
+                cls.driver = webdriver.Chrome()
 
 
-for index, username in enumerate(RetrieveSD.all_accounts[0:]):
-    driver.get('http://47.100.242.194/')
-    driver.maximize_window()
-    time.sleep(1)
-    print(index, username)
-    password = 'k187397'
-    driver.find_element(By.ID, "username").send_keys(username)
-    driver.find_element(By.ID, "password").send_keys(password)
-    driver.find_element(
-        By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span').click()
-    time.sleep(3)
-    open_url_in_new_window('http://47.100.242.194/account/buyers')
-    open_url_in_new_window('http://47.100.242.194/account/wallet')
-    driver.switch_to.window(driver.window_handles[1])
-    time.sleep(10)
-    driver.find_element(By.XPATH, '//*[@class="ant-btn ant-btn-primary"]/span').click()
-    driver.find_element(By.ID, "amount").send_keys('9999')
-    driver.find_element(By.ID, "tradeWayNo").send_keys('18739776523@qq.com')
-    value = driver.find_element(By.ID, "amount").get_attribute("value")
-    print(value)
-    pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
-    driver.find_element(By.ID, "realName").send_keys('徐可可')
-    driver.find_element(By.ID, "password").send_keys(password)
-    driver.find_element(
-        By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]').click()
-    input()
-    driver.quit()
-    if not index == len(RetrieveSD.all_accounts)-1:
-        driver = webdriver.Chrome()
+if __name__ == '__main__':
+    Spider.main()

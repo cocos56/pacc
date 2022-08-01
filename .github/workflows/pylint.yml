@@ -24,6 +24,8 @@ jobs:
         pip install pymysql
         pip install websocket_client
         pip install websocket-server
+        pip install pyperclip
+        pip install selenium
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2
