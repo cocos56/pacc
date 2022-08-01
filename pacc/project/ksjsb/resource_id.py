@@ -30,6 +30,10 @@ class ResourceID:
     # 【提现结果页面】
     pay_title_tv = 'com.kuaishou.nebula:id/pay_title_tv'  # 提现结果
 
+    #  【观看直播界面】
+    live_red_packet_container_close_view = 'com.kuaishou.nebula.live_audience_plugin:id/' \
+                                           'live_red_packet_container_close_view'
+
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
     button2 = 'android:id/button2'  # 等待按钮（应用长时间无反应）
     animated_image = f'{ROOT}animated_image'  # 主界面左上方关闭奥运福娃按钮

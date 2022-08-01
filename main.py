@@ -12,7 +12,7 @@ uia_ins = UIAutomator(DEVICE_SN)
 # uia_ins.click_by_screen_text('看广告再得300金币')
 # dic = uia_ins.get_dict('android:id/message')['@text']
 # print(dic)
-# uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+uia_ins.click('com.kuaishou.nebula.live_audience_plugin:id/live_red_packet_container_close_view')
 # uia_ins.click(text='领现金')
 # adb_ins.swipe(500, 300, 500, 1700)
 try:

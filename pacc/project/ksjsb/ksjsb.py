@@ -22,7 +22,6 @@ class KSJSB(Project):
         super().__init__(serial_num)
         self.start_day = datetime.now().day
         self.dbr = RetrieveKSJSB(serial_num)
-        self.exit_live_cnt = 0
         self.last_video_username = ''
         self.last_video_description = ''
         self.last_video_music = ''
@@ -38,60 +37,6 @@ class KSJSB(Project):
         except FileNotFoundError as err:
             print_err(err)
             self.shopping()
-
-    def watch_live(self):
-        """看直播"""
-        self.enter_wealth_interface()
-        self.random_swipe(True)
-        print('看直播')
-        while True:
-            try:
-                while self.uia_ins.get_point(text='live_activity_download') == (0, 0):
-                    self.random_swipe(True)
-                if not self.uia_ins.get_dict(text='live_activity_download', xml=self.uia_ins.xml):
-                    self.watch_live()
-                    return
-                if self.uia_ins.click_by_xml_texts(
-                        ['观看精彩直播得110金币', '每次110金币'], xml=self.uia_ins.xml):
-                    sleep(6)
-                    if self.uia_ins.get_dict(ResourceID.award_title_prefix):
-                        self.uia_ins.click(ResourceID.nick)
-                    sleep(20)
-                    if Activity.PhotoDetailActivity not in self.adb_ins.get_current_focus():
-                        self.watch_live()
-                        return
-                    sleep(89)
-                    self.exit_live()
-                else:
-                    break
-            except FileNotFoundError as err:
-                print_err(err)
-                self.watch_live()
-
-    def exit_live(self):
-        """退出直播界面"""
-        print(f'exit_live_cnt={self.exit_live_cnt}')
-        self.exit_live_cnt += 1
-        if self.exit_live_cnt >= 10:
-            self.reopen_app()
-            self.exit_live_cnt = 0
-            return
-        self.adb_ins.press_back_key()
-        current_focus = self.adb_ins.get_current_focus()
-        if Activity.AwardFeedFlowActivity in current_focus:
-            self.adb_ins.press_back_key()
-        if Activity.PhotoDetailActivity not in current_focus:
-            return
-        try:
-            if self.uia_ins.click(ResourceID.live_exit_button):
-                self.uia_ins.xml = ''
-            self.uia_ins.click(ResourceID.exit_btn, xml=self.uia_ins.xml)
-        except FileNotFoundError as err:
-            print_err(err)
-            self.exit_live()
-        if Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
-            self.exit_live()
-        self.exit_live_cnt = 0
 
     def sign_in(self):
         """签到"""
@@ -216,6 +161,23 @@ class KSJSB(Project):
         while self.uia_ins.click_by_screen_text(text='福利'):
             sleep(6)
             self.exit_award_video_play_activity()
+
+    def watch_live(self):
+        """看直播"""
+        self.enter_wealth_interface()
+        print('看直播')
+        self.adb_ins.swipe(600, 1800, 600, 230)
+        while self.uia_ins.click_by_screen_text(text='领福利'):
+            sleep(6)
+            self.uia_ins.tap((240, 848))
+            sleep(186)
+            self.uia_ins.click(ResourceID.live_red_packet_container_close_view)
+            self.adb_ins.press_back_key()
+            sleep(3)
+            self.uia_ins.click(text='退出直播间')
+            sleep(3)
+            self.adb_ins.press_back_key()
+            sleep(3)
 
     def open_meal_allowance(self):
         """领饭补"""
