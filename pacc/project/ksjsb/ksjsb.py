@@ -127,12 +127,14 @@ class Ksjsb(Project):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
             self.uia_ins.get_current_ui_hierarchy()
-            if self.uia_ins.click_by_screen_text('立即签到'):
+            day = datetime.now().day
+            if not self.dbr.last_sign_in_day == day and self.uia_ins.\
+                    click_by_screen_text('立即签到'):
                 sleep(3)
                 self.uia_ins.click_by_screen_text('看广告再得300金币')
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
-
+                self.dbu.update_last_sign_in_day(day)
             if self.uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
                 print('已进入财富界面')
             else:

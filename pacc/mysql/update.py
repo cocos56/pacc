@@ -101,3 +101,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_sign_in_day = last_sign_in_day
         print(self.query('last_sign_in_day', last_sign_in_day))
+
+    def update_last_change_money_day(self, last_change_money_day):
+        """更新上一次把金币兑换钱的日子
+
+        :param last_change_money_day: 上一次签到的日子
+        """
+        self.dbr.last_change_money_day = last_change_money_day
+        print(self.query('last_change_money_day', last_change_money_day))
