@@ -112,10 +112,8 @@ class Ksjsb(Project):
         while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
             sleep(10)
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
-        try:
+        if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
-        except (FileNotFoundError, ExpatError) as err:
-            print_err(err)
         return True
 
     def enter_wealth_interface(self, reopen=True, sleep_time=39):
