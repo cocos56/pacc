@@ -284,8 +284,8 @@ class Ksjsb(Project):
         self.uia_ins.tap((536, 1706), 16)
         self.uia_ins.click(text='立即提现')
         if self.uia_ins.get_dict(ResourceID.pay_title_tv):
-            return True
             self.dbu.update_last_change_money_day(day)
+            return True
         return False
 
     def init_sleep_time(self):
