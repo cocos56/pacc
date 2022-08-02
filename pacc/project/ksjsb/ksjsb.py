@@ -30,8 +30,7 @@ class Ksjsb(Project):
 
     def sign_in(self):
         """签到"""
-        day = datetime.now().day
-        if day == self.dbr.last_sign_in_day:
+        if self.start_day == self.dbr.last_sign_in_day:
             print('今天已经签过到了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -43,7 +42,7 @@ class Ksjsb(Project):
                 self.random_swipe(True)
             self.uia_ins.click(text='今天签到可领')
             self.after_sign_in()
-            self.dbu.update_last_sign_in_day(day)
+            self.dbu.update_last_sign_in_day(self.start_day)
         except FileNotFoundError as err:
             print_err(err)
             self.sign_in()
@@ -147,8 +146,7 @@ class Ksjsb(Project):
 
     def open_treasure_box(self):
         """开宝箱得金币"""
-        day = datetime.now().day
-        if day == self.dbr.last_treasure_box_day:
+        if self.start_day == self.dbr.last_treasure_box_day:
             print('今天已经开完宝箱了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -157,13 +155,12 @@ class Ksjsb(Project):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.dbu.update_last_treasure_box_day(day)
+            self.dbu.update_last_treasure_box_day(self.start_day)
             print('今天已经开完宝箱了，请明天再来')
 
     def view_ads(self):
         """看广告"""
-        day = datetime.now().day
-        if day == self.dbr.last_view_ads_day:
+        if self.start_day == self.dbr.last_view_ads_day:
             print('今天已经看完广告了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -172,7 +169,7 @@ class Ksjsb(Project):
         while self.uia_ins.click_by_screen_text(text='福利'):
             sleep(6)
             self.exit_award_video_play_activity()
-        self.dbu.update_last_view_ads_day(day)
+        self.dbu.update_last_view_ads_day(self.start_day)
 
     def exit_live(self):
         """退出直播页面"""
@@ -191,8 +188,7 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        day = datetime.now().day
-        if day == self.dbr.last_watch_live_day:
+        if self.start_day == self.dbr.last_watch_live_day:
             print('今天已经把直播看完了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -204,15 +200,14 @@ class Ksjsb(Project):
             sleep(76)
             self.exit_live()
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
-                self.dbu.update_last_watch_live_day(day)
+                self.dbu.update_last_watch_live_day(self.start_day)
                 break
             self.adb_ins.press_back_key()
             sleep(3)
 
     def shopping(self):
         """逛街"""
-        day = datetime.now().day
-        if day == self.dbr.last_shopping_day:
+        if self.start_day == self.dbr.last_shopping_day:
             print('今天已经逛完街了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -235,7 +230,7 @@ class Ksjsb(Project):
             sleep(2)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key()
-        self.dbu.update_last_shopping_day(day)
+        self.dbu.update_last_shopping_day(self.start_day)
 
     def open_meal_allowance(self):
         """领饭补"""
@@ -300,8 +295,7 @@ class Ksjsb(Project):
 
         :return: 兑换成功返回True，否则返回False
         """
-        day = datetime.now().day
-        if day == self.dbr.last_change_money_day:
+        if self.start_day == self.dbr.last_change_money_day:
             print('今天已经把金币兑换成钱过了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -326,7 +320,7 @@ class Ksjsb(Project):
         self.uia_ins.tap((536, 1706), 16)
         self.uia_ins.click(text='立即提现')
         if self.uia_ins.get_dict(ResourceID.pay_title_tv):
-            self.dbu.update_last_change_money_day(day)
+            self.dbu.update_last_change_money_day(self.start_day)
             return True
         return False
 
@@ -448,8 +442,5 @@ class Ksjsb(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
-                self.update_wealth()
-                self.open_treasure_box()
-                self.view_ads()
-                self.change_money()
+                sleep(3600)
             show_datetime('ksjsb.mainloop')

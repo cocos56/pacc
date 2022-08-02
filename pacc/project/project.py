@@ -26,7 +26,6 @@ class ResourceID:
 class Project:
     """工程类"""
     instances = []
-    startTime = datetime.now()
 
     def __init__(self, serial_num, add_flag=True):
         """构造函数
