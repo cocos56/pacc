@@ -258,6 +258,10 @@ class Ksjsb(Project):
 
         :return: 兑换成功返回True，否则返回False
         """
+        day = datetime.now().day
+        if day == self.dbr.last_change_money_day:
+            print('今天已经把金币兑换成钱过了，无需重复操作')
+            return True
         self.enter_wealth_interface()
         print('正在把金币兑换钱')
         self.uia_ins.tap((866, 349), 6)
@@ -281,6 +285,7 @@ class Ksjsb(Project):
         self.uia_ins.click(text='立即提现')
         if self.uia_ins.get_dict(ResourceID.pay_title_tv):
             return True
+            self.dbu.update_last_change_money_day(day)
         return False
 
     def init_sleep_time(self):
