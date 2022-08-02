@@ -105,15 +105,15 @@ class UpdateKsjsb(Update):
     def update_last_change_money_day(self, last_change_money_day):
         """更新上一次把金币兑换钱的日子
 
-        :param last_change_money_day: 上一次签到的日子
+        :param last_change_money_day: 上一次把金币兑换钱的日子
         """
         self.dbr.last_change_money_day = last_change_money_day
         print(self.query('last_change_money_day', last_change_money_day))
 
-    def update_last_click_positive_day(self, last_click_positive_day):
-        """更新上一次点击青少年模式确认框中我知道了的日子
+    def update_last_view_ads_day(self, last_view_ads_day):
+        """更新上一次看完广告的日子
 
-        :param last_click_positive_day: 上一次点击青少年模式确认框中我知道了的日子
+        :param last_view_ads_day: 上一次看完广告的日子
         """
-        self.dbr.last_click_positive_day = last_click_positive_day
-        print(self.query('last_click_positive_day', last_click_positive_day))
+        self.dbr.last_view_ads_day = last_view_ads_day
+        print(self.query('last_change_money_day', last_view_ads_day))

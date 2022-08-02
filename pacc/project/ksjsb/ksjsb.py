@@ -41,6 +41,10 @@ class Ksjsb(Project):
 
     def sign_in(self):
         """签到"""
+        day = datetime.now().day
+        if day == self.dbr.last_sign_in_day:
+            print('今天已经签过到了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('签到')
         if not self.uia_ins.get_dict(text='今天签到可领'):
@@ -50,6 +54,7 @@ class Ksjsb(Project):
                 self.random_swipe(True)
             self.uia_ins.click(text='今天签到可领')
             self.after_sign_in()
+            self.dbu.update_last_sign_in_day(day)
         except FileNotFoundError as err:
             print_err(err)
             self.sign_in()
@@ -166,12 +171,17 @@ class Ksjsb(Project):
 
     def view_ads(self):
         """看广告"""
+        day = datetime.now().day
+        if day == self.dbr.last_view_ads_day:
+            print('今天已经看完广告了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('看广告')
         self.adb_ins.swipe(600, 1800, 600, 630)
         while self.uia_ins.click_by_screen_text(text='福利'):
             sleep(6)
             self.exit_award_video_play_activity()
+        self.dbu.update_last_view_ads_day(day)
 
     def exit_live(self):
         """退出直播页面"""
@@ -346,6 +356,8 @@ class Ksjsb(Project):
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
+                    self.change_money()
+                    self.open_exclusive_gold_coin_gift_pack()
                     self.view_ads()
                     self.watch_live()
                     self.open_treasure_box()
