@@ -218,6 +218,14 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('逛街')
         self.adb_ins.swipe(600, 1860, 600, 60)
+        self.adb_ins.swipe(600, 1860, 600, 60)
+        self.uia_ins.click_by_screen_text('去逛街')
+        if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
+            self.shopping()
+            return
+        while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key()
+            sleep(1)
 
     def open_meal_allowance(self):
         """领饭补"""

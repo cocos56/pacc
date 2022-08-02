@@ -128,6 +128,7 @@ class RetrieveMobileInfo(RetrieveMobile):
         return super().query('mobile_info', field)
 
 
+# pylint: disable=too-many-instance-attributes
 class RetrieveKsjsbBase(RetrieveMobile):
     """查询快手极速版数据类基类"""
 
