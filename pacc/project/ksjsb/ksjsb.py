@@ -225,7 +225,7 @@ class Ksjsb(Project):
             self.shopping()
             return
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-            countdown = 90
+            countdown = 500
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -448,7 +448,8 @@ class Ksjsb(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
+                self.update_wealth()
                 self.open_treasure_box()
                 self.view_ads()
-                break
+                self.change_money()
             show_datetime('ksjsb.mainloop')
