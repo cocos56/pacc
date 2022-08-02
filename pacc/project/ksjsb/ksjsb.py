@@ -10,6 +10,7 @@ from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
 
 
+# pylint: disable=too-many-instance-attributes
 class Ksjsb(Project):
     """快手极速版类"""
 
@@ -26,16 +27,6 @@ class Ksjsb(Project):
         self.last_video_description = ''
         self.last_video_music = ''
         self.not_same_video_cnt = 0
-
-    def shopping(self):
-        """逛街"""
-        self.enter_wealth_interface()
-        print('逛街')
-        try:
-            self.uia_ins.click(text='浏览低价商品领金币')
-        except FileNotFoundError as err:
-            print_err(err)
-            self.shopping()
 
     def sign_in(self):
         """签到"""
@@ -217,6 +208,16 @@ class Ksjsb(Project):
                 break
             self.adb_ins.press_back_key()
             sleep(3)
+
+    def shopping(self):
+        """逛街"""
+        day = datetime.now().day
+        if day == self.dbr.last_shopping_day:
+            print('今天已经逛完街了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('逛街')
+        self.adb_ins.swipe(600, 1860, 600, 60)
 
     def open_meal_allowance(self):
         """领饭补"""

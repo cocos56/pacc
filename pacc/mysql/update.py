@@ -133,3 +133,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_treasure_box_day = last_treasure_box_day
         print(self.query('last_treasure_box_day', last_treasure_box_day))
+
+    def update_last_shopping_day(self, last_shopping_day):
+        """更新上一次逛完街的日子
+
+        :param last_shopping_day: 上一次逛完街的日子
+        """
+        self.dbr.last_shopping_day = last_shopping_day
+        print(self.query('last_shopping_day', last_shopping_day))
