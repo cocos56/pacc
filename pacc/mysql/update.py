@@ -109,3 +109,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_change_money_day = last_change_money_day
         print(self.query('last_change_money_day', last_change_money_day))
+
+    def update_last_click_positive_day(self, last_click_positive_day):
+        """更新上一次点击青少年模式确认框中我知道了的日子
+
+        :param last_click_positive_day: 上一次点击青少年模式确认框中我知道了的日子
+        """
+        self.dbr.last_click_positive_day = last_click_positive_day
+        print(self.query('last_click_positive_day', last_click_positive_day))

@@ -75,9 +75,9 @@ class Ksjsb(Project):
                 self.uia_ins.xml = ''
             if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
             if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
             if self.uia_ins.click(ResourceID.tv_upgrade_now, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
@@ -132,16 +132,23 @@ class Ksjsb(Project):
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 self.uia_ins.click_by_screen_text('看广告再得300金币')
+                sleep(3)
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
                 self.dbu.update_last_sign_in_day(day)
-            if self.uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
+                self.adb_ins.press_back_key()
+            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
+                    uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
                 print('已进入财富界面')
             else:
                 self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            self.enter_wealth_interface(False)
+            if Activity.HomeActivity in self.adb_ins.get_current_focus():
+                self.random_swipe()
+                self.enter_wealth_interface(False)
+            else:
+                self.enter_wealth_interface()
 
     def open_treasure_box(self):
         """开宝箱得金币"""
