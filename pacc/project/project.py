@@ -50,9 +50,11 @@ class Project:
                 self.instances.remove(self)
 
     # pylint: disable=too-many-arguments
-    def random_swipe(self, a_x, b_x, c_x, d_x, a_y, b_y, c_y, d_y, init_rest_time=False):
+    def random_swipe(
+            self, init_rest_time=False, a_x=0, b_x=0, c_x=0, d_x=0, a_y=0, b_y=0, c_y=0, d_y=0):
         """随机滑动一段长度
 
+        :param init_rest_time: 是否初始化剩余时间
         :param a_x: A点的X轴坐标
         :param b_x: B点的X轴坐标
         :param c_x: C点的X轴坐标
@@ -61,7 +63,6 @@ class Project:
         :param b_y: B点的Y轴坐标
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
-        :param init_rest_time: 是否初始化剩余时间
         """
         if init_rest_time and self.rest_time > 0:
             self.rest_time = 0

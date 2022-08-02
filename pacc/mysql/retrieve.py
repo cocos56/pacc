@@ -128,8 +128,8 @@ class RetrieveMobileInfo(RetrieveMobile):
         return super().query('mobile_info', field)
 
 
-class RetrieveKSJSB(RetrieveMobile):
-    """查询快手极速版数据类"""
+class RetrieveKsjsbBase(RetrieveMobile):
+    """查询快手极速版数据类基类"""
 
     def __init__(self, serial_num):
         """构造函数
@@ -140,6 +140,7 @@ class RetrieveKSJSB(RetrieveMobile):
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
         self.last_sign_in_day = self.query('last_sign_in_day')
+        self.last_watch_video_day = self.query('last_watch_video_day')
 
     # pylint: disable=arguments-differ
     def query(self, field):
@@ -149,6 +150,20 @@ class RetrieveKSJSB(RetrieveMobile):
         :return: 查询到的结果（单条）
         """
         return super().query('ksjsb', field)
+
+
+class RetrieveKsjsb(RetrieveKsjsbBase):
+    """查询快手极速版数据类"""
+
+    instances = {'003001002': RetrieveKsjsbBase('003001002')}
+
+    def __init__(self, serial_num):
+        """构造函数
+
+        :param serial_num: 设备序列号
+        """
+        super().__init__(serial_num)
+        self.__class__.instances.update({self.serial_num: self})
 
 
 class RetrieveAccount(Retrieve):

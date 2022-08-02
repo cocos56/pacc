@@ -1,13 +1,13 @@
 """MySQL数据库包的初始化模块"""
 from .create import CreateKSJSB
-from .retrieve import RetrieveMobileInfo, RetrieveKSJSB, RetrieveEmail
-from .update import UpdateMobileInfo, UpdateKSJSB
+from .retrieve import RetrieveMobileInfo, RetrieveKsjsb, RetrieveEmail
+from .update import UpdateMobileInfo, UpdateKsjsb
 
 __all__ = [
     "CreateKSJSB",
     "RetrieveMobileInfo",
-    "RetrieveKSJSB",
+    "RetrieveKsjsb",
     "RetrieveEmail",
     "UpdateMobileInfo",
-    "UpdateKSJSB",
+    "UpdateKsjsb",
 ]

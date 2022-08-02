@@ -7,11 +7,11 @@ from .activity import Activity
 from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err
-from ...mysql import RetrieveKSJSB, UpdateKSJSB
+from ...mysql import RetrieveKsjsb, UpdateKsjsb
 
 
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
-class KSJSB(Project):
+class Ksjsb(Project):
     """快手极速版类"""
 
     def __init__(self, serial_num):
@@ -21,7 +21,7 @@ class KSJSB(Project):
         """
         super().__init__(serial_num)
         self.start_day = datetime.now().day
-        self.dbr = RetrieveKSJSB(serial_num)
+        self.dbr = RetrieveKsjsb(serial_num)
         self.last_video_username = ''
         self.last_video_description = ''
         self.last_video_music = ''
@@ -226,9 +226,9 @@ class KSJSB(Project):
         try:
             gold_coins, cash_coupons = self.get_wealth()
             if gold_coins != self.dbr.gold_coins:
-                UpdateKSJSB(self.adb_ins.device.serial_num).update_gold_coins(gold_coins)
+                UpdateKsjsb(self.adb_ins.device.serial_num).update_gold_coins(gold_coins)
             if cash_coupons != self.dbr.cash_coupons:
-                UpdateKSJSB(self.adb_ins.device.serial_num).update_cash_coupons(cash_coupons)
+                UpdateKsjsb(self.adb_ins.device.serial_num).update_cash_coupons(cash_coupons)
         except FileNotFoundError as err:
             print_err(err)
             self.update_wealth(False)
@@ -370,10 +370,19 @@ class KSJSB(Project):
         self.uia_ins.xml = ''
 
     # pylint: disable=arguments-differ
-    def random_swipe(self, init_rest_time=False):
+    def random_swipe(
+            self, init_rest_time=False, a_x=0, b_x=0, c_x=0, d_x=0, a_y=0, b_y=0, c_y=0, d_y=0):
         """随机滑动一段长度
 
         :param init_rest_time: 是否初始化剩余时间
+        :param a_x: A点的X轴坐标
+        :param b_x: B点的X轴坐标
+        :param c_x: C点的X轴坐标
+        :param d_x: D点的X轴坐标
+        :param a_y: A点的Y轴坐标
+        :param b_y: B点的Y轴坐标
+        :param c_y: C点的Y轴坐标
+        :param d_y: D点的Y轴坐标
         """
         super().random_swipe(360, 390, 360, 390, 1160, 1190, 260, 290, init_rest_time)
 

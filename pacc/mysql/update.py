@@ -1,5 +1,6 @@
 """MySQL数据库包的改模块"""
 from .mysql import Mobile
+from .retrieve import RetrieveKsjsb
 
 
 # pylint: disable=too-few-public-methods
@@ -56,8 +57,16 @@ class UpdateMobileInfo(Update):
         print(self.query('Model', model))
 
 
-class UpdateKSJSB(Update):
+class UpdateKsjsb(Update):
     """更改快手极速版信息类"""
+
+    def __init__(self, serial_num):
+        """构造函数：初始化改类的对象
+
+        :param serial_num: 设备序列号
+        """
+        super().__init__(serial_num)
+        self.dbr = RetrieveKsjsb.instances.get(self.serial_num)
 
     # pylint: disable=arguments-differ
     def query(self, field, value):
@@ -74,6 +83,7 @@ class UpdateKSJSB(Update):
 
         :param gold_coins: 金币
         """
+        self.dbr.gold_coins = gold_coins
         print(self.query('gold_coins', gold_coins))
 
     def update_cash_coupons(self, cash_coupons):
@@ -81,6 +91,7 @@ class UpdateKSJSB(Update):
 
         :param cash_coupons: 现金
         """
+        self.dbr.cash_coupons = cash_coupons
         print(self.query('cash_coupons', cash_coupons))
 
     def update_last_sign_in_day(self, last_sign_in_day):
@@ -88,4 +99,5 @@ class UpdateKSJSB(Update):
 
         :param last_sign_in_day: 上一次签到的日子
         """
+        self.dbr.last_sign_in_day = last_sign_in_day
         print(self.query('last_sign_in_day', last_sign_in_day))
