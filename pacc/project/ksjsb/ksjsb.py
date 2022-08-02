@@ -429,7 +429,6 @@ class Ksjsb(Project):
             if datetime.now().day == self.start_day:
                 self.watch_video()
             else:
-                self.no_treasure_box_flag = False
                 self.open_treasure_box()
                 self.view_ads()
                 break
