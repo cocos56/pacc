@@ -22,6 +22,7 @@ class Ksjsb(Project):
         super().__init__(serial_num)
         self.start_day = datetime.now().day
         self.dbr = RetrieveKsjsb(serial_num)
+        self.dbu = UpdateKsjsb(serial_num)
         self.last_video_username = ''
         self.last_video_description = ''
         self.last_video_music = ''
@@ -131,6 +132,7 @@ class Ksjsb(Project):
                 self.uia_ins.click_by_screen_text('看广告再得300金币')
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
+
             if self.uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
                 print('已进入财富界面')
             else:
@@ -226,9 +228,9 @@ class Ksjsb(Project):
         try:
             gold_coins, cash_coupons = self.get_wealth()
             if gold_coins != self.dbr.gold_coins:
-                UpdateKsjsb(self.adb_ins.device.serial_num).update_gold_coins(gold_coins)
+                self.dbu.update_gold_coins(gold_coins)
             if cash_coupons != self.dbr.cash_coupons:
-                UpdateKsjsb(self.adb_ins.device.serial_num).update_cash_coupons(cash_coupons)
+                self.dbu.update_cash_coupons(cash_coupons)
         except FileNotFoundError as err:
             print_err(err)
             self.update_wealth(False)
@@ -369,7 +371,7 @@ class Ksjsb(Project):
         self.random_swipe()
         self.uia_ins.xml = ''
 
-    # pylint: disable=arguments-differ
+    # pylint: disable=too-many-arguments
     def random_swipe(
             self, init_rest_time=False, a_x=0, b_x=0, c_x=0, d_x=0, a_y=0, b_y=0, c_y=0, d_y=0):
         """随机滑动一段长度
