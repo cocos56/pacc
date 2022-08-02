@@ -5,9 +5,11 @@ ROOT = 'com.kuaishou.nebula/com.'
 # pylint: disable=too-few-public-methods
 class Activity:
     """快手极速版活动名类"""
-    # 【直播界面（由财富界面->领福利转入）】
+    # 【看直播领金币界面（由财富界面->领福利转入）】
     #  看直播领金币
     AwardFeedFlowActivity = f'{ROOT}yxcorp.gifshow.ad.award.flow.AwardFeedFlowActivity'
+
+    # 【直播界面（由财富界面->领福利->看直播领金币界面转入）】
     PhotoDetailActivity = f'{ROOT}yxcorp.gifshow.detail.PhotoDetailActivity'  # 直播
 
     HomeActivity = f'{ROOT}yxcorp.gifshow.HomeActivity'  # 主界面

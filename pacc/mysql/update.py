@@ -67,18 +67,25 @@ class UpdateKSJSB(Update):
         :param value: 新值（用于替换原有的旧值）
         :return: 修改的结果
         """
-        return super().query('KSJSB', field, value)
+        return super().query('ksjsb', field, value)
 
     def update_gold_coins(self, gold_coins):
         """更新金币值
 
         :param gold_coins: 金币
         """
-        print(self.query('goldCoins', gold_coins))
+        print(self.query('gold_coins', gold_coins))
 
     def update_cash_coupons(self, cash_coupons):
         """更新现金值
 
         :param cash_coupons: 现金
         """
-        print(self.query('cashCoupons', cash_coupons))
+        print(self.query('cash_coupons', cash_coupons))
+
+    def update_last_sign_in_day(self, last_sign_in_day):
+        """更新上一次签到的日子
+
+        :param last_sign_in_day: 上一次签到的日子
+        """
+        print(self.query('last_sign_in_day', last_sign_in_day))

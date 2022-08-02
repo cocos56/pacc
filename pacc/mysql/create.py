@@ -39,9 +39,9 @@ class CreateKSJSB(Create):
         super().__init__(device_sn)
         if self.exist:
             return
-        self.query('KSJSB', ('SN', 'goldCoins', 'cashCoupons'), (device_sn, 0, 0))
+        self.query('ksjsb', ('SN', 'gold_coins', 'cash_coupons'), (device_sn, 0, 0))
 
     @property
     def exist(self):
         """创建只读属性exist，该属性用于判断是否存在快手极速版数据库中存在指定设备的数据"""
-        return Mobile.query(f'select 1 from `KSJSB` where `SN` = {self.device_sn} limit 1') == (1,)
+        return Mobile.query(f'select 1 from `ksjsb` where `SN` = {self.device_sn} limit 1') == (1,)

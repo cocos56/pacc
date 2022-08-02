@@ -137,8 +137,9 @@ class RetrieveKSJSB(RetrieveMobile):
         :param serial_num: 设备序列号
         """
         super().__init__(serial_num)
-        self.gold_coins = self.query('goldCoins')
-        self.cash_coupons = self.query('cashCoupons')
+        self.gold_coins = self.query('gold_coins')
+        self.cash_coupons = self.query('cash_coupons')
+        self.last_sign_in_day = self.query('last_sign_in_day')
 
     # pylint: disable=arguments-differ
     def query(self, field):
@@ -147,7 +148,7 @@ class RetrieveKSJSB(RetrieveMobile):
         :param field: 字段名
         :return: 查询到的结果（单条）
         """
-        return super().query('KSJSB', field)
+        return super().query('ksjsb', field)
 
 
 class RetrieveAccount(Retrieve):

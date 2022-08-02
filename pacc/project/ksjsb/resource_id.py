@@ -30,7 +30,11 @@ class ResourceID:
     # 【提现结果页面】
     pay_title_tv = 'com.kuaishou.nebula:id/pay_title_tv'  # 提现结果
 
-    #  【观看直播界面】
+    # 【看直播领金币界面（由财富界面->领福利转入）】
+    progress_display = f'{ROOT}progress_display'  # 30/30
+    watch_live_task_layout = f'{ROOT}watch_live_task_layout'  # progress_display的父节点
+
+    # 【直播界面（由财富界面->领福利->看直播领金币界面转入）】
     #  关闭点我抢红包
     live_red_packet_container_close_view = 'com.kuaishou.nebula.live_audience_plugin:id/' \
                                            'live_red_packet_container_close_view'
