@@ -233,7 +233,9 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
             self.adb_ins.press_back_key()
             sleep(2)
-        # self.dbu.update_last_shopping_day(day)
+            if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key()
+        self.dbu.update_last_shopping_day(day)
 
     def open_meal_allowance(self):
         """领饭补"""
