@@ -400,7 +400,7 @@ class Ksjsb(Project):
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
         """
-        super().random_swipe(360, 390, 360, 390, 1160, 1190, 260, 290, init_rest_time)
+        super().random_swipe(init_rest_time, 360, 390, 360, 390, 1160, 1190, 260, 290)
 
     def mainloop(self):
         """主循环"""
