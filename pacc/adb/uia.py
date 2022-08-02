@@ -147,8 +147,9 @@ class UIAutomator:
         return False
 
     # pylint: disable=too-many-arguments
-    def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-              offset_x=0, offset_y=0):
+    def click(
+            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index='',
+            offset_x=0, offset_y=0):
         """点击目标点
 
         :param resource_id: 资源的ID
@@ -157,11 +158,12 @@ class UIAutomator:
         :param xml: 目标用户界面上元素的层次布局信息
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
+        :param index: 索引值
         :param offset_x: x轴坐标的偏移量
         :param offset_y: y轴坐标的偏移量
         :return: 找到后立即点击并返回True，未找到返回False
         """
-        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_)
+        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_, index)
         if point and text:
             print(f'检测到【{text}】')
         if not point:
@@ -179,7 +181,8 @@ class UIAutomator:
         point = self.get_point_from_two_points(find_all_ints_with_re(bounds))
         self.tap(point)
 
-    def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_=''):
+    def get_point(
+            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index=''):
         """获取目标点的坐标
 
         :param resource_id: 资源的ID
@@ -188,14 +191,16 @@ class UIAutomator:
         :param xml: 目标用户界面上元素的层次布局信息
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
+        :param index: 索引值
         :return: 找到后返回目标点的坐标，未找到返回False
         """
-        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_)
+        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_, index)
         if not bounds:
             return False
         return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
-    def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_=''):
+    def get_bounds(
+            self, resource_id, text='', content_desc='', xml='', bounds='', class_='', index=''):
         """获取目标点所在的边界的斜对角两点的坐标
 
         :param resource_id: 资源的ID
@@ -204,9 +209,10 @@ class UIAutomator:
         :param xml: 目标用户界面上元素的层次布局信息
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
+        :param index: 索引值
         :return: 找到后返回目边界的斜对角两点的坐标，未找到返回False
         """
-        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_)
+        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_, index)
         if dic:
             return dic['@bounds']
         return False
@@ -225,8 +231,8 @@ class UIAutomator:
                 return dic
         return False
 
-    def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                 index=''):
+    def get_dict(
+            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index=''):
         """获取目标对象的字典信息
 
         :param resource_id: 资源的ID

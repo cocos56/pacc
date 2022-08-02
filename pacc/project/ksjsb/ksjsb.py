@@ -10,7 +10,6 @@ from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
 
 
-# pylint: disable=too-many-instance-attributes, too-many-public-methods
 class Ksjsb(Project):
     """快手极速版类"""
 
@@ -27,7 +26,6 @@ class Ksjsb(Project):
         self.last_video_description = ''
         self.last_video_music = ''
         self.not_same_video_cnt = 0
-        self.no_treasure_box_flag = False
 
     def shopping(self):
         """逛街"""
@@ -148,24 +146,28 @@ class Ksjsb(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             if Activity.HomeActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key()
+                sleep(3)
                 self.random_swipe()
+                sleep(3)
                 self.enter_wealth_interface(False)
             else:
                 self.enter_wealth_interface()
 
     def open_treasure_box(self):
         """开宝箱得金币"""
-        # 60*5, 60*9, 1200
+        day = datetime.now().day
+        if day == self.dbr.last_treasure_box_day:
+            print('今天已经开完宝箱了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('开宝箱')
-        if self.no_treasure_box_flag:
-            print('明天再来')
-        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.no_treasure_box_flag = True
-            print('明天再来')
-        elif self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
+        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
+            self.dbu.update_last_treasure_box_day(day)
+            print('今天已经开完宝箱了，请明天再来')
 
     def view_ads(self):
         """看广告"""
@@ -212,6 +214,7 @@ class Ksjsb(Project):
             self.exit_live()
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
                 self.dbu.update_last_watch_live_day(day)
+                break
             self.adb_ins.press_back_key()
             sleep(3)
 
@@ -386,6 +389,9 @@ class Ksjsb(Project):
             elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.adb_ins.press_back_key()
+            elif self.uia_ins.get_dict(index='3', text='开宝箱', xml=self.uia_ins.xml):
+                self.uia_ins.xml = ''
+                self.open_treasure_box()
             elif self.is_same_video() and self.not_same_video_cnt >= 5:
                 print('由于视频连续相同五次而重启APP')
                 self.reopen_app()
