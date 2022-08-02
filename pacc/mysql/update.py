@@ -116,4 +116,12 @@ class UpdateKsjsb(Update):
         :param last_view_ads_day: 上一次看完广告的日子
         """
         self.dbr.last_view_ads_day = last_view_ads_day
-        print(self.query('last_change_money_day', last_view_ads_day))
+        print(self.query('last_view_ads_day', last_view_ads_day))
+
+    def update_last_watch_live_day(self, last_watch_live_day):
+        """更新上一次看完直播的日子
+
+        :param last_watch_live_day: 上一次看完直播的日子
+        """
+        self.dbr.last_watch_live_day = last_watch_live_day
+        print(self.query('last_watch_live_day', last_watch_live_day))

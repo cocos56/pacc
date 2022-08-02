@@ -185,22 +185,23 @@ class Ksjsb(Project):
         """退出直播页面"""
         print('退出直播页面')
         try:
-            while Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
+            while True:
                 self.adb_ins.press_back_key()
                 sleep(3)
                 if self.uia_ins.click(text='退出直播间'):
                     sleep(3)
-            if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
-                self.adb_ins.press_back_key()
-                sleep(3)
-                return True
-            return False
+                if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                    break
         except FileNotFoundError as err:
             print_err(err)
             return self.exit_live()
 
     def watch_live(self):
         """看直播"""
+        day = datetime.now().day
+        if day == self.dbr.last_watch_live_day:
+            print('今天已经把直播看完了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('看直播')
         self.adb_ins.swipe(600, 1800, 600, 230)
@@ -209,6 +210,10 @@ class Ksjsb(Project):
             self.uia_ins.tap((240, 848))
             sleep(76)
             self.exit_live()
+            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
+                self.dbu.update_last_watch_live_day(day)
+            self.adb_ins.press_back_key()
+            sleep(3)
 
     def open_meal_allowance(self):
         """领饭补"""

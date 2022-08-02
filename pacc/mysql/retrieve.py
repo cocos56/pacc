@@ -140,9 +140,9 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
         self.last_sign_in_day = self.query('last_sign_in_day')
-        self.last_watch_video_day = self.query('last_watch_video_day')
         self.last_change_money_day = self.query('last_change_money_day')
         self.last_view_ads_day = self.query('last_view_ads_day')
+        self.last_watch_live_day = self.query('last_watch_live_day')
 
     # pylint: disable=arguments-differ
     def query(self, field):
