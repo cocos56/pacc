@@ -98,6 +98,8 @@ class Ksjsb(Project):
                 self.uia_ins.txt = ''
                 self.dbu.update_last_sign_in_day(day)
                 self.adb_ins.press_back_key()
+            else:
+                self.uia_ins.txt = ''
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
                     uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
                 print('已进入财富界面')
@@ -156,7 +158,7 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看广告')
-        self.adb_ins.swipe(600, 1800, 600, 200)
+        self.adb_ins.swipe(600, 1800, 600, 160)
         while self.uia_ins.click_by_screen_text(text='福利'):
             sleep(6)
             self.exit_award_video_play_activity()
