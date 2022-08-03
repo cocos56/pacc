@@ -125,6 +125,7 @@ class Ksjsb(Project):
         self.view_ads()
         self.open_exclusive_gold_coin_gift_pack()
         self.watch_live()
+        self.shopping()
         self.sign_in()
         self.update_wealth()
         self.dbu.update_last_daily_task_day(self.start_day)
@@ -238,7 +239,7 @@ class Ksjsb(Project):
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
-        if self.start_day == self.dbr.last_shopping_day:
+        if self.start_day == self.dbr.last_exclusive_gift_day:
             print('今天已经领完专属金币礼包了，无需重复操作')
             return
         self.enter_wealth_interface()
