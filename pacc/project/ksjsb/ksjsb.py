@@ -194,14 +194,13 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看直播')
         self.adb_ins.swipe(600, 1800, 600, 230)
-        while self.uia_ins.click_by_screen_text(text='领福利'):
+        if self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848))
             sleep(76)
             self.exit_live()
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
                 self.dbu.update_last_watch_live_day(self.start_day)
-                break
             self.adb_ins.press_back_key()
             sleep(3)
 
@@ -370,7 +369,7 @@ class Ksjsb(Project):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
-            self.open_treasure_box()
+            self.watch_live()
             self.reopen_app()
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
