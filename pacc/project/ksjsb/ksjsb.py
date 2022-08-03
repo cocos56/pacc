@@ -363,6 +363,7 @@ class Ksjsb(Project):
             self.not_same_video_cnt = 0
         return is_same_video_flag
 
+    # pylint: disable=too-many-branches
     def watch_video(self):
         """看视频"""
         if self.reopen_app_per_hour(False):
