@@ -119,13 +119,16 @@ class Ksjsb(Project):
     def do_daily_task(self):
         """执行每日任务"""
         if self.start_day == self.dbr.last_daily_task_day:
-            print('今天所有任务已经执行完毕，无需重复操作')
+            print('今天的每日任务已经执行完毕，无需重复操作')
             return
+        elif datetime.now().hour < 6:
+            print('执行每日任务时还不到6点，暂不需操作')
+        print('执行每日任务')
         self.change_money()
         self.view_ads()
         self.open_exclusive_gold_coin_gift_pack()
-        self.watch_live()
         self.shopping()
+        self.watch_live()
         self.sign_in()
         self.update_wealth()
         self.dbu.update_last_daily_task_day(self.start_day)
@@ -208,7 +211,7 @@ class Ksjsb(Project):
         print('逛街')
         self.adb_ins.swipe(600, 1860, 600, 60)
         sleep(3)
-        self.adb_ins.swipe(600, 1860, 600, 60)
+        self.adb_ins.swipe(600, 1800, 600, 600)
         self.uia_ins.click_by_screen_text('去逛街')
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             self.shopping()
@@ -364,13 +367,11 @@ class Ksjsb(Project):
             self.not_same_video_cnt = 0
         return is_same_video_flag
 
-    # pylint: disable=too-many-branches
     def watch_video(self):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
-            if not self.start_day == self.dbr.last_daily_task_day and datetime.now().hour > 5:
-                self.do_daily_task()
+            self.do_daily_task()
             self.reopen_app()
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
