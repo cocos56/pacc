@@ -121,8 +121,9 @@ class Ksjsb(Project):
         if self.start_day == self.dbr.last_daily_task_day:
             print('今天的每日任务已经执行完毕，无需重复操作')
             return
-        elif datetime.now().hour < 6:
+        if datetime.now().hour < 6:
             print('执行每日任务时还不到6点，暂不需操作')
+            return
         print('执行每日任务')
         self.change_money()
         self.view_ads()
@@ -196,7 +197,7 @@ class Ksjsb(Project):
             self.uia_ins.tap((240, 848))
             sleep(76)
             self.exit_live()
-            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
+            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] in ['30/30', '10/10']:
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
             self.adb_ins.press_back_key()
