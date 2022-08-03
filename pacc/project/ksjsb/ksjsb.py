@@ -214,9 +214,9 @@ class Ksjsb(Project):
         sleep(3)
         self.adb_ins.swipe(600, 1800, 600, 600)
         self.uia_ins.click_by_screen_text('去逛街')
+        sleep(6)
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
-            self.shopping()
-            return
+            return self.shopping()
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
             countdown = 500
             while countdown:
