@@ -149,3 +149,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_shopping_day = last_shopping_day
         print(self.query('last_shopping_day', last_shopping_day))
+
+    def update_last_exclusive_gift_day(self, last_exclusive_gift_day):
+        """更新上一次领完专属金币礼包的日子
+
+        :param last_exclusive_gift_day: 上一次领完专属金币礼包的日子
+        """
+        self.dbr.last_shopping_day = last_exclusive_gift_day
+        print(self.query('last_exclusive_gift_day', last_exclusive_gift_day))

@@ -120,13 +120,12 @@ class Ksjsb(Project):
             print('今天所有任务已经执行完毕，无需重复操作')
             return
         self.change_money()
-        self.open_exclusive_gold_coin_gift_pack()
         self.view_ads()
+        self.open_exclusive_gold_coin_gift_pack()
         self.watch_live()
-        self.open_treasure_box()
         self.sign_in()
         self.update_wealth()
-        self.dbu.update_last_daily_task_day()
+        self.dbu.update_last_daily_task_day(self.start_day)
 
     def sign_in(self):
         """签到"""
@@ -157,7 +156,7 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看广告')
-        self.adb_ins.swipe(600, 1800, 600, 630)
+        self.adb_ins.swipe(600, 1800, 600, 200)
         while self.uia_ins.click_by_screen_text(text='福利'):
             sleep(6)
             self.exit_award_video_play_activity()
@@ -237,6 +236,9 @@ class Ksjsb(Project):
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
+        if self.start_day == self.dbr.last_shopping_day:
+            print('今天已经领完专属金币礼包了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('领取专属金币礼包')
         if not self.uia_ins.get_point_by_screen_text('专属金币礼包', txt=self.uia_ins.txt):
@@ -246,6 +248,7 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text('领金币'):
             self.uia_ins.tap((530, 1200), 6)
             self.exit_award_video_play_activity()
+        self.dbu.update_last_exclusive_gift_day(self.start_day)
 
     def update_wealth(self, reopen=True):
         """更新财富值
@@ -368,7 +371,6 @@ class Ksjsb(Project):
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
-
                     self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
