@@ -405,6 +405,7 @@ class Ksjsb(Project):
             elif self.uia_ins.get_dict(index='3', text='开宝箱', xml=self.uia_ins.xml):
                 self.uia_ins.xml = ''
                 self.open_treasure_box()
+                self.adb_ins.press_back_key()
             elif self.is_same_video() and self.not_same_video_cnt >= 5:
                 print('由于视频连续相同五次而重启APP')
                 self.reopen_app()
