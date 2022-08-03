@@ -9,7 +9,7 @@ Config.set_debug(True)
 DEVICE_SN = '003001002'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-# uia_ins.click_by_screen_text('看广告再得300金币')
+uia_ins.click_by_screen_text('看广告再得')
 # dic = uia_ins.get_dict('android:id/message')['@text']
 # print(dic)
 # uia_ins.click('com.kuaishou.nebula.live_audience_plugin:id/live_red_packet_container_close_view')

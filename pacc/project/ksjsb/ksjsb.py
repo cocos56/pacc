@@ -122,7 +122,7 @@ class Ksjsb(Project):
             if not self.dbr.last_sign_in_day == day and self.uia_ins.\
                     click_by_screen_text('立即签到'):
                 sleep(3)
-                self.uia_ins.click_by_screen_text('看广告再得300金币')
+                self.uia_ins.click_by_screen_text('看广告再得')
                 sleep(3)
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
