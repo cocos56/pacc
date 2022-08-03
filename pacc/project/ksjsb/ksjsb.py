@@ -28,36 +28,6 @@ class Ksjsb(Project):
         self.last_video_music = ''
         self.not_same_video_cnt = 0
 
-    def sign_in(self):
-        """签到"""
-        if self.start_day == self.dbr.last_sign_in_day:
-            print('今天已经签过到了，无需重复操作')
-            return
-        self.enter_wealth_interface()
-        print('签到')
-        if not self.uia_ins.get_dict(text='今天签到可领'):
-            return
-        try:
-            while self.uia_ins.get_point(text='今天签到可领') == (0, 0):
-                self.random_swipe(True)
-            self.uia_ins.click(text='今天签到可领')
-            self.after_sign_in()
-            self.dbu.update_last_sign_in_day(self.start_day)
-        except FileNotFoundError as err:
-            print_err(err)
-            self.sign_in()
-
-    def after_sign_in(self):
-        """执行签到之后"""
-        if self.uia_ins.click('', '打开签到提醒'):  # 需要授权
-            self.uia_ins.xml = ''
-        elif self.uia_ins.click('', '看广告再得', xml=self.uia_ins.xml):
-            sleep(60)
-            self.adb_ins.press_back_key()
-            self.uia_ins.xml = ''
-        if self.uia_ins.get_dict(text='邀请好友赚更多'):
-            self.enter_wealth_interface()
-
     def open_app(self):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
@@ -144,6 +114,28 @@ class Ksjsb(Project):
             else:
                 self.enter_wealth_interface()
 
+    def do_daily_task(self):
+        """执行每日任务"""
+        if self.start_day == self.dbr.last_daily_task_day:
+            print('今天所有任务已经执行完毕，无需重复操作')
+            return
+        self.change_money()
+        self.open_exclusive_gold_coin_gift_pack()
+        self.view_ads()
+        self.watch_live()
+        self.open_treasure_box()
+        self.sign_in()
+        self.update_wealth()
+        self.dbu.update_last_daily_task_day()
+
+    def sign_in(self):
+        """签到"""
+        if self.start_day == self.dbr.last_sign_in_day:
+            print('今天已经签过到了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('签到：此方法还未实现，请实现此方法')
+
     def open_treasure_box(self):
         """开宝箱得金币"""
         if self.start_day == self.dbr.last_treasure_box_day:
@@ -193,14 +185,15 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看直播')
-        self.adb_ins.swipe(600, 1800, 600, 230)
-        if self.uia_ins.click_by_screen_text(text='领福利'):
+        self.adb_ins.swipe(600, 1830, 600, 60)
+        while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848))
             sleep(76)
             self.exit_live()
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '30/30':
                 self.dbu.update_last_watch_live_day(self.start_day)
+                break
             self.adb_ins.press_back_key()
             sleep(3)
 
@@ -369,18 +362,13 @@ class Ksjsb(Project):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
-            self.watch_live()
+            if not self.start_day == self.dbr.last_daily_task_day and datetime.now().hour > 5:
+                self.do_daily_task()
             self.reopen_app()
         try:
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
-                    self.change_money()
-                    self.open_exclusive_gold_coin_gift_pack()
-                    self.view_ads()
-                    self.watch_live()
-                    self.open_treasure_box()
-                    self.sign_in()
-                    self.update_wealth()
+
                     self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
