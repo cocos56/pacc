@@ -74,7 +74,7 @@ class Ksjsb(Project):
             self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
         return True
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=39):
+    def enter_wealth_interface(self, reopen=True, sleep_time=30):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -83,6 +83,8 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
+        self.uia_ins.tap((90, 140))
+        sleep(9)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
@@ -107,14 +109,7 @@ class Ksjsb(Project):
                 self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            if Activity.HomeActivity in self.adb_ins.get_current_focus():
-                self.adb_ins.press_back_key()
-                sleep(3)
-                self.random_swipe()
-                sleep(3)
-                self.enter_wealth_interface(False)
-            else:
-                self.enter_wealth_interface()
+            self.enter_wealth_interface()
 
     def do_daily_task(self):
         """执行每日任务"""
@@ -128,7 +123,20 @@ class Ksjsb(Project):
         self.shopping()
         self.watch_live()
         self.sign_in()
+        self.get_daily_challenge_rewards()
         self.update_wealth()
+
+    def get_daily_challenge_rewards(self):
+        """领取每日挑战的奖励"""
+        if self.start_day == self.dbr.last_daily_challenge_day:
+            print('今天已经领完每日挑战的奖励了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('领取每日挑战的奖励')
+        self.adb_ins.swipe(600, 1800, 600, 800)
+        while self.uia_ins.click_by_screen_text('点击领取', start_index=1):
+            sleep(6)
+        self.dbu.update_last_daily_challenge_day(self.start_day)
 
     def sign_in(self):
         """签到"""
@@ -279,8 +287,8 @@ class Ksjsb(Project):
         if 'w' in gold_coins:
             gold_coins = 10000 * float(gold_coins[:-1])
         else:
-            gold_coins = float(gold_coins)
-        cash_coupons = float(dics[7]['@text'])
+            gold_coins = float(gold_coins[:-2])
+        cash_coupons = float(dics[6]['@text'][:-1])
         # print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
         return gold_coins, cash_coupons
 

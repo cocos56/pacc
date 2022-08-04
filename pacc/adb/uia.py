@@ -79,14 +79,15 @@ class UIAutomator:
                 return True
         return False
 
-    def click_by_screen_text(self, text, txt=''):
+    def click_by_screen_text(self, text, txt='', start_index=0):
         """搜索并点击截屏上的文本
 
         :param text: 待点击的文本
         :param txt: 截屏上的所有文本
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 如果查找到文本，则立即点击并返回True，如果没有找到，则返回False
         """
-        point = self.get_point_by_screen_text(text, txt)
+        point = self.get_point_by_screen_text(text, txt, start_index)
         if point:
             print(f'检测到【{text}】')
             self.tap(point)
@@ -101,11 +102,12 @@ class UIAutomator:
             print(self.txt)
         return self.txt
 
-    def get_point_by_screen_text(self, text, txt=''):
+    def get_point_by_screen_text(self, text, txt='', start_index=0):
         """通过屏幕上的文字来获取坐标点
 
         :param text: 待点击的文本
         :param txt: 截屏上的所有文本及其坐标信息
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 如果查找到该文本，则返回该文本的中心点，如果没有找到，则返回False
         """
         if txt:
@@ -113,10 +115,14 @@ class UIAutomator:
         else:
             self.get_texts_from_screen()
         points_list = []
+        count = 0
         for temp_txt in self.txt:
             if text in temp_txt[1]:
-                points_list = temp_txt[0]
-                break
+                if count == start_index:
+                    points_list = temp_txt[0]
+                    break
+                else:
+                    count += 1
         if not len(points_list) == 4:
             return False
         return self.get_point_from_two_points(points_list[0] + points_list[2])
