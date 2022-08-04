@@ -140,6 +140,7 @@ class RetrieveKsjsbBase(RetrieveMobile):
         super().__init__(serial_num)
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
+        self.last_double_bonus_day = self.query('last_double_bonus_day')
         self.last_sign_in_day = self.query('last_sign_in_day')
         self.last_change_money_day = self.query('last_change_money_day')
         self.last_view_ads_day = self.query('last_view_ads_day')

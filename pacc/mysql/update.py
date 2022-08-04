@@ -94,6 +94,14 @@ class UpdateKsjsb(Update):
         self.dbr.cash_coupons = cash_coupons
         print(self.query('cash_coupons', cash_coupons))
 
+    def update_last_double_bonus_day(self, last_double_bonus_day):
+        """更新上一次点击翻倍的日子
+
+        :param last_double_bonus_day: 上一次点击翻倍的日子
+        """
+        self.dbr.last_double_bonus_day = last_double_bonus_day
+        print(self.query('last_double_bonus_day', last_double_bonus_day))
+
     def update_last_sign_in_day(self, last_sign_in_day):
         """更新上一次签到的日子
 

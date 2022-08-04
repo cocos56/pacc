@@ -33,32 +33,6 @@ class Ksjsb(Project):
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
         sleep(19)
-        try:
-            if self.uia_ins.click(ResourceID.close):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.iv_close_common_dialog, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.positive, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.click_double, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-            if self.uia_ins.click(ResourceID.tv_upgrade_now, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-                self.adb_ins.press_back_key()
-            while not self.uia_ins.get_dict(ResourceID.red_packet_anim, xml=self.uia_ins.xml):
-                if self.uia_ins.get_dict(ResourceID.gold_egg_anim, xml=self.uia_ins.xml):
-                    break
-                if Activity.HomeActivity not in self.adb_ins.get_current_focus():
-                    self.reopen_app()
-                    return
-                if self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
-                    self.uia_ins.xml = ''
-                    self.adb_ins.press_back_key()
-                self.random_swipe(True)
-                self.uia_ins.xml = ''
-        except (FileNotFoundError, ExpatError) as err:
-            print_err(err)
-            self.adb_ins.press_back_key()
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -100,10 +74,8 @@ class Ksjsb(Project):
                 self.uia_ins.txt = ''
                 self.dbu.update_last_sign_in_day(day)
                 self.adb_ins.press_back_key()
-            else:
-                self.uia_ins.txt = ''
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
-                    uia_ins.get_point_by_screen_text('任务中心', txt=self.uia_ins.txt):
+                    uia_ins.get_point_by_screen_text('任务中心'):
                 print('已进入财富界面')
             else:
                 self.enter_wealth_interface()
@@ -113,10 +85,9 @@ class Ksjsb(Project):
 
     def do_daily_task(self):
         """执行每日任务"""
-        if datetime.now().hour < 6:
-            print('执行每日任务时还不到6点，暂不需操作')
-            return
         print('执行每日任务')
+        self.get_double_bonus()
+        self.open_treasure_box()
         self.change_money()
         self.view_ads()
         self.open_exclusive_gold_coin_gift_pack()
@@ -125,6 +96,17 @@ class Ksjsb(Project):
         self.sign_in()
         self.get_daily_challenge_rewards()
         self.update_wealth()
+
+    def get_double_bonus(self):
+        """点击翻倍：开启看视频奖励翻倍特权"""
+        if self.start_day == self.dbr.last_double_bonus_day:
+            print('今天已经点击翻倍了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('开启看视频奖励翻倍特权')
+        self.adb_ins.swipe(600, 1890, 600, 50)
+        self.uia_ins.click_by_screen_text('点击翻倍')
+        self.dbu.update_last_double_bonus_day(self.start_day)
 
     def get_daily_challenge_rewards(self):
         """领取每日挑战的奖励"""
