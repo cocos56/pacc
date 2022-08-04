@@ -102,6 +102,14 @@ class UpdateKsjsb(Update):
         self.dbr.last_double_bonus_day = last_double_bonus_day
         print(self.query('last_double_bonus_day', last_double_bonus_day))
 
+    def update_last_treasure_box_day(self, last_treasure_box_day):
+        """更新上一次开完宝箱的日子
+
+        :param last_treasure_box_day: 上一次开完宝箱的日子
+        """
+        self.dbr.last_treasure_box_day = last_treasure_box_day
+        print(self.query('last_treasure_box_day', last_treasure_box_day))
+
     def update_last_sign_in_day(self, last_sign_in_day):
         """更新上一次签到的日子
 

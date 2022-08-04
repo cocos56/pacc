@@ -108,6 +108,20 @@ class Ksjsb(Project):
         self.uia_ins.click_by_screen_text('点击翻倍')
         self.dbu.update_last_double_bonus_day(self.start_day)
 
+    def open_treasure_box(self):
+        """开宝箱得金币"""
+        if self.start_day == self.dbr.last_treasure_box_day:
+            print('今天已经开完宝箱了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('开宝箱')
+        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+            self.uia_ins.tap((530, 1330), 6)
+            self.exit_award_video_play_activity()
+        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
+            print('今天已经开完宝箱了，请明天再来')
+            self.dbu.update_last_treasure_box_day(self.start_day)
+
     def get_daily_challenge_rewards(self):
         """领取每日挑战的奖励"""
         if self.start_day == self.dbr.last_daily_challenge_day:
@@ -127,16 +141,6 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('签到：此方法还未实现，请实现此方法')
-
-    def open_treasure_box(self):
-        """开宝箱得金币"""
-        self.enter_wealth_interface()
-        print('开宝箱')
-        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
-            self.uia_ins.tap((530, 1330), 6)
-            self.exit_award_video_play_activity()
-        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            print('今天已经开完宝箱了，请明天再来')
 
     def view_ads(self):
         """看广告"""
