@@ -94,14 +94,6 @@ class UpdateKsjsb(Update):
         self.dbr.cash_coupons = cash_coupons
         print(self.query('cash_coupons', cash_coupons))
 
-    def update_last_daily_task_day(self, last_daily_task_day):
-        """更新上一次做完每日任务的日子
-
-        :param last_daily_task_day: 上一次做完每日任务的日子
-        """
-        self.dbr.last_daily_task_day = last_daily_task_day
-        print(self.query('last_daily_task_day', last_daily_task_day))
-
     def update_last_sign_in_day(self, last_sign_in_day):
         """更新上一次签到的日子
 
@@ -133,14 +125,6 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_watch_live_day = last_watch_live_day
         print(self.query('last_watch_live_day', last_watch_live_day))
-
-    def update_last_treasure_box_day(self, last_treasure_box_day):
-        """更新上一次开完宝箱的日子
-
-        :param last_treasure_box_day: 上一次开完宝箱的日子
-        """
-        self.dbr.last_treasure_box_day = last_treasure_box_day
-        print(self.query('last_treasure_box_day', last_treasure_box_day))
 
     def update_last_shopping_day(self, last_shopping_day):
         """更新上一次逛完街的日子

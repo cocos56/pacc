@@ -118,9 +118,6 @@ class Ksjsb(Project):
 
     def do_daily_task(self):
         """执行每日任务"""
-        if self.start_day == self.dbr.last_daily_task_day:
-            print('今天的每日任务已经执行完毕，无需重复操作')
-            return
         if datetime.now().hour < 6:
             print('执行每日任务时还不到6点，暂不需操作')
             return
@@ -132,7 +129,6 @@ class Ksjsb(Project):
         self.watch_live()
         self.sign_in()
         self.update_wealth()
-        self.dbu.update_last_daily_task_day(self.start_day)
 
     def sign_in(self):
         """签到"""
@@ -144,16 +140,12 @@ class Ksjsb(Project):
 
     def open_treasure_box(self):
         """开宝箱得金币"""
-        if self.start_day == self.dbr.last_treasure_box_day:
-            print('今天已经开完宝箱了，无需重复操作')
-            return
         self.enter_wealth_interface()
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.dbu.update_last_treasure_box_day(self.start_day)
             print('今天已经开完宝箱了，请明天再来')
 
     def view_ads(self):

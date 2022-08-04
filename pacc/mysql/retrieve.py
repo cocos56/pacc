@@ -27,7 +27,7 @@ class RetrieveSD:
         return cls.all_accounts
 
     @classmethod
-    def query_all_data(cls, field='account', database=Mobile):
+    def query_all_data(cls, field='account', database=Account):
         """查询函数：查询指定列的所有行数据
 
         :param field: 目标列的字段名
@@ -140,12 +140,10 @@ class RetrieveKsjsbBase(RetrieveMobile):
         super().__init__(serial_num)
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
-        self.last_daily_task_day = self.query('last_daily_task_day')
         self.last_sign_in_day = self.query('last_sign_in_day')
         self.last_change_money_day = self.query('last_change_money_day')
         self.last_view_ads_day = self.query('last_view_ads_day')
         self.last_watch_live_day = self.query('last_watch_live_day')
-        self.last_treasure_box_day = self.query('last_treasure_box_day')
         self.last_shopping_day = self.query('last_shopping_day')
         self.last_exclusive_gift_day = self.query('last_exclusive_gift_day')
 
