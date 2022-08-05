@@ -88,8 +88,8 @@ class Ksjsb(Project):
         print('执行每日任务')
         self.get_double_bonus()
         self.change_money()
-        self.view_ads()
         self.open_exclusive_gold_coin_gift_pack()
+        self.view_ads()
         self.shopping()
         self.watch_live()
         self.open_meal_allowance()
@@ -184,7 +184,7 @@ class Ksjsb(Project):
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             return self.shopping()
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-            countdown = 450
+            countdown = 480
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -274,7 +274,7 @@ class Ksjsb(Project):
         #     print(i, v)
         gold_coins = dics[2]['@text']
         if 'w' in gold_coins:
-            gold_coins = 10000 * float(gold_coins[:-1])
+            gold_coins = 10000 * float(gold_coins[:-3])
         else:
             gold_coins = float(gold_coins[:-2])
         cash_coupons = float(dics[6]['@text'][:-1])
@@ -354,7 +354,7 @@ class Ksjsb(Project):
     def mainloop(self):
         """主循环"""
         while True:
-            if datetime.now().day == self.start_day:
+            if datetime.now().day >= self.start_day:
                 self.watch_video()
             else:
                 sleep(3600)
