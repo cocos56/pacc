@@ -46,7 +46,7 @@ class Ksjsb(Project):
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
-                if self.uia_ins.click(text='再看一个最高得400金币'):
+                if self.uia_ins.click(text='再看一个'):
                     return self.exit_award_video_play_activity()
         return True
 
@@ -151,7 +151,7 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
-        self.adb_ins.swipe(600, 1800, 600, 360)
+        self.adb_ins.swipe(600, 1800, 600, 660)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.exit_award_video_play_activity()
