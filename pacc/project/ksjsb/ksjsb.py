@@ -96,6 +96,9 @@ class Ksjsb(Project):
         self.open_treasure_box()
         self.update_wealth()
 
+    def get_desktop_component_rewards(self):
+        """获取桌面组件奖励"""
+
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
         if self.start_day == self.dbr.last_double_bonus_day:
