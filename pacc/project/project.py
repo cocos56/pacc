@@ -34,7 +34,7 @@ class Project:
 
     # pylint: disable=too-many-arguments
     def random_swipe(
-            self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
+            self, x_min, x_max, a_y, b_y, c_y, d_y):
         """随机滑动一段长度
 
         :param x_min: A、C点的X轴坐标

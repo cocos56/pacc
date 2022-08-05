@@ -58,8 +58,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140))
-        sleep(9)
+        self.uia_ins.tap((90, 140), 9)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
@@ -233,7 +232,7 @@ class Ksjsb(Project):
         """
         if self.start_day == self.dbr.last_update_wealth_day:
             print('今天已经更新过财富值了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('更新财富值')
         self.uia_ins.tap((668, 360))
@@ -248,6 +247,7 @@ class Ksjsb(Project):
             print_err(err)
             return self.update_wealth()
         self.dbu.update_last_update_wealth_day(self.start_day)
+        return True
 
     def get_wealth(self):
         """获取财富值"""
@@ -305,7 +305,7 @@ class Ksjsb(Project):
             self.adb_ins.keep_online()
             self.do_daily_task()
             self.reopen_app()
-            self.uia_ins.tap((90, 140))
+            self.uia_ins.tap((90, 140), 9)
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.free_memory()
