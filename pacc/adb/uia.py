@@ -121,8 +121,7 @@ class UIAutomator:
                 if count == start_index:
                     points_list = temp_txt[0]
                     break
-                else:
-                    count += 1
+                count += 1
         if not len(points_list) == 4:
             return False
         return self.get_point_from_two_points(points_list[0] + points_list[2])

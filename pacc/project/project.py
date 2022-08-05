@@ -32,6 +32,7 @@ class Project:
         self.uia_ins = UIAutomator(serial_num)
         self.last_reopen_hour = -1
 
+    # pylint: disable=too-many-arguments
     def random_swipe(
             self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度

@@ -325,9 +325,10 @@ class Ksjsb(Project):
         elif Activity.SearchActivity in current_focus:
             self.reopen_app()
         self.random_swipe()
-        sleep(randint(3, 6))
+        sleep(randint(12, 15))
         self.adb_ins.press_back_key()
 
+    # pylint: disable=too-many-arguments
     def random_swipe(
             self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度
