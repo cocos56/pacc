@@ -9,6 +9,7 @@ Config.set_debug(True)
 DEVICE_SN = '003001002'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
+uia_ins.click(text='再看一个最高得400金币')
 # uia_ins.click_by_screen_text('看广告再得')
 # dic = uia_ins.get_dict('android:id/message')['@text']
 # print(dic)

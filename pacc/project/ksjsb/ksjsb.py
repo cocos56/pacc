@@ -45,7 +45,9 @@ class Ksjsb(Project):
             sleep(10)
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
-            self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button)
+            if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
+                if self.uia_ins.click(text='再看一个最高得400金币'):
+                    return self.exit_award_video_play_activity()
         return True
 
     def enter_wealth_interface(self, reopen=True, sleep_time=30):
@@ -143,14 +145,14 @@ class Ksjsb(Project):
         print('签到：此方法还未实现，请实现此方法')
 
     def view_ads(self):
-        """看广告"""
+        """看广告视频得5000金币"""
         if self.start_day == self.dbr.last_view_ads_day:
             print('今天已经看完广告了，无需重复操作')
             return
         self.enter_wealth_interface()
-        print('看广告')
-        self.adb_ins.swipe(600, 1800, 600, 160)
-        while self.uia_ins.click_by_screen_text(text='福利'):
+        print('看广告视频得5000金币')
+        self.adb_ins.swipe(600, 1800, 600, 360)
+        while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.exit_award_video_play_activity()
         self.dbu.update_last_view_ads_day(self.start_day)
