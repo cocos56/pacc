@@ -32,18 +32,17 @@ class Project:
         self.uia_ins = UIAutomator(serial_num)
         self.last_reopen_hour = -1
 
-    # pylint: disable=too-many-arguments
     def random_swipe(
-            self, x_min, x_max, a_y, b_y, c_y, d_y):
+            self, x_range, a_y, b_y, c_y, d_y):
         """随机滑动一段长度
 
-        :param x_min: A、C点的X轴坐标
-        :param x_max: B、D点的X轴坐标
+        :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
         :param a_y: A点的Y轴坐标
         :param b_y: B点的Y轴坐标
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
         """
+        x_min, x_max = x_range
         self.adb_ins.swipe(randint(x_min, x_max), randint(a_y, b_y), randint(x_min, x_max),
                            randint(c_y, d_y))
 

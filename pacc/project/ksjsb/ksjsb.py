@@ -92,7 +92,6 @@ class Ksjsb(Project):
         self.open_exclusive_gold_coin_gift_pack()
         self.shopping()
         self.watch_live()
-        self.sign_in()
         self.open_meal_allowance()
         self.open_treasure_box()
         self.update_wealth()
@@ -121,21 +120,6 @@ class Ksjsb(Project):
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_day(self.start_day)
-
-    def sign_in(self):
-        """签到"""
-        if self.start_day == self.dbr.last_sign_in_day:
-            print('今天已经签过到了，无需重复操作')
-            return
-        self.enter_wealth_interface()
-        print('签到：此方法还未实现，请实现此方法')
-
-    def read_novel(self):
-        """读小说"""
-        while True:
-            if self.uia_ins.click(text='10金币'):
-                self.exit_award_video_play_activity()
-            self.uia_ins.tap((1000, 980))
 
     def view_ads(self):
         """看广告视频得5000金币"""
@@ -356,19 +340,17 @@ class Ksjsb(Project):
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 
-    # pylint: disable=too-many-arguments
     def random_swipe(
-            self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
+            self, x_range=(360, 390), a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度
 
-        :param x_min: A、C点的X轴坐标
-        :param x_max: B、D点的X轴坐标
+        :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
         :param a_y: A点的Y轴坐标
         :param b_y: B点的Y轴坐标
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
         """
-        super().random_swipe(x_min, x_max, a_y, b_y, c_y, d_y)
+        super().random_swipe(x_range, a_y, b_y, c_y, d_y)
 
     def mainloop(self):
         """主循环"""
