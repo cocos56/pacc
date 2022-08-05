@@ -15,4 +15,4 @@ class Datetime:
 
 def show_datetime(text):
     """打印程序自启动以来已运行的时间"""
-    print(f"现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}\n")
+    print(f"\n现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}")

@@ -165,3 +165,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_update_wealth_day = last_update_wealth_day
         print(self.query('last_update_wealth_day', last_update_wealth_day))
+
+    def update_last_meal_allowance_hour(self, last_meal_allowance_hour):
+        """更新上一次领完饭补的小时
+
+        :param last_meal_allowance_hour: 上一次领完饭补的小时
+        """
+        self.dbr.last_meal_allowance_hour = last_meal_allowance_hour
+        print(self.query('last_meal_allowance_hour', last_meal_allowance_hour))

@@ -93,6 +93,7 @@ class Ksjsb(Project):
         self.shopping()
         self.watch_live()
         self.sign_in()
+        self.open_meal_allowance()
         self.open_treasure_box()
         self.update_wealth()
 
@@ -204,14 +205,35 @@ class Ksjsb(Project):
 
     def open_meal_allowance(self):
         """领饭补"""
+        hour = datetime.now().hour
+        if hour in [0, 1, 2, 3, 4, 9, 10, 14, 15, 16, 20]:
+            print('还没到饭点的，请到饭点的时候再来领饭补')
+            return
+        breakfast_hours = [5, 6, 7, 8]
+        lunch_hours = [11, 12, 13]
+        dinner_hours = [17, 18, 19]
+        supper_hours = [21, 22, 23]
+        if hour in breakfast_hours and self.dbr.last_meal_allowance_hour in breakfast_hours:
+            print('已经领过早饭饭补了，无需重复操作')
+            return
+        if hour in lunch_hours and self.dbr.last_meal_allowance_hour in lunch_hours:
+            print('已经领过午饭饭补了，无需重复操作')
+            return
+        if hour in dinner_hours and self.dbr.last_meal_allowance_hour in dinner_hours:
+            print('已经领过晚饭饭补了，无需重复操作')
+            return
+        if hour in supper_hours and self.dbr.last_meal_allowance_hour in supper_hours:
+            print('已经领过夜宵饭补了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('领饭补')
-        self.adb_ins.swipe(600, 1800, 600, 800)
+        self.adb_ins.swipe(600, 1800, 600, 600)
         self.uia_ins.click_by_screen_text('去领取')
         sleep(5)
         if self.uia_ins.click(text='领取饭补'):
             self.uia_ins.tap((530, 1220), 6)
             self.exit_award_video_play_activity()
+        self.dbu.update_last_meal_allowance_hour(hour)
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
@@ -313,6 +335,7 @@ class Ksjsb(Project):
                     self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
             self.adb_ins.press_back_key()
+        show_datetime('看视频')
         current_focus = self.adb_ins.get_current_focus()
         if Activity.PhotoDetailActivity in current_focus:
             self.exit_live()
@@ -347,4 +370,3 @@ class Ksjsb(Project):
                 self.watch_video()
             else:
                 sleep(3600)
-            show_datetime('ksjsb.mainloop')
