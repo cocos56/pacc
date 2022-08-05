@@ -158,10 +158,10 @@ class UpdateKsjsb(Update):
         self.dbr.last_shopping_day = last_exclusive_gift_day
         print(self.query('last_exclusive_gift_day', last_exclusive_gift_day))
 
-    def update_last_daily_challenge_day(self, last_daily_challenge_day):
-        """更新上一次领完每日挑战奖励的日子
+    def update_last_update_wealth_day(self, last_update_wealth_day):
+        """更新上一次更新完财富值的日子
 
-        :param last_daily_challenge_day: 上一次领完每日挑战奖励的日子
+        :param last_update_wealth_day: 上一次更新完财富值的日子
         """
-        self.dbr.last_daily_challenge_day = last_daily_challenge_day
-        print(self.query('last_daily_challenge_day', last_daily_challenge_day))
+        self.dbr.last_update_wealth_day = last_update_wealth_day
+        print(self.query('last_update_wealth_day', last_update_wealth_day))

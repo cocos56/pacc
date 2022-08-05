@@ -10,7 +10,6 @@ from ...base import sleep, show_datetime, print_err
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
 
 
-# pylint: disable=too-many-instance-attributes
 class Ksjsb(Project):
     """快手极速版类"""
 
@@ -23,10 +22,6 @@ class Ksjsb(Project):
         self.start_day = datetime.now().day
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
-        self.last_video_username = ''
-        self.last_video_description = ''
-        self.last_video_music = ''
-        self.not_same_video_cnt = 0
 
     def open_app(self):
         """打开快手极速版APP"""
@@ -41,8 +36,12 @@ class Ksjsb(Project):
         """
         if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
             return False
-        while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
-            sleep(10)
+        try:
+            while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
+                sleep(10)
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.exit_award_video_play_activity()
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
@@ -50,7 +49,7 @@ class Ksjsb(Project):
                     return self.exit_award_video_play_activity()
         return True
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=30):
+    def enter_wealth_interface(self, reopen=True, sleep_time=26):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -89,14 +88,13 @@ class Ksjsb(Project):
         """执行每日任务"""
         print('执行每日任务')
         self.get_double_bonus()
-        self.open_treasure_box()
         self.change_money()
         self.view_ads()
         self.open_exclusive_gold_coin_gift_pack()
         self.shopping()
         self.watch_live()
         self.sign_in()
-        self.get_daily_challenge_rewards()
+        self.open_treasure_box()
         self.update_wealth()
 
     def get_double_bonus(self):
@@ -120,21 +118,9 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
             self.exit_award_video_play_activity()
-        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            print('今天已经开完宝箱了，请明天再来')
+        elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
+            print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_day(self.start_day)
-
-    def get_daily_challenge_rewards(self):
-        """领取每日挑战的奖励"""
-        if self.start_day == self.dbr.last_daily_challenge_day:
-            print('今天已经领完每日挑战的奖励了，无需重复操作')
-            return
-        self.enter_wealth_interface()
-        print('领取每日挑战的奖励')
-        self.adb_ins.swipe(600, 1800, 600, 800)
-        while self.uia_ins.click_by_screen_text('点击领取', start_index=1):
-            sleep(6)
-        self.dbu.update_last_daily_challenge_day(self.start_day)
 
     def sign_in(self):
         """签到"""
@@ -151,7 +137,7 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
-        self.adb_ins.swipe(600, 1800, 600, 660)
+        self.adb_ins.swipe(600, 1600, 600, 960)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.exit_award_video_play_activity()
@@ -179,13 +165,13 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看直播')
-        self.adb_ins.swipe(600, 1830, 600, 60)
+        self.adb_ins.swipe(600, 1820, 600, 260)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848))
             sleep(76)
             self.exit_live()
-            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] in ['30/30', '10/10']:
+            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
             self.adb_ins.press_back_key()
@@ -199,14 +185,12 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('逛街')
         self.adb_ins.swipe(600, 1860, 600, 60)
-        sleep(3)
-        self.adb_ins.swipe(600, 1800, 600, 600)
         self.uia_ins.click_by_screen_text('去逛街')
         sleep(6)
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             return self.shopping()
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-            countdown = 500
+            countdown = 450
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -245,13 +229,15 @@ class Ksjsb(Project):
             self.exit_award_video_play_activity()
         self.dbu.update_last_exclusive_gift_day(self.start_day)
 
-    def update_wealth(self, reopen=True):
+    def update_wealth(self):
         """更新财富值
 
-        param reopen: 是否需要重启快手极速版APP
         """
+        if self.start_day == self.dbr.last_update_wealth_day:
+            print('今天已经更新过财富值了，无需重复操作')
+            return
+        self.enter_wealth_interface()
         print('更新财富值')
-        self.enter_wealth_interface(reopen)
         self.uia_ins.tap((668, 360))
         sleep(9)
         try:
@@ -262,7 +248,8 @@ class Ksjsb(Project):
                 self.dbu.update_cash_coupons(cash_coupons)
         except FileNotFoundError as err:
             print_err(err)
-            self.update_wealth(False)
+            return self.update_wealth()
+        self.dbu.update_last_update_wealth_day(self.start_day)
 
     def get_wealth(self):
         """获取财富值"""
@@ -314,94 +301,33 @@ class Ksjsb(Project):
             return True
         return False
 
-    def init_sleep_time(self):
-        """初始化睡眠时间"""
-        print(f'restTime={self.rest_time}')
-        if self.rest_time <= 0:
-            return
-        if self.uia_ins.get_dict(ResourceID.live_simple_play_swipe_text, xml=self.uia_ins.xml):
-            pass
-        elif self.uia_ins.get_dict(ResourceID.open_long_atlas, xml=self.uia_ins.xml):
-            pass
-        else:
-            return
-        self.rest_time = 0
-
-    def is_same_video(self):
-        """判断当前和上一次是否是同一视频"""
-        try:
-            last_video_username = self.uia_ins.get_dict(
-                ResourceID.user_name_text_view, xml=self.uia_ins.xml)['@text']
-        except TypeError as err:
-            print_err(err)
-            return False
-        try:
-            last_video_description = self.uia_ins.get_dict(
-                ResourceID.caption_scroll_container, xml=self.uia_ins.xml)['node']['@text']
-        except TypeError as err:
-            print_err(err)
-            last_video_description = ''
-        last_video_music = self.uia_ins.get_dict(
-            ResourceID.music_textview, xml=self.uia_ins.xml)['@text']
-        # print(last_video_username, last_video_description, last_video_music)
-        is_same_video_flag = last_video_username == self.\
-            last_video_username and last_video_description == self.\
-            last_video_description and last_video_music == self.last_video_music
-        self.last_video_username = last_video_username
-        self.last_video_description = last_video_description
-        self.last_video_music = last_video_music
-        if is_same_video_flag:
-            self.not_same_video_cnt += 1
-        else:
-            self.not_same_video_cnt = 0
-        return is_same_video_flag
-
     def watch_video(self):
         """看视频"""
         if self.reopen_app_per_hour(False):
             self.adb_ins.keep_online()
             self.do_daily_task()
             self.reopen_app()
-        try:
+            self.uia_ins.tap((90, 140))
             if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_day = (datetime.now() + timedelta(days=1)).day
                     return
-            current_focus = self.adb_ins.get_current_focus()
-            if Activity.PhotoDetailActivity in current_focus:
-                self.exit_live()
-                self.random_swipe(True)
-            elif Activity.LiveSlideActivity in current_focus:
-                self.exit_live()
-                self.random_swipe(True)
-            elif Activity.UserProfileActivity in current_focus:
-                self.adb_ins.press_back_key()
-            elif Activity.KwaiYodaWebViewActivity in current_focus:
-                self.adb_ins.press_back_key()
-            elif Activity.SearchActivity in current_focus:
-                self.reopen_app()
-            elif self.uia_ins.get_dict(ResourceID.item_title, xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-                self.adb_ins.press_back_key()
-            elif self.uia_ins.get_dict(index='3', text='开宝箱', xml=self.uia_ins.xml):
-                self.uia_ins.xml = ''
-                self.open_treasure_box()
-                self.adb_ins.press_back_key()
-            elif self.is_same_video() and self.not_same_video_cnt >= 5:
-                print('由于视频连续相同五次而重启APP')
-                self.reopen_app()
-            self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
-            self.init_sleep_time()
-        except (FileNotFoundError, ExpatError) as err:
-            print_err(err)
-            self.random_swipe(True)
             self.adb_ins.press_back_key()
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.PhotoDetailActivity in current_focus:
+            self.exit_live()
+            self.random_swipe(True)
+        elif Activity.LiveSlideActivity in current_focus:
+            self.exit_live()
+            self.random_swipe(True)
+        elif Activity.SearchActivity in current_focus:
+            self.reopen_app()
         self.rest_time = self.rest_time + self.last_time - time()
         self.last_time = time()
         self.random_swipe()
-        self.uia_ins.xml = ''
+        self.adb_ins.press_back_key()
 
     # pylint: disable=too-many-arguments
     def random_swipe(
