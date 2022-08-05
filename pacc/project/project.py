@@ -1,12 +1,10 @@
 """自动远程控制手机APP中央控制系统工程模块"""
 from datetime import datetime
 from random import randint
-from time import time
 
 from ..adb import ADB, UIAutomator
 from ..base import sleep
 from ..config import Config
-from ..multi import threadLock
 
 
 # pylint: disable=too-few-public-methods
@@ -25,51 +23,28 @@ class ResourceID:
 
 class Project:
     """工程类"""
-    instances = []
-
-    def __init__(self, serial_num, add_flag=True):
+    def __init__(self, serial_num):
         """构造函数
 
         :param serial_num: 设备编号
-        :param add_flag: 是否将此对象追加到实例列表中，默认会自动追加
         """
         self.adb_ins = ADB(serial_num)
         self.uia_ins = UIAutomator(serial_num)
         self.last_reopen_hour = -1
-        self.rest_time = 0
-        self.last_time = time()
-        if add_flag:
-            with threadLock:
-                self.instances.append(self)
 
-    def __del__(self):
-        """析构函数"""
-        with threadLock:
-            if self in self.instances:
-                self.instances.remove(self)
-
-    # pylint: disable=too-many-arguments
     def random_swipe(
-            self, init_rest_time=False, a_x=0, b_x=0, c_x=0, d_x=0, a_y=0, b_y=0, c_y=0, d_y=0):
+            self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度
 
-        :param init_rest_time: 是否初始化剩余时间
-        :param a_x: A点的X轴坐标
-        :param b_x: B点的X轴坐标
-        :param c_x: C点的X轴坐标
-        :param d_x: D点的X轴坐标
+        :param x_min: A、C点的X轴坐标
+        :param x_max: B、D点的X轴坐标
         :param a_y: A点的Y轴坐标
         :param b_y: B点的Y轴坐标
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
         """
-        if init_rest_time and self.rest_time > 0:
-            self.rest_time = 0
-        elif self.rest_time > 0:
-            return
-        self.adb_ins.swipe(randint(a_x, b_x), randint(a_y, b_y), randint(c_x, d_x),
+        self.adb_ins.swipe(randint(x_min, x_max), randint(a_y, b_y), randint(x_min, x_max),
                            randint(c_y, d_y))
-        self.rest_time += randint(3, 15)
 
     def reopen_app_per_hour(self, execute=True):
         """每小时重启一下APP

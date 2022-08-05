@@ -1,6 +1,6 @@
 """快手极速版模块"""
+from random import randint
 from datetime import datetime, timedelta
-from time import time
 from xml.parsers.expat import ExpatError
 
 from .activity import Activity
@@ -324,27 +324,23 @@ class Ksjsb(Project):
             self.random_swipe(True)
         elif Activity.SearchActivity in current_focus:
             self.reopen_app()
-        self.rest_time = self.rest_time + self.last_time - time()
-        self.last_time = time()
         self.random_swipe()
+        sleep(randint(3, 6))
         self.adb_ins.press_back_key()
 
     # pylint: disable=too-many-arguments
     def random_swipe(
-            self, init_rest_time=False, a_x=0, b_x=0, c_x=0, d_x=0, a_y=0, b_y=0, c_y=0, d_y=0):
+            self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度
 
-        :param init_rest_time: 是否初始化剩余时间
-        :param a_x: A点的X轴坐标
-        :param b_x: B点的X轴坐标
-        :param c_x: C点的X轴坐标
-        :param d_x: D点的X轴坐标
+        :param x_min: A、C点的X轴坐标
+        :param x_max: B、D点的X轴坐标
         :param a_y: A点的Y轴坐标
         :param b_y: B点的Y轴坐标
         :param c_y: C点的Y轴坐标
         :param d_y: D点的Y轴坐标
         """
-        super().random_swipe(init_rest_time, 360, 390, 360, 390, 1160, 1190, 260, 290)
+        super().random_swipe(x_min, x_max, a_y, b_y, c_y, d_y)
 
     def mainloop(self):
         """主循环"""
