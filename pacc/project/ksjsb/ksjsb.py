@@ -181,7 +181,7 @@ class Ksjsb(Project):
         """逛街"""
         if self.start_day == self.dbr.last_shopping_day:
             print('今天已经逛完街了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('逛街')
         self.adb_ins.swipe(600, 1860, 600, 60)
@@ -201,6 +201,7 @@ class Ksjsb(Project):
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key()
         self.dbu.update_last_shopping_day(self.start_day)
+        return True
 
     def open_meal_allowance(self):
         """领饭补"""
@@ -220,9 +221,6 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('领取专属金币礼包')
-        if not self.uia_ins.get_point_by_screen_text('专属金币礼包', txt=self.uia_ins.txt):
-            print('该账号没有领取专属金币礼包的任务')
-            return
         self.adb_ins.swipe(600, 1830, 600, 1750)
         if self.uia_ins.click_by_screen_text('领金币'):
             self.uia_ins.tap((530, 1200), 6)
@@ -325,7 +323,7 @@ class Ksjsb(Project):
         elif Activity.SearchActivity in current_focus:
             self.reopen_app()
         self.random_swipe()
-        sleep(randint(12, 15))
+        sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 
     # pylint: disable=too-many-arguments
