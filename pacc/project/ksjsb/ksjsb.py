@@ -130,6 +130,13 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('签到：此方法还未实现，请实现此方法')
 
+    def read_novel(self):
+        """读小说"""
+        while True:
+            if self.uia_ins.click(text='10金币'):
+                self.exit_award_video_play_activity()
+            self.uia_ins.tap((1000, 980))
+
     def view_ads(self):
         """看广告视频得5000金币"""
         if self.start_day == self.dbr.last_view_ads_day:
