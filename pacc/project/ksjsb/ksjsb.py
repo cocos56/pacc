@@ -343,17 +343,13 @@ class Ksjsb(Project):
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 
-    def random_swipe(
-            self, x_range=(360, 390), a_y=1160, b_y=1190, c_y=260, d_y=290):
+    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
         """随机滑动一段长度
 
         :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
-        :param a_y: A点的Y轴坐标
-        :param b_y: B点的Y轴坐标
-        :param c_y: C点的Y轴坐标
-        :param d_y: D点的Y轴坐标
+        :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
         """
-        super().random_swipe(x_range, a_y, b_y, c_y, d_y)
+        super().random_swipe(x_range, y_list)
 
     def mainloop(self):
         """主循环"""
