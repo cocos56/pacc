@@ -1,6 +1,6 @@
 """快手极速版模块"""
-from random import randint
 from datetime import datetime, timedelta
+from random import randint
 from xml.parsers.expat import ExpatError
 
 from .activity import Activity
@@ -328,7 +328,6 @@ class Ksjsb(Project):
         sleep(randint(3, 6))
         self.adb_ins.press_back_key()
 
-    # pylint: disable=too-many-arguments
     def random_swipe(
             self, x_min=360, x_max=390, a_y=1160, b_y=1190, c_y=260, d_y=290):
         """随机滑动一段长度
