@@ -27,7 +27,7 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        sleep(26)
+        sleep(23)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -58,7 +58,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 9)
+        self.uia_ins.tap((90, 140), 12)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
@@ -73,7 +73,10 @@ class Ksjsb(Project):
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
                 self.dbu.update_last_sign_in_day(day)
-                self.adb_ins.press_back_key()
+                sleep(3)
+                if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
+                    sleep(3)
+                    self.adb_ins.press_back_key(3)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
                     uia_ins.get_point_by_screen_text('任务中心'):
                 print('已进入财富界面')
@@ -113,6 +116,7 @@ class Ksjsb(Project):
         self.adb_ins.swipe(600, 1890, 600, 50)
         if self.uia_ins.click_by_screen_text('点击翻倍'):
             self.dbu.update_last_double_bonus_day(self.start_day)
+            sleep(3)
 
     def open_treasure_box(self):
         """开宝箱得金币"""
@@ -140,6 +144,8 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
         self.adb_ins.swipe(600, 1600, 600, 960)
+        while not self.uia_ins.get_point_by_screen_text(text='领福利'):
+            self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.exit_award_video_play_activity()
@@ -168,6 +174,8 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看直播')
         self.adb_ins.swipe(600, 1820, 600, 260)
+        while not self.uia_ins.get_point_by_screen_text(text='领福利'):
+            self.adb_ins.swipe(600, 1860, 600, 660)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848))
