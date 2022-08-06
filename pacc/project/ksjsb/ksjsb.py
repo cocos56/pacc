@@ -124,6 +124,7 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
+                sleep(69)
                 self.exit_live()
             else:
                 self.exit_award_video_play_activity()
