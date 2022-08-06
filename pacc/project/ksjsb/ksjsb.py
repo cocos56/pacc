@@ -49,7 +49,7 @@ class Ksjsb(Project):
                     return self.exit_award_video_play_activity()
         return True
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=43):
+    def enter_wealth_interface(self, reopen=True, sleep_time=50):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
