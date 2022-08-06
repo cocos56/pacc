@@ -6,6 +6,9 @@ NEO_VIDEO_ROOT = 'com.kuaishou.nebula.neo_video:id/'
 # pylint: disable=too-few-public-methods
 class ResourceID:
     """快手极速版的安卓资源ID类"""
+    # 【桌面组件】
+    tv_get_coin_right = 'com.kuaishou.nebula:id/tv_get_coin_right'  # 点击桌面组件获取金币奖励中的金币值
+
     # 【观看视频页面】
     user_name_text_view = f'{ROOT}user_name_text_view'  # 用户名
     caption_scroll_container = f'{ROOT}caption_scroll_container'  # 视频描述

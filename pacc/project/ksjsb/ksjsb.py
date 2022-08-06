@@ -96,8 +96,12 @@ class Ksjsb(Project):
         self.open_treasure_box()
         self.update_wealth()
 
-    def get_desktop_component_rewards(self):
+    def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
+        self.reopen_app()
+        self.adb_ins.press_home_key()
+        if self.uia_ins.click(ResourceID.tv_get_coin_right):
+            sleep(30)
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
