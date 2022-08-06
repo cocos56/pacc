@@ -27,7 +27,7 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        sleep(19)
+        sleep(26)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -49,7 +49,7 @@ class Ksjsb(Project):
                     return self.exit_award_video_play_activity()
         return True
 
-    def enter_wealth_interface(self, reopen=True, sleep_time=26):
+    def enter_wealth_interface(self, reopen=True, sleep_time=43):
         """进入财富界面
 
         param reopen: 是否需要重启快手极速版APP
@@ -187,7 +187,8 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('逛街')
         self.adb_ins.swipe(600, 1860, 600, 60)
-        self.uia_ins.click_by_screen_text('去逛街')
+        while not self.uia_ins.click_by_screen_text('去逛街'):
+            self.adb_ins.swipe(600, 1860, 600, 660)
         sleep(6)
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             return self.shopping()
@@ -198,6 +199,8 @@ class Ksjsb(Project):
                 countdown -= 1
                 print(countdown)
                 self.adb_ins.swipe(536, 1100, 536, 1000)
+                if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
+                    self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
             sleep(2)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
