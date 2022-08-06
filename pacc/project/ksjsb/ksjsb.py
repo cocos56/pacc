@@ -232,10 +232,14 @@ class Ksjsb(Project):
         self.adb_ins.swipe(600, 1800, 600, 600)
         self.uia_ins.click_by_screen_text('去领取')
         sleep(5)
-        if self.uia_ins.click(text='领取饭补'):
-            self.uia_ins.tap((530, 1220), 6)
-            self.exit_award_video_play_activity()
-        self.dbu.update_last_meal_allowance_hour(hour)
+        try:
+            if self.uia_ins.click(text='领取饭补'):
+                self.uia_ins.tap((530, 1220), 6)
+                self.exit_award_video_play_activity()
+            self.dbu.update_last_meal_allowance_hour(hour)
+        except FileNotFoundError as err:
+            print_err(err)
+            self.open_meal_allowance()
 
     def open_exclusive_gold_coin_gift_pack(self):
         """领取专属金币礼包"""
