@@ -6,7 +6,7 @@ from xml.parsers.expat import ExpatError
 from .activity import Activity
 from .resource_id import ResourceID
 from ..project import Project
-from ...base import sleep, show_datetime, print_err
+from ...base import sleep, show_datetime, print_err, run_forever
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
 
 
@@ -124,7 +124,7 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
-                sleep(69)
+                sleep(80)
                 self.exit_live()
             else:
                 self.exit_award_video_play_activity()
@@ -359,10 +359,10 @@ class Ksjsb(Project):
         """
         super().random_swipe(x_range, y_list)
 
+    @run_forever
     def mainloop(self):
         """主循环"""
-        while True:
-            if datetime.now().day >= self.start_day:
-                self.watch_video()
-            else:
-                sleep(3600)
+        if datetime.now().day >= self.start_day:
+            self.watch_video()
+        else:
+            sleep(3600)
