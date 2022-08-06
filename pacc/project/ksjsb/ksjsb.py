@@ -119,7 +119,10 @@ class Ksjsb(Project):
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             self.uia_ins.tap((530, 1330), 6)
-            self.exit_award_video_play_activity()
+            if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
+                self.exit_live()
+            else:
+                self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_day(self.start_day)
