@@ -165,7 +165,7 @@ class Ksjsb(Project):
             while True:
                 self.adb_ins.press_back_key()
                 sleep(3)
-                if self.uia_ins.click(text='退出直播间'):
+                if self.uia_ins.click(text='退出'):
                     sleep(3)
                 if break_activity in self.adb_ins.get_current_focus():
                     break
@@ -184,9 +184,9 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看直播')
         self.adb_ins.swipe(600, 1820, 600, 260)
-        while not self.uia_ins.get_point_by_screen_text(text='领福利'):
+        while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
-        while self.uia_ins.click_by_screen_text(text='领福利'):
+        while self.uia_ins.click_by_screen_text(text='看直播得1.5万金币'):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
@@ -277,6 +277,12 @@ class Ksjsb(Project):
             self.uia_ins.tap((530, 1200), 6)
             self.exit_award_video_play_activity()
         self.dbu.update_last_exclusive_gift_day(self.start_day)
+
+    def get_flash_benefits(self):
+        """"领取限时福利：限时福利14天领14元"""
+        self.enter_wealth_interface()
+        if self.uia_ins.get_point_by_screen_text(text='点击领取今日红包', txt=self.uia_ins.txt):
+            self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt)
 
     def update_wealth(self):
         """更新财富值
