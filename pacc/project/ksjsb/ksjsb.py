@@ -69,12 +69,16 @@ class Ksjsb(Project):
             if not self.dbr.last_sign_in_day == day and self.uia_ins.\
                     click_by_screen_text('立即签到'):
                 sleep(3)
-                self.uia_ins.click_by_screen_text('看广告再得')
+                if self.uia_ins.click_by_screen_text('看广告再得'):
+                    sleep(3)
+                    self.exit_award_video_play_activity()
+                    self.uia_ins.txt = ''
+                elif self.uia_ins.click_by_screen_text('看直播再得', text=self.uia_ins.txt):
+                    sleep(3)
+                    self.exit_live()
+                    self.uia_ins.txt = ''
                 sleep(3)
-                self.exit_award_video_play_activity()
-                self.uia_ins.txt = ''
                 self.dbu.update_last_sign_in_day(day)
-                sleep(3)
                 if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
                     sleep(3)
                     self.adb_ins.press_back_key(3)
@@ -129,7 +133,7 @@ class Ksjsb(Project):
             self.uia_ins.tap((530, 1330), 6)
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
                 sleep(80)
-                self.exit_live(Activity.KwaiYodaWebViewActivity)
+                self.exit_live()
             else:
                 self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
@@ -151,7 +155,7 @@ class Ksjsb(Project):
             self.exit_award_video_play_activity()
         self.dbu.update_last_view_ads_day(self.start_day)
 
-    def exit_live(self, break_activity=Activity.AwardFeedFlowActivity):
+    def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
 
         :param break_activity : 跳出循环体的活动
@@ -170,7 +174,7 @@ class Ksjsb(Project):
             while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
                 sleep(3)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                return self.exit_live()
+                return self.exit_live(break_activity)
 
     def watch_live(self):
         """看直播"""
@@ -185,7 +189,7 @@ class Ksjsb(Project):
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
-            self.exit_live()
+            self.exit_live(Activity.AwardFeedFlowActivity)
             sleep(6)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 continue
@@ -362,15 +366,6 @@ class Ksjsb(Project):
                     return
             self.adb_ins.press_back_key()
         show_datetime('看视频')
-        current_focus = self.adb_ins.get_current_focus()
-        if Activity.PhotoDetailActivity in current_focus:
-            self.exit_live()
-            self.random_swipe(True)
-        elif Activity.LiveSlideActivity in current_focus:
-            self.exit_live()
-            self.random_swipe(True)
-        elif Activity.SearchActivity in current_focus:
-            self.reopen_app()
         self.random_swipe()
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
