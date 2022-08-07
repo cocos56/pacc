@@ -189,7 +189,7 @@ class Ksjsb(Project):
             sleep(6)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 continue
-            elif self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
+            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
             self.adb_ins.press_back_key(3)
