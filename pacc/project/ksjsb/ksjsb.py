@@ -27,7 +27,7 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        sleep(23)
+        sleep(120)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -37,7 +37,8 @@ class Ksjsb(Project):
         if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
             return False
         try:
-            while not self.uia_ins.get_dict(resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
+            while not self.uia_ins.get_dict(
+                    resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
@@ -58,7 +59,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 12)
+        self.uia_ins.tap((90, 140), 15)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
@@ -101,7 +102,6 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        self.reopen_app()
         self.adb_ins.press_home_key()
         if self.uia_ins.click(ResourceID.tv_get_coin_right):
             sleep(30)
@@ -129,7 +129,7 @@ class Ksjsb(Project):
             self.uia_ins.tap((530, 1330), 6)
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
                 sleep(80)
-                self.exit_live()
+                self.exit_live(Activity.KwaiYodaWebViewActivity)
             else:
                 self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
@@ -151,8 +151,11 @@ class Ksjsb(Project):
             self.exit_award_video_play_activity()
         self.dbu.update_last_view_ads_day(self.start_day)
 
-    def exit_live(self):
-        """退出直播页面"""
+    def exit_live(self, break_activity=Activity.AwardFeedFlowActivity):
+        """退出直播页面
+
+        :param break_activity : 跳出循环体的活动
+        """
         print('退出直播页面')
         try:
             while True:
@@ -160,11 +163,14 @@ class Ksjsb(Project):
                 sleep(3)
                 if self.uia_ins.click(text='退出直播间'):
                     sleep(3)
-                if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                if break_activity in self.adb_ins.get_current_focus():
                     break
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            return self.exit_live()
+            while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
+                sleep(3)
+            if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+                return self.exit_live()
 
     def watch_live(self):
         """看直播"""
@@ -175,17 +181,18 @@ class Ksjsb(Project):
         print('看直播')
         self.adb_ins.swipe(600, 1820, 600, 260)
         while not self.uia_ins.get_point_by_screen_text(text='领福利'):
-            self.adb_ins.swipe(600, 1860, 600, 660)
+            self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
-            self.uia_ins.tap((240, 848))
-            sleep(76)
+            self.uia_ins.tap((240, 848), 96)
             self.exit_live()
-            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
+            sleep(6)
+            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
+                continue
+            elif self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
-            self.adb_ins.press_back_key()
-            sleep(3)
+            self.adb_ins.press_back_key(3)
 
     def shopping(self):
         """逛街"""
@@ -241,10 +248,12 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('领饭补')
         self.adb_ins.swipe(600, 1800, 600, 600)
-        self.uia_ins.click_by_screen_text('去领取')
-        sleep(5)
+        while not self.uia_ins.click_by_screen_text('到饭点领饭补'):
+            self.adb_ins.swipe(600, 1860, 600, 660)
+        sleep(6)
         try:
             if self.uia_ins.click(text='领取饭补'):
+                sleep(3)
                 self.uia_ins.tap((530, 1220), 6)
                 self.exit_award_video_play_activity()
             self.dbu.update_last_meal_allowance_hour(hour)
