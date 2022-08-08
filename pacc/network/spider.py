@@ -1,5 +1,5 @@
 """爬虫模块"""
-import time
+from time import sleep
 
 import pyperclip
 from selenium import webdriver
@@ -7,8 +7,7 @@ from selenium.webdriver.common.by import By
 
 from pacc.mysql.retrieve import RetrieveSD
 
-
-START_INDEX = 20
+START_INDEX = 21
 
 
 class Spider:
@@ -30,7 +29,7 @@ class Spider:
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
             cls.driver.get('http://47.100.242.194/')
             cls.driver.maximize_window()
-            time.sleep(4)
+            sleep(4)
             print(index + 1, username, end=' ')
             password = 'k187397'
             cls.driver.find_element(By.ID, "username").send_keys(username)
@@ -38,13 +37,29 @@ class Spider:
             cls.driver.find_element(
                 By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span'
             ).click()
-            time.sleep(3)
+            sleep(3)
             cls.open_url_in_new_window('http://47.100.242.194/record/trades/')
             cls.open_url_in_new_window('http://47.100.242.194/record/linked')
             cls.open_url_in_new_window('http://47.100.242.194/account/buyers')
             cls.open_url_in_new_window('http://47.100.242.194/account/wallet')
             cls.driver.switch_to.window(cls.driver.window_handles[1])
-            time.sleep(12)
+            sleep(5)
+            while True:
+                sleep(1)
+                recorded_amount = cls.driver.find_element(
+                    By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]/div'
+                              '/div/div/div/div/div/table/tbody/tr[1]/td[1]/div/span[2]')
+                recorded_amount = float(recorded_amount.text)
+                to_be_recorded_amount = cls.driver.find_element(
+                    By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]/'
+                              'div/div/div/div/div/div/table/tbody/tr[1]/td[2]/div/span[2]')
+                to_be_recorded_amount = float(to_be_recorded_amount.text)
+                withdrawn_amount = cls.driver.find_element(
+                    By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]/div'
+                              '/div/div/div/div/div/table/tbody/tr[1]/td[3]/div/span[2]')
+                withdrawn_amount = float(withdrawn_amount.text)
+                if recorded_amount or to_be_recorded_amount or withdrawn_amount:
+                    break
             cls.driver.find_element(By.XPATH, '//*[@class="ant-btn ant-btn-primary"]/span').click()
             cls.driver.find_element(By.ID, "amount").send_keys('9999')
             cls.driver.find_element(By.ID, "tradeWayNo").send_keys('18739776523@qq.com')
@@ -57,7 +72,7 @@ class Spider:
                     By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]'
                 ).click()
                 pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
-                time.sleep(3)
+                sleep(3)
                 cls.driver.refresh()
             input()
             cls.driver.quit()
