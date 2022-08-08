@@ -7,7 +7,11 @@ from selenium.webdriver.common.by import By
 
 from pacc.mysql.retrieve import RetrieveSD
 
-START_INDEX = 21
+START_INDEX = 13
+DEPARTING_STAFF = [
+    '郭志勇',
+    '吴洪德'
+]
 
 
 class Spider:
@@ -66,14 +70,16 @@ class Spider:
             value = cls.driver.find_element(By.ID, "amount").get_attribute("value")
             print(RetrieveSD.all_names[index], value)
             cls.driver.find_element(By.ID, "realName").send_keys('徐可可')
-            if float(value) >= 20:
-                cls.driver.find_element(By.ID, "password").send_keys(password)
+            cls.driver.find_element(By.ID, "password").send_keys(password)
+            if float(value) >= 20 and RetrieveSD.all_names[index] not in DEPARTING_STAFF:
                 cls.driver.find_element(
                     By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]'
                 ).click()
                 pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
                 sleep(3)
                 cls.driver.refresh()
+            else:
+                print(f'已入账金额：{recorded_amount}，待入账金额：{to_be_recorded_amount}')
             input()
             cls.driver.quit()
             if not index == len(RetrieveSD.all_accounts) - 1:
