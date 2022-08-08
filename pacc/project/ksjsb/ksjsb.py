@@ -141,7 +141,7 @@ class Ksjsb(Project):
             self.dbu.update_last_treasure_box_day(self.start_day)
 
     def view_ads(self):
-        """看广告视频得5000金币"""
+        """看广告视频得5000个金币"""
         if self.start_day == self.dbr.last_view_ads_day:
             print('今天已经看完广告了，无需重复操作')
             return
@@ -163,10 +163,9 @@ class Ksjsb(Project):
         print('退出直播页面')
         try:
             while True:
-                self.adb_ins.press_back_key()
-                sleep(3)
-                if self.uia_ins.click(text='退出'):
-                    sleep(3)
+                self.adb_ins.press_back_key(3)
+                if self.uia_ins.click_by_xml_texts(texts=['退出直播间', '退出']):
+                    sleep(6)
                 if break_activity in self.adb_ins.get_current_focus():
                     break
         except (FileNotFoundError, ExpatError) as err:
@@ -190,7 +189,7 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            sleep(6)
+            sleep(9)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 continue
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
@@ -220,10 +219,10 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
                 if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key()
-            sleep(2)
+            self.adb_ins.press_back_key(10)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key()
+            sleep(6)
         self.dbu.update_last_shopping_day(self.start_day)
         return True
 
