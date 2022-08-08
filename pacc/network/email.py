@@ -5,8 +5,8 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 from smtplib import SMTPDataError
 
-from ..base import sleep, print_err
-from ..mysql import RetrieveEmail
+from pacc.base import sleep, print_err
+from pacc.mysql import RetrieveEmail
 
 # 发件人账号
 USER = 'coco10069@qq.com'
@@ -56,3 +56,7 @@ class EMail:
     def send_login_alarm(self):
         """发送出现登录界面提醒"""
         self.send_email('出现登录界面')
+
+    def send_need_verification_alarm(self):
+        """发送去验证弹窗的提醒"""
+        self.send_email('Ksjsb提现时需要验证')

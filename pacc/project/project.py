@@ -28,6 +28,7 @@ class Project:
 
         :param serial_num: 设备编号
         """
+        self.serial_num = serial_num
         self.adb_ins = ADB(serial_num)
         self.uia_ins = UIAutomator(serial_num)
         self.last_reopen_hour = -1

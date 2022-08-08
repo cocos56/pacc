@@ -3,7 +3,7 @@ from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import show_datetime, sleep
-from ..tools import EMail
+from ..network import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 
@@ -40,7 +40,6 @@ class SD(Project):
 
         :param serial_num: 设备编号
         """
-        self.serial_num = serial_num
         super().__init__(serial_num)
 
     def check(self):

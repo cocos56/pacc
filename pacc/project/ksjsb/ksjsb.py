@@ -8,6 +8,7 @@ from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err, run_forever
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
+from ...network import EMail
 
 
 class Ksjsb(Project):
@@ -70,11 +71,11 @@ class Ksjsb(Project):
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 if self.uia_ins.click_by_screen_text('看广告再得'):
-                    sleep(3)
+                    sleep(6)
                     self.exit_award_video_play_activity()
                     self.uia_ins.txt = ''
                 elif self.uia_ins.click_by_screen_text('看直播再得', text=self.uia_ins.txt):
-                    sleep(3)
+                    sleep(6)
                     self.exit_live()
                     self.uia_ins.txt = ''
                 sleep(3)
@@ -351,7 +352,11 @@ class Ksjsb(Project):
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         self.uia_ins.tap((536, 1706), 16)
         self.uia_ins.click(text='立即提现')
-        if self.uia_ins.get_dict(ResourceID.pay_title_tv):
+        sleep(3)
+        if self.uia_ins.get_dict(text='去验证'):
+            EMail(self.serial_num).send_need_verification_alarm()
+            return False
+        if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
             self.dbu.update_last_change_money_day(self.start_day)
             return True
         return False
