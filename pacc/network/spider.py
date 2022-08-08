@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 from pacc.mysql.retrieve import RetrieveSD
 
-START_INDEX = 13
+START_INDEX = 0
 DEPARTING_STAFF = [
     '郭志勇',
     '吴洪德'
