@@ -74,7 +74,7 @@ class Ksjsb(Project):
                     sleep(6)
                     self.exit_award_video_play_activity()
                     self.uia_ins.txt = ''
-                elif self.uia_ins.click_by_screen_text('看直播再得', text=self.uia_ins.txt):
+                elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
                     sleep(6)
                     self.exit_live()
                     self.uia_ins.txt = ''
@@ -175,7 +175,7 @@ class Ksjsb(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             if break_activity not in self.adb_ins.get_current_focus():
-                return self.exit_live(break_activity)
+                self.exit_live(break_activity)
 
     def watch_live(self):
         """看直播"""
