@@ -191,7 +191,6 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            sleep(9)
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
