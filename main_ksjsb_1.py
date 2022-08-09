@@ -5,8 +5,8 @@ from pacc.project import Ksjsb
 from pacc.project.ksjsb.activity import Activity
 
 Config.set_debug(True)
-# Ksjsb('003001001').mainloop()
-Ksjsb('003001001').get_double_bonus()
+Ksjsb('003001001').mainloop()
+# Ksjsb('003001001').get_double_bonus()
 # Ksjsb('003001001').watch_live()
 # Ksjsb('003001001').get_desktop_component_coin()
 # Ksjsb('003001001').exit_live(Activity.AwardFeedFlowActivity)

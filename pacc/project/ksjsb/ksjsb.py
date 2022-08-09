@@ -186,10 +186,10 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        # if self.start_day == self.dbr.last_watch_live_day:
-        #     print('今天已经把直播看完了，无需重复操作')
-        #     return
-        # self.enter_wealth_interface()
+        if self.start_day == self.dbr.last_watch_live_day:
+            print('今天已经把直播看完了，无需重复操作')
+            return
+        self.enter_wealth_interface()
         print('看直播')
         while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
