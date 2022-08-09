@@ -174,9 +174,9 @@ class Ksjsb(Project):
         print('退出直播页面')
         try:
             while True:
-                self.adb_ins.press_back_key(6)
+                self.adb_ins.press_back_key(9)
                 if self.uia_ins.click_by_xml_texts(texts=['退出直播间', '退出']):
-                    sleep(6)
+                    sleep(9)
                 if break_activity in self.adb_ins.get_current_focus():
                     break
         except (FileNotFoundError, ExpatError) as err:
