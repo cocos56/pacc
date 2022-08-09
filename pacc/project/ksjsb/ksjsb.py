@@ -153,7 +153,10 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='领福利'):
             sleep(6)
-            self.exit_award_video_play_activity()
+            if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
+                self.exit_award_video_play_activity()
+            else:
+                break
         self.dbu.update_last_view_ads_day(self.start_day)
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
@@ -164,16 +167,14 @@ class Ksjsb(Project):
         print('退出直播页面')
         try:
             while True:
-                self.adb_ins.press_back_key(3)
+                self.adb_ins.press_back_key(6)
                 if self.uia_ins.click_by_xml_texts(texts=['退出直播间', '退出']):
                     sleep(6)
                 if break_activity in self.adb_ins.get_current_focus():
                     break
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
-                sleep(3)
-            if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+            if break_activity not in self.adb_ins.get_current_focus():
                 return self.exit_live(break_activity)
 
     def watch_live(self):
@@ -191,8 +192,6 @@ class Ksjsb(Project):
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
             sleep(9)
-            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
-                continue
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
                 self.dbu.update_last_watch_live_day(self.start_day)
                 break
@@ -220,10 +219,9 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
                 if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key(10)
+            self.adb_ins.press_back_key(9)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                self.adb_ins.press_back_key()
-            sleep(6)
+                self.adb_ins.press_back_key(9)
         self.dbu.update_last_shopping_day(self.start_day)
         return True
 
