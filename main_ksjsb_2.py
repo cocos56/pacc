@@ -4,6 +4,7 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('003001002').mainloop()
+# Ksjsb('003001002').watch_live()
 # Ksjsb('003001002').view_ads()
 # Ksjsb('003001002').shopping()
 # Ksjsb('003001002').get_double_bonus()

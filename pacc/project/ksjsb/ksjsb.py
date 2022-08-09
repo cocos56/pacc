@@ -97,7 +97,7 @@ class Ksjsb(Project):
         print('执行每日任务')
         self.get_double_bonus()
         self.change_money()
-        self.open_exclusive_gold_coin_gift_pack()
+        # self.open_exclusive_gold_coin_gift_pack()
         self.get_flash_benefits()
         self.view_ads()
         self.shopping()
@@ -108,10 +108,11 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
+        self.reopen_app()
         self.adb_ins.press_home_key(3)
         while self.uia_ins.click(ResourceID.tv_get_coin_left):
             sleep(3)
-        sleep(30)
+        sleep(16)
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
@@ -185,12 +186,11 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        if self.start_day == self.dbr.last_watch_live_day:
-            print('今天已经把直播看完了，无需重复操作')
-            return
-        self.enter_wealth_interface()
+        # if self.start_day == self.dbr.last_watch_live_day:
+        #     print('今天已经把直播看完了，无需重复操作')
+        #     return
+        # self.enter_wealth_interface()
         print('看直播')
-        self.adb_ins.swipe(600, 1820, 600, 260)
         while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='看直播得1.5万金币'):
@@ -357,7 +357,7 @@ class Ksjsb(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 16)
+        self.uia_ins.tap((536, 1706), 26)
         self.uia_ins.click(text='立即提现')
         sleep(3)
         if self.uia_ins.get_dict(text='去验证'):
