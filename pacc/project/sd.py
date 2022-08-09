@@ -35,13 +35,6 @@ class SD(Project):
 
     instances = []
 
-    def __init__(self, serial_num):
-        """构造函数
-
-        :param serial_num: 设备编号
-        """
-        super().__init__(serial_num)
-
     def check(self):
         """检查"""
         self.adb_ins.keep_online()

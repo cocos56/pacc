@@ -1,6 +1,7 @@
 """快手极速版程序入口模块"""
 from pacc.config import Config
 from pacc.project import Ksjsb
+# pylint: disable=unused-import
 from pacc.project.ksjsb.activity import Activity
 
 Config.set_debug(True)
