@@ -224,7 +224,7 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
                 if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key(9)
+            self.adb_ins.press_back_key(30)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(9)
         self.dbu.update_last_shopping_day(self.start_day)
