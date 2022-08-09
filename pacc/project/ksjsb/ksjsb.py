@@ -199,13 +199,13 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(3)
 
     def shopping(self):
-        """逛街"""
+        """去逛街"""
         if self.start_day == self.dbr.last_shopping_day:
             print('今天已经逛完街了，无需重复操作')
             return True
         self.enter_wealth_interface()
-        print('逛街')
-        self.adb_ins.swipe(600, 1860, 600, 60)
+        print('去逛街')
+        self.adb_ins.swipe(600, 1860, 600, 560)
         while not self.uia_ins.click_by_screen_text('去逛街'):
             self.adb_ins.swipe(600, 1860, 600, 660)
         sleep(6)

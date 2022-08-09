@@ -3,7 +3,8 @@ from pacc.config import Config
 from pacc.project import Ksjsb
 
 Config.set_debug(True)
-Ksjsb('003001002').mainloop()
+# Ksjsb('003001002').mainloop()
+Ksjsb('003001002').shopping()
 # Ksjsb('003001002').get_double_bonus()
 # Ksjsb('003001002').get_desktop_component_coin()
 # Ksjsb('003001002').enter_wealth_interface()
