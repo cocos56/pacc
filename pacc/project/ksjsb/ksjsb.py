@@ -109,9 +109,9 @@ class Ksjsb(Project):
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
         self.adb_ins.press_home_key(3)
-        self.uia_ins.click(ResourceID.tv_get_coin_left)
-        # if self.uia_ins.click(ResourceID.tv_get_coin_left):
-        #     sleep(30)
+        while self.uia_ins.click(ResourceID.tv_get_coin_left):
+            sleep(3)
+        sleep(30)
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
