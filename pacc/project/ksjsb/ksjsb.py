@@ -98,6 +98,7 @@ class Ksjsb(Project):
         self.get_double_bonus()
         self.change_money()
         self.open_exclusive_gold_coin_gift_pack()
+        self.get_flash_benefits()
         self.view_ads()
         self.shopping()
         self.watch_live()
@@ -107,9 +108,10 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        self.adb_ins.press_home_key()
-        if self.uia_ins.click(ResourceID.tv_get_coin_right):
-            sleep(30)
+        self.adb_ins.press_home_key(3)
+        self.uia_ins.click(ResourceID.tv_get_coin_left)
+        # if self.uia_ins.click(ResourceID.tv_get_coin_left):
+        #     sleep(30)
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
@@ -155,9 +157,13 @@ class Ksjsb(Project):
             sleep(6)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                 self.exit_award_video_play_activity()
-            else:
+            elif Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key(6)
                 break
-        self.dbu.update_last_view_ads_day(self.start_day)
+        if self.uia_ins.get_point_by_screen_text('5/5'):
+            self.dbu.update_last_view_ads_day(self.start_day)
+        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
+            self.dbu.update_last_view_ads_day(self.start_day)
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -277,9 +283,13 @@ class Ksjsb(Project):
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领14元"""
+        if self.start_day == self.dbr.last_flash_benefits_day:
+            print('今天已经领完限时福利了，无需重复操作')
+            return
         self.enter_wealth_interface()
         if self.uia_ins.get_point_by_screen_text(text='点击领取今日红包', txt=self.uia_ins.txt):
             self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt)
+        self.dbu.update_last_flash_benefits_day(self.start_day)
 
     def update_wealth(self):
         """更新财富值

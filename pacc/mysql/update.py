@@ -173,3 +173,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_meal_allowance_hour = last_meal_allowance_hour
         print(self.query('last_meal_allowance_hour', last_meal_allowance_hour))
+
+    def update_last_flash_benefits_day(self, last_flash_benefits_day):
+        """更新上一次领完限时福利的日子
+
+        param last_flash_benefits_day: 上一次领完限时福利的日子
+        """
+        self.dbr.last_flash_benefits_day = last_flash_benefits_day
+        print(self.query('last_flash_benefits_day', last_flash_benefits_day))

@@ -135,10 +135,13 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(f'{self.cmd}shell input keyevent {keycode}')
         sleep(sleep_time, False, False)
 
-    def press_home_key(self):
-        """按起始键"""
+    def press_home_key(self, sleep_time=1):
+        """按起始键
+
+        :param sleep_time: 休息时间
+        """
         self.keep_online()
-        self.press_key('KEYCODE_HOME')
+        self.press_key('KEYCODE_HOME', sleep_time)
 
     def press_menu_key(self):
         """按菜单键"""

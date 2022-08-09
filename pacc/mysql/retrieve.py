@@ -150,6 +150,7 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.last_exclusive_gift_day = self.query('last_exclusive_gift_day')
         self.last_update_wealth_day = self.query('last_update_wealth_day')
         self.last_meal_allowance_hour = self.query('last_meal_allowance_hour')
+        self.last_flash_benefits_day = self.query('last_flash_benefits_day')
 
     # pylint: disable=arguments-differ
     def query(self, field):

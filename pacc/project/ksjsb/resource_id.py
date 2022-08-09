@@ -8,6 +8,7 @@ class ResourceID:
     """快手极速版的安卓资源ID类"""
     # 【桌面组件】
     tv_get_coin_right = 'com.kuaishou.nebula:id/tv_get_coin_right'  # 点击桌面组件获取金币奖励中的金币值
+    tv_get_coin_left = 'com.kuaishou.nebula:id/tv_get_coin_left'  # 点击桌面组件获取金币奖励中的点击文字
 
     # 【观看视频页面】
     user_name_text_view = f'{ROOT}user_name_text_view'  # 用户名
