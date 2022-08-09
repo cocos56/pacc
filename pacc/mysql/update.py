@@ -181,3 +181,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_flash_benefits_day = last_flash_benefits_day
         print(self.query('last_flash_benefits_day', last_flash_benefits_day))
+
+    def update_last_desktop_component_day(self, last_desktop_component_day):
+        """更新上一次领完桌面组件奖励的日子
+
+        param last_desktop_component_day: 上一次领完桌面组件奖励的日子
+        """
+        self.dbr.last_desktop_component_day = last_desktop_component_day
+        print(self.query('last_desktop_component_day', last_desktop_component_day))

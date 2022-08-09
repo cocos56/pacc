@@ -104,15 +104,20 @@ class Ksjsb(Project):
         self.watch_live()
         self.open_meal_allowance()
         self.open_treasure_box()
+        self.get_desktop_component_coin()
         self.update_wealth()
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
+        if self.start_day == self.dbr.last_desktop_component_day:
+            print('今天已经领完桌面组件奖励了，无需重复操作')
+            return
         self.reopen_app()
         self.adb_ins.press_home_key(3)
         while self.uia_ins.click(ResourceID.tv_get_coin_left):
             sleep(3)
         sleep(16)
+        self.dbu.update_last_desktop_component_day(self.start_day)
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
