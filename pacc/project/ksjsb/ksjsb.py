@@ -75,10 +75,10 @@ class Ksjsb(Project):
                     self.exit_award_video_play_activity()
                     self.uia_ins.txt = ''
                 elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
-                    sleep(6)
+                    sleep(96)
                     self.exit_live()
                     self.uia_ins.txt = ''
-                sleep(3)
+                sleep(6)
                 self.dbu.update_last_sign_in_day(day)
                 if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
                     sleep(3)
