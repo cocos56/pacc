@@ -122,9 +122,9 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1800, 600, 350)
-        if self.uia_ins.click_by_screen_text('点击翻倍'):
+        if self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
             self.dbu.update_last_double_bonus_day(self.start_day)
-            sleep(3)
+            sleep(6)
 
     def open_treasure_box(self):
         """开宝箱得金币"""
