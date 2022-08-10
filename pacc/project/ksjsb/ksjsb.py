@@ -67,7 +67,7 @@ class Ksjsb(Project):
             sleep(sleep_time)
             self.uia_ins.get_current_ui_hierarchy()
             today_date = date.today()
-            if not self.dbr.last_sign_in_date == today_date and self.uia_ins.\
+            if self.dbr.last_sign_in_date != today_date and self.uia_ins.\
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -292,7 +292,6 @@ class Ksjsb(Project):
         """执行每日任务"""
         print('执行每日任务')
         self.get_double_bonus()
-        self.change_money()
         self.view_ads()
         self.watch_live()
         self.shopping()
@@ -389,5 +388,6 @@ class Ksjsb(Project):
             self.watch_video()
             self.open_treasure_box()
         else:
+            self.change_money()
             self.update_wealth()
             sleep(3600)

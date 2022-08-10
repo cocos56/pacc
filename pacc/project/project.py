@@ -4,7 +4,6 @@ from random import randint
 
 from ..adb import ADB, UIAutomator
 from ..base import sleep
-from ..config import Config
 
 
 # pylint: disable=too-few-public-methods
