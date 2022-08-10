@@ -4,7 +4,6 @@ from os import getenv
 from pymysql import connect, OperationalError
 
 from ..base import sleep
-from ..multi import threadLock
 
 
 class MySQL:
@@ -53,19 +52,17 @@ class MySQL:
 
         :param cmd: 待执行的查询语句
         """
-        with threadLock:
-            try:
-                cls.cs.execute(cmd)
-                res = cls.cs.fetchall()
-            except OperationalError as error:
-                threadLock.release()
-                print('query', error)
-                sleep(30)
-                cls()
-                return cls.query(cmd)
-            if len(res) == 1:
-                res = res[0]
-            return res
+        try:
+            cls.cs.execute(cmd)
+            res = cls.cs.fetchall()
+        except OperationalError as error:
+            print('query', error)
+            sleep(30)
+            cls()
+            return cls.query(cmd)
+        if len(res) == 1:
+            res = res[0]
+        return res
 
     @classmethod
     def commit(cls):

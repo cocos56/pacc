@@ -150,14 +150,6 @@ class UpdateKsjsb(Update):
         self.dbr.last_shopping_day = last_shopping_day
         print(self.query('last_shopping_day', last_shopping_day))
 
-    def update_last_exclusive_gift_day(self, last_exclusive_gift_day):
-        """更新上一次领完专属金币礼包的日子
-
-        :param last_exclusive_gift_day: 上一次领完专属金币礼包的日子
-        """
-        self.dbr.last_shopping_day = last_exclusive_gift_day
-        print(self.query('last_exclusive_gift_day', last_exclusive_gift_day))
-
     def update_last_update_wealth_day(self, last_update_wealth_day):
         """更新上一次更新完财富值的日子
 
@@ -189,3 +181,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_desktop_component_day = last_desktop_component_day
         print(self.query('last_desktop_component_day', last_desktop_component_day))
+
+    def update_test_date(self, test_date):
+        """更新上一次领完桌面组件奖励的日子
+
+        param last_desktop_component_day: 上一次领完桌面组件奖励的日子
+        """
+        self.dbr.test_date = test_date
+        print(self.query('test_date', test_date))

@@ -98,7 +98,6 @@ class Ksjsb(Project):
         print('执行每日任务')
         self.get_double_bonus()
         self.change_money()
-        # self.open_exclusive_gold_coin_gift_pack()
         self.get_flash_benefits()
         self.view_ads()
         self.shopping()
@@ -106,7 +105,6 @@ class Ksjsb(Project):
         self.open_meal_allowance()
         self.open_treasure_box()
         self.get_desktop_component_coin()
-        self.update_wealth()
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
@@ -274,19 +272,6 @@ class Ksjsb(Project):
             print_err(err)
             self.open_meal_allowance()
 
-    def open_exclusive_gold_coin_gift_pack(self):
-        """领取专属金币礼包"""
-        if self.start_day == self.dbr.last_exclusive_gift_day:
-            print('今天已经领完专属金币礼包了，无需重复操作')
-            return
-        self.enter_wealth_interface()
-        print('领取专属金币礼包')
-        self.adb_ins.swipe(600, 1830, 600, 1750)
-        if self.uia_ins.click_by_screen_text('领金币'):
-            self.uia_ins.tap((530, 1200), 6)
-            self.exit_award_video_play_activity()
-        self.dbu.update_last_exclusive_gift_day(self.start_day)
-
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领14元"""
         if self.start_day == self.dbr.last_flash_benefits_day:
@@ -407,4 +392,5 @@ class Ksjsb(Project):
         if datetime.now().day >= self.start_day:
             self.watch_video()
         else:
+            self.update_wealth()
             sleep(3600)
