@@ -1,5 +1,6 @@
-"""客户端模块"""
+"""统一计算中心（Unified Computing Center, UCC）客户端模块"""
 import _thread
+from json import loads
 
 import websocket
 
@@ -7,7 +8,7 @@ import websocket
 def on_message(client, message):
     """Callback function which is called when received data."""
     print(f'on_message {message} {client}')
-    UCCClient.res = message
+    UCCClient.texts = loads(message)
     _thread.start_new_thread(close, tuple([client]))
 
 
@@ -27,7 +28,7 @@ def close(client):
     client.close()
 
 
-def on_open(client=websocket.WebSocketApp("ws://127.0.0.1:56/")):
+def on_open(client):
     """Callback function which is called at opening websocket."""
     print(f'on_open {client}')
     client.send(UCCClient.msg)
@@ -36,8 +37,8 @@ def on_open(client=websocket.WebSocketApp("ws://127.0.0.1:56/")):
 # pylint: disable=too-few-public-methods
 class UCCClient:
     """客户器端类"""
-    msg = 'Client'
-    res = ''
+    msg = '003001001'
+    texts = []
 
     @classmethod
     def send(cls, msg):
@@ -47,4 +48,5 @@ class UCCClient:
             "ws://127.0.0.1:56/", on_open=on_open, on_message=on_message, on_error=on_error,
             on_close=on_close)
         ins.run_forever()
-        print(cls.res)
+        print(cls.texts)
+        return cls.texts
