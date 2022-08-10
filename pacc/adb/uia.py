@@ -96,7 +96,6 @@ class UIAutomator:
 
     def get_texts_from_screen(self, show_all_texts=False):
         """从当前屏幕截图中获取所有文字"""
-        # self.txt = get_texts_from_pic(self.get_screen())
         self.txt = UCCClient.send(self.device.serial_num)
         if show_all_texts:
             print(self.txt)

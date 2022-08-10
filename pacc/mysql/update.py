@@ -1,4 +1,5 @@
 """MySQL数据库包的改模块"""
+from datetime import datetime
 from .mysql import Mobile
 from .retrieve import RetrieveKsjsb
 
@@ -94,98 +95,98 @@ class UpdateKsjsb(Update):
         self.dbr.cash_coupons = cash_coupons
         print(self.query('cash_coupons', cash_coupons))
 
-    def update_last_double_bonus_day(self, last_double_bonus_day):
-        """更新上一次点击翻倍的日子
+    def update_last_double_bonus_date(self, last_double_bonus_date):
+        """更新上一次点击翻倍的日期
 
-        :param last_double_bonus_day: 上一次点击翻倍的日子
+        :param last_double_bonus_date: 上一次点击翻倍的日期
         """
-        self.dbr.last_double_bonus_day = last_double_bonus_day
-        print(self.query('last_double_bonus_day', last_double_bonus_day))
+        self.dbr.last_double_bonus_date = last_double_bonus_date
+        print(self.query('last_double_bonus_date', last_double_bonus_date))
 
-    def update_last_treasure_box_day(self, last_treasure_box_day):
-        """更新上一次开完宝箱的日子
+    def update_last_treasure_box_date(self, last_treasure_box_date):
+        """更新上一次开完宝箱的日期
 
-        :param last_treasure_box_day: 上一次开完宝箱的日子
+        :param last_treasure_box_date: 上一次开完宝箱的日期
         """
-        self.dbr.last_treasure_box_day = last_treasure_box_day
-        print(self.query('last_treasure_box_day', last_treasure_box_day))
+        self.dbr.last_treasure_box_date = last_treasure_box_date
+        print(self.query('last_treasure_box_date', last_treasure_box_date))
 
-    def update_last_sign_in_day(self, last_sign_in_day):
-        """更新上一次签到的日子
+    def update_last_treasure_box_datetime(self, last_treasure_box_datetime=datetime.now()):
+        """更新上一次打开宝箱的日期和时间
 
-        :param last_sign_in_day: 上一次签到的日子
+        :param last_treasure_box_datetime: 上一次打开宝箱的日期和时间
         """
-        self.dbr.last_sign_in_day = last_sign_in_day
-        print(self.query('last_sign_in_day', last_sign_in_day))
+        self.dbr.last_treasure_box_datetime = last_treasure_box_datetime
+        print(self.query('last_treasure_box_datetime', last_treasure_box_datetime))
 
-    def update_last_change_money_day(self, last_change_money_day):
-        """更新上一次把金币兑换钱的日子
+    def update_last_sign_in_date(self, last_sign_in_date):
+        """更新上一次签完到的日期
 
-        :param last_change_money_day: 上一次把金币兑换钱的日子
+        :param last_sign_in_date: 上一次签完到的日期
         """
-        self.dbr.last_change_money_day = last_change_money_day
-        print(self.query('last_change_money_day', last_change_money_day))
+        self.dbr.last_sign_in_date = last_sign_in_date
+        print(self.query('last_sign_in_date', last_sign_in_date))
 
-    def update_last_view_ads_day(self, last_view_ads_day):
-        """更新上一次看完广告的日子
+    def update_last_change_money_date(self, last_change_money_date):
+        """更新上一次把金币兑换钱的日期
 
-        :param last_view_ads_day: 上一次看完广告的日子
+        :param last_change_money_date: 上一次把金币兑换钱的日期
         """
-        self.dbr.last_view_ads_day = last_view_ads_day
-        print(self.query('last_view_ads_day', last_view_ads_day))
+        self.dbr.last_change_money_date = last_change_money_date
+        print(self.query('last_change_money_date', last_change_money_date))
 
-    def update_last_watch_live_day(self, last_watch_live_day):
-        """更新上一次看完直播的日子
+    def update_last_view_ads_date(self, last_view_ads_date):
+        """更新上一次看完广告的日期
 
-        :param last_watch_live_day: 上一次看完直播的日子
+        :param last_view_ads_date: 上一次看完广告的日期
         """
-        self.dbr.last_watch_live_day = last_watch_live_day
-        print(self.query('last_watch_live_day', last_watch_live_day))
+        self.dbr.last_view_ads_date = last_view_ads_date
+        print(self.query('last_view_ads_date', last_view_ads_date))
 
-    def update_last_shopping_day(self, last_shopping_day):
-        """更新上一次逛完街的日子
+    def update_last_watch_live_date(self, last_watch_live_date):
+        """更新上一次看完直播的日期
 
-        :param last_shopping_day: 上一次逛完街的日子
+        :param last_watch_live_date: 上一次看完直播的日期
         """
-        self.dbr.last_shopping_day = last_shopping_day
-        print(self.query('last_shopping_day', last_shopping_day))
+        self.dbr.last_watch_live_date = last_watch_live_date
+        print(self.query('last_watch_live_date', last_watch_live_date))
 
-    def update_last_update_wealth_day(self, last_update_wealth_day):
-        """更新上一次更新完财富值的日子
+    def update_last_shopping_date(self, last_shopping_date):
+        """更新上一次逛完街的日期
 
-        :param last_update_wealth_day: 上一次更新完财富值的日子
+        :param last_shopping_date: 上一次逛完街的日期
         """
-        self.dbr.last_update_wealth_day = last_update_wealth_day
-        print(self.query('last_update_wealth_day', last_update_wealth_day))
+        self.dbr.last_shopping_date = last_shopping_date
+        print(self.query('last_shopping_date', last_shopping_date))
 
-    def update_last_meal_allowance_hour(self, last_meal_allowance_hour):
-        """更新上一次领完饭补的小时
+    def update_last_update_wealth_date(self, last_update_wealth_date):
+        """更新上一次更新完财富值的日期
 
-        :param last_meal_allowance_hour: 上一次领完饭补的小时
+        :param last_update_wealth_date: 上一次更新完财富值的日期
         """
-        self.dbr.last_meal_allowance_hour = last_meal_allowance_hour
-        print(self.query('last_meal_allowance_hour', last_meal_allowance_hour))
+        self.dbr.last_update_wealth_date = last_update_wealth_date
+        print(self.query('last_update_wealth_date', last_update_wealth_date))
 
-    def update_last_flash_benefits_day(self, last_flash_benefits_day):
-        """更新上一次领完限时福利的日子
+    def update_last_meal_allowance_datetime(self, last_meal_allowance_datetime=datetime.now()):
+        """更新上一次领完饭补的日期和时间
 
-        param last_flash_benefits_day: 上一次领完限时福利的日子
+        :param last_meal_allowance_datetime: 上一次领完饭补的日期和时间
         """
-        self.dbr.last_flash_benefits_day = last_flash_benefits_day
-        print(self.query('last_flash_benefits_day', last_flash_benefits_day))
+        self.dbr.last_meal_allowance_datetime = last_meal_allowance_datetime
+        print(self.query('last_meal_allowance_datetime', last_meal_allowance_datetime))
 
-    def update_last_desktop_component_day(self, last_desktop_component_day):
-        """更新上一次领完桌面组件奖励的日子
+    def update_last_flash_benefits_date(self, last_flash_benefits_date):
+        """更新上一次领完限时福利的日期
 
-        param last_desktop_component_day: 上一次领完桌面组件奖励的日子
+        param last_flash_benefits_date: 上一次领完限时福利的日期
         """
-        self.dbr.last_desktop_component_day = last_desktop_component_day
-        print(self.query('last_desktop_component_day', last_desktop_component_day))
+        self.dbr.last_flash_benefits_date = last_flash_benefits_date
+        print(self.query('last_flash_benefits_date', last_flash_benefits_date))
 
-    def update_test_date(self, test_date):
-        """更新上一次领完桌面组件奖励的日子
+    def update_last_desktop_component_date(self, last_desktop_component_date):
+        """更新上一次领完桌面组件奖励的日期
 
-        param last_desktop_component_day: 上一次领完桌面组件奖励的日子
+        param last_desktop_component_date: 上一次领完桌面组件奖励的日期
         """
-        self.dbr.test_date = test_date
-        print(self.query('test_date', test_date))
+        self.dbr.last_desktop_component_date = last_desktop_component_date
+        print(self.query('last_desktop_component_date', last_desktop_component_date))

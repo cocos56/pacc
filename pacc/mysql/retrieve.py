@@ -1,5 +1,4 @@
 """MySQL数据库包的查模块"""
-from datetime import datetime
 from .mysql import MySQL, Mobile, Account
 
 
@@ -141,18 +140,18 @@ class RetrieveKsjsbBase(RetrieveMobile):
         super().__init__(serial_num)
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
-        self.last_double_bonus_day = self.query('last_double_bonus_day')
-        self.last_treasure_box_day = self.query('last_treasure_box_day')
-        self.last_sign_in_day = self.query('last_sign_in_day')
-        self.last_change_money_day = self.query('last_change_money_day')
-        self.last_view_ads_day = self.query('last_view_ads_day')
-        self.last_watch_live_day = self.query('last_watch_live_day')
-        self.last_shopping_day = self.query('last_shopping_day')
-        self.last_update_wealth_day = self.query('last_update_wealth_day')
-        self.last_meal_allowance_hour = self.query('last_meal_allowance_hour')
-        self.last_flash_benefits_day = self.query('last_flash_benefits_day')
-        self.last_desktop_component_day = self.query('last_desktop_component_day')
-        self.test_date = self.query('test_date')
+        self.last_double_bonus_date = self.query('last_double_bonus_date')
+        self.last_treasure_box_date = self.query('last_treasure_box_date')
+        self.last_treasure_box_datetime = self.query('last_treasure_box_datetime')
+        self.last_sign_in_date = self.query('last_sign_in_date')
+        self.last_change_money_date = self.query('last_change_money_date')
+        self.last_view_ads_date = self.query('last_view_ads_date')
+        self.last_watch_live_date = self.query('last_watch_live_date')
+        self.last_shopping_date = self.query('last_shopping_date')
+        self.last_update_wealth_date = self.query('last_update_wealth_date')
+        self.last_meal_allowance_datetime = self.query('last_meal_allowance_datetime')
+        self.last_flash_benefits_date = self.query('last_flash_benefits_date')
+        self.last_desktop_component_date = self.query('last_desktop_component_date')
 
     # pylint: disable=arguments-differ
     def query(self, field):

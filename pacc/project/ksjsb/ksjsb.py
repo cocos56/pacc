@@ -1,5 +1,5 @@
 """快手极速版模块"""
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from random import randint
 from xml.parsers.expat import ExpatError
 
@@ -20,7 +20,7 @@ class Ksjsb(Project):
         :param serial_num: 设备编号
         """
         super().__init__(serial_num)
-        self.start_day = datetime.now().day
+        self.start_date = date.today()
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
@@ -66,8 +66,8 @@ class Ksjsb(Project):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
             sleep(sleep_time)
             self.uia_ins.get_current_ui_hierarchy()
-            day = datetime.now().day
-            if not self.dbr.last_sign_in_day == day and self.uia_ins.\
+            today_date = date.today()
+            if not self.dbr.last_sign_in_date == today_date and self.uia_ins.\
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -79,10 +79,10 @@ class Ksjsb(Project):
                     self.exit_live()
                     self.uia_ins.txt = ''
                 sleep(6)
-                self.dbu.update_last_sign_in_day(day)
                 if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
                     sleep(3)
                     self.adb_ins.press_back_key(3)
+                self.dbu.update_last_sign_in_date(today_date)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
                     uia_ins.get_point_by_screen_text('任务中心'):
                 print('已进入财富界面')
@@ -93,64 +93,57 @@ class Ksjsb(Project):
             print_err(err)
             self.enter_wealth_interface()
 
-    def do_daily_task(self):
-        """执行每日任务"""
-        print('执行每日任务')
-        self.get_double_bonus()
-        self.change_money()
-        self.get_flash_benefits()
-        self.view_ads()
-        self.shopping()
-        self.watch_live()
-        self.open_meal_allowance()
-        self.open_treasure_box()
-        self.get_desktop_component_coin()
-
-    def get_desktop_component_coin(self):
-        """获取桌面组件奖励"""
-        if self.start_day == self.dbr.last_desktop_component_day:
-            print('今天已经领完桌面组件奖励了，无需重复操作')
-            return
-        self.reopen_app()
-        self.adb_ins.press_home_key(3)
-        while self.uia_ins.click(ResourceID.tv_get_coin_left):
-            sleep(3)
-        sleep(16)
-        self.dbu.update_last_desktop_component_day(self.start_day)
-
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
-        if self.start_day == self.dbr.last_double_bonus_day:
+        if self.start_date == self.dbr.last_double_bonus_date:
             print('今天已经点击翻倍了，无需重复操作')
             return
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1800, 600, 350)
         if self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
-            self.dbu.update_last_double_bonus_day(self.start_day)
+            self.dbu.update_last_double_bonus_date(self.start_date)
             sleep(6)
 
-    def open_treasure_box(self):
-        """开宝箱得金币"""
-        if self.start_day == self.dbr.last_treasure_box_day:
-            print('今天已经开完宝箱了，无需重复操作')
-            return
+    def change_money(self):
+        """把金币兑换钱
+
+        :return: 兑换成功返回True，否则返回False
+        """
+        if self.start_date == self.dbr.last_change_money_date:
+            print('今天已经把金币兑换成钱过了，无需重复操作')
+            return True
         self.enter_wealth_interface()
-        print('开宝箱')
-        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
-            self.uia_ins.tap((530, 1330), 6)
-            if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
-                sleep(80)
-                self.exit_live()
-            else:
-                self.exit_award_video_play_activity()
-        elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
-            print('今天已经开完宝箱了，请明日再来')
-            self.dbu.update_last_treasure_box_day(self.start_day)
+        print('正在把金币兑换钱')
+        self.uia_ins.tap((866, 349), 6)
+        self.uia_ins.get_current_ui_hierarchy()
+        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
+        cash = float(webview_dic['node'][0]['node'][1]['@text'])
+        dics = webview_dic['node'][1]['node']
+        for dic in dics[4:0:-1]:
+            dic = dic['node']
+            if isinstance(dic, list):
+                dic = dic[0]
+            money = float(dic['@text'][:-1])
+            if cash >= money:
+                print(money)
+                self.uia_ins.click_by_bounds(dic['@bounds'])
+                break
+        self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
+        self.uia_ins.tap((536, 1706), 26)
+        self.uia_ins.click(text='立即提现')
+        sleep(3)
+        if self.uia_ins.get_dict(text='去验证'):
+            EMail(self.serial_num).send_need_verification_alarm()
+            return False
+        if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
+            self.dbu.update_last_change_money_date(self.start_date)
+            return True
+        return False
 
     def view_ads(self):
         """看广告视频得5000个金币"""
-        if self.start_day == self.dbr.last_view_ads_day:
+        if self.start_date == self.dbr.last_view_ads_date:
             print('今天已经看完广告了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -166,9 +159,9 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(6)
                 break
         if self.uia_ins.get_point_by_screen_text('5/5'):
-            self.dbu.update_last_view_ads_day(self.start_day)
+            self.dbu.update_last_view_ads_date(self.start_date)
         elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.dbu.update_last_view_ads_day(self.start_day)
+            self.dbu.update_last_view_ads_date(self.start_date)
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -190,7 +183,7 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        if self.start_day == self.dbr.last_watch_live_day:
+        if self.start_date == self.dbr.last_watch_live_date:
             print('今天已经把直播看完了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -202,13 +195,13 @@ class Ksjsb(Project):
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
-                self.dbu.update_last_watch_live_day(self.start_day)
+                self.dbu.update_last_watch_live_date(self.start_date)
                 break
             self.adb_ins.press_back_key(3)
 
     def shopping(self):
         """去逛街"""
-        if self.start_day == self.dbr.last_shopping_day:
+        if self.start_date == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -231,7 +224,7 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(30)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(9)
-        self.dbu.update_last_shopping_day(self.start_day)
+        self.dbu.update_last_shopping_date(self.start_date)
         return True
 
     def open_meal_allowance(self):
@@ -244,16 +237,21 @@ class Ksjsb(Project):
         lunch_hours = [11, 12, 13]
         dinner_hours = [17, 18, 19]
         supper_hours = [21, 22, 23]
-        if hour in breakfast_hours and self.dbr.last_meal_allowance_hour in breakfast_hours:
+        if date.today() > date.fromisoformat(str(self.dbr.last_meal_allowance_datetime)[:10]):
+            self.dbr.last_meal_allowance_datetime = \
+                self.dbr.last_meal_allowance_datetime - timedelta(
+                    hours=self.dbr.last_meal_allowance_datetime.hour)
+        if hour in breakfast_hours and self.dbr.last_meal_allowance_datetime.\
+                hour in breakfast_hours:
             print('已经领过早饭饭补了，无需重复操作')
             return
-        if hour in lunch_hours and self.dbr.last_meal_allowance_hour in lunch_hours:
+        if hour in lunch_hours and self.dbr.last_meal_allowance_datetime.hour in lunch_hours:
             print('已经领过午饭饭补了，无需重复操作')
             return
-        if hour in dinner_hours and self.dbr.last_meal_allowance_hour in dinner_hours:
+        if hour in dinner_hours and self.dbr.last_meal_allowance_datetime.hour in dinner_hours:
             print('已经领过晚饭饭补了，无需重复操作')
             return
-        if hour in supper_hours and self.dbr.last_meal_allowance_hour in supper_hours:
+        if hour in supper_hours and self.dbr.last_meal_allowance_datetime.hour in supper_hours:
             print('已经领过夜宵饭补了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -262,102 +260,53 @@ class Ksjsb(Project):
         while not self.uia_ins.click_by_screen_text('到饭点领饭补'):
             self.adb_ins.swipe(600, 1860, 600, 660)
         sleep(6)
-        try:
-            if self.uia_ins.click(text='领取饭补'):
-                sleep(3)
-                self.uia_ins.tap((530, 1220), 6)
-                self.exit_award_video_play_activity()
-            self.dbu.update_last_meal_allowance_hour(hour)
-        except FileNotFoundError as err:
-            print_err(err)
-            self.open_meal_allowance()
+        if self.uia_ins.click(text='领取饭补'):
+            sleep(3)
+            self.uia_ins.tap((530, 1220), 6)
+            self.exit_award_video_play_activity()
+        self.dbu.update_last_meal_allowance_datetime()
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领14元"""
-        if self.start_day == self.dbr.last_flash_benefits_day:
+        if self.start_date == self.dbr.last_flash_benefits_date:
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
         if self.uia_ins.get_point_by_screen_text(text='点击领取今日红包', txt=self.uia_ins.txt):
             self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt)
-        self.dbu.update_last_flash_benefits_day(self.start_day)
+        self.dbu.update_last_flash_benefits_date(self.start_date)
 
-    def update_wealth(self):
-        """更新财富值
+    def get_desktop_component_coin(self):
+        """获取桌面组件奖励"""
+        if self.start_date == self.dbr.last_desktop_component_date:
+            print('今天已经领完桌面组件奖励了，无需重复操作')
+            return
+        self.reopen_app()
+        self.adb_ins.press_home_key(3)
+        while self.uia_ins.click(ResourceID.tv_get_coin_left):
+            sleep(3)
+        sleep(16)
+        self.dbu.update_last_desktop_component_date(self.start_date)
 
+    def do_daily_task(self):
+        """执行每日任务"""
+        print('执行每日任务')
+        self.get_double_bonus()
+        self.change_money()
+        self.view_ads()
+        self.watch_live()
+        self.shopping()
+        self.open_meal_allowance()
+        self.get_flash_benefits()
+        self.get_desktop_component_coin()
+
+    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
+        """随机滑动一段长度
+
+        :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
+        :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
         """
-        if self.start_day == self.dbr.last_update_wealth_day:
-            print('今天已经更新过财富值了，无需重复操作')
-            return True
-        self.enter_wealth_interface()
-        print('更新财富值')
-        self.uia_ins.tap((668, 360))
-        sleep(9)
-        try:
-            gold_coins, cash_coupons = self.get_wealth()
-            if gold_coins != self.dbr.gold_coins:
-                self.dbu.update_gold_coins(gold_coins)
-            if cash_coupons != self.dbr.cash_coupons:
-                self.dbu.update_cash_coupons(cash_coupons)
-        except FileNotFoundError as err:
-            print_err(err)
-            return self.update_wealth()
-        self.dbu.update_last_update_wealth_day(self.start_day)
-        return True
-
-    def get_wealth(self):
-        """获取财富值"""
-        print('正在获取财富值')
-        dics = self.uia_ins.get_dict(index='0', text='我的收益')['node']
-        # print(dics)
-        # for i, v in enumerate(dics):
-        #     print(i, v)
-        gold_coins = dics[2]['@text']
-        if 'w' in gold_coins:
-            gold_coins = 10000 * float(gold_coins[:-3])
-        else:
-            gold_coins = float(gold_coins[:-2])
-        cash_coupons = float(dics[6]['@text'][:-1])
-        # print(f"gold_coins={gold_coins}, cash_coupons={cash_coupons}")
-        return gold_coins, cash_coupons
-
-    def change_money(self):
-        """把金币兑换钱
-
-        :return: 兑换成功返回True，否则返回False
-        """
-        if self.start_day == self.dbr.last_change_money_day:
-            print('今天已经把金币兑换成钱过了，无需重复操作')
-            return True
-        self.enter_wealth_interface()
-        print('正在把金币兑换钱')
-        self.uia_ins.tap((866, 349), 6)
-        self.uia_ins.get_current_ui_hierarchy()
-        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
-        cash = float(webview_dic['node'][0]['node'][1]['@text'])
-        # print(cash)
-        dics = webview_dic['node'][1]['node']
-        for dic in dics[4:0:-1]:
-            dic = dic['node']
-            if isinstance(dic, list):
-                dic = dic[0]
-            money = float(dic['@text'][:-1])
-            # print(dic)
-            if cash >= money:
-                print(money)
-                self.uia_ins.click_by_bounds(dic['@bounds'])
-                break
-        self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 26)
-        self.uia_ins.click(text='立即提现')
-        sleep(3)
-        if self.uia_ins.get_dict(text='去验证'):
-            EMail(self.serial_num).send_need_verification_alarm()
-            return False
-        if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
-            self.dbu.update_last_change_money_day(self.start_day)
-            return True
-        return False
+        super().random_swipe(x_range, y_list)
 
     def watch_video(self):
         """看视频"""
@@ -370,7 +319,7 @@ class Ksjsb(Project):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.free_memory()
                     self.adb_ins.press_power_key()
-                    self.start_day = (datetime.now() + timedelta(days=1)).day
+                    self.start_date = (date.today() + timedelta(days=1))
                     return
             self.adb_ins.press_back_key()
         show_datetime('看视频')
@@ -378,19 +327,67 @@ class Ksjsb(Project):
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 
-    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
-        """随机滑动一段长度
+    def open_treasure_box(self, show_log=True):
+        """开宝箱得金币"""
+        if self.start_date == self.dbr.last_treasure_box_date:
+            if show_log:
+                print('今天已经把宝箱开完了，无需重复操作')
+            return
+        if datetime.now() - self.dbr.last_treasure_box_datetime < timedelta(minutes=20):
+            if show_log:
+                print('距离上次打开宝箱还不足20分钟，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        print('开宝箱')
+        if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
+            self.uia_ins.tap((530, 1330), 6)
+            if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
+                sleep(80)
+                self.exit_live()
+            else:
+                self.exit_award_video_play_activity()
+            self.dbu.update_last_treasure_box_datetime()
+        elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
+            print('今天已经开完宝箱了，请明日再来')
+            self.dbu.update_last_treasure_box_date(self.start_date)
 
-        :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
-        :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
+    def get_wealth(self):
+        """获取财富值"""
+        print('正在获取财富值')
+        dics = self.uia_ins.get_dict(index='0', text='我的收益')['node']
+        gold_coins = dics[2]['@text']
+        if 'w' in gold_coins:
+            gold_coins = 10000 * float(gold_coins[:-3])
+        else:
+            gold_coins = float(gold_coins[:-2])
+        cash_coupons = float(dics[6]['@text'][:-1])
+        return gold_coins, cash_coupons
+
+    def update_wealth(self):
+        """更新财富值
+
         """
-        super().random_swipe(x_range, y_list)
+        if self.start_date == self.dbr.last_update_wealth_date:
+            print('今天已经更新过财富值了，无需重复操作')
+            return True
+        self.enter_wealth_interface()
+        print('更新财富值')
+        self.uia_ins.tap((668, 360))
+        sleep(9)
+        gold_coins, cash_coupons = self.get_wealth()
+        if gold_coins != self.dbr.gold_coins:
+            self.dbu.update_gold_coins(gold_coins)
+        if cash_coupons != self.dbr.cash_coupons:
+            self.dbu.update_cash_coupons(cash_coupons)
+        self.dbu.update_last_update_wealth_date(self.start_date)
+        return True
 
     @run_forever
     def mainloop(self):
         """主循环"""
-        if datetime.now().day >= self.start_day:
+        if date.today() >= self.start_date:
             self.watch_video()
+            self.open_treasure_box()
         else:
             self.update_wealth()
             sleep(3600)
