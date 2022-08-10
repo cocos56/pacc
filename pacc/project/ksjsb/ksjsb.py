@@ -223,7 +223,10 @@ class Ksjsb(Project):
         lunch_hours = [11, 12, 13]
         dinner_hours = [17, 18, 19]
         supper_hours = [21, 22, 23]
-        if date.today() > date.fromisoformat(str(self.dbr.last_meal_allowance_datetime)[:10]):
+        if self.dbr.last_meal_allowance_datetime is None:
+            self.dbu.update_last_meal_allowance_datetime(datetime.now()-timedelta(
+                hours=datetime.now().hour))
+        elif date.today() > date.fromisoformat(str(self.dbr.last_meal_allowance_datetime)[:10]):
             self.dbr.last_meal_allowance_datetime = \
                 self.dbr.last_meal_allowance_datetime - timedelta(
                     hours=self.dbr.last_meal_allowance_datetime.hour)
