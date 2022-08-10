@@ -142,7 +142,6 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.cash_coupons = self.query('cash_coupons')
         self.last_double_bonus_date = self.query('last_double_bonus_date')
         self.last_treasure_box_date = self.query('last_treasure_box_date')
-        self.last_treasure_box_datetime = self.query('last_treasure_box_datetime')
         self.last_sign_in_date = self.query('last_sign_in_date')
         self.last_change_money_date = self.query('last_change_money_date')
         self.last_view_ads_date = self.query('last_view_ads_date')

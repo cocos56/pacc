@@ -1,5 +1,5 @@
 """自动远程控制手机APP中央控制系统工程模块"""
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint
 
 from ..adb import ADB, UIAutomator
@@ -30,7 +30,7 @@ class Project:
         self.serial_num = serial_num
         self.adb_ins = ADB(serial_num)
         self.uia_ins = UIAutomator(serial_num)
-        self.last_reopen_hour = -1
+        self.last_reopen_datetime = datetime.now() - timedelta(minutes=30)
 
     def random_swipe(self, x_range, y_list):
         """随机滑动一段长度
@@ -42,18 +42,6 @@ class Project:
         a_y, b_y, c_y, d_y = y_list
         self.adb_ins.swipe(randint(x_min, x_max), randint(a_y, b_y), randint(x_min, x_max),
                            randint(c_y, d_y))
-
-    def reopen_app_per_hour(self, execute=True):
-        """每小时重启一下APP
-
-        :param execute: 是否执行重启APP
-        """
-        if self.last_reopen_hour == datetime.now().hour:
-            return False
-        self.last_reopen_hour = datetime.now().hour
-        if execute:
-            self.reopen_app()
-        return True
 
     def tap_free_button(self):
         """点击清理按钮"""

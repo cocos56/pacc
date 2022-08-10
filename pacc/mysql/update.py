@@ -111,14 +111,6 @@ class UpdateKsjsb(Update):
         self.dbr.last_treasure_box_date = last_treasure_box_date
         print(self.query('last_treasure_box_date', last_treasure_box_date))
 
-    def update_last_treasure_box_datetime(self, last_treasure_box_datetime=datetime.now()):
-        """更新上一次打开宝箱的日期和时间
-
-        :param last_treasure_box_datetime: 上一次打开宝箱的日期和时间
-        """
-        self.dbr.last_treasure_box_datetime = last_treasure_box_datetime
-        print(self.query('last_treasure_box_datetime', last_treasure_box_datetime))
-
     def update_last_sign_in_date(self, last_sign_in_date):
         """更新上一次签完到的日期
 

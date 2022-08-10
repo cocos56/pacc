@@ -67,7 +67,7 @@ class Ksjsb(Project):
             sleep(sleep_time)
             self.uia_ins.get_current_ui_hierarchy()
             today_date = date.today()
-            if self.dbr.last_sign_in_date != today_date and self.uia_ins.\
+            if self.dbr.last_sign_in_date != today_date and self.uia_ins. \
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -77,14 +77,18 @@ class Ksjsb(Project):
                 elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
                     sleep(96)
                     self.exit_live()
-                    self.uia_ins.txt = ''
                 sleep(6)
                 if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
                     sleep(3)
                     self.adb_ins.press_back_key(3)
                 self.dbu.update_last_sign_in_date(today_date)
-            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self.\
-                    uia_ins.get_point_by_screen_text('任务中心'):
+                self.uia_ins.txt = ''
+            elif self.uia_ins.click_by_screen_text(text='继续邀请赚', txt=self.uia_ins.txt):
+                sleep(6)
+                self.adb_ins.press_back_key(6)
+                self.uia_ins.txt = ''
+            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus() and self. \
+                    uia_ins.get_point_by_screen_text(text='任务中心', txt=self.uia_ins.txt):
                 print('已进入财富界面')
             else:
                 print('未成功进入财富界面')
@@ -241,7 +245,7 @@ class Ksjsb(Project):
             self.dbr.last_meal_allowance_datetime = \
                 self.dbr.last_meal_allowance_datetime - timedelta(
                     hours=self.dbr.last_meal_allowance_datetime.hour)
-        if hour in breakfast_hours and self.dbr.last_meal_allowance_datetime.\
+        if hour in breakfast_hours and self.dbr.last_meal_allowance_datetime. \
                 hour in breakfast_hours:
             print('已经领过早饭饭补了，无需重复操作')
             return
@@ -292,6 +296,7 @@ class Ksjsb(Project):
         """执行每日任务"""
         print('执行每日任务')
         self.get_double_bonus()
+        self.open_treasure_box()
         self.view_ads()
         self.watch_live()
         self.shopping()
@@ -309,32 +314,30 @@ class Ksjsb(Project):
 
     def watch_video(self):
         """看视频"""
-        if self.reopen_app_per_hour(False):
+        if datetime.now() - self.last_reopen_datetime > timedelta(minutes=30):
             self.adb_ins.keep_online()
             self.do_daily_task()
             self.reopen_app()
             self.uia_ins.tap((90, 140), 9)
             if self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
+                    self.change_money()
+                    self.update_wealth()
                     self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_date = (date.today() + timedelta(days=1))
                     return
             self.adb_ins.press_back_key()
+            self.last_reopen_datetime = datetime.now()
         show_datetime('看视频')
         self.random_swipe()
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 
-    def open_treasure_box(self, show_log=True):
+    def open_treasure_box(self):
         """开宝箱得金币"""
         if self.start_date == self.dbr.last_treasure_box_date:
-            if show_log:
-                print('今天已经把宝箱开完了，无需重复操作')
-            return
-        if datetime.now() - self.dbr.last_treasure_box_datetime < timedelta(minutes=20):
-            if show_log:
-                print('距离上次打开宝箱还不足20分钟，无需重复操作')
+            print('今天已经把宝箱开完了，无需重复操作')
             return
         self.enter_wealth_interface()
         print('开宝箱')
@@ -345,7 +348,6 @@ class Ksjsb(Project):
                 self.exit_live()
             else:
                 self.exit_award_video_play_activity()
-            self.dbu.update_last_treasure_box_datetime()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_date(self.start_date)
@@ -386,8 +388,5 @@ class Ksjsb(Project):
         """主循环"""
         if date.today() >= self.start_date:
             self.watch_video()
-            self.open_treasure_box()
         else:
-            self.change_money()
-            self.update_wealth()
             sleep(3600)
