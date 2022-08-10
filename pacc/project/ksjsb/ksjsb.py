@@ -315,7 +315,7 @@ class Ksjsb(Project):
             self.do_daily_task()
             self.reopen_app()
             self.uia_ins.tap((90, 140), 9)
-            if datetime.now().hour > 5 and self.uia_ins.get_dict(ResourceID.red_packet_anim):
+            if self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.free_memory()
                     self.adb_ins.press_power_key()
