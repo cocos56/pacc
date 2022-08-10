@@ -2,7 +2,6 @@
 import os
 import warnings
 
-import easyocr
 from urlextract import URLExtract
 
 extractor = URLExtract()
@@ -18,15 +17,6 @@ def system(cmd, is_print=True):
     if is_print:
         print(cmd)
     os.system(cmd)
-
-
-def get_texts_from_pic(pic_path):
-    """从图片中获取所有文字
-
-    :param pic_path: 图片的路径
-    :return: 图片中所有文字及文字所在的位置坐标信息
-    """
-    return easyocr.Reader(['ch_sim', 'en']).readtext(pic_path)
 
 
 def get_urls_from_string(string):

@@ -1,34 +1,49 @@
 """统一计算中心（Unified Computing Center, UCC）服务器端模块"""
 from enum import Enum
-from json import dumps
+from pickle import dump
 from time import sleep
 
+from easyocr import Reader
 from websocket_server import WebsocketServer
 
 from ..adb import UIAutomator
-from ..tools import get_texts_from_pic
 
 
 # pylint: disable=unused-argument
 def new_client(client, server):
-    """Called for every client connecting (after handshake)"""
+    """Called for every client connecting (after handshake)
+
+    :param client: 客户端对象
+    :param server: 服务器端对象
+    """
     print(f"New client connected and was given id {client['id']}")
 
 
 # pylint: disable=unused-argument
 def client_left(client, server):
-    """Called for every client disconnecting"""
+    """Called for every client disconnecting
+
+    :param client: 客户端对象
+    :param server: 服务器端对象
+    """
     print(f"Client{client['id']} disconnected")
 
 
-def message_received(client, server, message):
-    """Called when a client sends a message"""
+def message_received(client, server, serial_num):
+    """Called when a client sends a message
+
+    :param client: 客户端对象
+    :param server: 服务器端对象
+    :param serial_num: 序列号
+    """
     while UCCServer.status == ServerStatus.BUSY:
         sleep(3)
         print('server is busy')
     UCCServer.status = ServerStatus.BUSY
-    print(f"Client({client['id']}) said: {message}")
-    server.send_message(client, dumps(get_texts_from_pic(UIAutomator(message).get_screen())))
+    print(f"Client({client['id']}) said: {serial_num}")
+    dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()),
+         open(f'CurrentUIHierarchy/{serial_num}.pkl', 'wb'))
+    server.send_message(client, serial_num)
     UCCServer.status = ServerStatus.FREE
 
 

@@ -1,4 +1,4 @@
-"""爬虫模块"""
+"""淘宝拼多多刷单爬虫模块"""
 from time import sleep
 
 import pyperclip
