@@ -95,6 +95,14 @@ class UpdateKsjsb(Update):
         self.dbr.cash_coupons = cash_coupons
         print(self.query('cash_coupons', cash_coupons))
 
+    def update_last_sign_in_date(self, last_sign_in_date):
+        """更新上一次签完到的日期
+
+        :param last_sign_in_date: 上一次签完到的日期
+        """
+        self.dbr.last_sign_in_date = last_sign_in_date
+        print(self.query('last_sign_in_date', last_sign_in_date))
+
     def update_last_double_bonus_date(self, last_double_bonus_date):
         """更新上一次点击翻倍的日期
 
@@ -110,22 +118,6 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_treasure_box_date = last_treasure_box_date
         print(self.query('last_treasure_box_date', last_treasure_box_date))
-
-    def update_last_sign_in_date(self, last_sign_in_date):
-        """更新上一次签完到的日期
-
-        :param last_sign_in_date: 上一次签完到的日期
-        """
-        self.dbr.last_sign_in_date = last_sign_in_date
-        print(self.query('last_sign_in_date', last_sign_in_date))
-
-    def update_last_change_money_date(self, last_change_money_date):
-        """更新上一次把金币兑换钱的日期
-
-        :param last_change_money_date: 上一次把金币兑换钱的日期
-        """
-        self.dbr.last_change_money_date = last_change_money_date
-        print(self.query('last_change_money_date', last_change_money_date))
 
     def update_last_view_ads_date(self, last_view_ads_date):
         """更新上一次看完广告的日期
@@ -151,14 +143,6 @@ class UpdateKsjsb(Update):
         self.dbr.last_shopping_date = last_shopping_date
         print(self.query('last_shopping_date', last_shopping_date))
 
-    def update_last_update_wealth_date(self, last_update_wealth_date):
-        """更新上一次更新完财富值的日期
-
-        :param last_update_wealth_date: 上一次更新完财富值的日期
-        """
-        self.dbr.last_update_wealth_date = last_update_wealth_date
-        print(self.query('last_update_wealth_date', last_update_wealth_date))
-
     def update_last_meal_allowance_datetime(self, last_meal_allowance_datetime=datetime.now()):
         """更新上一次领完饭补的日期和时间
 
@@ -182,3 +166,19 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_desktop_component_date = last_desktop_component_date
         print(self.query('last_desktop_component_date', last_desktop_component_date))
+
+    def update_last_change_money_date(self, last_change_money_date):
+        """更新上一次把金币兑换钱的日期
+
+        :param last_change_money_date: 上一次把金币兑换钱的日期
+        """
+        self.dbr.last_change_money_date = last_change_money_date
+        print(self.query('last_change_money_date', last_change_money_date))
+
+    def update_last_update_wealth_date(self, last_update_wealth_date):
+        """更新上一次更新完财富值的日期
+
+        :param last_update_wealth_date: 上一次更新完财富值的日期
+        """
+        self.dbr.last_update_wealth_date = last_update_wealth_date
+        print(self.query('last_update_wealth_date', last_update_wealth_date))

@@ -140,17 +140,17 @@ class RetrieveKsjsbBase(RetrieveMobile):
         super().__init__(serial_num)
         self.gold_coins = self.query('gold_coins')
         self.cash_coupons = self.query('cash_coupons')
+        self.last_sign_in_date = self.query('last_sign_in_date')
         self.last_double_bonus_date = self.query('last_double_bonus_date')
         self.last_treasure_box_date = self.query('last_treasure_box_date')
-        self.last_sign_in_date = self.query('last_sign_in_date')
-        self.last_change_money_date = self.query('last_change_money_date')
         self.last_view_ads_date = self.query('last_view_ads_date')
         self.last_watch_live_date = self.query('last_watch_live_date')
         self.last_shopping_date = self.query('last_shopping_date')
-        self.last_update_wealth_date = self.query('last_update_wealth_date')
         self.last_meal_allowance_datetime = self.query('last_meal_allowance_datetime')
         self.last_flash_benefits_date = self.query('last_flash_benefits_date')
         self.last_desktop_component_date = self.query('last_desktop_component_date')
+        self.last_change_money_date = self.query('last_change_money_date')
+        self.last_update_wealth_date = self.query('last_update_wealth_date')
 
     # pylint: disable=arguments-differ
     def query(self, field):
