@@ -8,7 +8,7 @@ from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err, run_forever
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
-from ...network import EMail
+from ...tools import EMail
 
 
 class Ksjsb(Project):

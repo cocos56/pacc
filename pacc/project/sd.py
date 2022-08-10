@@ -3,7 +3,7 @@ from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import show_datetime, sleep
-from ..network import EMail
+from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 

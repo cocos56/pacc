@@ -8,8 +8,7 @@ from .uia import UIAutomator
 from ..base import print_err, sleep
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
-from ..network import EMail
-from ..tools import find_all_with_re
+from ..tools import find_all_with_re, EMail
 
 
 def get_online_devices():
