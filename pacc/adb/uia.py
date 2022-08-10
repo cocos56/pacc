@@ -5,10 +5,9 @@ from os.path import exists
 
 import xmltodict
 
-from ..base import sleep
+from ..base import sleep, UCCClient
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
-from pacc.base.client import UCCClient
 from ..tools import create_dir, get_pretty_xml, get_xml, find_all_ints_with_re, average
 
 
