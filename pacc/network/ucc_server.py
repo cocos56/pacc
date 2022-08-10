@@ -41,8 +41,8 @@ def message_received(client, server, serial_num):
         print('server is busy')
     UCCServer.status = ServerStatus.BUSY
     print(f"Client({client['id']}) said: {serial_num}")
-    dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()),
-         open(f'CurrentUIHierarchy/{serial_num}.pkl', 'wb'))
+    with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'wb') as pkl_file:
+        dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
     server.send_message(client, serial_num)
     UCCServer.status = ServerStatus.FREE
 

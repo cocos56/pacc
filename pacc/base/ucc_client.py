@@ -11,7 +11,8 @@ def on_message(client, serial_num):
     :param client: 客户端对象
     :param serial_num: 序列号
     """
-    UCCClient.texts = load(open(f'CurrentUIHierarchy/{serial_num}.pkl', 'rb'))
+    with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'rb') as pkl_file:
+        UCCClient.texts = load(pkl_file)
     _thread.start_new_thread(close, tuple([client]))
 
 
