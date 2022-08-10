@@ -71,8 +71,7 @@ class Project:
         """重新打开APP"""
         print('重新打开APP')
         self.free_memory()
-        if not Config.debug and 'MI 4' in self.adb_ins.device.model:
-            self.adb_ins.press_power_key()
+        if 'MI 4' in self.adb_ins.device.model:
             sleep(60)
         self.adb_ins.press_home_key()
         self.open_app()
