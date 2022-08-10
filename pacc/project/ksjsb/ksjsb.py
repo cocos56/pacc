@@ -87,6 +87,7 @@ class Ksjsb(Project):
                     uia_ins.get_point_by_screen_text('任务中心'):
                 print('已进入财富界面')
             else:
+                print('未成功进入财富界面')
                 self.enter_wealth_interface()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
@@ -179,9 +180,9 @@ class Ksjsb(Project):
         print('退出直播页面')
         try:
             while True:
-                self.adb_ins.press_back_key(9)
+                self.adb_ins.press_back_key(18)
                 if self.uia_ins.click_by_xml_texts(texts=['退出直播间', '退出']):
-                    sleep(9)
+                    sleep(18)
                 if break_activity in self.adb_ins.get_current_focus():
                     break
         except (FileNotFoundError, ExpatError) as err:

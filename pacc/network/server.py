@@ -1,5 +1,6 @@
 """服务器端模块"""
 import json
+from time import sleep
 
 from websocket_server import WebsocketServer
 
@@ -7,6 +8,7 @@ from websocket_server import WebsocketServer
 def new_client(client, server):
     """Called for every client connecting (after handshake)"""
     print(f"New client connected and was given id {client['id']}")
+    sleep(3)
     server.send_message_to_all("Hey all, a new client has joined us")
 
 
