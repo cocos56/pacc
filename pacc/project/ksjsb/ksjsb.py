@@ -387,6 +387,7 @@ class Ksjsb(Project):
         print(f'距离下一轮任务轮询还剩'
               f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
+        print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
 

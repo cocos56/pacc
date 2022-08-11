@@ -8,7 +8,7 @@ from .uia import UIAutomator
 from ..base import print_err, sleep
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
-from ..tools import find_all_with_re, EMail
+from ..tools import find_all_with_re, EMail, find_all_ints_with_re
 
 
 def get_online_devices():
@@ -63,6 +63,11 @@ class ADB:  # pylint: disable=too-many-public-methods
                 self.get_current_focus():
             if self.device.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6)
+
+    def get_cpu_temperature(self):
+        """获取CPU温度"""
+        res = popen(f'{self.cmd}shell cat /sys/class/thermal/thermal_zone9/temp').read()
+        return find_all_ints_with_re(res)[0]
 
     def get_data_from_clipboard(self):
         """从粘贴板获取数据
