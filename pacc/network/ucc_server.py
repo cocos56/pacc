@@ -41,7 +41,7 @@ def message_received(client, server, serial_num):
         sleep(3)
         print(f'server is busy at {UCCServer.client_sn} for '
               f'{datetime.now()-UCCServer.last_datetime}')
-        if datetime.now()-UCCServer.last_datetime > timedelta(minutes=2):
+        if datetime.now()-UCCServer.last_datetime > timedelta(minutes=1):
             UCCServer.status = ServerStatus.FREE
     UCCServer.status = ServerStatus.BUSY
     UCCServer.client_sn = serial_num

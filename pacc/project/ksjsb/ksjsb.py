@@ -28,7 +28,10 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        sleep(120)
+        if 'MI 4' in self.adb_ins.device.model:
+            sleep(120)
+        else:
+            sleep(12)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -60,12 +63,18 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 15)
+        if 'MI 4' in self.adb_ins.device.model:
+            self.uia_ins.tap((90, 140), 15)
+        else:
+            self.uia_ins.tap((90, 140), 5)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
-            sleep(sleep_time)
-            self.uia_ins.get_current_ui_hierarchy()
+            if 'MI 4' in self.adb_ins.device.model:
+                sleep(sleep_time)
+                self.uia_ins.get_current_ui_hierarchy()
+            else:
+                sleep(sleep_time-30)
             today_date = date.today()
             if self.dbr.last_sign_in_date != today_date and self.uia_ins. \
                     click_by_screen_text('立即签到'):
@@ -117,7 +126,7 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
-            self.uia_ins.tap((530, 1330), 6)
+            self.uia_ins.tap((530, 1330), 9)
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
                 sleep(80)
                 self.exit_live()
