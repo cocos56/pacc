@@ -1,4 +1,5 @@
 """统一计算中心（Unified Computing Center, UCC）服务器端模块"""
+from datetime import datetime, timedelta
 from enum import Enum
 from pickle import dump
 from time import sleep
@@ -38,8 +39,13 @@ def message_received(client, server, serial_num):
     """
     while UCCServer.status == ServerStatus.BUSY:
         sleep(3)
-        print('server is busy')
+        print(f'server is busy at {UCCServer.client_sn} for '
+              f'{datetime.now()-UCCServer.last_datetime}')
+        if datetime.now()-UCCServer.last_datetime > timedelta(minutes=2):
+            UCCServer.status = ServerStatus.FREE
     UCCServer.status = ServerStatus.BUSY
+    UCCServer.client_sn = serial_num
+    UCCServer.last_datetime = datetime.now()
     print(f"Client({client['id']}) said: {serial_num}")
     with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'wb') as pkl_file:
         dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
@@ -58,6 +64,8 @@ class UCCServer:
     """服务器端类"""
 
     status = ServerStatus.FREE
+    client_sn = ''
+    last_datetime = datetime.now()
 
     @classmethod
     def mainloop(cls):
