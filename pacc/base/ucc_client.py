@@ -1,6 +1,7 @@
 """统一计算中心（Unified Computing Center, UCC）客户端模块"""
 import _thread
 from pickle import load
+from os import remove
 
 import websocket
 
@@ -13,6 +14,7 @@ def on_message(client, serial_num):
     """
     with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'rb') as pkl_file:
         UCCClient.texts = load(pkl_file)
+    remove(f'CurrentUIHierarchy/{serial_num}.pkl')
     _thread.start_new_thread(close, tuple([client]))
 
 

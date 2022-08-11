@@ -31,7 +31,7 @@ class Ksjsb(Project):
         if 'MI 4' in self.adb_ins.device.model:
             sleep(120)
         else:
-            sleep(12)
+            sleep(30)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -63,10 +63,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        if 'MI 4' in self.adb_ins.device.model:
-            self.uia_ins.tap((90, 140), 15)
-        else:
-            self.uia_ins.tap((90, 140), 5)
+        self.uia_ins.tap((90, 140), 15)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
@@ -352,6 +349,7 @@ class Ksjsb(Project):
         print('更新财富值')
         self.uia_ins.tap((668, 360))
         sleep(9)
+        self.uia_ins.get_current_ui_hierarchy()
         gold_coins, cash_coupons = self.get_wealth()
         if gold_coins != self.dbr.gold_coins:
             self.dbu.update_gold_coins(gold_coins)
@@ -380,12 +378,13 @@ class Ksjsb(Project):
             self.open_meal_allowance()
             self.get_flash_benefits()
             self.get_desktop_component_coin()
+            if datetime.now().hour > 5:
+                self.change_money()
+                self.update_wealth()
             self.reopen_app()
             self.uia_ins.tap((90, 140), 18)
             if self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
-                    self.change_money()
-                    self.update_wealth()
                     self.free_memory()
                     self.adb_ins.press_power_key()
                     self.start_date = (date.today() + timedelta(days=1))
