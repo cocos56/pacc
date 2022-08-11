@@ -83,7 +83,7 @@ class Ksjsb(Project):
                     self.adb_ins.press_back_key(3)
                 self.dbu.update_last_sign_in_date(today_date)
                 self.uia_ins.txt = ''
-            elif self.uia_ins.click_by_screen_text(text='继续邀请赚', txt=self.uia_ins.txt):
+            elif self.uia_ins.click_by_screen_text(text='继续邀请赚'):
                 sleep(6)
                 self.adb_ins.press_back_key(6)
                 self.uia_ins.txt = ''
@@ -354,7 +354,7 @@ class Ksjsb(Project):
 
     def watch_video(self):
         """看视频"""
-        if datetime.now() - self.last_reopen_datetime > timedelta(minutes=30):
+        if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
             self.adb_ins.keep_online()
             self.get_double_bonus()
             self.open_treasure_box()
@@ -377,6 +377,8 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key()
             self.last_reopen_datetime = datetime.now()
         show_datetime('看视频')
+        print(f'距离下一轮任务轮询还剩'
+              f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
