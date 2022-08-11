@@ -75,7 +75,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         except IndexError as err:
             print_err(err)
             sleep(1)
-            return self.get_cpu_temperature()
+            return -1
 
     def get_data_from_clipboard(self):
         """从粘贴板获取数据
