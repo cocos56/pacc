@@ -59,7 +59,11 @@ class Project:
         print('重新打开APP')
         self.free_memory()
         if 'MI 4' in self.adb_ins.device.model:
-            sleep(60)
+            sleep_time = 0
+            while sleep_time < 60:
+                sleep_time += 1
+                sleep(1, False, False)
+                print(f'{sleep_time} 当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
         self.adb_ins.press_home_key()
         self.open_app()
 

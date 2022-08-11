@@ -65,9 +65,17 @@ class ADB:  # pylint: disable=too-many-public-methods
                 self.press_back_key(6)
 
     def get_cpu_temperature(self):
-        """获取CPU温度"""
-        res = popen(f'{self.cmd}shell cat /sys/class/thermal/thermal_zone9/temp').read()
-        return find_all_ints_with_re(res)[0]
+        """获取CPU温度
+
+        :return: 摄氏度的数值
+        """
+        try:
+            res = popen(f'{self.cmd}shell cat /sys/class/thermal/thermal_zone9/temp').read()
+            return find_all_ints_with_re(res)[0]
+        except IndexError as err:
+            print_err(err)
+            sleep(1)
+            return self.get_cpu_temperature()
 
     def get_data_from_clipboard(self):
         """从粘贴板获取数据

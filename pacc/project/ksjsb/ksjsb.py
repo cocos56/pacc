@@ -372,7 +372,7 @@ class Ksjsb(Project):
             self.get_flash_benefits()
             self.get_desktop_component_coin()
             self.reopen_app()
-            self.uia_ins.tap((90, 140), 9)
+            self.uia_ins.tap((90, 140), 18)
             if self.uia_ins.get_dict(ResourceID.red_packet_anim):
                 if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
                     self.change_money()
