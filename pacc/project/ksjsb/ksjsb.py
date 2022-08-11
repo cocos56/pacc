@@ -274,8 +274,12 @@ class Ksjsb(Project):
             return
         self.reopen_app()
         self.adb_ins.press_home_key(3)
-        while self.uia_ins.click(ResourceID.tv_get_coin_left):
-            sleep(3)
+        try:
+            while self.uia_ins.click(ResourceID.tv_get_coin_left):
+                sleep(3)
+        except FileNotFoundError as err:
+            print_err(err)
+            return
         sleep(16)
         self.dbu.update_last_desktop_component_date(self.start_date)
 
@@ -306,7 +310,7 @@ class Ksjsb(Project):
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         self.uia_ins.tap((536, 1706), 26)
         self.uia_ins.click(text='立即提现')
-        sleep(3)
+        sleep(6)
         if self.uia_ins.get_dict(text='去验证'):
             EMail(self.serial_num).send_need_verification_alarm()
             return False

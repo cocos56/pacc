@@ -74,5 +74,5 @@ class UCCServer:
         server_ins.set_fn_new_client(new_client)
         server_ins.set_fn_client_left(client_left)
         server_ins.set_fn_message_received(message_received)
-        print("启动成功")
+        print("统一计算中心（Unified Computing Center, UCC）服务器启动成功")
         server_ins.run_forever()
