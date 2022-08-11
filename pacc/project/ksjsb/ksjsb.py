@@ -205,11 +205,13 @@ class Ksjsb(Project):
                 countdown -= 1
                 print(countdown)
                 self.adb_ins.swipe(536, 1100, 536, 1000)
-                if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
+                if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
+                    break
+                elif Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key(30)
+            self.adb_ins.press_back_key(60)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-                self.adb_ins.press_back_key(9)
+                self.adb_ins.press_back_key(60)
         self.dbu.update_last_shopping_date(self.start_date)
         return True
 
