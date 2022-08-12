@@ -1,0 +1,1 @@
+scrcpy -s 4c126d3d  --window-title 003001004自研小米4_淮阳_媛媛

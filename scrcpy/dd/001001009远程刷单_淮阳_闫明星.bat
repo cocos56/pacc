@@ -1,0 +1,1 @@
+scrcpy -s 26ca97ae

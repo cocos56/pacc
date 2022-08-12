@@ -145,7 +145,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         print(f'正在让{self.device.serial_num}按{keycode}')
         system(f'{self.cmd}shell input keyevent {keycode}')
-        sleep(sleep_time, False, False)
+        sleep(sleep_time, True, True)
 
     def press_home_key(self, sleep_time=1):
         """按起始键
