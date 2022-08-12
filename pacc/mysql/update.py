@@ -1,5 +1,4 @@
 """MySQL数据库包的改模块"""
-from datetime import datetime
 from .mysql import Mobile
 from .retrieve import RetrieveKsjsb
 
@@ -143,7 +142,7 @@ class UpdateKsjsb(Update):
         self.dbr.last_shopping_date = last_shopping_date
         print(self.query('last_shopping_date', last_shopping_date))
 
-    def update_last_meal_allowance_datetime(self, last_meal_allowance_datetime=datetime.now()):
+    def update_last_meal_allowance_datetime(self, last_meal_allowance_datetime):
         """更新上一次领完饭补的日期和时间
 
         :param last_meal_allowance_datetime: 上一次领完饭补的日期和时间
@@ -182,3 +181,11 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_update_wealth_date = last_update_wealth_date
         print(self.query('last_update_wealth_date', last_update_wealth_date))
+
+    def update_last_watch_video_date(self, last_watch_video_date):
+        """更新上一次看视频赚完金币的日期
+
+        :param last_watch_video_date: 上一次看视频赚完金币的日期
+        """
+        self.dbr.last_watch_video_date = last_watch_video_date
+        print(self.query('last_watch_video_date', last_watch_video_date))

@@ -151,6 +151,7 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.last_desktop_component_date = self.query('last_desktop_component_date')
         self.last_change_money_date = self.query('last_change_money_date')
         self.last_update_wealth_date = self.query('last_update_wealth_date')
+        self.last_watch_video_date = self.query('last_watch_video_date')
 
     # pylint: disable=arguments-differ
     def query(self, field):

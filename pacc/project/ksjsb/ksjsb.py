@@ -20,7 +20,6 @@ class Ksjsb(Project):
         :param serial_num: 设备编号
         """
         super().__init__(serial_num)
-        self.start_date = date.today()
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
@@ -105,19 +104,19 @@ class Ksjsb(Project):
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
-        if self.start_date == self.dbr.last_double_bonus_date:
+        if date.today() == self.dbr.last_double_bonus_date:
             print('今天已经点击翻倍了，无需重复操作')
             return
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1800, 600, 350)
         if self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
-            self.dbu.update_last_double_bonus_date(self.start_date)
+            self.dbu.update_last_double_bonus_date(date.today())
             sleep(6)
 
     def open_treasure_box(self):
         """开宝箱得金币"""
-        if self.start_date == self.dbr.last_treasure_box_date:
+        if date.today() == self.dbr.last_treasure_box_date:
             print('今天已经把宝箱开完了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -131,11 +130,11 @@ class Ksjsb(Project):
                 self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
-            self.dbu.update_last_treasure_box_date(self.start_date)
+            self.dbu.update_last_treasure_box_date(date.today())
 
     def view_ads(self):
         """看广告视频得5000个金币"""
-        if self.start_date == self.dbr.last_view_ads_date:
+        if date.today() == self.dbr.last_view_ads_date:
             print('今天已经看完广告了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -151,9 +150,9 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(6)
                 break
         if self.uia_ins.get_point_by_screen_text('5/5'):
-            self.dbu.update_last_view_ads_date(self.start_date)
+            self.dbu.update_last_view_ads_date(date.today())
         elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.dbu.update_last_view_ads_date(self.start_date)
+            self.dbu.update_last_view_ads_date(date.today())
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -175,7 +174,7 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        if self.start_date == self.dbr.last_watch_live_date:
+        if date.today() == self.dbr.last_watch_live_date:
             print('今天已经把直播看完了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -187,13 +186,13 @@ class Ksjsb(Project):
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
             if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
-                self.dbu.update_last_watch_live_date(self.start_date)
+                self.dbu.update_last_watch_live_date(date.today())
                 break
             self.adb_ins.press_back_key(3)
 
     def shopping(self):
         """去逛街"""
-        if self.start_date == self.dbr.last_shopping_date:
+        if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -219,7 +218,7 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(60)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(60)
-        self.dbu.update_last_shopping_date(self.start_date)
+        self.dbu.update_last_shopping_date(date.today())
         return True
 
     def open_meal_allowance(self):
@@ -262,21 +261,21 @@ class Ksjsb(Project):
             sleep(3)
             self.uia_ins.tap((530, 1220), 6)
             self.exit_award_video_play_activity()
-        self.dbu.update_last_meal_allowance_datetime()
+        self.dbu.update_last_meal_allowance_datetime(datetime.now())
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""
-        if self.start_date == self.dbr.last_flash_benefits_date:
+        if date.today() == self.dbr.last_flash_benefits_date:
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
         if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
             sleep(12)
-        self.dbu.update_last_flash_benefits_date(self.start_date)
+        self.dbu.update_last_flash_benefits_date(date.today())
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        if self.start_date == self.dbr.last_desktop_component_date:
+        if date.today() == self.dbr.last_desktop_component_date:
             print('今天已经领完桌面组件奖励了，无需重复操作')
             return
         self.reopen_app()
@@ -288,14 +287,14 @@ class Ksjsb(Project):
             print_err(err)
             return
         sleep(16)
-        self.dbu.update_last_desktop_component_date(self.start_date)
+        self.dbu.update_last_desktop_component_date(date.today())
 
     def change_money(self):
         """把金币兑换钱
 
         :return: 兑换成功返回True，否则返回False
         """
-        if self.start_date == self.dbr.last_change_money_date:
+        if date.today() == self.dbr.last_change_money_date:
             print('今天已经把金币兑换成钱过了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -322,7 +321,7 @@ class Ksjsb(Project):
             EMail(self.serial_num).send_need_verification_alarm()
             return False
         if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
-            self.dbu.update_last_change_money_date(self.start_date)
+            self.dbu.update_last_change_money_date(date.today())
             return True
         return False
 
@@ -343,7 +342,7 @@ class Ksjsb(Project):
         """更新财富值
 
         """
-        if self.start_date == self.dbr.last_update_wealth_date:
+        if date.today() == self.dbr.last_update_wealth_date:
             print('今天已经更新过财富值了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -355,7 +354,7 @@ class Ksjsb(Project):
             self.dbu.update_gold_coins(gold_coins)
         if cash_coupons != self.dbr.cash_coupons:
             self.dbu.update_cash_coupons(cash_coupons)
-        self.dbu.update_last_update_wealth_date(self.start_date)
+        self.dbu.update_last_update_wealth_date(date.today())
         return True
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -367,7 +366,22 @@ class Ksjsb(Project):
         super().random_swipe(x_range, y_list)
 
     def watch_video(self):
-        """看视频"""
+        """看视频赚金币"""
+        if date.today() <= self.dbr.last_watch_video_date:
+            print('今天已经看视频赚完金币了，无需重复操作')
+            return False
+        show_datetime('看视频')
+        print(f'距离下一轮任务轮询还剩'
+              f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
+        self.random_swipe()
+        print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
+        sleep(randint(15, 18))
+        self.adb_ins.press_back_key()
+        return True
+
+    @run_forever
+    def mainloop(self):
+        """主循环"""
         if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
             self.adb_ins.keep_online()
             self.get_double_bonus()
@@ -381,28 +395,15 @@ class Ksjsb(Project):
             if datetime.now().hour > 5:
                 self.change_money()
                 self.update_wealth()
-            self.reopen_app()
-            self.uia_ins.tap((90, 140), 18)
-            if self.uia_ins.get_dict(ResourceID.red_packet_anim):
-                if not self.uia_ins.get_dict(ResourceID.cycle_progress, xml=self.uia_ins.xml):
-                    self.free_memory()
-                    self.adb_ins.press_power_key()
-                    self.start_date = (date.today() + timedelta(days=1))
-                    return
-            self.adb_ins.press_back_key()
-            self.last_reopen_datetime = datetime.now()
-        show_datetime('看视频')
-        print(f'距离下一轮任务轮询还剩'
-              f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
-        self.random_swipe()
-        print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
-        sleep(randint(15, 18))
-        self.adb_ins.press_back_key()
-
-    @run_forever
-    def mainloop(self):
-        """主循环"""
-        if date.today() >= self.start_date:
-            self.watch_video()
-        else:
+            if date.today() > self.dbr.last_watch_video_date:
+                self.reopen_app()
+                self.uia_ins.tap((90, 140), 18)
+                if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
+                        ResourceID.cycle_progress, xml=self.uia_ins.xml):
+                    self.dbu.update_last_watch_video_date(date.today())
+                else:
+                    self.adb_ins.press_back_key()
+                    self.last_reopen_datetime = datetime.now()
+        if not self.watch_video():
+            self.free_memory()
             sleep(3600)
