@@ -233,8 +233,8 @@ class Ksjsb(Project):
         supper_hours = [21, 22, 23]
         if not self.dbr.last_meal_allowance_datetime or date.today() > date.fromisoformat(str(
                 self.dbr.last_meal_allowance_datetime)[:10]):
-            self.dbr.last_meal_allowance_datetime = datetime.now() - timedelta(
-                hours=datetime.now().hour)
+            self.dbu.update_last_meal_allowance_datetime(datetime.now() - timedelta(
+                hours=datetime.now().hour))
         if hour in breakfast_hours and self.dbr.last_meal_allowance_datetime. \
                 hour in breakfast_hours:
             print('已经领过早饭饭补了，无需重复操作')
@@ -392,7 +392,9 @@ class Ksjsb(Project):
             if datetime.now().hour > 5:
                 self.change_money()
                 self.update_wealth()
-            if not self.dbr.last_watch_video_date or date.today() > self.dbr.last_watch_video_date:
+            if not self.dbr.last_watch_video_date:
+                self.dbu.update_last_watch_video_date(date.min)
+            if date.today() > self.dbr.last_watch_video_date:
                 self.reopen_app()
                 self.uia_ins.tap((90, 140), 18)
                 if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
@@ -403,4 +405,4 @@ class Ksjsb(Project):
                     self.last_reopen_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
-            sleep(3600)
+            sleep(1800)
