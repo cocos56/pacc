@@ -14,6 +14,7 @@ def on_message(client, serial_num):
     """
     with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'rb') as pkl_file:
         UCCClient.texts = load(pkl_file)
+        print(UCCClient.texts)
     remove(f'CurrentUIHierarchy/{serial_num}.pkl')
     _thread.start_new_thread(close, tuple([client]))
 
@@ -52,6 +53,7 @@ def on_open(client):
 
     :param client: 客户端对象
     """
+    print(f'on_open {client}')
     client.send(UCCClient.serial_num)
 
 

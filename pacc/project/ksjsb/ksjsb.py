@@ -42,6 +42,7 @@ class Ksjsb(Project):
         try:
             while not self.uia_ins.get_dict(
                     resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
+                self.uia_ins.click(ResourceID.retry_btn, xml=self.uia_ins.xml)
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)

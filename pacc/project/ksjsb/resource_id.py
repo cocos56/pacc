@@ -7,8 +7,8 @@ NEO_VIDEO_ROOT = 'com.kuaishou.nebula.neo_video:id/'
 class ResourceID:
     """快手极速版的安卓资源ID类"""
     # 【桌面组件】
-    tv_get_coin_right = 'com.kuaishou.nebula:id/tv_get_coin_right'  # 点击桌面组件获取金币奖励中的金币值
-    tv_get_coin_left = 'com.kuaishou.nebula:id/tv_get_coin_left'  # 点击桌面组件获取金币奖励中的点击文字
+    tv_get_coin_right = f'{ROOT}tv_get_coin_right'  # 点击桌面组件获取金币奖励中的金币值
+    tv_get_coin_left = f'{ROOT}tv_get_coin_left'  # 点击桌面组件获取金币奖励中的点击文字
 
     # 【观看视频页面】
     user_name_text_view = f'{ROOT}user_name_text_view'  # 用户名
@@ -27,12 +27,14 @@ class ResourceID:
     # 放弃奖励
     award_video_close_dialog_abandon_button = f'{NEO_VIDEO_ROOT}' \
                                               f'award_video_close_dialog_abandon_button'
+    # 点击重试（无法连接网络，请稍后重试）
+    retry_btn = f'{ROOT}retry_btn'
 
     # 【分享领现金页面】
     WebView = 'android.webkit.WebView'
 
     # 【提现结果页面】
-    pay_title_tv = 'com.kuaishou.nebula:id/pay_title_tv'  # 提现结果
+    pay_title_tv = f'{ROOT}pay_title_tv'  # 提现结果
 
     # 【看直播领金币界面（由财富界面->领福利转入）】
     progress_display = f'{ROOT}progress_display'  # 30/30
