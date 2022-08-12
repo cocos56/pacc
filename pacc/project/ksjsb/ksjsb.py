@@ -8,7 +8,7 @@ from .resource_id import ResourceID
 from ..project import Project
 from ...base import sleep, show_datetime, print_err, run_forever
 from ...mysql import RetrieveKsjsb, UpdateKsjsb
-from ...tools import EMail
+from ...tools import EMail, find_all_ints_with_re
 
 
 class Ksjsb(Project):
@@ -42,7 +42,7 @@ class Ksjsb(Project):
         try:
             while not self.uia_ins.get_dict(
                     resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
-                self.uia_ins.click(ResourceID.retry_btn, xml=self.uia_ins.xml)
+                self.uia_ins.click(resource_id=ResourceID.retry_btn, xml=self.uia_ins.xml)
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
@@ -110,7 +110,7 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
-        self.adb_ins.swipe(600, 1800, 600, 350)
+        self.adb_ins.swipe(600, 1800, 600, 150)
         if self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
             self.dbu.update_last_double_bonus_date(date.today())
             sleep(6)
@@ -186,7 +186,9 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            if self.uia_ins.get_dict(ResourceID.progress_display)['@text'] == '10/10':
+            progress = find_all_ints_with_re(self.uia_ins.get_dict(
+                ResourceID.progress_display)['@text'])
+            if progress[0] == progress[1]:
                 self.dbu.update_last_watch_live_date(date.today())
                 break
             self.adb_ins.press_back_key(3)
@@ -315,13 +317,17 @@ class Ksjsb(Project):
         self.uia_ins.tap((536, 1706), 26)
         self.uia_ins.click(text='立即提现')
         sleep(6)
-        if self.uia_ins.get_dict(text='去验证'):
-            EMail(self.serial_num).send_need_verification_alarm()
+        try:
+            if self.uia_ins.get_dict(text='去验证'):
+                EMail(self.serial_num).send_need_verification_alarm()
+                return False
+            if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
+                self.dbu.update_last_change_money_date(date.today())
+                return True
             return False
-        if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
-            self.dbu.update_last_change_money_date(date.today())
-            return True
-        return False
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.change_money()
 
     def get_wealth(self):
         """获取财富值"""
@@ -372,6 +378,7 @@ class Ksjsb(Project):
         print(f'距离下一轮任务轮询还剩'
               f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
+        print(f'当前活动为：{self.adb_ins.get_current_focus()}')
         print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()

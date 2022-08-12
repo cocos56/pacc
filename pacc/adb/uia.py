@@ -168,8 +168,16 @@ class UIAutomator:
         :return: 找到后立即点击并返回True，未找到返回False
         """
         point = self.get_point(resource_id, text, content_desc, xml, bounds, class_, index)
-        if point and text:
-            print(f'检测到【{text}】')
+        if text:
+            if point:
+                print(f'检测到【{text}】')
+            else:
+                print(f'未找到【{text}】')
+        elif resource_id:
+            if point:
+                print(f'检测到【{resource_id}】')
+            else:
+                print(f'未找到【{resource_id}】')
         if not point:
             return False
         x_coordinate, y_coordinate = point

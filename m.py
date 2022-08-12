@@ -6,9 +6,10 @@ from pacc.config import Config
 from pacc.project.ksjsb.resource_id import ResourceID
 
 Config.set_debug(True)
-DEVICE_SN = '003001001'
+DEVICE_SN = '003002001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
+uia_ins.click(ResourceID.retry_btn)
 # uia_ins.get_texts_from_screen(True)
 # adb_ins.get_cpu_temperature()
 try:
