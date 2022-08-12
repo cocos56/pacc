@@ -347,8 +347,7 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('更新财富值')
-        self.uia_ins.tap((668, 360))
-        sleep(9)
+        self.uia_ins.tap((186, 360), 9)
         self.uia_ins.get_current_ui_hierarchy()
         gold_coins, cash_coupons = self.get_wealth()
         if gold_coins != self.dbr.gold_coins:
