@@ -405,4 +405,4 @@ class Ksjsb(Project):
                     self.last_reopen_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
-            sleep(1800)
+            sleep(3600)
