@@ -166,7 +166,11 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(18)
                 if self.uia_ins.click_by_xml_texts(texts=['退出直播间', '退出']):
                     sleep(18)
+                current_focus = self.adb_ins.get_current_focus()
                 if break_activity in self.adb_ins.get_current_focus():
+                    break
+                if not break_activity == Activity.KwaiYodaWebViewActivity and Activity.\
+                        KwaiYodaWebViewActivity in current_focus:
                     break
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
@@ -186,12 +190,13 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            progress = find_all_ints_with_re(self.uia_ins.get_dict(
-                ResourceID.progress_display)['@text'])
-            if progress[0] == progress[1]:
-                self.dbu.update_last_watch_live_date(date.today())
-                break
-            self.adb_ins.press_back_key(3)
+            if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                progress = find_all_ints_with_re(self.uia_ins.get_dict(
+                    ResourceID.progress_display)['@text'])
+                if progress[0] == progress[1]:
+                    self.dbu.update_last_watch_live_date(date.today())
+                    break
+                self.adb_ins.press_back_key(3)
 
     def shopping(self):
         """去逛街"""
