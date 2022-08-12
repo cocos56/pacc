@@ -265,13 +265,13 @@ class Ksjsb(Project):
         self.dbu.update_last_meal_allowance_datetime()
 
     def get_flash_benefits(self):
-        """"领取限时福利：限时福利14天领14元"""
+        """"领取限时福利：限时福利14天领"""
         if self.start_date == self.dbr.last_flash_benefits_date:
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
-        if self.uia_ins.get_point_by_screen_text(text='点击领取今日红包', txt=self.uia_ins.txt):
-            self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt)
+        if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
+            sleep(12)
         self.dbu.update_last_flash_benefits_date(self.start_date)
 
     def get_desktop_component_coin(self):
@@ -329,6 +329,7 @@ class Ksjsb(Project):
     def get_wealth(self):
         """获取财富值"""
         print('正在获取财富值')
+        self.uia_ins.tap((790, 1100))
         dics = self.uia_ins.get_dict(index='0', text='我的收益')['node']
         gold_coins = dics[2]['@text']
         if 'w' in gold_coins:
