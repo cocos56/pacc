@@ -338,7 +338,7 @@ class Ksjsb(Project):
     def get_wealth(self):
         """获取财富值"""
         print('正在获取财富值')
-        self.uia_ins.tap((790, 1100))
+        self.uia_ins.click_by_screen_text('抵用金明细')
         dics = self.uia_ins.get_dict(index='0', text='我的收益')['node']
         gold_coins = dics[2]['@text']
         if 'w' in gold_coins:
@@ -352,10 +352,10 @@ class Ksjsb(Project):
         """更新财富值
 
         """
-        if date.today() == self.dbr.last_update_wealth_date:
-            print('今天已经更新过财富值了，无需重复操作')
-            return True
-        self.enter_wealth_interface()
+        # if date.today() == self.dbr.last_update_wealth_date:
+        #     print('今天已经更新过财富值了，无需重复操作')
+        #     return True
+        # self.enter_wealth_interface()
         print('更新财富值')
         self.uia_ins.tap((186, 360), 9)
         self.uia_ins.get_current_ui_hierarchy()
