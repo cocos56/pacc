@@ -46,7 +46,10 @@ class Ksjsb(Project):
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
-            return self.exit_award_video_play_activity()
+            if self.uia_ins.get_point_by_screen_text(text='已成功领取奖励'):
+                self.adb_ins.press_back_key(6)
+            else:
+                return self.exit_award_video_play_activity()
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
@@ -352,10 +355,10 @@ class Ksjsb(Project):
         """更新财富值
 
         """
-        # if date.today() == self.dbr.last_update_wealth_date:
-        #     print('今天已经更新过财富值了，无需重复操作')
-        #     return True
-        # self.enter_wealth_interface()
+        if date.today() == self.dbr.last_update_wealth_date:
+            print('今天已经更新过财富值了，无需重复操作')
+            return True
+        self.enter_wealth_interface()
         print('更新财富值')
         self.uia_ins.tap((186, 360), 9)
         self.uia_ins.get_current_ui_hierarchy()

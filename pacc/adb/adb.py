@@ -1,6 +1,6 @@
 """安卓调试桥模块"""
 import base64
-from datetime import datetime
+from datetime import date
 from os import popen, system
 from random import randint
 
@@ -22,7 +22,6 @@ def get_online_devices():
 
 class ADB:  # pylint: disable=too-many-public-methods
     """安卓调试桥类"""
-    reboot_per_hour_record = [-1]
 
     def __init__(self, device_sn, offline_cnt=1):
         """构造函数：初始化安卓调试桥类的对象
@@ -177,14 +176,14 @@ class ADB:  # pylint: disable=too-many-public-methods
         """按回车键"""
         self.press_key('KEYCODE_ENTER')
 
-    def usb(self, timeout=2):
+    def usb(self, sleep_time=2):
         """restart adbd listening on USB
-        :param timeout: 超时
+        :param sleep_time: 超时
         """
         cmd = f'{self.cmd}usb'
         system(cmd)
         print(cmd)
-        sleep(timeout)
+        sleep(sleep_time)
 
     def tcpip(self):
         """restart adbd listening on TCP on PORT"""
@@ -275,10 +274,6 @@ class ADB:  # pylint: disable=too-many-public-methods
             duration = randint(1000, 1500)
         self.swipe(x_coordinate, y_coordinate, x_coordinate, y_coordinate, duration)
 
-    def reboot(self):
-        """重启设备"""
-        self.reboot_by_ip()
-
     def reboot_by_cmd(self, cmd):
         """通过CMD指令重启设备
 
@@ -290,40 +285,19 @@ class ADB:  # pylint: disable=too-many-public-methods
         # pylint: disable=unnecessary-dunder-call
         self.__init__(self.device.serial_num)
 
-    def reboot_by_id(self):
-        """通过ID重启指定的设备"""
-        self.reboot_by_cmd(f'adb -s {self.device.id_num} reboot')
-
-    def reboot_by_ip(self):
+    def reboot(self):
         """通过IP重启指定的设备"""
         if self.device.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_num)
         self.reboot_by_cmd(f'adb -s {self.device.ipv4_addr} reboot')
 
-    def reboot_per_hour(self, tip='小时'):
-        """每小时重启一次设备
+    def reboot_by_id(self):
+        """通过ID重启指定的设备"""
+        self.reboot_by_cmd(f'adb -s {self.device.id_num} reboot')
 
-        :param tip: 该函数可能每天重启一次设备被复用，相应的tip值也应该改变
-        """
-        if not datetime.now().hour == self.reboot_per_hour_record[0]:
-            self.reboot_per_hour_record = [datetime.now().hour]
-        if self.device.serial_num not in self.reboot_per_hour_record:
-            print(f'按每{tip}重启一次的计划重启{self.device.serial_num}')
-            self.reboot()
-            self.reboot_per_hour_record.append(self.device.serial_num)
-            return True
-        return False
-
-    def reboot_per_day(self, hours=tuple([0])):
-        """每天固定点重启一次设备
-
-        :param hours: 重启的时
-        """
-        if datetime.now().hour in hours:
-            self.reboot_per_hour(tip='天')
-            return True
-        return False
+    def reboot_per_day(self):
+        """每天重启一次设备"""
 
     def get_ipv4_address(self):
         """获取设备的IPv4地址"""
