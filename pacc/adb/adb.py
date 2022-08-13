@@ -30,40 +30,38 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param offline_cnt: 离线次数计数器
         """
         system('adb reconnect offline')
-        self.device = RetrieveMobileInfo(device_sn)
-        if self.device.id_num not in get_online_devices():
-            if self.device.ipv4_addr in get_online_devices():
+        self.dbr = RetrieveMobileInfo(device_sn)
+        self.dbu = UpdateMobileInfo(device_sn)
+        if self.dbr.id_num not in get_online_devices():
+            if self.dbr.ipv4_addr in get_online_devices():
                 self.reboot()
             else:
                 if not offline_cnt % 20:
-                    EMail(self.device.serial_num).send_offline_error()
-                print(f'{self.device.serial_num}不在线，该设备的ID为：{self.device.id_num}，请核对！')
+                    EMail(self.dbr.serial_num).send_offline_error()
+                print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
                 sleep(30)
                 # pylint: disable=non-parent-init-called
                 self.__init__(device_sn, offline_cnt+1)
-        self.cmd = f'adb -s {self.device.id_num} '
+        self.cmd = f'adb -s {self.dbr.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(device_sn)
-        if not self.get_ipv4_address() == self.device.ipv4_addr:
-            UpdateMobileInfo(device_sn).update_ipv4_addr(self.get_ipv4_address())
-            self.device = RetrieveMobileInfo(device_sn)
+        if not self.get_ipv4_address() == self.dbr.ipv4_addr:
+            self.dbu.update_ipv4_addr(self.get_ipv4_address())
         if not Config.debug:
             self.reconnect()
-        self.cmd = f'adb -s {self.device.ipv4_addr} '
+        self.cmd = f'adb -s {self.dbr.ipv4_addr} '
         self.uia = UIAutomator(device_sn)
         model = self.get_model()
         while not model:
             model = self.get_model()
-        # print(model, self.device.model)
-        if not model == self.device.model:
-            UpdateMobileInfo(device_sn).update_model(model)
-            self.device = RetrieveMobileInfo(device_sn)
+        if not model == self.dbr.model:
+            self.dbu.update_model(model)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
-            if self.device.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
+            if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6)
 
     def get_cpu_temperature(self):
@@ -120,7 +118,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if not res:
             self.reconnect()
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.serial_num)
+            self.__init__(self.dbr.serial_num)
             return
         while res[-1] == '\n':
             res = res[:-1]
@@ -131,7 +129,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         try:
             res = popen(f'{self.cmd}shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
         except UnicodeDecodeError as err:
-            print_err(f'{self.device.serial_num} {err}')
+            print_err(f'{self.dbr.serial_num} {err}')
             self.reboot()
             return self.get_current_focus()
         print(res)
@@ -145,7 +143,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param keycode: 按键代码
         :param sleep_time: 休息时间
         """
-        print(f'正在让{self.device.serial_num}按{keycode}')
+        print(f'正在让{self.dbr.serial_num}按{keycode}')
         system(f'{self.cmd}shell input keyevent {keycode}')
         sleep(sleep_time, True, True)
 
@@ -187,21 +185,21 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def tcpip(self):
         """restart adbd listening on TCP on PORT"""
-        system(f'adb -s {self.device.id_num} tcpip 5555')
+        system(f'adb -s {self.dbr.id_num} tcpip 5555')
         sleep(1, False, False)
 
     def connect(self):
         """connect to a device via TCP/IP [default port=5555]"""
         self.tcpip()
-        system(f'adb connect {self.device.ipv4_addr}')
+        system(f'adb connect {self.dbr.ipv4_addr}')
         sleep(6)
-        system(f'adb connect {self.device.ipv4_addr}')
-        if self.device.ipv4_addr not in get_online_devices():
+        system(f'adb connect {self.dbr.ipv4_addr}')
+        if self.dbr.ipv4_addr not in get_online_devices():
             self.reboot_by_id()
 
     def disconnect(self):
         """disconnect from given TCP/IP device [default port=5555], or all"""
-        system(f'adb disconnect {self.device.ipv4_addr}')
+        system(f'adb disconnect {self.dbr.ipv4_addr}')
         sleep(2, False, False)
 
     def reconnect(self):
@@ -212,10 +210,10 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self):
         """保持在线"""
-        if self.device.ipv4_addr not in get_online_devices():
+        if self.dbr.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.serial_num)
-        elif self.device.id_num not in get_online_devices():
+            self.__init__(self.dbr.serial_num)
+        elif self.dbr.id_num not in get_online_devices():
             self.reboot()
 
     def taps(self, instructions):
@@ -262,7 +260,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         cmd = f'{self.cmd}shell input swipe {x1_coordinate} {y1_coordinate} ' \
               f'{x2_coordinate} {y2_coordinate} {duration}'
         system(cmd)
-        print(self.device.serial_num, cmd)
+        print(self.dbr.serial_num, cmd)
 
     def long_press(self, x_coordinate, y_coordinate, duration=-1):
         """长按
@@ -280,24 +278,27 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param cmd: CMD指令
         """
         popen(cmd)
-        print(f'已向设备{self.device.serial_num}下达重启指令')
+        print(f'已向设备{self.dbr.serial_num}下达重启指令')
         sleep(96)
         # pylint: disable=unnecessary-dunder-call
-        self.__init__(self.device.serial_num)
+        self.__init__(self.dbr.serial_num)
 
     def reboot(self):
         """通过IP重启指定的设备"""
-        if self.device.ipv4_addr not in get_online_devices():
+        if self.dbr.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.device.serial_num)
-        self.reboot_by_cmd(f'adb -s {self.device.ipv4_addr} reboot')
+            self.__init__(self.dbr.serial_num)
+        self.reboot_by_cmd(f'adb -s {self.dbr.ipv4_addr} reboot')
 
     def reboot_by_id(self):
         """通过ID重启指定的设备"""
-        self.reboot_by_cmd(f'adb -s {self.device.id_num} reboot')
+        self.reboot_by_cmd(f'adb -s {self.dbr.id_num} reboot')
 
     def reboot_per_day(self):
         """每天重启一次设备"""
+        if date.today() > self.dbr.last_reboot_date:
+            self.reboot()
+            self.dbu.update_last_reboot_date(date.today())
 
     def get_ipv4_address(self):
         """获取设备的IPv4地址"""
@@ -313,8 +314,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         ipv6_address = find_all_with_re(res, r'inet6 addr: (.+:.+:.+)/64 Scope: Global')
         if 0 < len(ipv6_address) <= 2:
             ipv6_address = ipv6_address[0]
-            print(f'设备{self.device}的公网IPv6地址为：{ipv6_address}')
+            print(f'设备{self.dbr}的公网IPv6地址为：{ipv6_address}')
         else:
-            print(f'设备{self.device}的公网IPv6地址数大于2或小于0，正在尝试重新获取')
+            print(f'设备{self.dbr}的公网IPv6地址数大于2或小于0，正在尝试重新获取')
             self.reboot()
             self.get_ipv6_address()

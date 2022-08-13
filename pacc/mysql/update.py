@@ -1,6 +1,6 @@
 """MySQL数据库包的改模块"""
 from .mysql import Mobile
-from .retrieve import RetrieveKsjsb
+from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
 
 
 # pylint: disable=too-few-public-methods
@@ -32,6 +32,16 @@ class Update:
 class UpdateMobileInfo(Update):
     """更改手机信息类"""
 
+    def __init__(self, serial_num):
+        """构造函数：初始化改类的对象
+
+        :param serial_num: 设备序列号
+        """
+        super().__init__(serial_num)
+
+    def get_dbr(self):
+        return RetrieveMobileInfo.instances.get(self.serial_num)
+
     # pylint: disable=arguments-differ
     def query(self, field, value):
         """查询函数：修改数据
@@ -47,6 +57,7 @@ class UpdateMobileInfo(Update):
 
         :param ipv4_addr: 新的IPv4地址
         """
+        self.get_dbr().ipv4_addr = ipv4_addr
         print(self.query('IP', ipv4_addr))
 
     def update_model(self, model):
@@ -54,7 +65,16 @@ class UpdateMobileInfo(Update):
 
         :param model: 新的型号
         """
-        print(self.query('Model', model))
+        self.get_dbr().model = model
+        print(self.query('model', model))
+
+    def update_last_reboot_date(self, last_reboot_date):
+        """更新上次重启的日期
+
+        :param last_reboot_date: 上次重启的日期
+        """
+        self.get_dbr().last_reboot_date = last_reboot_date
+        print(self.query('last_reboot_date', last_reboot_date))
 
 
 class UpdateKsjsb(Update):

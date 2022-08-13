@@ -27,7 +27,7 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        if 'MI 4' in self.adb_ins.device.model:
+        if 'MI 4' in self.adb_ins.dbr.model:
             sleep(120)
         else:
             sleep(30)
@@ -70,7 +70,7 @@ class Ksjsb(Project):
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
-            if 'MI 4' in self.adb_ins.device.model:
+            if 'MI 4' in self.adb_ins.dbr.model:
                 sleep(sleep_time)
                 self.uia_ins.get_current_ui_hierarchy()
             else:
@@ -172,12 +172,16 @@ class Ksjsb(Project):
                 current_focus = self.adb_ins.get_current_focus()
                 if break_activity in self.adb_ins.get_current_focus():
                     break
-                if not break_activity == Activity.KwaiYodaWebViewActivity and Activity.\
-                        KwaiYodaWebViewActivity in current_focus:
+                if Activity.KwaiYodaWebViewActivity in current_focus:
                     break
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            if break_activity not in self.adb_ins.get_current_focus():
+            current_focus = self.adb_ins.get_current_focus()
+            if break_activity in current_focus:
+                pass
+            elif Activity.KwaiYodaWebViewActivity in current_focus:
+                pass
+            else:
                 self.exit_live(break_activity)
 
     def watch_live(self):

@@ -105,7 +105,7 @@ class RetrieveMobile(Retrieve):
         return super().query(table, field, 'SN', self.serial_num, Mobile)
 
 
-class RetrieveMobileInfo(RetrieveMobile):
+class RetrieveMobileInfoBase(RetrieveMobile):
     """查询手机信息类"""
 
     def __init__(self, serial_num):
@@ -116,7 +116,8 @@ class RetrieveMobileInfo(RetrieveMobile):
         super().__init__(serial_num)
         self.id_num = self.query('ID')
         self.ipv4_addr = self.query('IP')
-        self.model = self.query('Model')
+        self.model = self.query('model')
+        self.last_reboot_date = self.query('last_reboot_date')
 
     # pylint: disable=arguments-differ
     def query(self, field):
@@ -126,6 +127,23 @@ class RetrieveMobileInfo(RetrieveMobile):
         :return: 查询到的结果（单条）
         """
         return super().query('mobile_info', field)
+
+
+class RetrieveMobileInfo(RetrieveMobileInfoBase):
+    """查询手机信息类"""
+    instances = {'003001001': RetrieveMobileInfoBase('003001001')}
+
+    def __init__(self, serial_num):
+        """初始化函数
+
+        :param serial_num: 设备序列号
+        """
+        super().__init__(serial_num)
+        self.__class__.instances.update({self.serial_num: self})
+
+    @classmethod
+    def get_ins(cls, serial_num):
+        return cls.instances.get(serial_num, cls(serial_num))
 
 
 # pylint: disable=too-many-instance-attributes
