@@ -33,12 +33,15 @@ class ADB:  # pylint: disable=too-many-public-methods
         system('adb reconnect offline')
         self.device = RetrieveMobileInfo(device_sn)
         if self.device.id_num not in get_online_devices():
-            if not offline_cnt % 20:
-                EMail(self.device.serial_num).send_offline_error()
-            print(f'{self.device.serial_num}不在线，该设备的ID为：{self.device.id_num}，请核对！')
-            sleep(30)
-            # pylint: disable=non-parent-init-called
-            self.__init__(device_sn, offline_cnt+1)
+            if self.device.ipv4_addr in get_online_devices():
+                self.reboot()
+            else:
+                if not offline_cnt % 20:
+                    EMail(self.device.serial_num).send_offline_error()
+                print(f'{self.device.serial_num}不在线，该设备的ID为：{self.device.id_num}，请核对！')
+                sleep(30)
+                # pylint: disable=non-parent-init-called
+                self.__init__(device_sn, offline_cnt+1)
         self.cmd = f'adb -s {self.device.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
@@ -213,6 +216,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         if self.device.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.device.serial_num)
+        elif self.device.id_num not in get_online_devices():
+            self.reboot()
 
     def taps(self, instructions):
         """点击
