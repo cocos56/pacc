@@ -304,7 +304,7 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('正在把金币兑换钱')
-        self.uia_ins.tap((866, 349), 9)
+        self.uia_ins.tap((866, 349), 12)
         self.uia_ins.get_current_ui_hierarchy()
         webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
         cash = float(webview_dic['node'][0]['node'][1]['@text'])
@@ -325,6 +325,7 @@ class Ksjsb(Project):
         try:
             if self.uia_ins.get_dict(text='去验证'):
                 EMail(self.serial_num).send_need_verification_alarm()
+                input()
                 return False
             if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
                 self.dbu.update_last_change_money_date(date.today())
