@@ -6,16 +6,16 @@ from os import remove
 import websocket
 
 
-def on_message(client, serial_num):
+def on_message(client, pkl_path):
     """Callback function which is called when received data.
 
     :param client: 客户端对象
-    :param serial_num: 序列号
+    :param pkl_path: pkl文件的绝对路径
     """
-    with open(f'CurrentUIHierarchy/{serial_num}.pkl', 'rb') as pkl_file:
+    with open(pkl_path, 'rb') as pkl_file:
         UCCClient.texts = load(pkl_file)
-        print(UCCClient.texts)
-    remove(f'CurrentUIHierarchy/{serial_num}.pkl')
+        print(f'on_message pkl_path={pkl_path} texts={UCCClient.texts}')
+    remove(pkl_path)
     _thread.start_new_thread(close, tuple([client]))
 
 
