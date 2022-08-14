@@ -133,17 +133,11 @@ class RetrieveMobileInfo(RetrieveMobileInfoBase):
     """查询手机信息类"""
     instances = {'003001001': RetrieveMobileInfoBase('003001001')}
 
-    def __init__(self, serial_num):
-        """初始化函数
-
-        :param serial_num: 设备序列号
-        """
-        super().__init__(serial_num)
-        self.__class__.instances.update({self.serial_num: self})
-
     @classmethod
     def get_ins(cls, serial_num):
-        return cls.instances.get(serial_num, cls(serial_num))
+        if serial_num not in cls.instances:
+            cls.instances.update({serial_num: cls(serial_num)})
+        return cls.instances.get(serial_num)
 
 
 # pylint: disable=too-many-instance-attributes

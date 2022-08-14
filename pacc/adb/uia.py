@@ -36,13 +36,13 @@ class Node:
 class UIAutomator:
     """UI自动化测试类"""
 
-    def __init__(self, device_sn):
+    def __init__(self, serial_num):
         """构造函数
 
-        :param device_sn: 设备编号
+        :param serial_num: 设备编号
         """
-        self.device = RetrieveMobileInfo(device_sn)
-        self.cmd = f'adb -s {self.device.ipv4_addr} '
+        self.dbr = RetrieveMobileInfo.get_ins(serial_num)
+        self.cmd = f'adb -s {self.dbr.ipv4_addr} '
         self.node = Node()
         self.xml = ''
         self.txt = ''
@@ -50,7 +50,7 @@ class UIAutomator:
 
     def get_screen(self):
         """获取屏幕（截屏）"""
-        png_path = f'CurrentUIHierarchy/{self.device.serial_num}.png'
+        png_path = f'CurrentUIHierarchy/{self.dbr.serial_num}.png'
         system(f'{self.cmd}exec-out screencap -p > {png_path}')
         return png_path
 
@@ -61,7 +61,7 @@ class UIAutomator:
         :param interval: 停顿时间
         """
         x_coordinate, y_coordinate = point
-        print(f'正在让{self.device.serial_num}点击({x_coordinate},{y_coordinate})')
+        print(f'正在让{self.dbr.serial_num}点击({x_coordinate},{y_coordinate})')
         system(f'{self.cmd}shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
@@ -96,7 +96,7 @@ class UIAutomator:
 
     def get_texts_from_screen(self, show_all_texts=False):
         """从当前屏幕截图中获取所有文字"""
-        self.txt = UCCClient.send(self.device.serial_num)
+        self.txt = UCCClient.send(self.dbr.serial_num)
         if show_all_texts:
             print(self.txt)
         return self.txt
@@ -401,7 +401,7 @@ class UIAutomator:
         system(cmd)
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        file_path = f'{dir_name}/{self.device.serial_num}.xml'
+        file_path = f'{dir_name}/{self.dbr.serial_num}.xml'
         print(file_path)
         if exists(file_path):
             remove(file_path)

@@ -23,15 +23,15 @@ def get_online_devices():
 class ADB:  # pylint: disable=too-many-public-methods
     """安卓调试桥类"""
 
-    def __init__(self, device_sn, offline_cnt=1):
+    def __init__(self, serial_num, offline_cnt=1):
         """构造函数：初始化安卓调试桥类的对象
 
-        :param device_sn: 设备序列号
+        :param serial_num: 设备序列号
         :param offline_cnt: 离线次数计数器
         """
         system('adb reconnect offline')
-        self.dbr = RetrieveMobileInfo(device_sn)
-        self.dbu = UpdateMobileInfo(device_sn)
+        self.dbr = RetrieveMobileInfo.get_ins(serial_num)
+        self.dbu = UpdateMobileInfo(serial_num)
         if self.dbr.id_num not in get_online_devices():
             if self.dbr.ipv4_addr in get_online_devices():
                 self.reboot()
@@ -41,19 +41,19 @@ class ADB:  # pylint: disable=too-many-public-methods
                 print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
                 sleep(30)
                 # pylint: disable=non-parent-init-called
-                self.__init__(device_sn, offline_cnt+1)
+                self.__init__(serial_num, offline_cnt+1)
         self.cmd = f'adb -s {self.dbr.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
             sleep(30)
             # pylint: disable=non-parent-init-called
-            self.__init__(device_sn)
+            self.__init__(serial_num)
         if not self.get_ipv4_address() == self.dbr.ipv4_addr:
             self.dbu.update_ipv4_addr(self.get_ipv4_address())
         if not Config.debug:
             self.reconnect()
         self.cmd = f'adb -s {self.dbr.ipv4_addr} '
-        self.uia = UIAutomator(device_sn)
+        self.uia = UIAutomator(serial_num)
         model = self.get_model()
         while not model:
             model = self.get_model()
@@ -210,10 +210,22 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self):
         """保持在线"""
-        if self.dbr.ipv4_addr not in get_online_devices():
+        online_devices = get_online_devices()
+        if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
+            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:{self.dbr.ipv4_addr}均在线')
+        elif self.dbr.ipv4_addr not in online_devices and self.dbr.id_num not in online_devices:
+            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
+                  f'{self.dbr.ipv4_addr}均离线')
+            input('请手动处理后按回车键以继续')
+            print('正在继续向下处理')
+        elif self.dbr.ipv4_addr not in get_online_devices():
+            print(f'{self.dbr.serial_num}所对应的的IP:{self.dbr.ipv4_addr}离线，但ID:'
+                  f'{self.dbr.id_num}在线')
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.dbr.serial_num)
         elif self.dbr.id_num not in get_online_devices():
+            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
+                  f'{self.dbr.ipv4_addr}在线')
             self.reboot()
 
     def taps(self, instructions):

@@ -38,9 +38,7 @@ class UpdateMobileInfo(Update):
         :param serial_num: 设备序列号
         """
         super().__init__(serial_num)
-
-    def get_dbr(self):
-        return RetrieveMobileInfo.instances.get(self.serial_num)
+        self.dbr = RetrieveMobileInfo.get_ins(serial_num)
 
     # pylint: disable=arguments-differ
     def query(self, field, value):
@@ -57,7 +55,7 @@ class UpdateMobileInfo(Update):
 
         :param ipv4_addr: 新的IPv4地址
         """
-        self.get_dbr().ipv4_addr = ipv4_addr
+        self.dbr.ipv4_addr = ipv4_addr
         print(self.query('IP', ipv4_addr))
 
     def update_model(self, model):
@@ -65,7 +63,7 @@ class UpdateMobileInfo(Update):
 
         :param model: 新的型号
         """
-        self.get_dbr().model = model
+        self.dbr.model = model
         print(self.query('model', model))
 
     def update_last_reboot_date(self, last_reboot_date):
@@ -73,7 +71,7 @@ class UpdateMobileInfo(Update):
 
         :param last_reboot_date: 上次重启的日期
         """
-        self.get_dbr().last_reboot_date = last_reboot_date
+        self.dbr.last_reboot_date = last_reboot_date
         print(self.query('last_reboot_date', last_reboot_date))
 
 
