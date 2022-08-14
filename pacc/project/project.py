@@ -58,11 +58,15 @@ class Project:
         """重新打开APP"""
         print('重新打开APP')
         self.free_memory()
+        last_cpu_temperature = -1
         if 'MI 4' in self.adb_ins.dbr.model:
             sleep_time = 0
             while sleep_time < 60:
                 sleep_time += 1
                 sleep(1, False, False)
+                if last_cpu_temperature == self.adb_ins.get_cpu_temperature():
+                    continue
+                last_cpu_temperature = self.adb_ins.get_cpu_temperature()
                 print(f'{sleep_time} 当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
         self.adb_ins.press_home_key()
         self.open_app()
