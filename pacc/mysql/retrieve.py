@@ -135,6 +135,10 @@ class RetrieveMobileInfo(RetrieveMobileInfoBase):
 
     @classmethod
     def get_ins(cls, serial_num):
+        """获取指定设备序列号所对应的单例对象
+
+        :param serial_num: 设备序列号
+        """
         if serial_num not in cls.instances:
             cls.instances.update({serial_num: cls(serial_num)})
         return cls.instances.get(serial_num)
