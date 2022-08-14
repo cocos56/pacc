@@ -88,10 +88,8 @@ class UIAutomator:
         """
         point = self.get_point_by_screen_text(text, txt, start_index)
         if point:
-            print(f'检测到【{text}】')
             self.tap(point)
             return True
-        print(f'未找到【{text}】')
         return False
 
     def get_texts_from_screen(self, show_all_texts=False):
@@ -122,7 +120,9 @@ class UIAutomator:
                     break
                 count += 1
         if not len(points_list) == 4:
+            print(f'未找到【{text}】')
             return False
+        print(f'检测到【{text}】')
         return self.get_point_from_two_points(points_list[0] + points_list[2])
 
     @classmethod

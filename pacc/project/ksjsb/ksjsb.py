@@ -29,10 +29,10 @@ class Ksjsb(Project):
             self.uia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
             print_err(f'is_loading {err}')
-            self.adb_ins.press_back_key(3)
-            self.uia_ins.tap((90, 140))
+            self.adb_ins.press_back_key(9)
+            self.uia_ins.tap((90, 140), 9)
             return True
-        self.adb_ins.press_back_key(3)
+        self.adb_ins.press_back_key(9)
         return False
 
     def open_app(self):
@@ -56,7 +56,7 @@ class Ksjsb(Project):
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
-            if self.uia_ins.get_point_by_screen_text(text='已成功领取奖励'):
+            if self.uia_ins.get_point_by_screen_text(text='成功领取奖励'):
                 self.adb_ins.press_back_key(6)
             else:
                 return self.exit_award_video_play_activity()
@@ -220,9 +220,9 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
-        while not self.uia_ins.click_by_screen_text('去逛街'):
+        while not self.uia_ins.click_by_screen_text('逛街领金币'):
             self.adb_ins.swipe(600, 1860, 600, 660)
-        sleep(6)
+        sleep(12)
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             return self.shopping()
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
@@ -234,6 +234,8 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
                 current_focus = self.adb_ins.get_current_focus()
                 if Activity.KwaiYodaWebViewActivity in current_focus:
+                    break
+                if Activity.HomeActivity in current_focus:
                     break
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
