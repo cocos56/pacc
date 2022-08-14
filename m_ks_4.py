@@ -4,4 +4,5 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('003001004').mainloop()
+# Ksjsb('003001004').change_money()
 # Ksjsb('003001004').update_wealth()

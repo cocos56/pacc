@@ -4,3 +4,4 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('003002001').mainloop()
+# Ksjsb('003002001').open_meal_allowance()

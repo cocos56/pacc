@@ -269,7 +269,7 @@ class Ksjsb(Project):
         while not self.uia_ins.click_by_screen_text('到饭点领饭补'):
             self.adb_ins.swipe(600, 1860, 600, 660)
         sleep(6)
-        if self.uia_ins.click(text='领取饭补'):
+        if self.uia_ins.click_by_screen_text(text='领取饭补'):
             sleep(3)
             self.uia_ins.tap((530, 1220), 6)
             self.exit_award_video_play_activity()
@@ -332,7 +332,7 @@ class Ksjsb(Project):
         try:
             if self.uia_ins.get_dict(text='去验证'):
                 EMail(self.serial_num).send_need_verification_alarm()
-                input()
+                input('提现时需要验证才能继续，请手动处理')
                 return False
             if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text="提现结果"):
                 self.dbu.update_last_change_money_date(date.today())
