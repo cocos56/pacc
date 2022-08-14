@@ -8,7 +8,7 @@ from pacc.project.ksjsb.resource_id import ResourceID
 
 get_version()
 Config.set_debug(True)
-DEVICE_SN = '003002001'
+DEVICE_SN = '003001004'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 # uia_ins.click(ResourceID.retry_btn)

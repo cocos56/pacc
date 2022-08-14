@@ -23,14 +23,23 @@ class Ksjsb(Project):
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
+    def is_loading(self):
+        """打开快手极速版APP时是否正在加载资源"""
+        try:
+            self.uia_ins.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(f'is_loading {err}')
+            return False
+        return True
+
     def open_app(self):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        if 'MI 4' in self.adb_ins.dbr.model:
-            sleep(120)
-        else:
-            sleep(30)
+        self.uia_ins.tap((90, 140))
+        while not self.is_loading():
+            pass
+        self.adb_ins.press_back_key(3)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
@@ -66,7 +75,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 15)
+        self.uia_ins.tap((90, 140), 3)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim):
                 self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
