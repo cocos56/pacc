@@ -212,20 +212,21 @@ class ADB:  # pylint: disable=too-many-public-methods
         """保持在线"""
         online_devices = get_online_devices()
         if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
-            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:{self.dbr.ipv4_addr}均在线')
+            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
+                  f'{self.dbr.ipv4_addr}均在线，无需额外操作')
         elif self.dbr.ipv4_addr not in online_devices and self.dbr.id_num not in online_devices:
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
-                  f'{self.dbr.ipv4_addr}均离线')
+                  f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
             input('请手动处理后按回车键以继续')
             print('正在继续向下处理')
         elif self.dbr.ipv4_addr not in get_online_devices():
             print(f'{self.dbr.serial_num}所对应的的IP:{self.dbr.ipv4_addr}离线，但ID:'
-                  f'{self.dbr.id_num}在线')
+                  f'{self.dbr.id_num}在线，正在尝试自动修复该问题')
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.dbr.serial_num)
         elif self.dbr.id_num not in get_online_devices():
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
-                  f'{self.dbr.ipv4_addr}在线')
+                  f'{self.dbr.ipv4_addr}在线，正在尝试自动修复该问题')
             self.reboot()
 
     def taps(self, instructions):
@@ -308,9 +309,12 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def reboot_per_day(self):
         """每天重启一次设备"""
-        if date.today() > self.dbr.last_reboot_date:
+        if self.dbr.last_reboot_date is None or date.today() > self.dbr.last_reboot_date:
+            print('今天还未重启过设备，正在执行重启指令')
             self.reboot()
             self.dbu.update_last_reboot_date(date.today())
+        else:
+            print('今天已经重启过设备，无需重复操作')
 
     def get_ipv4_address(self):
         """获取设备的IPv4地址"""

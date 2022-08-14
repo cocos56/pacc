@@ -401,6 +401,7 @@ class Ksjsb(Project):
     def mainloop(self):
         """主循环"""
         if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
+            self.adb_ins.reboot_per_day()
             self.adb_ins.keep_online()
             self.get_double_bonus()
             self.open_treasure_box()
