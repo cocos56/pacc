@@ -11,17 +11,17 @@ class Activity:
     #  【财富界面】
     KwaiYodaWebViewActivity = f'{ROOT}yxcorp.gifshow.webview.KwaiYodaWebViewActivity'  # 财富界面
 
-    # 【看广告界面（由财富界面->开宝箱转入）】
+    # 【看广告界面】由财富界面->开宝箱转入
     AwardVideoPlayActivity = f'{ROOT}yxcorp.gifshow.ad.neo.video.award.AwardVideoPlayActivity'
 
-    # 【看直播领金币界面（由财富界面->领福利转入）】
+    # 【看直播领金币界面】由财富界面->领福利转入
     #  看直播领金币
     AwardFeedFlowActivity = f'{ROOT}yxcorp.gifshow.ad.award.flow.AwardFeedFlowActivity'
 
-    # 【直播界面（由财富界面->领福利->看直播领金币界面转入）】
+    # 【直播界面】由财富界面->领福利->看直播领金币界面转入
     PhotoDetailActivity = f'{ROOT}yxcorp.gifshow.detail.PhotoDetailActivity'  # 直播
 
-    # 【逛街界面（由财富界面->去逛街转入）】
+    # 【逛街界面】由财富界面->去逛街转入
     AdKwaiRnActivity = 'com.kuaishou.nebula/com.yxcorp.gifshow.ad.rn.AdKwaiRnActivity'
 
     LiveSlideActivity = f'{ROOT}kuaishou.live.core.basic.activity.LiveSlideActivity'  # 游戏直播

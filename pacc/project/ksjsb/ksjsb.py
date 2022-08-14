@@ -273,8 +273,12 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('领饭补')
         self.adb_ins.swipe(600, 1800, 600, 600)
+        not_cnt = 0
         while not self.uia_ins.click_by_screen_text('到饭点领饭补'):
             self.adb_ins.swipe(600, 1860, 600, 660)
+            not_cnt += 1
+            if not_cnt >= 6:
+                return self.open_meal_allowance()
         sleep(6)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
             sleep(3)
