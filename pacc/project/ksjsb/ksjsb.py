@@ -60,6 +60,8 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(6)
             else:
                 return self.exit_award_video_play_activity()
+            if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
+                return True
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
@@ -310,11 +312,11 @@ class Ksjsb(Project):
         try:
             while self.uia_ins.click(ResourceID.tv_get_coin_left):
                 sleep(3)
+            sleep(16)
+            self.dbu.update_last_desktop_component_date(date.today())
         except FileNotFoundError as err:
             print_err(err)
             return
-        sleep(16)
-        self.dbu.update_last_desktop_component_date(date.today())
 
     def change_money(self):
         """把金币兑换钱
