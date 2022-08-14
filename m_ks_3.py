@@ -4,4 +4,6 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('003001003').mainloop()
+# Ksjsb('003001003').open_meal_allowance()
+# Ksjsb('003001003').get_daily_challenge_coins()
 # Ksjsb('003001003').change_money()

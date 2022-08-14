@@ -279,12 +279,14 @@ class Ksjsb(Project):
             not_cnt += 1
             if not_cnt >= 6:
                 return self.open_meal_allowance()
-        sleep(6)
+        sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
             sleep(3)
-            self.uia_ins.tap((530, 1220), 6)
+            self.uia_ins.tap((530, 1220), 12)
             self.exit_award_video_play_activity()
-        self.dbu.update_last_meal_allowance_datetime(datetime.now())
+            sleep(6)
+        if not self.uia_ins.get_point_by_screen_text('点击立得'):
+            self.dbu.update_last_meal_allowance_datetime(datetime.now())
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""
