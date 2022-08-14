@@ -29,17 +29,18 @@ class Ksjsb(Project):
             self.uia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
             print_err(f'is_loading {err}')
-            return False
-        return True
+            self.adb_ins.press_back_key(3)
+            self.uia_ins.tap((90, 140))
+            return True
+        self.adb_ins.press_back_key(3)
+        return False
 
     def open_app(self):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
-        self.uia_ins.tap((90, 140))
-        while not self.is_loading():
+        while self.is_loading():
             pass
-        self.adb_ins.press_back_key(3)
 
     def exit_award_video_play_activity(self):
         """退出奖励视频播放活动页面
