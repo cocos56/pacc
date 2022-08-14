@@ -78,8 +78,9 @@ class Ksjsb(Project):
         print('准备进入财富界面')
         self.uia_ins.tap((90, 140), 3)
         try:
-            if not self.uia_ins.click(ResourceID.red_packet_anim):
-                self.uia_ins.click(ResourceID.gold_egg_anim, xml=self.uia_ins.xml)
+            if not self.uia_ins.click(ResourceID.red_packet_anim) and not self.uia_ins.click(
+                    ResourceID.gold_egg_anim, xml=self.uia_ins.xml):
+                self.uia_ins.click(ResourceID.title, '去赚钱', xml=self.uia_ins.xml)
             if 'MI 4' in self.adb_ins.dbr.model:
                 sleep(sleep_time)
                 self.uia_ins.get_current_ui_hierarchy()

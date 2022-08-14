@@ -20,6 +20,9 @@ class ResourceID:
     gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋
     positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
 
+    # 【菜单页面】由观看视频页面->左上方的三个杠转入
+    title = f'{ROOT}title'
+
     # 【观看广告页面】
     video_countdown = f'{NEO_VIDEO_ROOT}video_countdown'  # 广告视频倒计时
     # 关闭视频广告按钮
@@ -36,7 +39,7 @@ class ResourceID:
     # 【提现结果页面】
     pay_title_tv = f'{ROOT}pay_title_tv'  # 提现结果
 
-    # 【看直播领金币界面（由财富界面->领福利转入）】
+    # 【看直播领金币界面】由财富界面->领福利转入
     progress_display = f'{ROOT}progress_display'  # 30/30
     watch_live_task_layout = f'{ROOT}watch_live_task_layout'  # progress_display的父节点
 
