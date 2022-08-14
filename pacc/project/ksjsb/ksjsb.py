@@ -76,7 +76,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 3)
+        self.uia_ins.tap((90, 140), 6)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim) and not self.uia_ins.click(
                     ResourceID.gold_egg_anim, xml=self.uia_ins.xml):
@@ -155,19 +155,15 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
         self.adb_ins.swipe(600, 1600, 600, 960)
-        while not self.uia_ins.get_point_by_screen_text(text='领福利'):
+        while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
-        while self.uia_ins.click_by_screen_text(text='领福利'):
+        while self.uia_ins.click_by_screen_text(text='看视频得5000金币'):
             sleep(6)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                 self.exit_award_video_play_activity()
-            elif Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
-                self.adb_ins.press_back_key(6)
+            elif Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
+                self.dbu.update_last_view_ads_date(date.today())
                 break
-        if self.uia_ins.get_point_by_screen_text('5/5'):
-            self.dbu.update_last_view_ads_date(date.today())
-        elif self.uia_ins.get_point_by_screen_text('明天再来', txt=self.uia_ins.txt):
-            self.dbu.update_last_view_ads_date(date.today())
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -353,6 +349,18 @@ class Ksjsb(Project):
             print_err(err)
             return self.change_money()
 
+    def get_daily_challenge_coins(self):
+        """领取每日挑战奖励"""
+        if date.today() == self.dbr.last_daily_challenge_date:
+            print('今天已经领过每日挑战奖励了，无需重复操作')
+            return True
+        self.enter_wealth_interface()
+        print('领取每日挑战奖励')
+        self.adb_ins.swipe(600, 1860, 600, 60)
+        while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
+            sleep(6)
+        self.dbu.update_last_daily_challenge_date(date.today())
+
     def get_wealth(self):
         """获取财富值"""
         print('正在获取财富值')
@@ -423,6 +431,7 @@ class Ksjsb(Project):
             self.get_desktop_component_coin()
             if datetime.now().hour > 5:
                 self.change_money()
+                self.get_daily_challenge_coins()
                 self.update_wealth()
             if not self.dbr.last_watch_video_date:
                 self.dbu.update_last_watch_video_date(date.min)

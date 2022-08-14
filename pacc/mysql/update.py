@@ -192,6 +192,14 @@ class UpdateKsjsb(Update):
         self.dbr.last_change_money_date = last_change_money_date
         print(self.query('last_change_money_date', last_change_money_date))
 
+    def update_last_daily_challenge_date(self, last_daily_challenge_date):
+        """更新上一次把金币兑换钱的日期
+
+        :param last_daily_challenge_date: 上一次把金币兑换钱的日期
+        """
+        self.dbr.last_daily_challenge_date = last_daily_challenge_date
+        print(self.query('last_daily_challenge_date', last_daily_challenge_date))
+
     def update_last_update_wealth_date(self, last_update_wealth_date):
         """更新上一次更新完财富值的日期
 
