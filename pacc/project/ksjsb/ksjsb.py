@@ -95,8 +95,7 @@ class Ksjsb(Project):
                 self.uia_ins.get_current_ui_hierarchy()
             else:
                 sleep(sleep_time - 30)
-            today_date = date.today()
-            if self.dbr.last_sign_in_date != today_date and self.uia_ins. \
+            if self.dbr.last_sign_in_date != date.today() and self.uia_ins. \
                     click_by_screen_text('立即签到'):
                 sleep(3)
                 if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -110,7 +109,7 @@ class Ksjsb(Project):
                 if self.uia_ins.click_by_screen_text('邀请好友赚更多'):
                     sleep(3)
                     self.adb_ins.press_back_key(3)
-                self.dbu.update_last_sign_in_date(today_date)
+                    self.dbu.update_last_sign_in_date(date.today())
                 self.uia_ins.txt = ''
             elif self.uia_ins.click_by_screen_text(text='继续邀请赚'):
                 sleep(6)
@@ -125,6 +124,27 @@ class Ksjsb(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.enter_wealth_interface()
+
+    def sign_in(self):
+        """签到领金币"""
+        if date.today() == self.dbr.last_sign_in_date:
+            print('今天已经签过到了，无需重复操作')
+            return
+        self.enter_wealth_interface()
+        self.adb_ins.swipe(600, 1860, 600, 60)
+        while not self.uia_ins.click_by_screen_text('签到领金币'):
+            self.adb_ins.swipe(600, 1860, 600, 660)
+        sleep(9)
+        if self.uia_ins.click_by_screen_text('看广告再得'):
+            sleep(6)
+            self.exit_award_video_play_activity()
+            self.uia_ins.txt = ''
+        elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
+            sleep(96)
+            self.exit_live()
+        sleep(6)
+        if self.uia_ins.get_point_by_screen_text('邀请好友赚更多'):
+            self.dbu.update_last_sign_in_date(date.today())
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
@@ -470,6 +490,7 @@ class Ksjsb(Project):
         """主循环"""
         if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
             self.last_reopen_datetime = datetime.now()
+            self.sign_in()
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
             self.open_treasure_box()
