@@ -11,6 +11,7 @@ from ...mysql import RetrieveKsjsb, UpdateKsjsb
 from ...tools import EMail, find_all_ints_with_re
 
 
+# pylint: disable=too-many-public-methods
 class Ksjsb(Project):
     """快手极速版类"""
 
@@ -221,7 +222,6 @@ class Ksjsb(Project):
         """去逛街"""
         if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
-            return True
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
@@ -248,7 +248,6 @@ class Ksjsb(Project):
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(60)
         self.dbu.update_last_shopping_date(date.today())
-        return True
 
     def open_meal_allowance(self):
         """领饭补"""

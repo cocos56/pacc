@@ -20,7 +20,7 @@ def new_client(client: dict, server):
                 'address': ('127.0.0.1', 52120)}
     :param server: 服务器端对象
     """
-    print(f"New client is : {client}")
+    print(f"New client connected and was given id {client['id']}")
     UCCServer.datetime_dic.update({client.get('id'): datetime.now()})
 
 
@@ -35,7 +35,6 @@ def client_left(client: dict, server):
     """
     print(f"Client{client.get('id')} disconnected")
     print(f'本次连接耗时：{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
-    print(UCCServer.datetime_dic)
     UCCServer.datetime_dic.pop(client.get('id'))
 
 
@@ -60,7 +59,6 @@ def message_received(client, server, serial_num):
     with open(pkl_path, 'wb') as pkl_file:
         dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
     server.send_message(client, pkl_path)
-    print('本次计算耗时')
     UCCServer.status = ServerStatus.FREE
 
 
