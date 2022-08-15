@@ -2,7 +2,7 @@
 from xml.parsers.expat import ExpatError
 
 from .project import Project
-from ..base import show_datetime, sleep
+from ..base import show_datetime, sleep, print_err
 from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
@@ -38,28 +38,23 @@ class SD(Project):
     def check(self):
         """检查"""
         self.adb_ins.keep_online()
-        try:
-            dic = self.uia_ins.get_dict(ResourceID.message)
-            if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
-                self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
-                self.uia_ins.xml = ''
-            self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
-            dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
-            current_focus = self.adb_ins.get_current_focus()
-            if dic and dic['@text'] == '正在连接服务器...':
-                self.reopen_app()
-            elif not dic and Activity.MainActivity in current_focus:
-                self.reopen_app()
-            elif Activity.LoginActivity in current_focus:
-                self.adb_ins.reboot()
-                self.open_app()
-                if Activity.LoginActivity in self.adb_ins.get_current_focus():
-                    EMail(self.serial_num).send_offline_error()
-                    sleep(600)
-        except (FileNotFoundError, ExpatError) as err:
-            print(err)
-            sleep(60)
-            self.check()
+        current_focus = self.adb_ins.get_current_focus()
+        dic = self.uia_ins.get_dict(ResourceID.message)
+        if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
+            self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
+            self.uia_ins.xml = ''
+        self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
+        dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
+        if dic and dic['@text'] == '正在连接服务器...':
+            self.reopen_app()
+        elif not dic and Activity.MainActivity in current_focus:
+            self.reopen_app()
+        elif Activity.LoginActivity in current_focus:
+            self.adb_ins.reboot()
+            self.open_app()
+            if Activity.LoginActivity in self.adb_ins.get_current_focus():
+                EMail(self.serial_num).send_offline_error()
+                sleep(600)
 
     def reopen_app(self):
         """重新打开APP"""

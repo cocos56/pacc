@@ -21,6 +21,7 @@ class Ksjsb(Project):
         :param serial_num: 设备编号
         """
         super().__init__(serial_num)
+        self.last_loop_datetime = datetime.now() - timedelta(minutes=30)
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
@@ -461,7 +462,7 @@ class Ksjsb(Project):
             return False
         show_datetime('看视频')
         print(f'距离下一轮任务轮询还剩'
-              f'{self.last_reopen_datetime - datetime.now() + timedelta(minutes=20)}')
+              f'{self.last_loop_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
         print(f'当前活动为：{self.adb_ins.get_current_focus()}')
         print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
@@ -488,10 +489,10 @@ class Ksjsb(Project):
     @run_forever
     def mainloop(self):
         """主循环"""
-        if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
-            self.last_reopen_datetime = datetime.now()
-            self.sign_in()
+        if datetime.now() - self.last_loop_datetime > timedelta(minutes=20):
+            self.last_loop_datetime = datetime.now()
             self.adb_ins.reboot_per_day()
+            self.sign_in()
             self.get_double_bonus()
             self.open_treasure_box()
             self.view_ads()

@@ -30,7 +30,6 @@ class Project:
         self.serial_num = serial_num
         self.adb_ins = ADB(serial_num)
         self.uia_ins = UIAutomator(serial_num)
-        self.last_reopen_datetime = datetime.now() - timedelta(minutes=30)
 
     def random_swipe(self, x_range, y_list):
         """随机滑动一段长度
