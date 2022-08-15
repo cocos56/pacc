@@ -6,6 +6,7 @@ from ..base import show_datetime, sleep, print_err
 from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
+PDD_ROOT = 'com.xunmeng.pinduoduo'
 
 
 # pylint: disable=too-few-public-methods
@@ -39,6 +40,9 @@ class SD(Project):
         """检查"""
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
+        if PDD_ROOT in current_focus:
+            print('拼多多正在运行，无需额外检查\n')
+            return
         dic = self.uia_ins.get_dict(ResourceID.message)
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
@@ -55,6 +59,7 @@ class SD(Project):
             if Activity.LoginActivity in self.adb_ins.get_current_focus():
                 EMail(self.serial_num).send_offline_error()
                 sleep(600)
+        print('检查结束，未发现不可处理异常\n')
 
     def reopen_app(self):
         """重新打开APP"""
