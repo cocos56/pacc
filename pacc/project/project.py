@@ -1,5 +1,4 @@
 """自动远程控制手机APP中央控制系统工程模块"""
-from datetime import datetime, timedelta
 from random import randint
 
 from ..adb import ADB, UIAutomator

@@ -155,10 +155,11 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
-        self.adb_ins.swipe(600, 1800, 600, 150)
-        if self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
-            self.dbu.update_last_double_bonus_date(date.today())
-            sleep(6)
+        self.adb_ins.swipe(600, 1860, 600, 60)
+        while not self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
+            self.adb_ins.swipe(600, 1860, 600, 660)
+        self.dbu.update_last_double_bonus_date(date.today())
+        sleep(6)
 
     def open_treasure_box(self):
         """开宝箱得金币"""

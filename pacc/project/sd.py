@@ -1,8 +1,6 @@
 """淘宝/拼多多全自动远程刷单APP中央控制系统模块"""
-from xml.parsers.expat import ExpatError
-
 from .project import Project
-from ..base import show_datetime, sleep, print_err
+from ..base import show_datetime, sleep
 from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
