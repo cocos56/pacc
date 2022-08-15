@@ -250,11 +250,14 @@ class Ksjsb(Project):
         self.dbu.update_last_shopping_date(date.today())
 
     def open_meal_allowance(self):
-        """领饭补"""
+        """领饭补
+
+        :return: 成功领取或者已经领取返回True，否则返回False
+        """
         hour = datetime.now().hour
         if hour in [0, 1, 2, 3, 4, 9, 10, 14, 15, 16, 20]:
             print('还没到饭点的，请到饭点的时候再来领饭补')
-            return
+            return True
         breakfast_hours = [5, 6, 7, 8]
         lunch_hours = [11, 12, 13]
         dinner_hours = [17, 18, 19]
@@ -266,16 +269,16 @@ class Ksjsb(Project):
         if hour in breakfast_hours and self.dbr.last_meal_allowance_datetime. \
                 hour in breakfast_hours:
             print('已经领过早饭饭补了，无需重复操作')
-            return
+            return True
         if hour in lunch_hours and self.dbr.last_meal_allowance_datetime.hour in lunch_hours:
             print('已经领过午饭饭补了，无需重复操作')
-            return
+            return True
         if hour in dinner_hours and self.dbr.last_meal_allowance_datetime.hour in dinner_hours:
             print('已经领过晚饭饭补了，无需重复操作')
-            return
+            return True
         if hour in supper_hours and self.dbr.last_meal_allowance_datetime.hour in supper_hours:
             print('已经领过夜宵饭补了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('领饭补')
         self.adb_ins.swipe(600, 1800, 600, 600)
@@ -284,6 +287,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
+                print('检测到本次滑动距离过长，取消向下继续滑动')
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
@@ -293,6 +297,8 @@ class Ksjsb(Project):
             sleep(6)
         if not self.uia_ins.get_point_by_screen_text('点击立得'):
             self.dbu.update_last_meal_allowance_datetime(datetime.now())
+            return True
+        return False
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""

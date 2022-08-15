@@ -12,7 +12,7 @@ from ..adb import UIAutomator
 
 
 # pylint: disable=unused-argument
-def new_client(client: dict, server):
+def new_client(client: dict, server: WebsocketServer):
     """Called for every client connecting (after handshake)
 
     :param client: 客户端对象，是一个字典，具体实例如{'id': 2, 'handler':
@@ -25,7 +25,7 @@ def new_client(client: dict, server):
 
 
 # pylint: disable=unused-argument
-def client_left(client: dict, server):
+def client_left(client: dict, server: WebsocketServer):
     """Called for every client disconnecting
 
     :param client: 客户端对象，是一个字典，具体实例如{'id': 2, 'handler':
@@ -33,12 +33,12 @@ def client_left(client: dict, server):
                 'address': ('127.0.0.1', 52120)}
     :param server: 服务器端对象
     """
-    print(f"Client{client.get('id')} disconnected")
-    print(f'本次连接耗时：{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
+    print(f'The client({client.get("id")}) is disconnected and this connection takes '
+          f'{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
     UCCServer.datetime_dic.pop(client.get('id'))
 
 
-def message_received(client, server, serial_num):
+def message_received(client: dict, server: WebsocketServer, serial_num: str):
     """Called when a client sends a message
 
     :param client: 客户端对象
