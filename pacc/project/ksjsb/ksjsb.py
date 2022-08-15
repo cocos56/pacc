@@ -222,7 +222,10 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(3)
 
     def shopping(self):
-        """去逛街"""
+        """去逛街
+
+        return: 成功逛完街返回True，无法确定是否成功逛完则返回False
+        """
         if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
         self.enter_wealth_interface()
@@ -231,8 +234,13 @@ class Ksjsb(Project):
         while not self.uia_ins.click_by_screen_text('逛街领金币'):
             self.adb_ins.swipe(600, 1860, 600, 660)
         sleep(12)
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.KwaiYodaWebViewActivity in current_focus:
+            self.dbu.update_last_shopping_date(date.today())
+            return True
         if Activity.AdKwaiRnActivity not in self.adb_ins.get_current_focus():
             return self.shopping()
+        break_while = False
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
             countdown = 480
             while countdown:
@@ -242,16 +250,22 @@ class Ksjsb(Project):
                 self.adb_ins.swipe(536, 1100, 536, 1000)
                 current_focus = self.adb_ins.get_current_focus()
                 if Activity.KwaiYodaWebViewActivity in current_focus:
+                    break_while = True
                     break
                 if Activity.HomeActivity in current_focus:
+                    break_while = True
                     break
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(60)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(60)
+        if break_while:
+            return False
         self.dbu.update_last_shopping_date(date.today())
+        return True
 
+    # pylint: disable=too-many-return-statements
     def open_meal_allowance(self):
         """领饭补
 
