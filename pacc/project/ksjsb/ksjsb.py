@@ -296,8 +296,7 @@ class Ksjsb(Project):
                     break_while = True
                     break
                 if Activity.HomeActivity in current_focus:
-                    break_while = True
-                    break
+                    return False
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(60)
