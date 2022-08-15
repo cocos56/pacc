@@ -26,11 +26,12 @@ class Ksjsb(Project):
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
-    def is_loading(self):
+    def is_loading(self, retry_cnt=0):
         """打开快手极速版APP时是否正在加载资源
 
         :return: 正在加载资源返回True，否则返回False
         """
+        print(f'is_loading retry_cnt={retry_cnt}')
         try:
             self.uia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
@@ -38,8 +39,11 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(9)
             self.uia_ins.tap((90, 140), 9)
             return True
-        self.adb_ins.press_back_key(9)
-        return False
+        if retry_cnt >= 3:
+            self.adb_ins.press_back_key(9)
+            return False
+        else:
+            return self.is_loading(retry_cnt=retry_cnt+1)
 
     def open_app(self):
         """打开快手极速版APP"""
