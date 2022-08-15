@@ -12,25 +12,29 @@ from ..adb import UIAutomator
 
 
 # pylint: disable=unused-argument
-def new_client(client, server):
+def new_client(client: dict, server):
     """Called for every client connecting (after handshake)
 
-    :param client: 客户端对象
+    :param client: 客户端对象，是一个字典，具体实例如{'id': 2, 'handler':
+                <websocket_server.websocket_server.WebSocketHandler object at 0x0000027BE9147970>,
+                'address': ('127.0.0.1', 52120)}
     :param server: 服务器端对象
     """
-    print(f"New {client} connected and was given id {client['id']}")
-    UCCServer.datetime_dic.update({client: datetime.now()})
+    print(f"New client is : {client}")
+    UCCServer.datetime_dic.update({client.get('id'): datetime.now()})
 
 
 # pylint: disable=unused-argument
-def client_left(client, server):
+def client_left(client: dict, server):
     """Called for every client disconnecting
 
-    :param client: 客户端对象
+    :param client: 客户端对象，是一个字典，具体实例如{'id': 2, 'handler':
+                <websocket_server.websocket_server.WebSocketHandler object at 0x0000027BE9147970>,
+                'address': ('127.0.0.1', 52120)}
     :param server: 服务器端对象
     """
-    print(f"Client{client['id']} disconnected")
-    print(f'本次连接耗时：{datetime.now()-UCCServer.datetime_dic.get(client)}\n')
+    print(f"Client{client.get('id')} disconnected")
+    print(f'本次连接耗时：{datetime.now() - UCCServer.datetime_dic.get(client)}\n')
     print(UCCServer.datetime_dic)
     UCCServer.datetime_dic.pop(client)
 
@@ -45,8 +49,8 @@ def message_received(client, server, serial_num):
     while UCCServer.status == ServerStatus.BUSY:
         sleep(3)
         print(f'server is busy at {UCCServer.client_sn} for '
-              f'{datetime.now()-UCCServer.last_datetime}')
-        if datetime.now()-UCCServer.last_datetime > timedelta(seconds=16):
+              f'{datetime.now() - UCCServer.last_datetime}')
+        if datetime.now() - UCCServer.last_datetime > timedelta(seconds=16):
             UCCServer.status = ServerStatus.FREE
     UCCServer.status = ServerStatus.BUSY
     UCCServer.client_sn = serial_num
