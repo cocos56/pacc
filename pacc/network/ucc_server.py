@@ -18,7 +18,8 @@ def new_client(client, server):
     :param client: 客户端对象
     :param server: 服务器端对象
     """
-    print(f"New client connected and was given id {client['id']}")
+    print(f"New {client} connected and was given id {client['id']}")
+    UCCServer.datetime_dic.update({client: datetime.now()})
 
 
 # pylint: disable=unused-argument
@@ -29,6 +30,7 @@ def client_left(client, server):
     :param server: 服务器端对象
     """
     print(f"Client{client['id']} disconnected")
+    print(UCCServer.datetime_dic)
 
 
 def message_received(client, server, serial_num):
@@ -52,6 +54,7 @@ def message_received(client, server, serial_num):
     with open(pkl_path, 'wb') as pkl_file:
         dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
     server.send_message(client, pkl_path)
+    print('本次计算耗时')
     UCCServer.status = ServerStatus.FREE
 
 
@@ -64,7 +67,7 @@ class ServerStatus(Enum):
 # pylint: disable=too-few-public-methods
 class UCCServer:
     """服务器端类"""
-
+    datetime_dic = {}
     status = ServerStatus.FREE
     client_sn = ''
     last_datetime = datetime.now()

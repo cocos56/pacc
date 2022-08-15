@@ -42,7 +42,7 @@ class Ksjsb(Project):
         while self.is_loading():
             pass
 
-    def exit_award_video_play_activity(self):
+    def exit_award_video_play_activity(self, retry_cnt=1):
         """退出奖励视频播放活动页面
 
         :return: 正常关闭页面返回True，否则返回False
@@ -50,16 +50,19 @@ class Ksjsb(Project):
         if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
             return False
         try:
+            self.uia_ins.get_current_ui_hierarchy()
             while not self.uia_ins.get_dict(
                     resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
                 self.uia_ins.click(resource_id=ResourceID.retry_btn, xml=self.uia_ins.xml)
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
-            if self.uia_ins.get_point_by_screen_text(text='成功领取奖励'):
+            if retry_cnt > 2 or self.uia_ins.get_point_by_screen_text(text='成功领取奖励'):
                 self.adb_ins.press_back_key(6)
             else:
-                return self.exit_award_video_play_activity()
+                sleep(30)
+                print(f'retry_cnt={retry_cnt}')
+                return self.exit_award_video_play_activity(retry_cnt=retry_cnt + 1)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 return True
         self.uia_ins.click(ResourceID.video_countdown_end_icon)
@@ -87,7 +90,7 @@ class Ksjsb(Project):
                 sleep(sleep_time)
                 self.uia_ins.get_current_ui_hierarchy()
             else:
-                sleep(sleep_time-30)
+                sleep(sleep_time - 30)
             today_date = date.today()
             if self.dbr.last_sign_in_date != today_date and self.uia_ins. \
                     click_by_screen_text('立即签到'):
@@ -426,10 +429,23 @@ class Ksjsb(Project):
         self.adb_ins.press_back_key()
         return True
 
+    def is_done_watching_video(self, retest_cnt=1):
+        """判断今天是否看完了视频，即看视频是否还有奖励"""
+        self.reopen_app()
+        self.uia_ins.tap((90, 140), 18)
+        if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
+                ResourceID.cycle_progress, xml=self.uia_ins.xml):
+            print(f'retest_cnt={retest_cnt}')
+            if retest_cnt > 2:
+                return True
+            return self.is_done_watching_video(retest_cnt=retest_cnt+1)
+        return False
+
     @run_forever
     def mainloop(self):
         """主循环"""
         if datetime.now() - self.last_reopen_datetime > timedelta(minutes=20):
+            self.last_reopen_datetime = datetime.now()
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
             self.open_treasure_box()
@@ -446,14 +462,10 @@ class Ksjsb(Project):
             if not self.dbr.last_watch_video_date:
                 self.dbu.update_last_watch_video_date(date.min)
             if date.today() > self.dbr.last_watch_video_date:
-                self.reopen_app()
-                self.uia_ins.tap((90, 140), 18)
-                if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
-                        ResourceID.cycle_progress, xml=self.uia_ins.xml):
+                if self.is_done_watching_video():
                     self.dbu.update_last_watch_video_date(date.today())
                 else:
                     self.adb_ins.press_back_key()
-                    self.last_reopen_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
             sleep(3600)
