@@ -34,9 +34,9 @@ def client_left(client: dict, server):
     :param server: 服务器端对象
     """
     print(f"Client{client.get('id')} disconnected")
-    print(f'本次连接耗时：{datetime.now() - UCCServer.datetime_dic.get(client)}\n')
+    print(f'本次连接耗时：{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
     print(UCCServer.datetime_dic)
-    UCCServer.datetime_dic.pop(client)
+    UCCServer.datetime_dic.pop(client.get('id'))
 
 
 def message_received(client, server, serial_num):
