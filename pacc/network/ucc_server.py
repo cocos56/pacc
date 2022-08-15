@@ -30,7 +30,9 @@ def client_left(client, server):
     :param server: 服务器端对象
     """
     print(f"Client{client['id']} disconnected")
+    print(f'本次连接耗时：{datetime.now()-UCCServer.datetime_dic.get(client)}\n')
     print(UCCServer.datetime_dic)
+    UCCServer.datetime_dic.pop(client)
 
 
 def message_received(client, server, serial_num):

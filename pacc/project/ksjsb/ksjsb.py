@@ -388,9 +388,7 @@ class Ksjsb(Project):
         return gold_coins, cash_coupons
 
     def update_wealth(self):
-        """更新财富值
-
-        """
+        """更新财富值"""
         if date.today() == self.dbr.last_update_wealth_date:
             print('今天已经更新过财富值了，无需重复操作')
             return True
@@ -429,10 +427,14 @@ class Ksjsb(Project):
         self.adb_ins.press_back_key()
         return True
 
-    def is_done_watching_video(self, retest_cnt=1):
-        """判断今天是否看完了视频，即看视频是否还有奖励"""
+    def is_done_watching_video(self, retest_cnt=0):
+        """判断今天是否看完了视频，即看视频是否还有奖励
+
+        :param retest_cnt : 重新检测是看完的次数
+        :return: 多次检测结果均是看完了视频才返回True，否则返回False
+        """
         self.reopen_app()
-        self.uia_ins.tap((90, 140), 18)
+        self.uia_ins.tap((90, 140), 30)
         if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
                 ResourceID.cycle_progress, xml=self.uia_ins.xml):
             print(f'retest_cnt={retest_cnt}')
