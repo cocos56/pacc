@@ -5,7 +5,7 @@ from os.path import exists
 
 import xmltodict
 
-from ..base import sleep, UCCClient
+from ..base import sleep, UCCClient, print_err
 from ..config import Config
 from ..mysql import RetrieveMobileInfo
 from ..tools import create_dir, get_pretty_xml, get_xml, find_all_ints_with_re, average
@@ -393,7 +393,10 @@ class UIAutomator:
         return False
 
     def get_current_ui_hierarchy(self):
-        """获取当前的用户界面上的元素的层次布局信息"""
+        """获取当前的用户界面上的元素的层次布局信息
+
+        :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
+        """
         system(f'{self.cmd}shell rm /sdcard/window_dump.xml')
         cmd = f'{self.cmd}shell uiautomator dump /sdcard/window_dump.xml'
         if Config.debug:
@@ -409,3 +412,16 @@ class UIAutomator:
         if Config.debug:
             return get_pretty_xml(file_path)
         return get_xml(file_path)
+
+    def secure_get_current_ui_hierarchy(self):
+        """安全地获取当前的用户界面上的元素的层次布局信息
+
+        :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，
+                如果遇到异常则会捕捉处理并返回False
+        """
+        try:
+            return self.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(f'is_loading {err}')
+            return False
+

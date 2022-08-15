@@ -8,7 +8,9 @@ from time import sleep
 from easyocr import Reader
 from websocket_server import WebsocketServer
 
+from ..config import Language
 from ..adb import UIAutomator
+from ..base import show_datetime
 
 
 # pylint: disable=unused-argument
@@ -36,6 +38,7 @@ def client_left(client: dict, server: WebsocketServer):
     print(f'The client({client.get("id")}) is disconnected and this connection takes '
           f'{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
     UCCServer.datetime_dic.pop(client.get('id'))
+    show_datetime('mainloop', language=Language.EN)
 
 
 def message_received(client: dict, server: WebsocketServer, serial_num: str):

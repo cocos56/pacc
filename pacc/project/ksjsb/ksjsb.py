@@ -48,7 +48,7 @@ class Ksjsb(Project):
         while self.is_loading():
             pass
 
-    def exit_award_video_play_activity(self, retry_cnt=1):
+    def exit_award_video_play_activity(self, retry_cnt=0):
         """退出奖励视频播放活动页面
 
         :return: 正常关闭页面返回True，否则返回False
@@ -190,7 +190,7 @@ class Ksjsb(Project):
         while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='看视频得5000金币'):
-            sleep(6)
+            sleep(12)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                 self.exit_award_video_play_activity()
             elif Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
@@ -485,7 +485,9 @@ class Ksjsb(Project):
         :return: 多次检测结果均是看完了视频才返回True，否则返回False
         """
         self.reopen_app()
-        self.uia_ins.tap((90, 140), 30)
+        self.uia_ins.tap((90, 140), 9)
+        while not self.uia_ins.secure_get_current_ui_hierarchy():
+            sleep(10)
         if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
                 ResourceID.cycle_progress, xml=self.uia_ins.xml):
             print(f'retest_cnt={retest_cnt}')

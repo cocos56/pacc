@@ -1,4 +1,11 @@
 """配置模块"""
+from enum import Enum
+
+
+class Language(Enum):
+    """语言枚举类"""
+    CH = 'Chinese'
+    EN = 'English'
 
 
 # pylint: disable=too-few-public-methods
