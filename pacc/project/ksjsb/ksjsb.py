@@ -25,7 +25,10 @@ class Ksjsb(Project):
         self.dbu = UpdateKsjsb(serial_num)
 
     def is_loading(self):
-        """打开快手极速版APP时是否正在加载资源"""
+        """打开快手极速版APP时是否正在加载资源
+
+        :return: 正在加载资源返回True，否则返回False
+        """
         try:
             self.uia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
