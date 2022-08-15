@@ -22,6 +22,7 @@ class Ksjsb(Project):
         """
         super().__init__(serial_num)
         self.last_loop_datetime = datetime.now() - timedelta(minutes=30)
+        self.view_ads_cnt = 0
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
 
@@ -192,8 +193,14 @@ class Ksjsb(Project):
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                 self.exit_award_video_play_activity()
             elif Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
-                self.dbu.update_last_view_ads_date(date.today())
                 break
+        if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
+            print(f'view_ads_cnt={self.view_ads_cnt}')
+            if self.view_ads_cnt > 2:
+                self.dbu.update_last_view_ads_date(date.today())
+                self.view_ads_cnt = 0
+            else:
+                self.view_ads_cnt += 1
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -490,7 +497,6 @@ class Ksjsb(Project):
     def mainloop(self):
         """主循环"""
         if datetime.now() - self.last_loop_datetime > timedelta(minutes=20):
-            self.last_loop_datetime = datetime.now()
             self.adb_ins.reboot_per_day()
             self.sign_in()
             self.get_double_bonus()
@@ -505,13 +511,14 @@ class Ksjsb(Project):
                 self.change_money()
                 self.get_daily_challenge_coins()
                 self.update_wealth()
-            if not self.dbr.last_watch_video_date:
-                self.dbu.update_last_watch_video_date(date.min)
-            if date.today() > self.dbr.last_watch_video_date:
-                if self.is_done_watching_video():
-                    self.dbu.update_last_watch_video_date(date.today())
-                else:
-                    self.adb_ins.press_back_key()
+                if not self.dbr.last_watch_video_date:
+                    self.dbu.update_last_watch_video_date(date.min)
+                if date.today() > self.dbr.last_watch_video_date:
+                    if self.is_done_watching_video():
+                        self.dbu.update_last_watch_video_date(date.today())
+                    else:
+                        self.adb_ins.press_back_key()
+            self.last_loop_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
             sleep(3600)
