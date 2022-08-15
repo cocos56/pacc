@@ -71,7 +71,11 @@ class Ksjsb(Project):
                 return self.exit_award_video_play_activity(retry_cnt=retry_cnt + 1)
             if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 return True
-        self.uia_ins.click(ResourceID.video_countdown_end_icon)
+        try:
+            self.uia_ins.click(ResourceID.video_countdown_end_icon)
+        except FileNotFoundError as err:
+            print_err(err)
+            self.adb_ins.press_back_key(6)
         if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
             if not self.uia_ins.click(ResourceID.award_video_close_dialog_abandon_button):
                 if self.uia_ins.click(text='再看一个'):
@@ -104,7 +108,7 @@ class Ksjsb(Project):
                     sleep(6)
                     self.exit_award_video_play_activity()
                     self.uia_ins.txt = ''
-                elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
+                elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):
                     sleep(96)
                     self.exit_live()
                 sleep(6)
@@ -134,18 +138,23 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         self.adb_ins.swipe(600, 1860, 600, 60)
+        not_cnt = 0
         while not self.uia_ins.click_by_screen_text('签到领金币'):
             self.adb_ins.swipe(600, 1860, 600, 660)
+            not_cnt += 1
+            if not_cnt >= 6:
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
+                return self.sign_in()
         sleep(9)
         if self.uia_ins.click_by_screen_text('看广告再得'):
             sleep(6)
             self.exit_award_video_play_activity()
             self.uia_ins.txt = ''
-        elif self.uia_ins.click_by_screen_text(text='看直播再得', txt=self.uia_ins.txt):
+        elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):  # 532, 1367
             sleep(96)
             self.exit_live()
         sleep(6)
-        if self.uia_ins.get_point_by_screen_text('邀请好友赚更多'):
+        if self.uia_ins.get_point_by_screen_text('邀请好友赚更多'):  # 532, 1367
             self.dbu.update_last_sign_in_date(date.today())
 
     def get_double_bonus(self):
@@ -506,8 +515,8 @@ class Ksjsb(Project):
         """主循环"""
         if datetime.now() - self.last_loop_datetime > timedelta(minutes=20):
             self.adb_ins.reboot_per_day()
-            self.sign_in()
             self.get_double_bonus()
+            self.sign_in()
             self.open_treasure_box()
             self.view_ads()
             self.watch_live()
