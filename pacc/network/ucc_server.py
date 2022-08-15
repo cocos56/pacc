@@ -1,16 +1,16 @@
 """统一计算中心（Unified Computing Center, UCC）服务器端模块"""
-from os.path import abspath
 from datetime import datetime, timedelta
 from enum import Enum
+from os.path import abspath
 from pickle import dump
 from time import sleep
 
 from easyocr import Reader
 from websocket_server import WebsocketServer
 
-from ..config import Language
 from ..adb import UIAutomator
 from ..base import show_datetime
+from ..config import Language
 
 
 # pylint: disable=unused-argument

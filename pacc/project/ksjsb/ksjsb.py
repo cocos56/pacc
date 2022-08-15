@@ -260,8 +260,13 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
+        not_cnt = 0
         while not self.uia_ins.click_by_screen_text('逛街领金币'):
             self.adb_ins.swipe(600, 1860, 600, 660)
+            not_cnt += 1
+            if not_cnt >= 6:
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
+                return self.shopping()
         sleep(12)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.KwaiYodaWebViewActivity in current_focus:
@@ -333,7 +338,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次滑动距离过长，取消向下继续滑动')
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):

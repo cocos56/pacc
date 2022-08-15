@@ -33,6 +33,7 @@ class Node:
         self.index = index
 
 
+# pylint: disable=too-many-public-methods
 class UIAutomator:
     """UI自动化测试类"""
 
@@ -424,4 +425,3 @@ class UIAutomator:
         except FileNotFoundError as err:
             print_err(f'is_loading {err}')
             return False
-
