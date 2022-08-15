@@ -36,7 +36,7 @@ def client_left(client: dict, server: WebsocketServer):
     :param server: 服务器端对象
     """
     print(f'The client({client.get("id")}) is disconnected and this connection takes '
-          f'{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}\n')
+          f'{datetime.now() - UCCServer.datetime_dic.get(client.get("id"))}')
     UCCServer.datetime_dic.pop(client.get('id'))
     show_datetime('mainloop', language=Language.EN)
 
