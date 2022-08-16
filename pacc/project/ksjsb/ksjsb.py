@@ -426,7 +426,8 @@ class Ksjsb(Project):
         self.uia_ins.click_by_screen_text('金币购划算')
         sleep(20)
         self.uia_ins.tap((991, 378), 6)
-        self.uia_ins.click_by_screen_text(text='去签到')  # 明日再来
+        if self.uia_ins.click_by_screen_text(text='去签到'):  # 明日再来
+            sleep(3)
         while self.uia_ins.click_by_screen_text(text='领福利'):  # 已完成
             sleep(6)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
