@@ -1,3 +1,4 @@
+"""快手极速版主循环模块"""
 from ...base import run_forever
 
 

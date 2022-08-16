@@ -19,7 +19,7 @@ def show_datetime(text: str, language=Language.CH, start_br=False):
     """打印程序自启动以来已运行的时间"""
     if language == Language.CH:
         if start_br:
-            print(f'\n现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}\n')
+            print(f'\n现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}')
         else:
             print(f'现在是：{datetime.now()}，正在执行{text}，已运行{Datetime.get_run_time()}\n')
     elif language == Language.EN:
