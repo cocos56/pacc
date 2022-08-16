@@ -398,10 +398,16 @@ class Ksjsb(Project):
         self.reopen_app()
         self.adb_ins.press_home_key(3)
         try:
+            enter_while = False
             while self.uia_ins.click(ResourceID.tv_get_coin_left):
                 sleep(3)
-            sleep(16)
-            self.dbu.update_last_desktop_component_date(date.today())
+                enter_while = True
+            if enter_while:
+                print('成功检测到并领取桌面组件奖励')
+                sleep(16)
+                self.dbu.update_last_desktop_component_date(date.today())
+            else:
+                print('没有找到桌面组件奖励')
         except FileNotFoundError as err:
             print_err(err)
             return
