@@ -180,10 +180,13 @@ class Ksjsb(Project):
         sleep(6)
 
     def open_treasure_box(self):
-        """开宝箱得金币"""
+        """开宝箱得金币
+
+        :return: 正常开宝箱或者已经开过宝箱返回True
+        """
         if date.today() == self.dbr.last_treasure_box_date:
             print('今天已经把宝箱开完了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
@@ -191,14 +194,18 @@ class Ksjsb(Project):
             self.uia_ins.tap((530, 1330), 12)
             while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
                 sleep(3)
+            current_focus = self.adb_ins.get_current_focus()
             if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
                 sleep(80)
                 self.exit_live()
+            elif Activity.KwaiYodaWebViewActivity in current_focus:
+                return self.open_treasure_box()
             else:
                 self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_date(date.today())
+        return True
 
     def view_ads(self):
         """看广告视频得5000个金币"""
@@ -275,7 +282,7 @@ class Ksjsb(Project):
     def shopping(self):
         """去逛街
 
-        return: 成功逛完街返回True，无法确定是否成功逛完则返回False
+        :return: 成功逛完街返回True，无法确定是否成功逛完则返回False
         """
         if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
