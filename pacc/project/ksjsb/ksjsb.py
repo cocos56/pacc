@@ -42,8 +42,7 @@ class Ksjsb(Project):
         if retry_cnt >= 3:
             self.adb_ins.press_back_key(9)
             return False
-        else:
-            return self.is_loading(retry_cnt=retry_cnt+1)
+        return self.is_loading(retry_cnt=retry_cnt+1)
 
     def open_app(self):
         """打开快手极速版APP"""
@@ -55,6 +54,7 @@ class Ksjsb(Project):
     def exit_award_video_play_activity(self, retry_cnt=0):
         """退出奖励视频播放活动页面
 
+        :param retry_cnt: 出现异常后的重试次数
         :return: 正常关闭页面返回True，否则返回False
         """
         if Activity.AwardVideoPlayActivity not in self.adb_ins.get_current_focus():
@@ -89,8 +89,8 @@ class Ksjsb(Project):
     def enter_wealth_interface(self, reopen=True, sleep_time=50):
         """进入财富界面
 
-        param reopen: 是否需要重启快手极速版APP
-        param sleep_time: 睡眠时间
+        :param reopen: 是否需要重启快手极速版APP
+        :param sleep_time: 睡眠时间
         """
         if reopen:
             self.reopen_app()
@@ -136,10 +136,13 @@ class Ksjsb(Project):
             self.enter_wealth_interface()
 
     def sign_in(self):
-        """签到领金币"""
+        """签到领金币
+
+        :return: 正常签到或者已经签到返回True，否则返回False
+        """
         if date.today() == self.dbr.last_sign_in_date:
             print('今天已经签过到了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         self.adb_ins.swipe(600, 1860, 600, 60)
         not_cnt = 0
@@ -160,6 +163,8 @@ class Ksjsb(Project):
         sleep(6)
         if self.uia_ins.get_point_by_screen_text('邀请好友赚更多'):  # 532, 1367
             self.dbu.update_last_sign_in_date(date.today())
+            return True
+        return False
 
     def get_double_bonus(self):
         """点击翻倍：开启看视频奖励翻倍特权"""
@@ -209,6 +214,7 @@ class Ksjsb(Project):
             sleep(12)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
                 self.exit_award_video_play_activity()
+                self.view_ads_cnt = 0
             elif Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 break
         if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
