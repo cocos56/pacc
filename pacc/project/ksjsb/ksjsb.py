@@ -279,14 +279,15 @@ class Ksjsb(Project):
                     break
                 self.adb_ins.press_back_key(3)
 
+    # pylint: disable=too-many-return-statements
     def shopping(self):
         """去逛街
 
-        :return: 成功逛完街返回True，无法确定是否成功逛完则返回False
+        :return: 今天成功逛完街或者已经逛完街返回True，无法确定是否成功逛完则返回False
         """
         if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
