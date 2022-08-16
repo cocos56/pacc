@@ -41,6 +41,9 @@ class SD(Project):
         if PDD_ROOT in current_focus:
             print('拼多多正在运行，无需额外检查\n')
             return
+        elif 'mCurrentFocus=null' in current_focus:
+            print('无法正常获取current_focus，无法进行检查\n')
+            return
         dic = self.uia_ins.get_dict(ResourceID.message)
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
