@@ -248,6 +248,8 @@ class Ksjsb(Project):
                     break
                 if Activity.KwaiYodaWebViewActivity in current_focus:
                     break
+                if Activity.HomeActivity in current_focus:
+                    break
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             current_focus = self.adb_ins.get_current_focus()
