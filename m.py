@@ -5,8 +5,11 @@ from pacc.adb import ADB, UIAutomator
 from pacc.base import print_err
 from pacc.config import Config
 from pacc.project.ksjsb.resource_id import ResourceID
+from pacc.project.ksjsb.mainloop import KsjsbMainloop
 
-get_version()
+# KsjsbMainloop.run()
+# get_version()
+
 Config.set_debug(True)
 DEVICE_SN = '003001003'
 adb_ins = ADB(DEVICE_SN)

@@ -36,6 +36,7 @@ class SD(Project):
 
     def check(self):
         """检查"""
+        show_datetime('检查', start_br=True)
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
         if PDD_ROOT in current_focus:
@@ -64,7 +65,7 @@ class SD(Project):
             if Activity.LoginActivity in self.adb_ins.get_current_focus():
                 EMail(self.serial_num).send_offline_error()
                 sleep(600)
-        print('检查结束，未发现不可处理异常\n')
+        show_datetime('检查结束，未发现不可处理异常\n')
 
     def reopen_app(self):
         """重新打开APP"""
@@ -96,4 +97,3 @@ class SD(Project):
             for i in cls.instances:
                 i.check()
             sleep(600)
-            show_datetime('mainloop')

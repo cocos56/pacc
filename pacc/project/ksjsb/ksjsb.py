@@ -95,7 +95,7 @@ class Ksjsb(Project):
         if reopen:
             self.reopen_app()
         print('准备进入财富界面')
-        self.uia_ins.tap((90, 140), 6)
+        self.uia_ins.tap((90, 140), 12)
         try:
             if not self.uia_ins.click(ResourceID.red_packet_anim) and not self.uia_ins.click(
                     ResourceID.gold_egg_anim, xml=self.uia_ins.xml):
@@ -271,6 +271,7 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
+            sleep(6)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 progress = find_all_ints_with_re(self.uia_ins.get_dict(
                     ResourceID.progress_display)['@text'])
@@ -307,7 +308,7 @@ class Ksjsb(Project):
             return self.shopping()
         break_while = False
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-            countdown = 480
+            countdown = 699
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -413,6 +414,28 @@ class Ksjsb(Project):
             print_err(err)
             return
 
+    def buy_things_with_coins(self):
+        """金币购划算"""
+        self.enter_wealth_interface()
+        self.uia_ins.click_by_screen_text('金币购划算')
+        sleep(20)
+        self.uia_ins.tap((991, 378), 6)
+        self.uia_ins.click_by_screen_text(text='去签到')  # 明日再来
+        while self.uia_ins.click_by_screen_text(text='领福利'):  # 已完成
+            sleep(6)
+            if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
+                self.uia_ins.tap((240, 848), 96)
+                self.exit_live(Activity.AwardFeedFlowActivity)
+                self.adb_ins.press_back_key(9)
+        if self.uia_ins.click_by_screen_text('去逛街'):  # 已领取
+            countdown = 699
+            while countdown:
+                sleep(1)
+                countdown -= 1
+                print(countdown)
+                self.adb_ins.swipe(536, 1100, 536, 1000)
+            self.adb_ins.press_back_key(30)
+
     def change_money(self):
         """把金币兑换钱
 
@@ -461,7 +484,7 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('领取每日挑战奖励')
-        self.adb_ins.swipe(600, 1860, 600, 60)
+        self.adb_ins.swipe(600, 1860, 600, 390)
         while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
             sleep(6)
         self.dbu.update_last_daily_challenge_date(date.today())
@@ -525,7 +548,7 @@ class Ksjsb(Project):
         :return: 多次检测结果均是看完了视频才返回True，否则返回False
         """
         self.reopen_app()
-        self.uia_ins.tap((90, 140), 9)
+        self.uia_ins.tap((90, 140), 18)
         while not self.uia_ins.secure_get_current_ui_hierarchy():
             sleep(10)
         if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(

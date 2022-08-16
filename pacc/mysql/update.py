@@ -184,6 +184,14 @@ class UpdateKsjsb(Update):
         self.dbr.last_desktop_component_date = last_desktop_component_date
         print(self.query('last_desktop_component_date', last_desktop_component_date))
 
+    def update_last_buy_things_date(self, last_buy_things_date):
+        """更新上一次领完金币购划算内所有奖励的日期
+
+        param last_buy_things_date: 上一次领完金币购划算内所有奖励的日期
+        """
+        self.dbr.last_buy_things_date = last_buy_things_date
+        print(self.query('last_buy_things_date', last_buy_things_date))
+
     def update_last_change_money_date(self, last_change_money_date):
         """更新上一次把金币兑换钱的日期
 
