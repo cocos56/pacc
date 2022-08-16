@@ -65,7 +65,7 @@ class SD(Project):
             if Activity.LoginActivity in self.adb_ins.get_current_focus():
                 EMail(self.serial_num).send_offline_error()
                 sleep(600)
-        show_datetime('检查结束，未发现不可处理异常\n')
+        print('检查结束，未发现不可处理异常\n')
 
     def reopen_app(self):
         """重新打开APP"""

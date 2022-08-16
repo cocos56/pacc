@@ -388,6 +388,7 @@ class Ksjsb(Project):
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
+        print('领取限时福利')
         if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
             sleep(12)
         self.dbu.update_last_flash_benefits_date(date.today())
@@ -398,6 +399,7 @@ class Ksjsb(Project):
             print('今天已经领完桌面组件奖励了，无需重复操作')
             return
         self.reopen_app()
+        print('获取桌面组件奖励')
         self.adb_ins.press_home_key(3)
         try:
             enter_while = False
@@ -415,8 +417,12 @@ class Ksjsb(Project):
             return
 
     def buy_things_with_coins(self):
-        """金币购划算"""
+        """获取金币购划算页面内的所有奖励"""
+        if date.today() == self.dbr.last_buy_things_date:
+            print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
+            return
         self.enter_wealth_interface()
+        print('金币购划算')
         self.uia_ins.click_by_screen_text('金币购划算')
         sleep(20)
         self.uia_ins.tap((991, 378), 6)
@@ -435,6 +441,10 @@ class Ksjsb(Project):
                 print(countdown)
                 self.adb_ins.swipe(536, 1100, 536, 1000)
             self.adb_ins.press_back_key(30)
+        if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins.\
+                get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins.\
+                get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
+            self.dbu.update_last_buy_things_date(date.today())
 
     def change_money(self):
         """把金币兑换钱
@@ -573,6 +583,7 @@ class Ksjsb(Project):
             self.open_meal_allowance()
             self.get_flash_benefits()
             self.get_desktop_component_coin()
+            self.buy_things_with_coins()
             if datetime.now().hour > 5:
                 self.change_money()
                 self.get_daily_challenge_coins()
