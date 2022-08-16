@@ -508,7 +508,6 @@ class Ksjsb(Project):
         if date.today() <= self.dbr.last_watch_video_date:
             print('今天已经看视频赚完金币了，无需重复操作')
             return False
-        show_datetime('看视频')
         print(f'距离下一轮任务轮询还剩'
               f'{self.last_loop_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
@@ -565,3 +564,4 @@ class Ksjsb(Project):
         if not self.watch_video():
             self.free_memory()
             sleep(1200)
+        show_datetime('看视频')
