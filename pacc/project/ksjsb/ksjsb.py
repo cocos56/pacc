@@ -286,6 +286,7 @@ class Ksjsb(Project):
         """
         if date.today() == self.dbr.last_shopping_date:
             print('今天已经逛完街了，无需重复操作')
+            return
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
