@@ -557,4 +557,4 @@ class Ksjsb(Project):
             self.last_loop_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
-            sleep(3600)
+            sleep(1200)
