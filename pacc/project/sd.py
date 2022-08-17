@@ -1,10 +1,13 @@
 """淘宝/拼多多全自动远程刷单APP中央控制系统模块"""
+from xml.parsers.expat import ExpatError
+
 from .project import Project
 from ..base import show_datetime, sleep
 from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 PDD_ROOT = 'com.xunmeng.pinduoduo'
+TB_ROOT = 'com.taobao.taobao'
 
 
 # pylint: disable=too-few-public-methods
@@ -39,6 +42,9 @@ class SD(Project):
         show_datetime('检查', start_br=True)
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
+        if TB_ROOT in current_focus:
+            print('淘宝正在运行，无需额外检查\n')
+            return
         if PDD_ROOT in current_focus:
             print('拼多多正在运行，无需额外检查\n')
             return
@@ -47,7 +53,7 @@ class SD(Project):
             return
         try:
             dic = self.uia_ins.get_dict(ResourceID.message)
-        except FileNotFoundError:
+        except (FileNotFoundError, ExpatError):
             print('无法正常获取当前用户界面上元素的层次布局信息，无法进行检查')
             return
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
