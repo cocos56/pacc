@@ -419,7 +419,10 @@ class Ksjsb(Project):
             return
 
     def buy_things_with_coins(self):
-        """获取金币购划算页面内的所有奖励"""
+        """获取金币购划算页面内的所有奖励
+
+        :return: 成功获取或者已经获取返回True，否则返回False
+        """
         if date.today() == self.dbr.last_buy_things_date:
             print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
             return
@@ -443,11 +446,19 @@ class Ksjsb(Project):
                 countdown -= 1
                 print(countdown)
                 self.adb_ins.swipe(536, 1100, 536, 1000)
+                current_focus = self.adb_ins.get_current_focus()
+                if Activity.KwaiYodaWebViewActivity in current_focus:
+                    break
+                if Activity.HomeActivity in current_focus:
+                    return False
+                if Activity.AdKwaiRnActivity not in current_focus:
+                    self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
         if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins.\
                 get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins.\
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
             self.dbu.update_last_buy_things_date(date.today())
+            return True
 
     def change_money(self):
         """把金币兑换钱
@@ -554,22 +565,29 @@ class Ksjsb(Project):
         self.adb_ins.press_back_key()
         return True
 
-    def is_done_watching_video(self, retest_cnt=0):
+    def is_done_watching_video(self, retest_cnt=0, reopen_flag=True):
         """判断今天是否看完了视频，即看视频是否还有奖励
 
         :param retest_cnt : 重新检测是看完的次数
+        :param reopen_flag : 是否需要重新打开
         :return: 多次检测结果均是看完了视频才返回True，否则返回False
         """
-        self.reopen_app()
-        self.uia_ins.tap((90, 140), 18)
+        if reopen_flag:
+            self.reopen_app()
+            self.uia_ins.tap((90, 140), 9)
         while not self.uia_ins.secure_get_current_ui_hierarchy():
             sleep(10)
-        if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
-                ResourceID.cycle_progress, xml=self.uia_ins.xml):
-            print(f'retest_cnt={retest_cnt}')
-            if retest_cnt > 2:
-                return True
-            return self.is_done_watching_video(retest_cnt=retest_cnt+1)
+        try:
+            if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
+                    ResourceID.cycle_progress, xml=self.uia_ins.xml):
+                print(f'retest_cnt={retest_cnt}')
+                if retest_cnt > 2:
+                    return True
+                return self.is_done_watching_video(retest_cnt=retest_cnt+1)
+        except FileNotFoundError as err:
+            print_err(f'is_done_watching_video {err}')
+            sleep(10)
+            return self.is_done_watching_video(retest_cnt=retest_cnt, reopen_flag=False)
         return False
 
     @run_forever
