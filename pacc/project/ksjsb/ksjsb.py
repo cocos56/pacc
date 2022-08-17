@@ -391,9 +391,12 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('领取限时福利')
+        if not self.uia_ins.get_point_by_screen_text(text='限时福利14天领', txt=self.uia_ins.txt):
+            self.dbu.update_last_flash_benefits_date(date.today())
+            return
         if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
             sleep(12)
-        self.dbu.update_last_flash_benefits_date(date.today())
+            self.dbu.update_last_flash_benefits_date(date.today())
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
@@ -459,6 +462,7 @@ class Ksjsb(Project):
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
             self.dbu.update_last_buy_things_date(date.today())
             return True
+        return False
 
     def change_money(self):
         """把金币兑换钱
@@ -552,7 +556,10 @@ class Ksjsb(Project):
         super().random_swipe(x_range, y_list)
 
     def watch_video(self):
-        """看视频赚金币"""
+        """看视频赚金币
+
+        :return: 今天已经看视频赚完金币了返回True，否则返回False
+        """
         if date.today() <= self.dbr.last_watch_video_date:
             print('今天已经看视频赚完金币了，无需重复操作')
             return False

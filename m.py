@@ -11,12 +11,11 @@ from pacc.project.ksjsb.mainloop import KsjsbMainloop
 # get_version()
 
 Config.set_debug(True)
-DEVICE_SN = '003001004'
+# DEVICE_SN = '003001004'
+DEVICE_SN = '001003001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-# uia_ins.click(ResourceID.retry_btn)
-# uia_ins.get_texts_from_screen(True)
-# adb_ins.get_cpu_temperature()
+uia_ins.get_screen()
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:
