@@ -174,10 +174,16 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1860, 600, 60)
-        while not self.uia_ins.click_by_screen_text('开启看视频奖励翻倍特权'):
+        not_cnt = 0
+        while not self.uia_ins.get_point_by_screen_text('开启看视频奖励翻倍特权'):
             self.adb_ins.swipe(600, 1860, 600, 660)
-        self.dbu.update_last_double_bonus_date(date.today())
-        sleep(6)
+            not_cnt += 1
+            if not_cnt >= 6:
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
+                return self.get_double_bonus()
+        if self.uia_ins.click_by_screen_text(text='开启看视频奖励翻倍特权', txt=self.uia_ins.txt):
+            self.dbu.update_last_double_bonus_date(date.today())
+            sleep(6)
 
     def open_treasure_box(self):
         """开宝箱得金币

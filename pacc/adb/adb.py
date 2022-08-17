@@ -215,6 +215,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
                   f'{self.dbr.ipv4_addr}均在线，无需额外操作')
         elif self.dbr.ipv4_addr not in online_devices and self.dbr.id_num not in online_devices:
+            EMail(self.dbr.serial_num).send_offline_error()
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
                   f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
             input('请手动处理后按回车键以继续')
