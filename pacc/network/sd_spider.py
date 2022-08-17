@@ -28,13 +28,13 @@ class Spider:
 
     @classmethod
     def main(cls):
-        """程序入口方法"""
+        """淘宝拼多多刷单爬虫程序入口方法"""
         RetrieveSD.all_names = RetrieveSD.all_names[START_INDEX:]
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
             cls.driver.get('http://47.100.242.194/')
             cls.driver.maximize_window()
             sleep(4)
-            print(index + 1, username, end=' ')
+            print(index + START_INDEX + 1, username, end=' ')
             password = 'k187397'
             cls.driver.find_element(By.ID, "username").send_keys(username)
             cls.driver.find_element(By.ID, "password").send_keys(password)
@@ -71,11 +71,11 @@ class Spider:
             print(RetrieveSD.all_names[index], value)
             cls.driver.find_element(By.ID, "realName").send_keys('徐可可')
             cls.driver.find_element(By.ID, "password").send_keys(password)
+            pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
             if float(value) >= 20 and RetrieveSD.all_names[index] not in DEPARTING_STAFF:
                 cls.driver.find_element(
                     By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]'
                 ).click()
-                pyperclip.copy(f'{RetrieveSD.all_names[index]}	{value}')
                 sleep(3)
                 cls.driver.refresh()
             else:
