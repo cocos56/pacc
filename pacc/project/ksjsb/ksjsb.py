@@ -200,7 +200,7 @@ class Ksjsb(Project):
     def open_treasure_box(self):
         """开宝箱得金币
 
-        :return: 正常开宝箱或者已经开过宝箱返回True
+        :return: 正常开宝箱、已经开过或开完宝箱返回True
         """
         if date.today() == self.dbr.last_treasure_box_date:
             print('今天已经把宝箱开完了，无需重复操作')
