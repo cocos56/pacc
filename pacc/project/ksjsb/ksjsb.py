@@ -627,7 +627,8 @@ class Ksjsb(Project):
     @run_forever
     def mainloop(self):
         """主循环"""
-        if datetime.now() - self.last_loop_datetime > timedelta(minutes=20):
+        if date.today() > date.fromisoformat(str(self.last_loop_datetime)[:10]) or datetime.\
+                now() - self.last_loop_datetime > timedelta(minutes=20):
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
             self.sign_in()
