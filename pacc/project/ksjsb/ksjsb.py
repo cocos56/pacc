@@ -228,8 +228,13 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
         self.adb_ins.swipe(600, 1600, 600, 960)
+        not_cnt = 0
         while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):
             self.adb_ins.swipe(600, 1800, 600, 800)
+            not_cnt += 1
+            if not_cnt >= 6:
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
+                return self.view_ads()
         while self.uia_ins.click_by_screen_text(text='看视频得5000金币'):
             sleep(12)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
@@ -525,7 +530,7 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('领取每日挑战奖励')
-        self.adb_ins.swipe(600, 1860, 600, 390)
+        self.adb_ins.swipe(600, 1800, 600, 390)
         while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
             sleep(6)
         self.dbu.update_last_daily_challenge_date(date.today())

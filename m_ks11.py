@@ -3,8 +3,8 @@ from pacc.config import Config
 from pacc.project import Ksjsb
 
 Config.set_debug(True)
-# Ksjsb('003001001').mainloop()
-Ksjsb('003001001').reopen_app()
+Ksjsb('003001001').mainloop()
+# Ksjsb('003001001').reopen_app()
 # Ksjsb('003001001').buy_things_with_coins()
 # Ksjsb('003001001').get_daily_challenge_coins()
 # Ksjsb('003001001').sign_in()
