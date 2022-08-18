@@ -256,8 +256,7 @@ class Ksjsb(Project):
                 self.view_ads_cnt = 0
                 self.dbu.update_last_view_ads_date(date.today())
                 return True
-            else:
-                self.view_ads_cnt += 1
+            self.view_ads_cnt += 1
         return False
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
