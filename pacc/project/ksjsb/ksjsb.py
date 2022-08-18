@@ -174,10 +174,13 @@ class Ksjsb(Project):
         return False
 
     def get_double_bonus(self):
-        """点击翻倍：开启看视频奖励翻倍特权"""
+        """点击翻倍：开启看视频奖励翻倍特权
+
+        :return: 成功点击翻倍或者已经点击翻倍返回True，否则返回False
+        """
         if date.today() == self.dbr.last_double_bonus_date:
             print('今天已经点击翻倍了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1860, 600, 60)
@@ -191,6 +194,8 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text(text='开启看视频奖励翻倍特权', txt=self.uia_ins.txt):
             self.dbu.update_last_double_bonus_date(date.today())
             sleep(6)
+            return True
+        return False
 
     def open_treasure_box(self):
         """开宝箱得金币
@@ -221,10 +226,13 @@ class Ksjsb(Project):
         return True
 
     def view_ads(self):
-        """看广告视频得5000个金币"""
+        """看广告视频得5000个金币
+
+        :return: 成功获得或者已经获得返回True，否则返回False
+        """
         if date.today() == self.dbr.last_view_ads_date:
             print('今天已经看完广告了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('看广告视频得5000金币')
         self.adb_ins.swipe(600, 1600, 600, 960)
@@ -245,10 +253,12 @@ class Ksjsb(Project):
         if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
             print(f'view_ads_cnt={self.view_ads_cnt}')
             if self.view_ads_cnt > 2:
-                self.dbu.update_last_view_ads_date(date.today())
                 self.view_ads_cnt = 0
+                self.dbu.update_last_view_ads_date(date.today())
+                return True
             else:
                 self.view_ads_cnt += 1
+        return False
 
     def exit_live(self, break_activity=Activity.KwaiYodaWebViewActivity):
         """退出直播页面
@@ -446,7 +456,7 @@ class Ksjsb(Project):
         """
         if date.today() == self.dbr.last_buy_things_date:
             print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('金币购划算')
         self.uia_ins.click_by_screen_text('金币购划算')
