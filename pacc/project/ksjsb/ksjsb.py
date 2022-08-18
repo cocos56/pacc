@@ -33,11 +33,16 @@ class Ksjsb(Project):
         """
         print(f'is_loading retry_cnt={retry_cnt}')
         try:
-            self.uia_ins.get_current_ui_hierarchy()
+            if self.uia_ins.get_dict(ResourceID.password_login_title):
+                self.adb_ins.press_back_key()
+                self.uia_ins.click(ResourceID.switch_login_way)
+                EMail(self.serial_num).send_login_alarm()
+                print('请手动输入密码后再继续向下执行程序')
+                input()
         except (FileNotFoundError, ExpatError) as err:
             print_err(f'is_loading {err}')
-            self.adb_ins.press_back_key(9)
-            self.uia_ins.tap((90, 140), 9)
+            self.adb_ins.press_back_key(12)
+            self.uia_ins.tap((90, 140), 12)
             return True
         if retry_cnt >= 3:
             self.adb_ins.press_back_key(9)
@@ -48,6 +53,8 @@ class Ksjsb(Project):
         """打开快手极速版APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
+        sleep(6)
+        self.uia_ins.tap((90, 140), 12)
         while self.is_loading():
             pass
 

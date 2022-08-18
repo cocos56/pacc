@@ -12,10 +12,11 @@ from pacc.project.ksjsb.mainloop import KsjsbMainloop
 
 Config.set_debug(True)
 # DEVICE_SN = '003001004'
-DEVICE_SN = '001003001'
+DEVICE_SN = '003001001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 uia_ins.get_screen()
+uia_ins.click('com.kuaishou.nebula:id/float_widget_login_guide_text')
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:
