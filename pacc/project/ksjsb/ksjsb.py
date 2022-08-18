@@ -654,5 +654,10 @@ class Ksjsb(Project):
             self.last_loop_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
-            sleep(1200)
+            seconds = (datetime.fromisoformat(
+                f'{date.today()+timedelta(days=1)} 00:00:00')-datetime.now()).seconds
+            if seconds > 1200:
+                sleep(1200)
+            else:
+                sleep(seconds)
         show_datetime('看视频')
