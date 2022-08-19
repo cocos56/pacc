@@ -252,7 +252,8 @@ class Ksjsb(Project):
                 break
         if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
             print(f'view_ads_cnt={self.view_ads_cnt}')
-            if self.view_ads_cnt > 2:
+            if self.view_ads_cnt > 2 or self.uia_ins.get_point_by_screen_text(
+                    text='明天再来', txt=self.uia_ins.txt):
                 self.view_ads_cnt = 0
                 self.dbu.update_last_view_ads_date(date.today())
                 return True
@@ -496,7 +497,7 @@ class Ksjsb(Project):
 
         :return: 兑换成功返回True，否则返回False
         """
-        if date.today() == self.dbr.last_change_money_date:
+        if date.today() <= self.dbr.last_change_money_date:
             print('今天已经把金币兑换成钱过了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -633,6 +634,7 @@ class Ksjsb(Project):
             self.get_double_bonus()
             self.sign_in()
             self.open_treasure_box()
+            self.last_loop_datetime = datetime.now()
             self.view_ads()
             self.watch_live()
             self.shopping()
@@ -651,7 +653,6 @@ class Ksjsb(Project):
                         self.dbu.update_last_watch_video_date(date.today())
                     else:
                         self.adb_ins.press_back_key()
-            self.last_loop_datetime = datetime.now()
         if not self.watch_video():
             self.free_memory()
             seconds = (datetime.fromisoformat(
