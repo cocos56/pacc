@@ -4,7 +4,6 @@ from datetime import date
 from os import popen, system
 from random import randint
 
-from .uia import UIAutomator
 from ..base import print_err, sleep
 from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
@@ -53,7 +52,6 @@ class ADB:  # pylint: disable=too-many-public-methods
         if not Config.debug:
             self.reconnect()
         self.cmd = f'adb -s {self.dbr.ipv4_addr} '
-        self.uia = UIAutomator(serial_num)
         model = self.get_model()
         while not model:
             model = self.get_model()
@@ -229,15 +227,6 @@ class ADB:  # pylint: disable=too-many-public-methods
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
                   f'{self.dbr.ipv4_addr}在线，正在尝试自动修复该问题')
             self.reboot()
-
-    def taps(self, instructions):
-        """点击
-
-        :param instructions: 指令集
-        """
-        for x_coordinate, y_coordinate, interval, tip in instructions:
-            print(tip)
-            self.uia.tap([x_coordinate, y_coordinate], interval)
 
     def open_app(self, activity):
         """打开APP
