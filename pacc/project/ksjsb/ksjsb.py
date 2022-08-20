@@ -470,8 +470,8 @@ class Ksjsb(Project):
                 self.uia_ins.tap((240, 848), 96)
                 self.exit_live(Activity.AwardFeedFlowActivity)
                 self.adb_ins.press_back_key(9)
-        if self.uia_ins.click_by_screen_text('去逛街'):  # 已领取
-            countdown = 699
+        while self.uia_ins.click_by_screen_text('去逛街'):  # 已领取
+            countdown = 126
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -619,7 +619,7 @@ class Ksjsb(Project):
                 if retest_cnt > 2:
                     return True
                 return self.is_done_watching_video(retest_cnt=retest_cnt+1)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(f'is_done_watching_video {err}')
             sleep(10)
             return self.is_done_watching_video(retest_cnt=retest_cnt, reopen_flag=False)
