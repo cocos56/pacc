@@ -349,7 +349,7 @@ class Ksjsb(Project):
             return self.shopping()
         break_while = False
         while Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
-            countdown = 699
+            countdown = 199
             while countdown:
                 sleep(1)
                 countdown -= 1
