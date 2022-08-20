@@ -213,7 +213,7 @@ class Ksjsb(Project):
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             sleep(3)
-            self.uia_ins.tap((530, 1330), 12)
+            self.uia_ins.tap((530, 1330), 16)
             while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
                 sleep(3)
             current_focus = self.adb_ins.get_current_focus()
