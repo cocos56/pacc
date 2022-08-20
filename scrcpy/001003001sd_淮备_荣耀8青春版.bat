@@ -1,1 +1,0 @@
-scrcpy -s YTQNW17321066160
