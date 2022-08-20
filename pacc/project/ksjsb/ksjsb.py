@@ -51,7 +51,7 @@ class Ksjsb(Project):
         if retry_cnt >= 3:
             self.adb_ins.press_back_key(9)
             return False
-        return self.is_loading(retry_cnt=retry_cnt+1)
+        return self.is_loading(retry_cnt=retry_cnt + 1)
 
     def open_app(self):
         """打开快手极速版APP"""
@@ -161,7 +161,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
                 return self.sign_in()
         sleep(9)
         if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -193,7 +194,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
                 return self.get_double_bonus()
         if self.uia_ins.click_by_screen_text(text='开启看视频奖励翻倍特权', txt=self.uia_ins.txt):
             self.dbu.update_last_double_bonus_date(date.today())
@@ -247,6 +249,7 @@ class Ksjsb(Project):
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
                 return self.view_ads()
+        click_cnt = 0
         while self.uia_ins.click_by_screen_text(text='看视频得5000金币'):
             sleep(12)
             if Activity.AwardVideoPlayActivity in self.adb_ins.get_current_focus():
@@ -254,10 +257,16 @@ class Ksjsb(Project):
                 self.view_ads_cnt = 0
             elif Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                 break
+            click_cnt += 1
+            if click_cnt >= 10:
+                print('在看视频得5000金币过程中已经观看了超过10个视频，无需继续')
+                break
         if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
             print(f'view_ads_cnt={self.view_ads_cnt}')
-            if self.view_ads_cnt > 2 or self.uia_ins.get_point_by_screen_text(
-                    text='明天再来', txt=self.uia_ins.txt):
+            if self.uia_ins.get_point_by_screen_text(
+                    text='明日看广告最高领取', txt=self.uia_ins.txt) or self.uia_ins.\
+                    get_point_by_screen_text(text='明天再来', txt=self.uia_ins.txt) or self.\
+                    view_ads_cnt > 2:
                 self.view_ads_cnt = 0
                 self.dbu.update_last_view_ads_date(date.today())
                 return True
@@ -331,7 +340,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
                 return self.shopping()
         sleep(12)
         current_focus = self.adb_ins.get_current_focus()
@@ -403,7 +413,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
@@ -492,8 +503,8 @@ class Ksjsb(Project):
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
             self.uia_ins.txt = ''
-        if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins.\
-                get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins.\
+        if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins. \
+                get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins. \
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
             self.dbu.update_last_buy_things_date(date.today())
             return True
@@ -625,7 +636,7 @@ class Ksjsb(Project):
                 print(f'retest_cnt={retest_cnt}')
                 if retest_cnt > 2:
                     return True
-                return self.is_done_watching_video(retest_cnt=retest_cnt+1)
+                return self.is_done_watching_video(retest_cnt=retest_cnt + 1)
         except (FileNotFoundError, ExpatError) as err:
             print_err(f'is_done_watching_video {err}')
             sleep(10)
@@ -635,7 +646,7 @@ class Ksjsb(Project):
     @run_forever
     def mainloop(self):
         """主循环"""
-        if date.today() > date.fromisoformat(str(self.last_loop_datetime)[:10]) or datetime.\
+        if date.today() > date.fromisoformat(str(self.last_loop_datetime)[:10]) or datetime. \
                 now() - self.last_loop_datetime > timedelta(minutes=20):
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
@@ -663,7 +674,7 @@ class Ksjsb(Project):
         if not self.watch_video():
             self.free_memory()
             seconds = (datetime.fromisoformat(
-                f'{date.today()+timedelta(days=1)} 00:00:00')-datetime.now()).seconds
+                f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
             if seconds > 1200:
                 sleep(1200)
             else:
