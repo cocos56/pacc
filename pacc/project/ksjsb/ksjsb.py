@@ -483,6 +483,7 @@ class Ksjsb(Project):
                 self.exit_live(Activity.AwardFeedFlowActivity)
                 self.adb_ins.press_back_key(9)
             self.uia_ins.txt = ''
+        click_cnt = 0
         while self.uia_ins.click_by_screen_text('去逛街', txt=self.uia_ins.txt):  # 已领取
             countdown = 96
             while countdown:
@@ -499,6 +500,10 @@ class Ksjsb(Project):
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
             self.uia_ins.txt = ''
+            click_cnt += 1
+            if click_cnt >= 10:
+                print('在获取金币购划算页面内的去逛街奖励过程中已经累计逛了10次街，无需继续')
+                break
         if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins. \
                 get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins. \
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
