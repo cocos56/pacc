@@ -31,7 +31,7 @@ class Spider:
         """淘宝拼多多刷单爬虫程序入口方法"""
         RetrieveSD.all_names = RetrieveSD.all_names[START_INDEX:]
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
-            cls.driver.get('http://47.100.242.194/')
+            cls.driver.get('http://sd.coco56.top')
             cls.driver.maximize_window()
             sleep(4)
             print(index + START_INDEX + 1, username, end=' ')
@@ -42,10 +42,10 @@ class Spider:
                 By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span'
             ).click()
             sleep(3)
-            cls.open_url_in_new_window('http://47.100.242.194/record/trades/')
-            cls.open_url_in_new_window('http://47.100.242.194/record/linked')
-            cls.open_url_in_new_window('http://47.100.242.194/account/buyers')
-            cls.open_url_in_new_window('http://47.100.242.194/account/wallet')
+            cls.open_url_in_new_window('http://sd.coco56.top/record/trades')
+            cls.open_url_in_new_window('http://sd.coco56.top/record/linked')
+            cls.open_url_in_new_window('http://sd.coco56.top/account/buyers')
+            cls.open_url_in_new_window('http://sd.coco56.top/account/wallet')
             cls.driver.switch_to.window(cls.driver.window_handles[1])
             sleep(5)
             while True:
