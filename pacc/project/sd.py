@@ -1,5 +1,6 @@
 """淘宝/拼多多全自动远程刷单APP中央控制系统模块"""
 from xml.parsers.expat import ExpatError
+from datetime import datetime
 
 from .project import Project
 from ..base import show_datetime, sleep
@@ -40,6 +41,9 @@ class SD(Project):
     def check(self):
         """检查"""
         show_datetime('检查', start_br=True)
+        if datetime.now().hour == 3:
+            print('当前正值自动开关机时段，，无需额外检查\n')
+            return
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
         if TB_ROOT in current_focus:
