@@ -161,8 +161,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print(
-                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
                 return self.sign_in()
         sleep(9)
         if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -194,8 +193,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print(
-                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
                 return self.get_double_bonus()
         if self.uia_ins.click_by_screen_text(text='开启看视频奖励翻倍特权', txt=self.uia_ins.txt):
             self.dbu.update_last_double_bonus_date(date.today())
@@ -340,8 +338,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print(
-                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
                 return self.shopping()
         sleep(12)
         current_focus = self.adb_ins.get_current_focus()
@@ -413,8 +410,7 @@ class Ksjsb(Project):
             self.adb_ins.swipe(600, 1860, 600, 660)
             not_cnt += 1
             if not_cnt >= 6:
-                print(
-                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
+                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
