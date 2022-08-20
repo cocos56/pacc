@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pacc',  # 包名
-    version='0.0.395',  # 版本
+    version='0.0.396',  # 版本
     packages=find_packages(),  # 目录下所有文件
     description="""Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或WLAN
     （基于IPv4的无线局域网）对Android手机集群（包含模拟器，目前已适配夜神模拟器）的控制提供支持""",  # 描述信息
@@ -23,7 +23,7 @@ setup(
     已实现的中央控制脚本如下：\n
     1. 快手极速版全自动刷金币（刷视频、刷广告、刷直播）中央控制系统脚本\n
     正在实现中的中央控制脚本如下：\n
-    1. 趣头条全自动刷金币中央控制系统脚本
+    1. 趣头条全自动刷金币中央控制系统脚本\n
     待实现的中央控制脚本如下：\n
     1. 点淘全自动刷金币中央控制脚本\n
     2. 抖音全自动抢福袋脚本app中央控制脚本\n
