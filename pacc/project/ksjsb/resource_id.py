@@ -18,7 +18,7 @@ class ResourceID:
     click_double = f'{ROOT}click_double'  # 点击翻倍（金币）
     circular_progress_bar = f'{ROOT}circular_progress_bar'  # 金币进度条
     gold_egg_anim = f'{ROOT}gold_egg_anim'  # 金蛋
-    positive = f'{ROOT}positive'  # 主界面中间青少年模式，我知道了
+    positive = f'{ROOT}positive'  # 主界面中间（青少年模式，我知道了）、（欢迎使用快手极速版，同意并继续）
 
     # 【菜单页面】由观看视频页面->左上方的三个杠转入
     title = f'{ROOT}title'

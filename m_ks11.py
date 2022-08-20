@@ -4,3 +4,4 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('003001001').mainloop()
+# Ksjsb('003001001').is_loading()

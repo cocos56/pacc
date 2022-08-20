@@ -33,7 +33,11 @@ class Ksjsb(Project):
         """
         print(f'is_loading retry_cnt={retry_cnt}')
         try:
-            if self.uia_ins.get_dict(ResourceID.password_login_title):
+            if self.uia_ins.get_dict(ResourceID.positive, '同意并继续'):
+                EMail(self.serial_num).send_login_alarm()
+                print('请手动输入密码后再继续向下执行程序')
+                input()
+            elif self.uia_ins.get_dict(ResourceID.password_login_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
                 self.uia_ins.click(ResourceID.switch_login_way)
                 EMail(self.serial_num).send_login_alarm()
@@ -464,14 +468,16 @@ class Ksjsb(Project):
         self.uia_ins.tap((991, 378), 6)
         if self.uia_ins.click_by_screen_text(text='去签到'):  # 明日再来
             sleep(3)
-        while self.uia_ins.click_by_screen_text(text='领福利'):  # 已完成
+            self.uia_ins.txt = ''
+        while self.uia_ins.click_by_screen_text(text='领福利', txt=self.uia_ins.txt):  # 已完成
             sleep(6)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.tap((240, 848), 96)
                 self.exit_live(Activity.AwardFeedFlowActivity)
                 self.adb_ins.press_back_key(9)
-        while self.uia_ins.click_by_screen_text('去逛街'):  # 已领取
-            countdown = 126
+            self.uia_ins.txt = ''
+        while self.uia_ins.click_by_screen_text('去逛街', txt=self.uia_ins.txt):  # 已领取
+            countdown = 96
             while countdown:
                 sleep(1)
                 countdown -= 1
@@ -485,6 +491,7 @@ class Ksjsb(Project):
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
+            self.uia_ins.txt = ''
         if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins.\
                 get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt) and self.uia_ins.\
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
@@ -517,7 +524,7 @@ class Ksjsb(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        self.uia_ins.tap((536, 1706), 26)
+        self.uia_ins.tap((536, 1706), 36)
         self.uia_ins.click(text='立即提现')
         sleep(6)
         try:
