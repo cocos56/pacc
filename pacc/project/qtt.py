@@ -8,6 +8,7 @@ from ..base import run_forever, sleep
 class Activity:
     """趣头条中央控制系统模块的安卓活动名类"""
     MainActivity = 'com.jifen.qukan/com.jifen.qkbase.main.MainActivity'  # 主界面
+    # 奖励广告活动
     InciteADActivity = 'com.jifen.qukan/com.iclicash.advlib.ui.front.InciteADActivity'
     PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
     # 新闻详情
@@ -23,7 +24,6 @@ class ResourceID:
     bh4 = 'com.jifen.qukan:id/bh4'  # 阅读奖励图标
 
 
-# pylint: disable=too-few-public-methods
 class Qtt(Project):
     """趣头条中央控制系统类"""
 
@@ -42,15 +42,19 @@ class Qtt(Project):
         super().random_swipe(x_range, y_list)
 
     def exit_incite_ad_activity(self):
-        """"""
+        """退出奖励广告活动页面"""
         while not self.uia_ins.get_dict(text='点击重播'):
             sleep(30)
         self.adb_ins.press_back_key()
         self.uia_ins.click(text='坚决放弃')
 
     def exit_portrait_ad_activity(self):
-        """"""
+        """退出portrait广告活动页面"""
         self.uia_ins.click(index='1', class_='android.widget.ImageView')
+
+    def watch_news(self):
+        """看新闻"""
+        self.reopen_app()
 
     def watch_little_videos(self):
         """看小视频"""
@@ -79,7 +83,6 @@ class Qtt(Project):
             self.uia_ins.click(text='坚决放弃')
         # while not self.uia_ins.secure_get_current_ui_hierarchy():
         #     sleep(30)
-        # if
 
     @run_forever
     def mainloop(self):

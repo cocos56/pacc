@@ -552,9 +552,11 @@ class Ksjsb(Project):
             print_err(err)
             return self.change_money()
 
-    def get_daily_challenge_coins(self):
+    def get_daily_challenge_coins(self, enforce=False):
         """领取每日挑战奖励"""
-        if date.today() == self.dbr.last_daily_challenge_date:
+        if enforce:
+            print('正在强制执行领取每日挑战奖励的操作')
+        elif date.today() == self.dbr.last_daily_challenge_date:
             print('今天已经领过每日挑战奖励了，无需重复操作')
             return True
         self.enter_wealth_interface()
