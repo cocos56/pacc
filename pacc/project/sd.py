@@ -1,4 +1,4 @@
-"""淘宝/拼多多全自动远程刷单APP中央控制系统模块"""
+"""淘宝/拼多多全自动远程刷单APP中央监控系统模块"""
 from xml.parsers.expat import ExpatError
 from datetime import datetime
 
@@ -13,14 +13,14 @@ TB_ROOT = 'com.taobao.taobao'
 
 # pylint: disable=too-few-public-methods
 class Activity:
-    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的活动名类"""
+    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓活动名类"""
     MainActivity = f'{ROOT}MainActivity'
     LoginActivity = f'{ROOT}LoginActivity'  # 登录
 
 
 # pylint: disable=too-few-public-methods
 class ResourceID:
-    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓的资源ID类"""
+    """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓资源ID类"""
     # 确定（联机业务异常，请重新联机）、立即连接（连接异常,正在重新连接......）、
     # （切换账号将会结束您当前的挂机,是否继续?）
     button2 = 'android:id/button2'

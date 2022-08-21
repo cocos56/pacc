@@ -5,18 +5,15 @@ from pacc.adb import ADB, UIAutomator
 from pacc.base import print_err
 from pacc.config import Config
 from pacc.project.ksjsb.resource_id import ResourceID
-from pacc.project.ksjsb.mainloop import KsjsbMainloop
 
-# KsjsbMainloop.run()
 # get_version()
 
 Config.set_debug(True)
-# DEVICE_SN = '003001004'
-DEVICE_SN = '003001001'
+DEVICE_SN = '002004003'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-uia_ins.get_screen()
-uia_ins.click('com.kuaishou.nebula:id/float_widget_login_guide_text')
+# uia_ins.get_screen()
+# uia_ins.click('com.kuaishou.nebula:id/float_widget_login_guide_text')
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:

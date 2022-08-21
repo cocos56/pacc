@@ -1,4 +1,4 @@
-"""快手极速版模块"""
+"""快手极速版中央控制系统模块"""
 from datetime import datetime, timedelta, date
 from random import randint
 from xml.parsers.expat import ExpatError
@@ -13,7 +13,7 @@ from ...tools import EMail, find_all_ints_with_re
 
 # pylint: disable=too-many-public-methods
 class Ksjsb(Project):
-    """快手极速版类"""
+    """快手极速版中央控制系统类"""
 
     def __init__(self, serial_num):
         """构造函数
