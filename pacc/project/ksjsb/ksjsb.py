@@ -562,7 +562,7 @@ class Ksjsb(Project):
         if enter_wealth_interface:
             self.enter_wealth_interface()
         print('领取每日挑战奖励')
-        self.adb_ins.swipe(600, 1800, 600, 690)
+        self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
             sleep(6)
         self.dbu.update_last_daily_challenge_date(date.today())
