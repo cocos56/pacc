@@ -5,4 +5,5 @@ from pacc.project import Qtt
 Config.set_debug(True)
 # Qtt('002004003').mainloop()
 # Qtt('002004003').reopen_app()
-Qtt('002004003').view_ads_video()
+# Qtt('002004003').watch_videos_to_make_money()
+Qtt('002004003').watch_little_videos()

@@ -14,7 +14,7 @@ TB_ROOT = 'com.taobao.taobao'
 # pylint: disable=too-few-public-methods
 class Activity:
     """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓活动名类"""
-    MainActivity = f'{ROOT}MainActivity'
+    MainActivity = f'{ROOT}MainActivity'  # 主界面
     LoginActivity = f'{ROOT}LoginActivity'  # 登录
 
 

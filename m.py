@@ -12,8 +12,7 @@ Config.set_debug(True)
 DEVICE_SN = '002004003'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-# uia_ins.get_screen()
-# uia_ins.click('com.kuaishou.nebula:id/float_widget_login_guide_text')
+# uia_ins.click('com.jifen.qukan:id/a0m')
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:

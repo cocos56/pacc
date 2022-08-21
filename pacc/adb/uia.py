@@ -305,6 +305,9 @@ class UIAutomator:
                     if self.node.bounds and self.is_target_bounds(self.node.bounds, dic['@bounds']):
                         if dic['@resource-id'] == self.node.resource_id:
                             return True
+                    else:
+                        return False
+                    return True
             return False
         if self.node.resource_id:
             if dic['@resource-id'] == self.node.resource_id:
