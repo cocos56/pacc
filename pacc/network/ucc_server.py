@@ -73,7 +73,7 @@ class ServerStatus(Enum):
 
 # pylint: disable=too-few-public-methods
 class UCCServer:
-    """服务器端类"""
+    """统一计算中心服务器端类"""
     datetime_dic = {}
     status = ServerStatus.FREE
     client_sn = ''
