@@ -8,6 +8,12 @@ class Language(Enum):
     EN = 'English'
 
 
+class ServerStatus(Enum):
+    """服务器状态枚举类"""
+    FREE = 'Free'
+    BUSY = 'Busy'
+
+
 # pylint: disable=too-few-public-methods
 class Config:
     """配置类"""

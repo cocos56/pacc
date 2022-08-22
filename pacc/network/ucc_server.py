@@ -1,6 +1,5 @@
 """统一计算中心（Unified Computing Center, UCC）服务器端模块"""
 from datetime import datetime, timedelta
-from enum import Enum
 from os.path import abspath
 from pickle import dump
 from time import sleep
@@ -10,7 +9,7 @@ from websocket_server import WebsocketServer
 
 from ..adb import UIAutomator
 from ..base import show_datetime
-from ..config import Language
+from ..config import Language, ServerStatus
 
 
 # pylint: disable=unused-argument
@@ -63,12 +62,6 @@ def message_received(client: dict, server: WebsocketServer, serial_num: str):
         dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
     server.send_message(client, pkl_path)
     UCCServer.status = ServerStatus.FREE
-
-
-class ServerStatus(Enum):
-    """服务器状态枚举类"""
-    FREE = 'free'
-    BUSY = 'busy'
 
 
 # pylint: disable=too-few-public-methods

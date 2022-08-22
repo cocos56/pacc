@@ -22,6 +22,10 @@ class ResourceID:
     ch1 = "com.jifen.qukan:id/ch1"  # 看视频赚钱
     a0m = 'com.jifen.qukan:id/a0m'  # 看视频再领xx金币
     bh4 = 'com.jifen.qukan:id/bh4'  # 阅读奖励图标
+    # 【头条界面】
+    b2d = "com.jifen.qukan:id/b2d"  # 文章标题
+    ap7 = "com.jifen.qukan:id/ap7"  #
+    adh = "com.jifen.qukan:id/adh"  # 领50金币
 
 
 class Qtt(Project):
@@ -50,11 +54,21 @@ class Qtt(Project):
 
     def exit_portrait_ad_activity(self):
         """退出portrait广告活动页面"""
-        self.uia_ins.click(index='1', class_='android.widget.ImageView')
+        if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
+            self.uia_ins.click(index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
 
     def watch_news(self):
         """看新闻"""
         self.reopen_app()
+        self.uia_ins.tap((831, 253), 6)
+        self.adb_ins.press_back_key(6)
+        if self.uia_ins.click(ResourceID.adh):
+            sleep(6)
+            if self.uia_ins.click(text='看视频再领'):
+                sleep(6)
+        else:
+            self.uia_ins.click(ResourceID.b2d)
+            self.uia_ins.click(ResourceID.bh4)
 
     def watch_little_videos(self):
         """看小视频"""

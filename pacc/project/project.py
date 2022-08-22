@@ -8,7 +8,7 @@ from ..base import sleep
 # pylint: disable=too-few-public-methods
 class Activity:
     """活动名类"""
-    Launcher = 'com.miui.home/com.miui.home.launcher.Launcher'
+    Miui_Launcher = 'com.miui.home/com.miui.home.launcher.Launcher'
     RecentsActivity = 'com.android.systemui/com.android.systemui.recents.RecentsActivity'
 
 
@@ -87,6 +87,6 @@ class Project:
         if Activity.RecentsActivity in current_focus:
             self.adb_ins.press_home_key()
             current_focus = self.adb_ins.get_current_focus()
-        if Activity.Launcher not in current_focus:
+        if 'MI 4' in self.adb_ins.dbr.model and Activity.Miui_Launcher not in current_focus:
             self.adb_ins.reboot()
             self.free_memory()

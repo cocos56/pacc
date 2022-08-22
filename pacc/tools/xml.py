@@ -19,9 +19,9 @@ def get_pretty_xml(file_path):
     :return: 返回美化后的xml文件内容
     """
     xml = get_xml(file_path)
-    xml = minidom.parseString(xml)
-    xml = xml.toprettyxml()
-    xml = unescape(xml)
+    pretty_xml = minidom.parseString(xml)
+    pretty_xml = pretty_xml.toprettyxml()
+    pretty_xml = unescape(pretty_xml)
     with open(file_path, 'w', encoding='utf-8') as file_stream:
-        file_stream.writelines(xml)
+        file_stream.writelines(pretty_xml)
     return xml
