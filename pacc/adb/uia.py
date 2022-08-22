@@ -310,8 +310,7 @@ class UIAutomator:
                     if self.node.bounds and self.is_target_bounds(self.node.bounds, dic['@bounds']):
                         if dic['@resource-id'] == self.node.resource_id:
                             return True
-                        else:
-                            return False
+                        return False
                     return True
             return False
         if self.node.resource_id:
@@ -418,8 +417,8 @@ class UIAutomator:
         if exists(file_path):
             remove(file_path)
         system(f'{self.cmd}pull /sdcard/window_dump.xml {file_path}')
-        # if Config.debug:
-        #     return get_pretty_xml(file_path)
+        if Config.debug:
+            return get_pretty_xml(file_path)
         return get_xml(file_path)
 
     def secure_get_current_ui_hierarchy(self):

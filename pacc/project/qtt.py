@@ -11,9 +11,12 @@ class Activity:
     # 奖励广告活动
     InciteADActivity = 'com.jifen.qukan/com.iclicash.advlib.ui.front.InciteADActivity'
     PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
+    # 发现好货广告活动
+    MobRewardVideoActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.MobRewardVideoActivity'
     # 新闻详情
     NewsDetailNewActivity = \
         'com.jifen.qukan/com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'
+    ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'
 
 
 # pylint: disable=too-few-public-methods
@@ -24,7 +27,7 @@ class ResourceID:
     bh4 = 'com.jifen.qukan:id/bh4'  # 阅读奖励图标
     # 【头条界面】
     b2d = "com.jifen.qukan:id/b2d"  # 文章标题
-    ap7 = "com.jifen.qukan:id/ap7"  #
+    ap7 = "com.jifen.qukan:id/ap7"  # 关闭图标（恭喜你获得一个5400金币的问卷任务）
     adh = "com.jifen.qukan:id/adh"  # 领50金币
 
 
@@ -35,7 +38,7 @@ class Qtt(Project):
         """打开趣头条APP"""
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.MainActivity)
-        sleep(9)
+        sleep(16)
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
         """随机滑动一段长度
@@ -45,9 +48,19 @@ class Qtt(Project):
         """
         super().random_swipe(x_range, y_list)
 
+    def exit_ad_activity(self):
+        """推出广告活动页面"""
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.InciteADActivity in current_focus:
+            self.exit_incite_ad_activity()
+        elif Activity.PortraitADActivity in current_focus:
+            self.exit_portrait_ad_activity()
+
     def exit_incite_ad_activity(self):
         """退出奖励广告活动页面"""
         while not self.uia_ins.get_dict(text='点击重播'):
+            if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
+                self.adb_ins.press_back_key()
             sleep(30)
         self.adb_ins.press_back_key()
         self.uia_ins.click(text='坚决放弃')
@@ -56,10 +69,16 @@ class Qtt(Project):
         """退出portrait广告活动页面"""
         if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
             self.uia_ins.click(index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
+        if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
+            return self.exit_portrait_ad_activity()
+
+    def exit_mob_reward_video_activity(self):
+        """退出发现好货广告活动页面"""
 
     def watch_news(self):
         """看新闻"""
         self.reopen_app()
+        self.uia_ins.click(ResourceID.ap7)
         self.uia_ins.tap((831, 253), 6)
         self.adb_ins.press_back_key(6)
         if self.uia_ins.click(ResourceID.adh):
