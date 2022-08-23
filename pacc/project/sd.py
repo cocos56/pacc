@@ -3,7 +3,7 @@ from xml.parsers.expat import ExpatError
 from datetime import datetime
 
 from .project import Project
-from ..base import show_datetime, sleep
+from ..base import show_datetime, sleep, print_err
 from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
@@ -68,7 +68,12 @@ class SD(Project):
         if dic and dic['@text'] == '正在连接服务器...':
             self.reopen_app()
         elif not dic and Activity.MainActivity in current_focus:
-            self.reopen_app()
+            try:
+                self.reopen_app()
+            except FileNotFoundError as err:
+                print_err(err)
+                self.uia_ins.get_screen()
+                input('出现未知错误，请手动处理')
         elif Activity.LoginActivity in current_focus:
             self.adb_ins.reboot()
             self.open_app()

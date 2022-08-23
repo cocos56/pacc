@@ -4,4 +4,3 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('002002001').mainloop()
-# Ksjsb('002002001').get_daily_challenge_coins(True)
