@@ -169,7 +169,7 @@ class Ksjsb(Project):
             self.exit_award_video_play_activity()
             self.uia_ins.txt = ''
         elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):  # 532, 1367
-            sleep(96)
+            sleep(126)
             self.exit_live()
         sleep(6)
         if self.uia_ins.get_point_by_screen_text('邀请好友赚更多'):  # 532, 1367
