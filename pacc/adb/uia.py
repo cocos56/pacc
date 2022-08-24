@@ -15,7 +15,8 @@ from ..tools import create_dir, get_pretty_xml, get_xml, find_all_ints_with_re, 
 class Node:
     """节点类"""
     # pylint: disable=too-many-arguments
-    def __init__(self, resource_id='', text='', content_desc='', bounds='', class_='', index=''):
+    def __init__(
+            self, resource_id='', text='', content_desc='', bounds='', class_='', index='', naf=''):
         """构造函数
 
         :param resource_id: 资源的ID
@@ -24,6 +25,11 @@ class Node:
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param index: 索引值
+        :param naf: 可访问性不友好（Not Accessibility Friendly）
+         We're looking for UI controls that are enabled, clickable but have no
+         text nor content-description. Such controls configuration indicate an
+         interactive control is present in the UI and is most likely not
+         accessibility friendly. We refer to such controls here as NAF controls.
         """
         self.resource_id = resource_id
         self.text = text
@@ -31,6 +37,7 @@ class Node:
         self.bounds = bounds
         self.class_ = class_
         self.index = index
+        self.naf = naf
 
 
 # pylint: disable=too-many-public-methods
@@ -152,9 +159,8 @@ class UIAutomator:
         return False
 
     # pylint: disable=too-many-arguments
-    def click(
-            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index='',
-            offset_x=0, offset_y=0):
+    def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+              index='', naf='', offset_x=0, offset_y=0):
         """点击目标点
 
         :param resource_id: 资源的ID
@@ -164,11 +170,16 @@ class UIAutomator:
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param index: 索引值
+        :param naf: 可访问性不友好（Not Accessibility Friendly）
+         We're looking for UI controls that are enabled, clickable but have no text nor
+         content-description. Such controls configuration indicate an interactive control
+         is present in the UI and is most likely not accessibility friendly. We refer to
+         such controls here as NAF controls.
         :param offset_x: x轴坐标的偏移量
         :param offset_y: y轴坐标的偏移量
         :return: 找到后立即点击并返回True，未找到返回False
         """
-        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_, index)
+        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_, index, naf)
         if not point:
             return False
         x_coordinate, y_coordinate = point
@@ -184,8 +195,8 @@ class UIAutomator:
         point = self.get_point_from_two_points(find_all_ints_with_re(bounds))
         self.tap(point)
 
-    def get_point(
-            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index=''):
+    def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+                  index='', naf=''):
         """获取目标点的坐标
 
         :param resource_id: 资源的ID
@@ -195,15 +206,20 @@ class UIAutomator:
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param index: 索引值
+        :param naf: 可访问性不友好（Not Accessibility Friendly）
+         We're looking for UI controls that are enabled, clickable but have no text nor
+         content-description. Such controls configuration indicate an interactive control
+         is present in the UI and is most likely not accessibility friendly. We refer to
+         such controls here as NAF controls.
         :return: 找到后返回目标点的坐标，未找到返回False
         """
-        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_, index)
+        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_, index, naf)
         if not bounds:
             return False
         return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
-    def get_bounds(
-            self, resource_id, text='', content_desc='', xml='', bounds='', class_='', index=''):
+    def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_='',
+                   index='', naf=''):
         """获取目标点所在的边界的斜对角两点的坐标
 
         :param resource_id: 资源的ID
@@ -213,9 +229,14 @@ class UIAutomator:
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param index: 索引值
+        :param naf: 可访问性不友好（Not Accessibility Friendly）
+         We're looking for UI controls that are enabled, clickable but have no text nor
+         content-description. Such controls configuration indicate an interactive control
+         is present in the UI and is most likely not accessibility friendly. We refer to
+         such controls here as NAF controls.
         :return: 找到后返回目边界的斜对角两点的坐标，未找到返回False
         """
-        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_, index)
+        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_, index, naf)
         if dic:
             return dic['@bounds']
         return False
@@ -234,20 +255,25 @@ class UIAutomator:
                 return dic
         return False
 
-    def get_dict(
-            self, resource_id='', text='', content_desc='', xml='', bounds='', class_='', index=''):
+    def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
+                 index='', naf=''):
         """获取目标对象的字典信息
 
-        :param resource_id: 资源的ID
+        :param resource_id: 资源的身份码
         :param text: 文本
         :param content_desc: 描述
         :param xml: 目标用户界面上元素的层次布局信息
         :param bounds: 边界值（位于目标矩形的斜对角的两点坐标）
         :param class_: 类名
         :param index: 索引值
+        :param naf: 可访问性不友好（Not Accessibility Friendly）
+         We're looking for UI controls that are enabled, clickable but have no text nor
+         content-description. Such controls configuration indicate an interactive control
+         is present in the UI and is most likely not accessibility friendly. We refer to
+         such controls here as NAF controls.
         :return: 返回通过深度优先方式获取到的字典信息（若找不到目标则返回的字典信息的值为False）
         """
-        self.node = Node(resource_id, text, content_desc, bounds, class_, index)
+        self.node = Node(resource_id, text, content_desc, bounds, class_, index, naf)
         if xml:
             self.xml = xml
         else:
@@ -304,6 +330,8 @@ class UIAutomator:
             return False
         if self.node.index:
             if self.node.index == dic['@index']:
+                if self.node.naf and '@NAF' in dic and self.node.naf == dic['@NAF']:
+                    return True
                 if self.node.text and self.node.text in unescape(dic['@text']):
                     return True
                 if self.node.class_ and dic['@class'] == self.node.class_:
@@ -430,5 +458,5 @@ class UIAutomator:
         try:
             return self.get_current_ui_hierarchy()
         except FileNotFoundError as err:
-            print_err(f'is_loading {err}')
+            print_err(f'secure_get_current_ui_hierarchy {err}')
             return False

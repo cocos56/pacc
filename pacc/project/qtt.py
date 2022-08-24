@@ -1,7 +1,7 @@
 """趣头条中央控制系统模块"""
 from random import randint
 from .project import Project
-from ..base import run_forever, sleep
+from ..base import run_forever, sleep, print_err
 
 
 # pylint: disable=too-few-public-methods
@@ -13,10 +13,10 @@ class Activity:
     PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
     # 发现好货广告活动
     MobRewardVideoActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.MobRewardVideoActivity'
+    ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'  # 广告浏览器
     # 新闻详情
     NewsDetailNewActivity = \
         'com.jifen.qukan/com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'
-    ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'
 
 
 # pylint: disable=too-few-public-methods
@@ -49,45 +49,95 @@ class Qtt(Project):
         super().random_swipe(x_range, y_list)
 
     def exit_ad_activity(self):
-        """推出广告活动页面"""
+        """退出广告活动页面"""
+        sleep(6)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.InciteADActivity in current_focus:
             self.exit_incite_ad_activity()
         elif Activity.PortraitADActivity in current_focus:
             self.exit_portrait_ad_activity()
+        elif Activity.MobRewardVideoActivity in current_focus:
+            self.exit_mob_reward_video_activity()
+        elif Activity.ADBrowser in current_focus:
+            self.exit_ad_browser()
+        sleep(6)
 
     def exit_incite_ad_activity(self):
         """退出奖励广告活动页面"""
         while not self.uia_ins.get_dict(text='点击重播'):
             if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
-            sleep(30)
+            sleep(20)
         self.adb_ins.press_back_key()
         self.uia_ins.click(text='坚决放弃')
 
     def exit_portrait_ad_activity(self):
         """退出portrait广告活动页面"""
-        if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
-            self.uia_ins.click(index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
+        try:
+            if not self.uia_ins.click(naf='true', index='1'):
+                if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
+                    self.uia_ins.click(
+                        index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.exit_portrait_ad_activity()
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
             return self.exit_portrait_ad_activity()
 
     def exit_mob_reward_video_activity(self):
         """退出发现好货广告活动页面"""
+        self.uia_ins.click(index='2', class_='android.widget.ImageView')
+
+    def exit_ad_browser(self):
+        """退出广告浏览器"""
+        sleep(26)
+        self.uia_ins.tap((584, 335), 16)
+        self.adb_ins.press_back_key(16)
+        self.uia_ins.tap((584, 335), 16)
+        self.adb_ins.press_back_key(16)
+        self.uia_ins.tap((584, 335), 16)
+        self.adb_ins.press_back_key(16)
+        self.uia_ins.click(text='关闭', index='2')
+
+    def watch_news_detail(self):
+        """看新闻详情（某条新闻文章）"""
+        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key(6)
+            self.uia_ins.tap((300, 400), 6)
+        else:
+            return
+        cnt = 0
+        while cnt < 30:
+            self.adb_ins.swipe(536, 1100, 536, 1000)
+            sleep(3)
+            print(f'cnt={cnt}')
+            cnt += 1
+        if not self.uia_ins.get_dict(ResourceID.bh4):
+            self.watch_news_detail()
 
     def watch_news(self):
         """看新闻"""
         self.reopen_app()
-        self.uia_ins.click(ResourceID.ap7)
-        self.uia_ins.tap((831, 253), 6)
+        try:
+            self.uia_ins.click(ResourceID.ap7)
+        except FileNotFoundError as err:
+            print_err(err)
+        self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
-        if self.uia_ins.click(ResourceID.adh):
-            sleep(6)
-            if self.uia_ins.click(text='看视频再领'):
-                sleep(6)
-        else:
-            self.uia_ins.click(ResourceID.b2d)
-            self.uia_ins.click(ResourceID.bh4)
+        try:
+            if self.uia_ins.click(ResourceID.adh):
+                self.exit_ad_activity()
+                while self.uia_ins.click_by_screen_text('看视频再领'):
+                    self.exit_ad_activity()
+        except FileNotFoundError as err:
+            print_err(err)
+        self.uia_ins.tap((300, 400), 6)
+        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
+            if self.uia_ins.click(ResourceID.bh4):
+                while self.uia_ins.click_by_screen_text('看视频再领'):
+                    self.exit_ad_activity()
+            self.watch_news_detail()
 
     def watch_little_videos(self):
         """看小视频"""
