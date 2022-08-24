@@ -192,7 +192,7 @@ class Ksjsb(Project):
         if enter_wealth_interface:
             self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
-        self.adb_ins.swipe(600, 1800, 900, 60)
+        self.adb_ins.swipe(600, 1800, 1000, 60)
         not_cnt = 0
         while not self.uia_ins.get_point_by_screen_text('开启看视频奖励翻倍特权'):
             self.adb_ins.swipe(600, 1860, 600, 660)
