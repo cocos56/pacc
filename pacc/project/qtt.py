@@ -94,6 +94,7 @@ class Qtt(Project):
             return self.exit_portrait_ad_activity()
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
             return self.exit_portrait_ad_activity()
+        return True
 
     def exit_mob_reward_video_activity(self):
         """退出发现好货广告活动页面"""

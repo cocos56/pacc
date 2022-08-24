@@ -181,7 +181,7 @@ class Ksjsb(Project):
             return True
         return False
 
-    def get_double_bonus(self):
+    def get_double_bonus(self, enter_wealth_interface=True):
         """点击翻倍：开启看视频奖励翻倍特权
 
         :return: 成功点击翻倍或者已经点击翻倍返回True，否则返回False
@@ -189,7 +189,8 @@ class Ksjsb(Project):
         if date.today() == self.dbr.last_double_bonus_date:
             print('今天已经点击翻倍了，无需重复操作')
             return True
-        self.enter_wealth_interface()
+        if enter_wealth_interface:
+            self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
         self.adb_ins.swipe(600, 1860, 600, 60)
         not_cnt = 0
