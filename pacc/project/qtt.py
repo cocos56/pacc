@@ -78,6 +78,8 @@ class Qtt(Project):
                 if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
+            else:
+                self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
             print_err(err)
             return self.exit_portrait_ad_activity()
@@ -90,14 +92,18 @@ class Qtt(Project):
 
     def exit_ad_browser(self):
         """退出广告浏览器"""
-        sleep(26)
+        sleep(36)
         self.uia_ins.tap((584, 335), 16)
-        self.adb_ins.press_back_key(16)
+        if Activity.ADBrowser in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key(16)
         self.uia_ins.tap((584, 335), 16)
-        self.adb_ins.press_back_key(16)
+        if Activity.ADBrowser in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key(16)
         self.uia_ins.tap((584, 335), 16)
-        self.adb_ins.press_back_key(16)
-        self.uia_ins.click(text='关闭', index='2')
+        if Activity.ADBrowser in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key(16)
+        if Activity.ADBrowser in self.adb_ins.get_current_focus():
+            self.uia_ins.click(text='关闭', index='2')
 
     def watch_news_detail(self):
         """看新闻详情（某条新闻文章）"""
@@ -170,3 +176,6 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
+        # while self.uia_ins.click_by_screen_text('看视频再领'):
+        #     self.exit_ad_activity()
+        self.watch_news()
