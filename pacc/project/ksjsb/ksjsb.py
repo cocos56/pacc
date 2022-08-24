@@ -62,6 +62,7 @@ class Ksjsb(Project):
         is_loading_cnt = 0
         while self.is_loading():
             is_loading_cnt += 1
+            print(f'is_loading_cnt={is_loading_cnt}')
             if is_loading_cnt >= 10:
                 return self.reopen_app()
 
