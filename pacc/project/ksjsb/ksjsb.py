@@ -59,8 +59,11 @@ class Ksjsb(Project):
         self.adb_ins.open_app(Activity.HomeActivity)
         sleep(6)
         self.uia_ins.tap((90, 140), 12)
+        is_loading_cnt = 0
         while self.is_loading():
-            pass
+            is_loading_cnt += 1
+            if is_loading_cnt >= 10:
+                return self.reopen_app()
 
     def exit_award_video_play_activity(self, retry_cnt=0):
         """退出奖励视频播放活动页面

@@ -1,7 +1,7 @@
 """趣头条中央控制系统模块"""
 from random import randint
 from .project import Project
-from ..base import run_forever, sleep, print_err
+from ..base import run_forever, sleep, print_err, show_datetime
 
 
 # pylint: disable=too-few-public-methods
@@ -14,6 +14,7 @@ class Activity:
     # 发现好货广告活动
     MobRewardVideoActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.MobRewardVideoActivity'
     ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'  # 广告浏览器
+    KsRewardVideoActivity = 'com.jifen.qukan/com.kwad.sdk.api.proxy.app.KsRewardVideoActivity'
     # 新闻详情
     NewsDetailNewActivity = \
         'com.jifen.qukan/com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'
@@ -60,7 +61,15 @@ class Qtt(Project):
             self.exit_mob_reward_video_activity()
         elif Activity.ADBrowser in current_focus:
             self.exit_ad_browser()
+        elif Activity.KsRewardVideoActivity in current_focus:
+            self.exit_ks_reward_video_activity()
         sleep(6)
+
+    def exit_ks_reward_video_activity(self):
+        """退出快手激励视频活动页面"""
+        self.uia_ins.click(naf='true', index='1')
+        if Activity.KsRewardVideoActivity in self.adb_ins.get_current_focus():
+            self.exit_ks_reward_video_activity()
 
     def exit_incite_ad_activity(self):
         """退出奖励广告活动页面"""
@@ -89,6 +98,8 @@ class Qtt(Project):
     def exit_mob_reward_video_activity(self):
         """退出发现好货广告活动页面"""
         self.uia_ins.click(index='2', class_='android.widget.ImageView')
+        if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
+            self.exit_mob_reward_video_activity()
 
     def exit_ad_browser(self):
         """退出广告浏览器"""
@@ -116,7 +127,7 @@ class Qtt(Project):
         cnt = 0
         while cnt < 30:
             self.adb_ins.swipe(536, 1100, 536, 1000)
-            sleep(3)
+            sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
         if not self.uia_ins.get_dict(ResourceID.bh4):
@@ -176,6 +187,5 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        # while self.uia_ins.click_by_screen_text('看视频再领'):
-        #     self.exit_ad_activity()
         self.watch_news()
+        show_datetime('mainloop')
