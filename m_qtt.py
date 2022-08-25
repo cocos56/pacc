@@ -4,6 +4,7 @@ from pacc.project import Qtt
 
 Config.set_debug(True)
 Qtt('003001001').mainloop()
+# Qtt('003001001').watch_bxs()
 # Qtt('003001001').reopen_app()
 # Qtt('003001001').watch_videos_to_make_money()
 # Qtt('003001001').watch_little_videos()

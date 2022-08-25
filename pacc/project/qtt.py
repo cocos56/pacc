@@ -15,9 +15,14 @@ class Activity:
     MobRewardVideoActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.MobRewardVideoActivity'
     ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'  # 广告浏览器
     KsRewardVideoActivity = 'com.jifen.qukan/com.kwad.sdk.api.proxy.app.KsRewardVideoActivity'
+    AppActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.AppActivity'  # 看5秒领金币
+    # 【详情页】
     # 新闻详情
     NewsDetailNewActivity = \
         'com.jifen.qukan/com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'
+    # 视频详情
+    VideoDetailsActivity = \
+        'com.jifen.qukan/com.jifen.qukan.content.videodetail.VideoDetailsActivity'
 
 
 # pylint: disable=too-few-public-methods
@@ -40,6 +45,17 @@ class Qtt(Project):
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(16)
+        try:
+            self.uia_ins.click(ResourceID.ap7)
+        except FileNotFoundError as err:
+            print_err(err)
+        if self.uia_ins.click_by_screen_text('领取'):
+            if Activity.InciteADActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key(6)
+            else:
+                sleep(6)
+        # if self.uia_ins.click_by_screen_text('再领'):
+        #     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
         """随机滑动一段长度
@@ -91,14 +107,22 @@ class Qtt(Project):
                 self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
             print_err(err)
-            return self.exit_portrait_ad_activity()
+            if Activity.MainActivity not in self.adb_ins.get_current_focus():
+                return self.exit_portrait_ad_activity()
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
             return self.exit_portrait_ad_activity()
         return True
 
     def exit_mob_reward_video_activity(self):
         """退出发现好货广告活动页面"""
-        self.uia_ins.click(index='2', class_='android.widget.ImageView')
+        try:
+            self.uia_ins.click(index='2', class_='android.widget.ImageView')
+        except FileNotFoundError as err:
+            print_err(err)
+            if Activity.MainActivity not in self.adb_ins.get_current_focus() and self.\
+                    uia_ins.get_point_by_screen_text('立即下载'):
+                self.uia_ins.tap((980, 106))
+            return self.exit_mob_reward_video_activity()
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
             self.exit_mob_reward_video_activity()
 
@@ -117,9 +141,11 @@ class Qtt(Project):
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.uia_ins.click(text='关闭', index='2')
 
-    def watch_news_detail(self):
-        """看新闻详情（某条新闻文章）"""
-        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
+    def watch_detail(self):
+        """进入详情页"""
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.NewsDetailNewActivity in current_focus or Activity.\
+                VideoDetailsActivity in current_focus:
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key(6)
             self.uia_ins.tap((300, 400), 6)
@@ -131,16 +157,14 @@ class Qtt(Project):
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
-        if not self.uia_ins.get_dict(ResourceID.bh4):
-            self.watch_news_detail()
+        if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
+            self.watch_detail()
+        elif not self.uia_ins.get_dict(ResourceID.bh4):
+            self.watch_detail()
 
     def watch_news(self):
         """看新闻"""
         self.reopen_app()
-        try:
-            self.uia_ins.click(ResourceID.ap7)
-        except FileNotFoundError as err:
-            print_err(err)
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
         try:
@@ -155,7 +179,28 @@ class Qtt(Project):
             if self.uia_ins.click(ResourceID.bh4):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            self.watch_news_detail()
+            self.watch_detail()
+
+    def get_coins_by_bxs(self):
+        """通过bxs（看5秒领金币、看视频领金币）来获取金币"""
+        if self.uia_ins.click_by_screen_text(text='看5秒领金币'):
+            if Activity.AppActivity in self.adb_ins.get_current_focus():
+                sleep(9)
+                self.adb_ins.press_back_key(3)
+            return True
+        elif self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
+            self.exit_ad_activity()
+            while self.uia_ins.click_by_screen_text('看视频再领'):
+                self.exit_ad_activity()
+            return True
+        return False
+
+    def watch_bxs(self):
+        """观看bxs（看5秒领金币、看视频领金币）"""
+        self.reopen_app()
+        self.uia_ins.tap((757, 1836), 6)
+        while self.get_coins_by_bxs():
+            pass
 
     def watch_little_videos(self):
         """看小视频"""
@@ -188,5 +233,7 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
+        # while self.uia_ins.click_by_screen_text('看视频再领'):
+        #     self.exit_ad_activity()
         self.watch_news()
         show_datetime('mainloop')
