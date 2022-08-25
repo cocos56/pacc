@@ -141,12 +141,16 @@ class Qtt(Project):
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.uia_ins.click(text='关闭', index='2')
 
+    def refresh_detail(self):
+        """刷新详情页"""
+        self.adb_ins.press_back_key()
+        self.adb_ins.press_back_key(6)
+        self.uia_ins.tap((300, 400), 6)
+
     def watch_news_detail(self):
         """进入新闻详情页"""
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
-            self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key(6)
-            self.uia_ins.tap((300, 400), 6)
+            self.refresh_detail()
         else:
             return
         cnt = 0
@@ -161,13 +165,17 @@ class Qtt(Project):
 
     def watch_video_detail(self):
         """进入视频详情页"""
-        if Activity.VideoDetailsActivity not in self.adb_ins.get_current_focus():
+        if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
+            self.refresh_detail()
+        else:
             return
         cnt = 0
-        while cnt < 30:
+        while cnt < 60:
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
+        if Activity.VideoDetailsActivity:
+            self.watch_video_detail()
 
     def watch_detail(self):
         """进入视频或者新闻详情页赚金币"""
