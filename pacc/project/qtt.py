@@ -54,8 +54,8 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             else:
                 sleep(6)
-        elif self.uia_ins.click_by_screen_text('再领', self.uia_ins.txt):
-            self.exit_ad_activity()
+                if self.uia_ins.click_by_screen_text('再领', self.uia_ins.txt):
+                    self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
         """随机滑动一段长度
@@ -124,7 +124,8 @@ class Qtt(Project):
                 self.uia_ins.tap((980, 106))
             return self.exit_mob_reward_video_activity()
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
-            self.exit_mob_reward_video_activity()
+            return self.exit_mob_reward_video_activity()
+        return True
 
     def exit_ad_browser(self):
         """退出广告浏览器"""
@@ -206,7 +207,7 @@ class Qtt(Project):
                 sleep(9)
                 self.adb_ins.press_back_key(3)
             return True
-        elif self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
+        if self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
             self.exit_ad_activity()
             while self.uia_ins.click_by_screen_text('看视频再领'):
                 self.exit_ad_activity()
@@ -254,4 +255,5 @@ class Qtt(Project):
         # while self.uia_ins.click_by_screen_text('看视频再领'):
         #     self.exit_ad_activity()
         self.watch_detail()
+        self.watch_bxs()
         show_datetime('mainloop')
