@@ -54,8 +54,8 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             else:
                 sleep(6)
-        # if self.uia_ins.click_by_screen_text('再领'):
-        #     self.exit_ad_activity()
+        elif self.uia_ins.click_by_screen_text('再领', self.uia_ins.txt):
+            self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
         """随机滑动一段长度
@@ -141,11 +141,9 @@ class Qtt(Project):
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.uia_ins.click(text='关闭', index='2')
 
-    def watch_detail(self):
-        """进入详情页"""
-        current_focus = self.adb_ins.get_current_focus()
-        if Activity.NewsDetailNewActivity in current_focus or Activity.\
-                VideoDetailsActivity in current_focus:
+    def watch_news_detail(self):
+        """进入新闻详情页"""
+        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key(6)
             self.uia_ins.tap((300, 400), 6)
@@ -157,13 +155,21 @@ class Qtt(Project):
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
-        if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
-            self.watch_detail()
-        elif not self.uia_ins.get_dict(ResourceID.bh4):
-            self.watch_detail()
+        if not self.uia_ins.get_dict(ResourceID.bh4):
+            self.watch_news_detail()
+
+    def watch_video_detail(self):
+        """进入视频详情页"""
+        if Activity.VideoDetailsActivity not in self.adb_ins.get_current_focus():
+            return
+        cnt = 0
+        while cnt < 30:
+            sleep(2)
+            print(f'cnt={cnt}')
+            cnt += 1
 
     def watch_news(self):
-        """看新闻"""
+        """通过健康频道赚取金币"""
         self.reopen_app()
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
@@ -175,11 +181,14 @@ class Qtt(Project):
         except FileNotFoundError as err:
             print_err(err)
         self.uia_ins.tap((300, 400), 6)
-        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.NewsDetailNewActivity in current_focus:
             if self.uia_ins.click(ResourceID.bh4):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            self.watch_detail()
+            self.watch_news_detail()
+        elif Activity.VideoDetailsActivity in current_focus:
+            self.watch_video_detail()
 
     def get_coins_by_bxs(self):
         """通过bxs（看5秒领金币、看视频领金币）来获取金币"""
