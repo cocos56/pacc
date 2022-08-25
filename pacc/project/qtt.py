@@ -1,5 +1,7 @@
 """趣头条中央控制系统模块"""
+from datetime import datetime, timedelta
 from random import randint
+
 from .project import Project
 from ..base import run_forever, sleep, print_err, show_datetime
 
@@ -39,6 +41,14 @@ class ResourceID:
 
 class Qtt(Project):
     """趣头条中央控制系统类"""
+
+    def __init__(self, serial_num):
+        """构造函数
+
+        :param serial_num: 设备编号
+        """
+        super().__init__(serial_num)
+        self.last_loop_datetime = datetime.now()
 
     def open_app(self):
         """打开趣头条APP"""
@@ -160,6 +170,11 @@ class Qtt(Project):
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
+        if datetime.now()-self.last_loop_datetime > timedelta(minutes=20):
+            print('进入新闻详情页超过20分钟，需要退出')
+            return
+        else:
+            print(f'距离退出新闻详情页还剩：{datetime.now()-self.last_loop_datetime}')
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
                 uia_ins.get_dict(ResourceID.bh4):
             self.watch_news_detail()
@@ -175,6 +190,11 @@ class Qtt(Project):
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
+        if datetime.now()-self.last_loop_datetime > timedelta(minutes=20):
+            print('进入视频详情页超过20分钟，需要退出')
+            return
+        else:
+            print(f'距离退出视频详情页还剩：{datetime.now()-self.last_loop_datetime}')
         if Activity.VideoDetailsActivity:
             self.watch_video_detail()
 
@@ -257,3 +277,4 @@ class Qtt(Project):
         self.watch_detail()
         self.watch_bxs()
         show_datetime('mainloop')
+        self.last_loop_datetime = datetime.now()
