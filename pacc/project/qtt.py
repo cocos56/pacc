@@ -259,8 +259,6 @@ class Qtt(Project):
             print(f'swipe_cnt={swipe_cnt}')
             if swipe_cnt > 10:
                 swipe_cnt = 0
-                if self.uia_ins.click_by_screen_text('阅读奖励'):
-                    input()
 
     def watch_videos_to_make_money(self):
         """看视频赚钱的方法"""

@@ -1,0 +1,1 @@
+scrcpy -s ca61c071
