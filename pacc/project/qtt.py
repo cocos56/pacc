@@ -64,7 +64,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             else:
                 sleep(6)
-                if self.uia_ins.click_by_screen_text('再领', self.uia_ins.txt):
+                if self.uia_ins.click_by_screen_text('再领'):
                     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -174,7 +174,8 @@ class Qtt(Project):
             print('进入新闻详情页超过20分钟，需要退出')
             return
         else:
-            print(f'距离退出新闻详情页还剩：{datetime.now()-self.last_loop_datetime}')
+            print(f'距离退出新闻详情页还剩：'
+                  f'{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
                 uia_ins.get_dict(ResourceID.bh4):
             self.watch_news_detail()
@@ -194,7 +195,8 @@ class Qtt(Project):
             print('进入视频详情页超过20分钟，需要退出')
             return
         else:
-            print(f'距离退出视频详情页还剩：{datetime.now()-self.last_loop_datetime}')
+            print(f'距离退出视频详情页还剩：'
+                  f'{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         if Activity.VideoDetailsActivity:
             self.watch_video_detail()
 
