@@ -10,6 +10,7 @@ from ..base import run_forever, sleep, print_err, show_datetime
 class Activity:
     """趣头条中央控制系统模块的安卓活动名类"""
     MainActivity = 'com.jifen.qukan/com.jifen.qkbase.main.MainActivity'  # 主界面
+    BdShellActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.BdShellActivity'
     # 奖励广告活动
     InciteADActivity = 'com.jifen.qukan/com.iclicash.advlib.ui.front.InciteADActivity'
     PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
@@ -129,7 +130,7 @@ class Qtt(Project):
             self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
             print_err(err)
-            if Activity.MainActivity not in self.adb_ins.get_current_focus() and self.\
+            if Activity.MobRewardVideoActivity not in self.adb_ins.get_current_focus() and self.\
                     uia_ins.get_point_by_screen_text('立即下载'):
                 self.uia_ins.tap((980, 106))
             return self.exit_mob_reward_video_activity()
@@ -232,7 +233,10 @@ class Qtt(Project):
         if self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
             self.exit_ad_activity()
             while self.uia_ins.click_by_screen_text('看视频再领'):
-                self.exit_ad_activity()
+                if Activity.BdShellActivity in self.adb_ins.get_current_focus():
+                    self.adb_ins.press_back_key(3)
+                else:
+                    self.exit_ad_activity()
             return True
         return False
 
