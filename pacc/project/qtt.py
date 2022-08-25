@@ -155,7 +155,8 @@ class Qtt(Project):
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
-        if not self.uia_ins.get_dict(ResourceID.bh4):
+        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
+                uia_ins.get_dict(ResourceID.bh4):
             self.watch_news_detail()
 
     def watch_video_detail(self):
@@ -168,8 +169,8 @@ class Qtt(Project):
             print(f'cnt={cnt}')
             cnt += 1
 
-    def watch_news(self):
-        """通过健康频道赚取金币"""
+    def watch_detail(self):
+        """进入视频或者新闻详情页赚金币"""
         self.reopen_app()
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
@@ -244,5 +245,5 @@ class Qtt(Project):
         """趣头条中央控制系统类的主循环成员方法"""
         # while self.uia_ins.click_by_screen_text('看视频再领'):
         #     self.exit_ad_activity()
-        self.watch_news()
+        self.watch_detail()
         show_datetime('mainloop')
