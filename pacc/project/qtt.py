@@ -1,6 +1,7 @@
 """趣头条中央控制系统模块"""
 from datetime import datetime, timedelta
 from random import randint
+from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import run_forever, sleep, print_err, show_datetime
@@ -116,7 +117,7 @@ class Qtt(Project):
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
             else:
                 self.uia_ins.click(index='2', class_='android.widget.ImageView')
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             if Activity.MainActivity not in self.adb_ins.get_current_focus():
                 return self.exit_portrait_ad_activity()
