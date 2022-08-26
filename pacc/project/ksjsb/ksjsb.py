@@ -430,7 +430,7 @@ class Ksjsb(Project):
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""
-        if date.today() >= self.dbr.last_flash_benefits_date:
+        if self.dbr.last_flash_benefits_date >= date.today():
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -444,7 +444,7 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        if date.today() >= self.dbr.last_desktop_component_date:
+        if self.dbr.last_desktop_component_date >= date.today():
             print('今天已经领完桌面组件奖励了，无需重复操作')
             return
         self.reopen_app()
@@ -470,7 +470,7 @@ class Ksjsb(Project):
 
         :return: 成功获取或者已经获取返回True，否则返回False
         """
-        if date.today() == self.dbr.last_buy_things_date:
+        if self.dbr.last_buy_things_date >= date.today():
             print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -521,7 +521,7 @@ class Ksjsb(Project):
 
         :return: 兑换成功返回True，否则返回False
         """
-        if date.today() <= self.dbr.last_change_money_date:
+        if self.dbr.last_change_money_date >= date.today():
             print('今天已经把金币兑换成钱过了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -560,7 +560,7 @@ class Ksjsb(Project):
         """领取每日挑战奖励"""
         if enforce:
             print('正在强制执行领取每日挑战奖励的操作')
-        elif date.today() == self.dbr.last_daily_challenge_date:
+        elif self.dbr.last_daily_challenge_date >= date.today():
             print('今天已经领过每日挑战奖励了，无需重复操作')
             return True
         if enter_wealth_interface:
@@ -586,7 +586,7 @@ class Ksjsb(Project):
 
     def update_wealth(self):
         """更新财富值"""
-        if date.today() == self.dbr.last_update_wealth_date:
+        if self.dbr.last_update_wealth_date >= date.today():
             print('今天已经更新过财富值了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -614,7 +614,7 @@ class Ksjsb(Project):
 
         :return: 今天已经看视频赚完金币了返回True，否则返回False
         """
-        if date.today() <= self.dbr.last_watch_video_date:
+        if self.dbr.last_watch_video_date >= date.today():
             print('今天已经看视频赚完金币了，无需重复操作')
             return False
         print(f'距离下一轮任务轮询还剩'
