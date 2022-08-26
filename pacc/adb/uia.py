@@ -255,6 +255,7 @@ class UIAutomator:
                 return dic
         return False
 
+    # pylint: disable=too-many-branches
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                  index='', naf=''):
         """获取目标对象的字典信息
@@ -283,24 +284,24 @@ class UIAutomator:
             dic.update({'@text': unescape(dic['@text'])})
         if text:
             if dic:
-                print(f'检测到【{text}】')
+                print(f'检测到【text={text}】')
             else:
-                print(f'未找到【{text}】')
+                print(f'未找到【text={text}】')
         elif resource_id:
             if dic:
-                print(f'检测到【{resource_id}】')
+                print(f'检测到【resource_id={resource_id}】')
             else:
-                print(f'未找到【{resource_id}】')
+                print(f'未找到【resource_id={resource_id}】')
         elif class_:
             if dic:
-                print(f'检测到【{class_}】')
+                print(f'检测到【class_={class_}】')
             else:
-                print(f'未找到【{class_}】')
+                print(f'未找到【class_={class_}】')
         elif naf:
             if dic:
-                print(f'检测到【naf】')
+                print(f'检测到【naf={naf}】')
             else:
-                print(f'未找到【naf】')
+                print(f'未找到【naf={naf}】')
         return dic
 
     def get_dicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
