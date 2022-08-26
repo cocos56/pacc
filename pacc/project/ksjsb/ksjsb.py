@@ -438,9 +438,9 @@ class Ksjsb(Project):
         if not self.uia_ins.get_point_by_screen_text(text='限时福利14天领', txt=self.uia_ins.txt):
             self.dbu.update_last_flash_benefits_date(date.today())
             return
-        while self.uia_ins.click_by_screen_text(text='立即领取'):
+        if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
             sleep(12)
-        self.dbu.update_last_flash_benefits_date(date.today())
+            self.dbu.update_last_flash_benefits_date(date.today())
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
