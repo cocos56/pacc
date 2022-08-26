@@ -231,6 +231,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
                   f'{self.dbr.ipv4_addr}在线，正在尝试自动修复该问题')
             self.reboot()
+        return True
 
     def open_app(self, activity):
         """打开APP
