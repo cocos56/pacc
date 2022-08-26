@@ -61,7 +61,7 @@ class Qtt(Project):
         sleep(16)
         try:
             self.uia_ins.click(ResourceID.ap7)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
         if self.uia_ins.click_by_screen_text('领取'):
             if Activity.InciteADActivity in self.adb_ins.get_current_focus():
@@ -110,7 +110,7 @@ class Qtt(Project):
         self.adb_ins.press_back_key()
         self.uia_ins.click(text='坚决放弃')
 
-    def exit_portrait_ad_activity(self):
+    def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
         try:
             if not self.uia_ins.click(naf='true', index='1'):
@@ -121,8 +121,11 @@ class Qtt(Project):
                 self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
+            sleep(10)
+            if err_cnt > 6:
+                self.uia_ins.tap((1016, 63))
             if Activity.MainActivity not in self.adb_ins.get_current_focus():
-                return self.exit_portrait_ad_activity()
+                return self.exit_portrait_ad_activity(err_cnt+1)
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
             return self.exit_portrait_ad_activity()
         return True
@@ -133,8 +136,10 @@ class Qtt(Project):
             self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
             print_err(err)
+            if self.uia_ins.click_by_screen_text('跳过'):
+                return
             if Activity.MobRewardVideoActivity not in self.adb_ins.get_current_focus() and self.\
-                    uia_ins.get_point_by_screen_text('立即下载'):
+                    uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
             return self.exit_mob_reward_video_activity()
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
@@ -160,7 +165,7 @@ class Qtt(Project):
         """刷新详情页"""
         self.adb_ins.press_back_key()
         self.adb_ins.press_back_key(6)
-        self.uia_ins.tap((300, 400), 6)
+        self.uia_ins.tap((631, 633), 6)
 
     def watch_news_detail(self):
         """进入新闻详情页"""
@@ -209,7 +214,7 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
-        self.uia_ins.tap((300, 400), 6)
+        self.uia_ins.tap((631, 633), 6)
         try:
             if self.uia_ins.click(ResourceID.adh):
                 self.exit_ad_activity()
