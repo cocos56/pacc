@@ -85,10 +85,6 @@ class Qtt(Project):
                         index='1', class_='android.widget.ImageView', xml=self.uia_ins.xml):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
-            # else:
-            #     if Activity.MainActivity in self.adb_ins.get_current_focus():
-            #         return True
-            #     self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(10)
