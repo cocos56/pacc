@@ -359,7 +359,7 @@ class Ksjsb(Project):
                 sleep(1)
                 countdown -= 1
                 print(countdown)
-                self.adb_ins.swipe(536, 1100, 536, 1000)
+                self.adb_ins.swipe(536, 1150, 536, 1000)
                 current_focus = self.adb_ins.get_current_focus()
                 if Activity.KwaiYodaWebViewActivity in current_focus:
                     break_while = True
