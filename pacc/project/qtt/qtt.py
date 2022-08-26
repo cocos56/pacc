@@ -34,7 +34,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             else:
                 sleep(6)
-                if self.uia_ins.click_by_screen_text('再领'):
+                while self.uia_ins.click_by_screen_text('再领'):
                     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -81,13 +81,14 @@ class Qtt(Project):
         print('退出portrait广告活动页面')
         try:
             if not self.uia_ins.click(naf='true', index='1'):
-                if Activity.MainActivity in self.adb_ins.get_current_focus():
-                    return True
-                if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
+                if not self.uia_ins.click(
+                        index='1', class_='android.widget.ImageView', xml=self.uia_ins.xml):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
-            else:
-                self.uia_ins.click(index='2', class_='android.widget.ImageView')
+            # else:
+            #     if Activity.MainActivity in self.adb_ins.get_current_focus():
+            #         return True
+            #     self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(10)
@@ -220,7 +221,7 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((757, 1836), 6)
         while self.get_coins_by_bxs():
-            pass
+            sleep(6)
 
     def watch_little_videos(self):
         """看小视频"""

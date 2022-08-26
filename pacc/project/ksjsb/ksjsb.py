@@ -636,8 +636,14 @@ class Ksjsb(Project):
         if reopen_flag:
             self.reopen_app()
             self.uia_ins.tap((90, 140), 9)
+        not_cnt = 0
         while not self.uia_ins.secure_get_current_ui_hierarchy():
             sleep(10)
+            if not_cnt >= 12:
+                self.reopen_app()
+                self.uia_ins.tap((90, 140), 9)
+                not_cnt = 0
+            not_cnt += 1
         try:
             if self.uia_ins.get_dict(ResourceID.red_packet_anim) and not self.uia_ins.get_dict(
                     ResourceID.cycle_progress, xml=self.uia_ins.xml):

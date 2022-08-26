@@ -296,6 +296,11 @@ class UIAutomator:
                 print(f'检测到【{class_}】')
             else:
                 print(f'未找到【{class_}】')
+        elif naf:
+            if dic:
+                print(f'检测到【naf】')
+            else:
+                print(f'未找到【naf】')
         return dic
 
     def get_dicts(self, resource_id='', text='', content_desc='', xml='', bounds=''):
