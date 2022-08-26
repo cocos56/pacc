@@ -12,6 +12,7 @@ class Activity:
     """趣头条中央控制系统模块的安卓活动名类"""
     MainActivity = 'com.jifen.qukan/com.jifen.qkbase.main.MainActivity'  # 主界面
     BdShellActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.BdShellActivity'
+    WebActivity = 'com.jifen.qukan/com.jifen.qkbase.web.WebActivity'
     # 奖励广告活动
     InciteADActivity = 'com.jifen.qukan/com.iclicash.advlib.ui.front.InciteADActivity'
     PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
@@ -35,6 +36,7 @@ class ResourceID:
     ch1 = "com.jifen.qukan:id/ch1"  # 看视频赚钱
     a0m = 'com.jifen.qukan:id/a0m'  # 看视频再领xx金币
     bh4 = 'com.jifen.qukan:id/bh4'  # 阅读奖励图标
+    bhs = 'com.jifen.qukan:id/bhs'  # 阅读奖励图标新版
     # 【头条界面】
     b2d = "com.jifen.qukan:id/b2d"  # 文章标题
     ap7 = "com.jifen.qukan:id/ap7"  # 关闭图标（恭喜你获得一个5400金币的问卷任务）
@@ -179,7 +181,7 @@ class Qtt(Project):
             print(f'距离退出新闻详情页还剩：'
                   f'{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
-                uia_ins.get_dict(ResourceID.bh4):
+                uia_ins.get_dict(ResourceID.bhs):
             self.watch_news_detail()
 
     def watch_video_detail(self):
@@ -207,6 +209,7 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
+        self.uia_ins.tap((300, 400), 6)
         try:
             if self.uia_ins.click(ResourceID.adh):
                 self.exit_ad_activity()
@@ -214,10 +217,9 @@ class Qtt(Project):
                     self.exit_ad_activity()
         except FileNotFoundError as err:
             print_err(err)
-        self.uia_ins.tap((300, 400), 6)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.NewsDetailNewActivity in current_focus:
-            if self.uia_ins.click(ResourceID.bh4):
+            if self.uia_ins.click(ResourceID.bhs):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
             self.watch_news_detail()
