@@ -430,7 +430,7 @@ class Ksjsb(Project):
 
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""
-        if date.today() == self.dbr.last_flash_benefits_date:
+        if date.today() >= self.dbr.last_flash_benefits_date:
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
