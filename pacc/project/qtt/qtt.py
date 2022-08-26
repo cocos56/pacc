@@ -82,7 +82,7 @@ class Qtt(Project):
         try:
             if not self.uia_ins.click(naf='true', index='1'):
                 if Activity.MainActivity in self.adb_ins.get_current_focus():
-                    return
+                    return True
                 if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
@@ -106,7 +106,7 @@ class Qtt(Project):
         except FileNotFoundError as err:
             print_err(err)
             if self.uia_ins.click_by_screen_text('跳过'):
-                return
+                return True
             if Activity.MobRewardVideoActivity not in self.adb_ins.get_current_focus() and self.\
                     uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
@@ -151,9 +151,7 @@ class Qtt(Project):
         if datetime.now()-self.last_loop_datetime > timedelta(minutes=20):
             print('进入新闻详情页超过20分钟，需要退出')
             return
-        else:
-            print(f'距离退出新闻详情页还剩：'
-                  f'{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
+        print(f'距离退出新闻详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
                 uia_ins.get_dict(ResourceID.bhs):
             self.watch_news_detail()
@@ -172,9 +170,7 @@ class Qtt(Project):
         if datetime.now()-self.last_loop_datetime > timedelta(minutes=20):
             print('进入视频详情页超过20分钟，需要退出')
             return
-        else:
-            print(f'距离退出视频详情页还剩：'
-                  f'{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
+        print(f'距离退出视频详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         if Activity.VideoDetailsActivity:
             self.watch_video_detail()
 
