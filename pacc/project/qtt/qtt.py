@@ -79,16 +79,15 @@ class Qtt(Project):
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
         print('退出portrait广告活动页面')
-        # if Activity.MainActivity in self.adb_ins.get_current_focus():
-        #     return
         try:
             if not self.uia_ins.click(naf='true', index='1'):
+                if Activity.MainActivity in self.adb_ins.get_current_focus():
+                    return
                 if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
             else:
                 self.uia_ins.click(index='2', class_='android.widget.ImageView')
-            sleep(6)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(10)
@@ -184,16 +183,16 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((693, 253), 6)
         self.adb_ins.press_back_key(6)
-        self.uia_ins.tap((631, 633), 6)
         try:
             if self.uia_ins.click(ResourceID.adh):  # 领50金币
                 self.exit_ad_activity()
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            elif self.uia_ins.get_dict(ResourceID.ae6):  # 您已获得提取0.3元现金机会
+            elif self.uia_ins.get_dict(ResourceID.ae6, xml=self.uia_ins.xml):  # 您已获得提取0.3元现金机会
                 self.adb_ins.press_back_key()
         except FileNotFoundError as err:
             print_err(err)
+        self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.NewsDetailNewActivity in current_focus:
             if self.uia_ins.click(ResourceID.bhs):
