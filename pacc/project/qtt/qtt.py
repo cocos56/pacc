@@ -3,44 +3,10 @@ from datetime import datetime, timedelta
 from random import randint
 from xml.parsers.expat import ExpatError
 
-from .project import Project
-from ..base import run_forever, sleep, print_err, show_datetime
-
-
-# pylint: disable=too-few-public-methods
-class Activity:
-    """趣头条中央控制系统模块的安卓活动名类"""
-    MainActivity = 'com.jifen.qukan/com.jifen.qkbase.main.MainActivity'  # 主界面
-    BdShellActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.BdShellActivity'
-    WebActivity = 'com.jifen.qukan/com.jifen.qkbase.web.WebActivity'
-    # 奖励广告活动
-    InciteADActivity = 'com.jifen.qukan/com.iclicash.advlib.ui.front.InciteADActivity'
-    PortraitADActivity = 'com.jifen.qukan/com.qq.e.ads.PortraitADActivity'
-    # 发现好货广告活动
-    MobRewardVideoActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.MobRewardVideoActivity'
-    ADBrowser = 'com.jifen.qukan/com.iclicash.advlib.ui.front.ADBrowser'  # 广告浏览器
-    KsRewardVideoActivity = 'com.jifen.qukan/com.kwad.sdk.api.proxy.app.KsRewardVideoActivity'
-    AppActivity = 'com.jifen.qukan/com.baidu.mobads.sdk.api.AppActivity'  # 看5秒领金币
-    # 【详情页】
-    # 新闻详情
-    NewsDetailNewActivity = \
-        'com.jifen.qukan/com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'
-    # 视频详情
-    VideoDetailsActivity = \
-        'com.jifen.qukan/com.jifen.qukan.content.videodetail.VideoDetailsActivity'
-
-
-# pylint: disable=too-few-public-methods
-class ResourceID:
-    """趣头条中央控制系统模块的安卓资源身份码类"""
-    ch1 = "com.jifen.qukan:id/ch1"  # 看视频赚钱
-    a0m = 'com.jifen.qukan:id/a0m'  # 看视频再领xx金币
-    bh4 = 'com.jifen.qukan:id/bh4'  # 阅读奖励图标
-    bhs = 'com.jifen.qukan:id/bhs'  # 阅读奖励图标新版
-    # 【头条界面】
-    b2d = "com.jifen.qukan:id/b2d"  # 文章标题
-    ap7 = "com.jifen.qukan:id/ap7"  # 关闭图标（恭喜你获得一个5400金币的问卷任务）
-    adh = "com.jifen.qukan:id/adh"  # 领50金币
+from .activity import Activity
+from .resource_id import ResourceID
+from ..project import Project
+from ...base import run_forever, sleep, print_err, show_datetime
 
 
 class Qtt(Project):
@@ -112,6 +78,9 @@ class Qtt(Project):
 
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
+        print('退出portrait广告活动页面')
+        # if Activity.MainActivity in self.adb_ins.get_current_focus():
+        #     return
         try:
             if not self.uia_ins.click(naf='true', index='1'):
                 if not self.uia_ins.click(index='1', class_='android.widget.ImageView'):
@@ -119,11 +88,12 @@ class Qtt(Project):
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
             else:
                 self.uia_ins.click(index='2', class_='android.widget.ImageView')
+            sleep(6)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(10)
             if err_cnt > 6:
-                self.uia_ins.tap((1016, 63))
+                self.uia_ins.tap((1016, 63), 6)
             if Activity.MainActivity not in self.adb_ins.get_current_focus():
                 return self.exit_portrait_ad_activity(err_cnt+1)
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
@@ -216,10 +186,12 @@ class Qtt(Project):
         self.adb_ins.press_back_key(6)
         self.uia_ins.tap((631, 633), 6)
         try:
-            if self.uia_ins.click(ResourceID.adh):
+            if self.uia_ins.click(ResourceID.adh):  # 领50金币
                 self.exit_ad_activity()
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
+            elif self.uia_ins.get_dict(ResourceID.ae6):  # 您已获得提取0.3元现金机会
+                self.adb_ins.press_back_key()
         except FileNotFoundError as err:
             print_err(err)
         current_focus = self.adb_ins.get_current_focus()
@@ -260,13 +232,15 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((539, 1836), 6)
         swipe_cnt = 0
+        start_datetime = datetime.now()
         while True:
             swipe_cnt += 1
             self.random_swipe()
-            sleep(randint(15, 18))
-            print(f'swipe_cnt={swipe_cnt}')
-            if swipe_cnt > 10:
-                swipe_cnt = 0
+            sleep(randint(60, 90))
+            run_datetime = datetime.now()-start_datetime
+            print(f'swipe_cnt={swipe_cnt} run_datetime={run_datetime}')
+            if run_datetime > timedelta(minutes=30):
+                break
 
     def watch_videos_to_make_money(self):
         """看视频赚钱的方法"""
@@ -286,7 +260,10 @@ class Qtt(Project):
         """趣头条中央控制系统类的主循环成员方法"""
         # while self.uia_ins.click_by_screen_text('看视频再领'):
         #     self.exit_ad_activity()
-        self.watch_detail()
-        self.watch_bxs()
+        if datetime.now().hour > 5:
+            self.watch_little_videos()
+        else:
+            self.watch_detail()
+            self.watch_bxs()
         show_datetime('mainloop')
         self.last_loop_datetime = datetime.now()

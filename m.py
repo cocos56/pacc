@@ -9,7 +9,8 @@ Config.set_debug(True)
 DEVICE_SN = '003001001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-uia_ins.click_by_screen_text('跳过')
+# uia_ins.click('com.jifen.qukan:id/a8h')
+# uia_ins.click_by_screen_text('跳过')
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:

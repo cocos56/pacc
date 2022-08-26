@@ -1,11 +1,11 @@
-"""快手极速版工程包的资源ID模块"""
+"""快手极速版工程包的资源身份码模块"""
 ROOT = 'com.kuaishou.nebula:id/'
 NEO_VIDEO_ROOT = 'com.kuaishou.nebula.neo_video:id/'
 
 
 # pylint: disable=too-few-public-methods
 class ResourceID:
-    """快手极速版的安卓资源ID类"""
+    """快手极速版的安卓资源身份码类"""
     # 【桌面组件】
     tv_get_coin_right = f'{ROOT}tv_get_coin_right'  # 点击桌面组件获取金币奖励中的金币值
     tv_get_coin_left = f'{ROOT}tv_get_coin_left'  # 点击桌面组件获取金币奖励中的点击文字
