@@ -92,6 +92,7 @@ class Ksjsb(Project):
                 return True
         try:
             self.uia_ins.click(ResourceID.video_countdown_end_icon)
+            sleep(6)
         except FileNotFoundError as err:
             print_err(err)
             self.adb_ins.press_back_key(6)
@@ -338,9 +339,11 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('去逛街')
         self.adb_ins.swipe(600, 1860, 600, 560)
+        sleep(6)
         not_cnt = 0
         while not self.uia_ins.click_by_screen_text('逛街领金币'):
             self.adb_ins.swipe(600, 1860, 600, 660)
+            sleep(6)
             not_cnt += 1
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')

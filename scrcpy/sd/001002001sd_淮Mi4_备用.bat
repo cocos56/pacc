@@ -1,0 +1,1 @@
+scrcpy -s 4c26f6a6

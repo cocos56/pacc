@@ -231,7 +231,7 @@ class Qtt(Project):
             sleep(randint(60, 90))
             run_datetime = datetime.now()-start_datetime
             print(f'swipe_cnt={swipe_cnt} run_datetime={run_datetime}')
-            if run_datetime > timedelta(minutes=30):
+            if run_datetime > timedelta(minutes=20):
                 break
 
     def watch_videos_to_make_money(self):
@@ -252,7 +252,7 @@ class Qtt(Project):
         """趣头条中央控制系统类的主循环成员方法"""
         # while self.uia_ins.click_by_screen_text('看视频再领'):
         #     self.exit_ad_activity()
-        if datetime.now().hour > 5:
+        if datetime.now().hour > 10:
             self.watch_little_videos()
         else:
             self.watch_detail()
