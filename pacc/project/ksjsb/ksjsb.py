@@ -567,6 +567,8 @@ class Ksjsb(Project):
         """领取每日挑战奖励"""
         if enforce:
             print('正在强制执行领取每日挑战奖励的操作')
+        elif not self.dbr.last_daily_challenge_date:
+            pass
         elif self.dbr.last_daily_challenge_date >= date.today():
             print('今天已经领过每日挑战奖励了，无需重复操作')
             return True

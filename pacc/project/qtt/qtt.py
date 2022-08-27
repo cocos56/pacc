@@ -32,6 +32,8 @@ class Qtt(Project):
         if self.uia_ins.click_by_screen_text('领取'):
             if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(6)
+            elif self.uia_ins.get_point_by_screen_text('我的金币'):
+                self.uia_ins.tap((115, 1860), 6)
             else:
                 sleep(6)
                 while self.uia_ins.click_by_screen_text('再领'):
