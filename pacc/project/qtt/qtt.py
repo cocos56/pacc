@@ -69,12 +69,16 @@ class Qtt(Project):
 
     def exit_incite_ad_activity(self):
         """退出奖励广告活动页面"""
-        while not self.uia_ins.get_dict(text='点击重播'):
-            if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
-                self.adb_ins.press_back_key()
-            sleep(20)
-        self.adb_ins.press_back_key()
-        self.uia_ins.click(text='坚决放弃')
+        try:
+            while not self.uia_ins.get_dict(text='点击重播'):
+                if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
+                    self.adb_ins.press_back_key()
+                sleep(20)
+            self.adb_ins.press_back_key()
+            self.uia_ins.click(text='坚决放弃')
+        except FileNotFoundError as err:
+            print_err(err)
+            self.exit_incite_ad_activity()
 
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""

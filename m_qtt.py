@@ -4,4 +4,4 @@ from pacc.project import Qtt
 
 Config.set_debug(True)
 Qtt('003001001').mainloop()
-# Qtt('003001001').exit_ad_activity()
+# Qtt('003001001').exit_incite_ad_activity()
