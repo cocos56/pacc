@@ -475,7 +475,9 @@ class Ksjsb(Project):
 
         :return: 成功获取或者已经获取返回True，否则返回False
         """
-        if self.dbr.last_buy_things_date >= date.today():
+        if not self.dbr.last_buy_things_date:
+            pass
+        elif self.dbr.last_buy_things_date >= date.today():
             print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
             return True
         self.enter_wealth_interface()
