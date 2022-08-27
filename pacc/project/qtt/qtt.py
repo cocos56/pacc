@@ -78,7 +78,8 @@ class Qtt(Project):
             self.uia_ins.click(text='坚决放弃')
         except FileNotFoundError as err:
             print_err(err)
-            self.exit_incite_ad_activity()
+            if Activity.MainActivity not in self.adb_ins.get_current_focus():
+                self.exit_incite_ad_activity()
 
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
@@ -106,6 +107,7 @@ class Qtt(Project):
             self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
             print_err(err)
+            sleep(20)
             if self.uia_ins.click_by_screen_text('跳过'):
                 return True
             if Activity.MobRewardVideoActivity not in self.adb_ins.get_current_focus() and self.\
@@ -175,13 +177,14 @@ class Qtt(Project):
         if Activity.VideoDetailsActivity:
             self.watch_video_detail()
 
-    def watch_detail(self):
+    def watch_detail(self, reopen_flag=True):
         """进入视频或者新闻详情页赚金币"""
-        self.reopen_app()
-        self.uia_ins.tap((693, 253), 6)
-        self.adb_ins.press_back_key(6)
+        if reopen_flag:
+            self.reopen_app()
+            self.uia_ins.tap((693, 253), 6)
+            self.adb_ins.press_back_key(6)
         try:
-            if self.uia_ins.click(ResourceID.adh):  # 领50金币
+            if self.uia_ins.click(ResourceID.ae3):  # 领50金币
                 self.exit_ad_activity()
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
