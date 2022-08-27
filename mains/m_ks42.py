@@ -4,3 +4,5 @@ from pacc.project import Ksjsb
 
 Config.set_debug(True)
 Ksjsb('002004002').mainloop()
+# while True:
+#     Ksjsb('002004002').watch_video()

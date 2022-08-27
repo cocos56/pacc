@@ -256,10 +256,12 @@ class Qtt(Project):
         """趣头条中央控制系统类的主循环成员方法"""
         # while self.uia_ins.click_by_screen_text('看视频再领'):
         #     self.exit_ad_activity()
-        if datetime.now().hour > 10:
-            self.watch_little_videos()
-        else:
-            self.watch_detail()
-            self.watch_bxs()
+        # if datetime.now().hour > 10:
+        #     self.watch_little_videos()
+        # else:
+        #     self.watch_detail()
+        #     self.watch_bxs()
+        self.watch_detail()
+        self.watch_bxs()
         show_datetime('mainloop')
         self.last_loop_datetime = datetime.now()
