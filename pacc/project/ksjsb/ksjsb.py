@@ -156,7 +156,7 @@ class Ksjsb(Project):
 
         :return: 正常签到或者已经签到返回True，否则返回False
         """
-        if date.today() == self.dbr.last_sign_in_date:
+        if self.dbr.last_sign_in_date == date.today():
             print('今天已经签过到了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -187,7 +187,7 @@ class Ksjsb(Project):
 
         :return: 成功点击翻倍或者已经点击翻倍返回True，否则返回False
         """
-        if date.today() == self.dbr.last_double_bonus_date:
+        if self.dbr.last_double_bonus_date == date.today():
             print('今天已经点击翻倍了，无需重复操作')
             return True
         if enter_wealth_interface:
@@ -212,7 +212,7 @@ class Ksjsb(Project):
 
         :return: 正常开宝箱、已经开过或开完宝箱返回True
         """
-        if date.today() == self.dbr.last_treasure_box_date:
+        if self.dbr.last_treasure_box_date == date.today():
             print('今天已经把宝箱开完了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -307,7 +307,7 @@ class Ksjsb(Project):
 
     def watch_live(self):
         """看直播"""
-        if date.today() == self.dbr.last_watch_live_date:
+        if self.dbr.last_watch_live_date == date.today():
             print('今天已经把直播看完了，无需重复操作')
             return
         self.enter_wealth_interface()
@@ -333,7 +333,7 @@ class Ksjsb(Project):
 
         :return: 今天成功逛完街或者已经逛完街返回True，无法确定是否成功逛完则返回False
         """
-        if date.today() == self.dbr.last_shopping_date:
+        if self.dbr.last_shopping_date == date.today():
             print('今天已经逛完街了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -434,12 +434,12 @@ class Ksjsb(Project):
     def get_flash_benefits(self):
         """"领取限时福利：限时福利14天领"""
         if not self.dbr.last_flash_benefits_date:
-            pass
+            print('从未领取过限时福利')
         elif self.dbr.last_flash_benefits_date >= date.today():
             print('今天已经领完限时福利了，无需重复操作')
             return
         self.enter_wealth_interface()
-        print('领取限时福利')
+        print('正在领取限时福利')
         if not self.uia_ins.get_point_by_screen_text(text='限时福利14天领', txt=self.uia_ins.txt):
             self.dbu.update_last_flash_benefits_date(date.today())
             return
@@ -449,7 +449,7 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        if self.dbr.last_desktop_component_date >= date.today():
+        if self.dbr.last_desktop_component_date == date.today():
             print('今天已经领完桌面组件奖励了，无需重复操作')
             return
         self.reopen_app()
@@ -475,9 +475,7 @@ class Ksjsb(Project):
 
         :return: 成功获取或者已经获取返回True，否则返回False
         """
-        if not self.dbr.last_buy_things_date:
-            pass
-        elif self.dbr.last_buy_things_date >= date.today():
+        if self.dbr.last_buy_things_date == date.today():
             print('今天已经领完金币购划算页面内的所有奖励了，无需重复操作')
             return True
         self.enter_wealth_interface()
@@ -568,13 +566,13 @@ class Ksjsb(Project):
         if enforce:
             print('正在强制执行领取每日挑战奖励的操作')
         elif not self.dbr.last_daily_challenge_date:
-            pass
+            print('从未领取过每日挑战奖励')
         elif self.dbr.last_daily_challenge_date >= date.today():
             print('今天已经领过每日挑战奖励了，无需重复操作')
             return True
         if enter_wealth_interface:
             self.enter_wealth_interface()
-        print('领取每日挑战奖励')
+        print('正在领取每日挑战奖励')
         self.adb_ins.swipe(600, 1800, 600, 800)
         while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
             sleep(6)
@@ -595,11 +593,11 @@ class Ksjsb(Project):
 
     def update_wealth(self):
         """更新财富值"""
-        if self.dbr.last_update_wealth_date >= date.today():
+        if self.dbr.last_update_wealth_date == date.today():
             print('今天已经更新过财富值了，无需重复操作')
             return True
         self.enter_wealth_interface()
-        print('更新财富值')
+        print('正在更新财富值')
         self.uia_ins.tap((186, 360), 9)
         self.uia_ins.get_current_ui_hierarchy()
         gold_coins, cash_coupons = self.get_wealth()
@@ -689,7 +687,7 @@ class Ksjsb(Project):
                 self.update_wealth()
                 if not self.dbr.last_watch_video_date:
                     self.dbu.update_last_watch_video_date(date.min)
-                if date.today() > self.dbr.last_watch_video_date:
+                if self.dbr.last_watch_video_date < date.today():
                     if self.is_done_watching_video():
                         self.dbu.update_last_watch_video_date(date.today())
                     else:
