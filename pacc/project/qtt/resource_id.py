@@ -12,6 +12,10 @@ class ResourceID:
     adh = f'{ROOT}adh'  # 领50金币
     ae3 = f'{ROOT}ae3'  # 20220828新版领50金币
     ae6 = f'{ROOT}ae6'  # 您已获得提取0.3元现金机会
+    aps = f'{ROOT}aps'  # 关闭金币补贴计划
+
+    #  【任务界面】
+    a6u = f'{ROOT}a6u'  # 签到领x金币、看视频再领x金币
 
     ch1 = f'{ROOT}ch1'  # 看视频赚钱
     a0m = f'{ROOT}a0m'  # 看视频再领xx金币

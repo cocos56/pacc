@@ -57,7 +57,7 @@ class Project:
 
     def reopen_app(self):
         """重新打开APP"""
-        print('重新打开APP')
+        print('正在重新打开APP')
         self.free_memory()
         if 'MI 4' in self.adb_ins.dbr.model:
             last_cpu_temperature = 99

@@ -26,7 +26,8 @@ class Qtt(Project):
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(16)
         try:
-            self.uia_ins.click(ResourceID.ap7)
+            if not self.uia_ins.click(ResourceID.ap7):
+                self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
         if self.uia_ins.click_by_screen_text('领取'):
@@ -250,6 +251,16 @@ class Qtt(Project):
         self.uia_ins.tap((757, 1836), 6)
         while self.get_coins_by_bxs():
             sleep(6)
+
+    def sign_in(self):
+        """签到"""
+        self.reopen_app()
+        self.uia_ins.tap((765, 1833), 6)
+        print('正在签到')
+        if self.uia_ins.click(ResourceID.a6u, '签到领'):
+            while self.uia_ins.click(text='看视频再领'):
+                self.exit_ad_activity()
+            self.uia_ins.click(text='知道了')
 
     def watch_little_videos(self):
         """看小视频"""
