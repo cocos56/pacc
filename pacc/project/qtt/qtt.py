@@ -122,8 +122,9 @@ class Qtt(Project):
             sleep(20)
             if self.uia_ins.click_by_screen_text('跳过'):
                 return True
-            if Activity.MobRewardVideoActivity not in self.adb_ins.get_current_focus() and self.\
-                    uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
+            if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
+                self.uia_ins.tap((991, 61))
+            elif self.uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
             return self.exit_mob_reward_video_activity()
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
