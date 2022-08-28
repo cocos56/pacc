@@ -37,6 +37,9 @@ class Qtt(Project):
             else:
                 sleep(6)
                 while self.uia_ins.click_by_screen_text('再领'):
+                    sleep(6)
+                    if Activity.InciteADActivity in self.adb_ins.get_current_focus():
+                        self.adb_ins.press_back_key(6)
                     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -83,6 +86,7 @@ class Qtt(Project):
             self.uia_ins.click(text='坚决放弃')
         except FileNotFoundError as err:
             print_err(err)
+            sleep(5)
             current_focus = self.adb_ins.get_current_focus()
             if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
                 self.exit_incite_ad_activity()

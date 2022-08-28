@@ -1,0 +1,1 @@
+scrcpy -s efc0c4d4
