@@ -3,7 +3,7 @@ from pacc.config import Config
 from pacc.project import Qtt
 
 Config.set_debug(True)
-# Qtt('003001001').mainloop()
-Qtt('003001001').sign_in()
+Qtt('003001001').mainloop()
+# Qtt('003001001').sign_in()
 # Qtt('003001001').watch_detail(False)
 # Qtt('003001001').exit_incite_ad_activity()

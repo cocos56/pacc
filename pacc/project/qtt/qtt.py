@@ -41,7 +41,10 @@ class Qtt(Project):
                     sleep(6)
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                         self.adb_ins.press_back_key(6)
-                        self.uia_ins.click(text='继续观看')
+                        if self.uia_ins.click(text='继续观看'):
+                            pass
+                        elif self.uia_ins.click(text='有任务奖励未领取，是否继续？'):
+                            input()
                     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -293,7 +296,17 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        self.watch_detail()
-        self.watch_bxs()
-        show_datetime('mainloop')
-        self.last_loop_datetime = datetime.now()
+        # self.watch_detail()
+        # self.watch_bxs()
+        # show_datetime('mainloop')
+        # self.last_loop_datetime = datetime.now()
+
+        while self.uia_ins.click_by_screen_text('再领'):
+            sleep(6)
+            if Activity.InciteADActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key(6)
+                if self.uia_ins.click(text='继续观看'):
+                    pass
+                elif self.uia_ins.click(text='有任务奖励未领取，是否继续？'):
+                    input()
+            self.exit_ad_activity()

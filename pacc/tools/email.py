@@ -36,7 +36,7 @@ class EMail:
         msg['From'] = formataddr((f"{error}感知中枢", USER))  # 括号里的参数分别对应发件人昵称和账号
         msg['To'] = formataddr(("Coco56", RECEIVER))  # 括号里的参数分别对应收件人昵称和账号
         msg['Subject'] = f"{self.serial_num}{error}，请处理"  # 邮件的主题，也可以说是标题
-        print(f'正在发送{self.serial_num}的{error}感知邮件')
+        print(f'正在发送{self.serial_num}的{error}感知邮件，当前时间为：{datetime.now()}')
         try:
             # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
             server.sendmail(USER, [RECEIVER, ], msg.as_string())
