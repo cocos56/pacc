@@ -240,11 +240,11 @@ class Ksjsb(Project):
 
         :return: 成功获得或者已经获得返回True，否则返回False
         """
-        if date.today() == self.dbr.last_view_ads_date:
+        if self.dbr.last_view_ads_date == date.today():
             print('今天已经看完广告了，无需重复操作')
             return True
         self.enter_wealth_interface()
-        print('看广告视频得5000金币')
+        print('正在看广告视频得5000金币')
         self.adb_ins.swipe(600, 1600, 600, 960)
         not_cnt = 0
         while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):

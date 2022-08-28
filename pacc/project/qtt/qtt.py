@@ -49,6 +49,7 @@ class Qtt(Project):
 
     def exit_ad_activity(self):
         """退出广告活动页面"""
+        print('正在退出广告活动页面')
         sleep(6)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.InciteADActivity in current_focus:
@@ -65,12 +66,14 @@ class Qtt(Project):
 
     def exit_ks_reward_video_activity(self):
         """退出快手激励视频活动页面"""
+        print('正在退出快手激励视频活动页面')
         self.uia_ins.click(naf='true', index='1')
         if Activity.KsRewardVideoActivity in self.adb_ins.get_current_focus():
             self.exit_ks_reward_video_activity()
 
     def exit_incite_ad_activity(self):
         """退出奖励广告活动页面"""
+        print('正在退出奖励广告活动页面')
         try:
             while not self.uia_ins.get_dict(text='点击重播'):
                 if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
@@ -80,12 +83,13 @@ class Qtt(Project):
             self.uia_ins.click(text='坚决放弃')
         except FileNotFoundError as err:
             print_err(err)
-            if Activity.MainActivity not in self.adb_ins.get_current_focus():
+            current_focus = self.adb_ins.get_current_focus()
+            if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
                 self.exit_incite_ad_activity()
 
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
-        print('退出portrait广告活动页面')
+        print('正在退出portrait广告活动页面')
         try:
             if not self.uia_ins.click(naf='true', index='1'):
                 if not self.uia_ins.click(
@@ -105,6 +109,7 @@ class Qtt(Project):
 
     def exit_mob_reward_video_activity(self):
         """退出发现好货广告活动页面"""
+        print('正在退出发现好货广告活动页面')
         try:
             self.uia_ins.click(index='2', class_='android.widget.ImageView')
         except FileNotFoundError as err:
@@ -122,6 +127,7 @@ class Qtt(Project):
 
     def exit_ad_browser(self):
         """退出广告浏览器"""
+        print('正在退出广告浏览器')
         sleep(36)
         self.uia_ins.tap((584, 335), 16)
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
@@ -137,12 +143,14 @@ class Qtt(Project):
 
     def refresh_detail(self):
         """刷新详情页"""
+        print('正在刷新详情页')
         self.adb_ins.press_back_key()
         self.adb_ins.press_back_key(6)
         self.uia_ins.tap((631, 633), 6)
 
     def watch_news_detail(self):
         """进入新闻详情页"""
+        print('正在进入新闻详情页')
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus():
             self.refresh_detail()
         else:
@@ -163,6 +171,7 @@ class Qtt(Project):
 
     def watch_video_detail(self):
         """进入视频详情页"""
+        print('正在进入视频详情页')
         if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
             self.refresh_detail()
         else:
@@ -181,6 +190,7 @@ class Qtt(Project):
 
     def watch_detail(self, reopen_flag=True):
         """进入视频或者新闻详情页赚金币"""
+        print('正在进入视频或者新闻详情页赚金币')
         if reopen_flag:
             self.reopen_app()
             self.uia_ins.tap((693, 253), 6)
@@ -206,6 +216,7 @@ class Qtt(Project):
 
     def get_coins_by_bxs(self):
         """通过bxs（看5秒领金币、看视频领金币）来获取金币"""
+        print('正在通过bxs（看5秒领金币、看视频领金币）来获取金币')
         if self.uia_ins.click_by_screen_text(text='看5秒领金币'):
             if Activity.AppActivity in self.adb_ins.get_current_focus():
                 sleep(9)
@@ -223,6 +234,7 @@ class Qtt(Project):
 
     def watch_bxs(self):
         """观看bxs（看5秒领金币、看视频领金币）"""
+        print('正在观看bxs（看5秒领金币、看视频领金币）')
         self.reopen_app()
         self.uia_ins.tap((757, 1836), 6)
         while self.get_coins_by_bxs():
@@ -231,6 +243,7 @@ class Qtt(Project):
     def watch_little_videos(self):
         """看小视频"""
         self.reopen_app()
+        print('正在看小视频')
         self.uia_ins.tap((539, 1836), 6)
         swipe_cnt = 0
         start_datetime = datetime.now()
@@ -246,6 +259,7 @@ class Qtt(Project):
     def watch_videos_to_make_money(self):
         """看视频赚钱的方法"""
         self.reopen_app()
+        print('正在看视频赚钱的方法')
         self.uia_ins.tap((968, 1839), 6)
         self.uia_ins.click(ResourceID.ch1, '看视频赚钱')
         if Activity.InciteADActivity in self.adb_ins.get_current_focus():
@@ -253,19 +267,10 @@ class Qtt(Project):
                 sleep(30)
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
-        # while not self.uia_ins.secure_get_current_ui_hierarchy():
-        #     sleep(30)
 
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        # while self.uia_ins.click_by_screen_text('看视频再领'):
-        #     self.exit_ad_activity()
-        # if datetime.now().hour > 10:
-        #     self.watch_little_videos()
-        # else:
-        #     self.watch_detail()
-        #     self.watch_bxs()
         self.watch_detail()
         self.watch_bxs()
         show_datetime('mainloop')
