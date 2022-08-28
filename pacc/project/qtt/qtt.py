@@ -40,6 +40,7 @@ class Qtt(Project):
                     sleep(6)
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                         self.adb_ins.press_back_key(6)
+                        self.uia_ins.click(text='继续观看')
                     self.exit_ad_activity()
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
@@ -151,6 +152,8 @@ class Qtt(Project):
         self.adb_ins.press_back_key()
         self.adb_ins.press_back_key(6)
         self.uia_ins.tap((631, 633), 6)
+        if self.uia_ins.get_dict(text='安装并打开', index='0'):
+            self.refresh_detail()
 
     def watch_news_detail(self):
         """进入新闻详情页"""
@@ -210,6 +213,9 @@ class Qtt(Project):
             print_err(err)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
+        while self.uia_ins.get_dict(text='安装并打开', index='0'):
+            self.refresh_detail()
+            current_focus = self.adb_ins.get_current_focus()
         if Activity.NewsDetailNewActivity in current_focus:
             if self.uia_ins.click(ResourceID.bhs):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
