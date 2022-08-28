@@ -17,6 +17,9 @@ class ResourceID:
     #  【任务界面】
     a6u = f'{ROOT}a6u'  # 签到领x金币、看视频再领x金币
 
+    #  【我的界面】
+    be2 = 'com.jifen.qukan:id/be2'  # 提现兑换
+
     ch1 = f'{ROOT}ch1'  # 看视频赚钱
     a0m = f'{ROOT}a0m'  # 看视频再领xx金币
     bh4 = f'{ROOT}bh4'  # 阅读奖励图标

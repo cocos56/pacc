@@ -270,6 +270,21 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((977, 1839), 6)
         print('正在把金币换成钱')
+        self.uia_ins.click(ResourceID.be2)
+        sleep(6)
+        price_number = self.uia_ins.get_dict('price_number').get('@text', '0')
+        price_number = price_number.replace(',', '')
+        price_number = int(price_number)
+        print(price_number)
+        if price_number > 50000:
+            self.uia_ins.click(text='5元50000金币')
+        elif price_number > 10000:
+            self.uia_ins.click(text='1元10000金币')
+        elif price_number > 1000:
+            self.uia_ins.click(text='1000金币')
+        self.uia_ins.click('alipay_quick')  # 立即提现
+        if self.uia_ins.get_dict(text='提现成功，已到账'):
+            print('提现成功，已到账')
 
     def watch_little_videos(self):
         """看小视频"""
