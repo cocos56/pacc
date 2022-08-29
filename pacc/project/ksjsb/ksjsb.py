@@ -35,18 +35,22 @@ class Ksjsb(Project):
         try:
             if self.uia_ins.click(ResourceID.positive, '同意并继续'):
                 EMail(self.serial_num).send_login_alarm()
-                print('请手动输入密码后再继续向下执行程序')
+                print('请手动输入密码登录后再继续向下执行程序')
                 input()
             elif self.uia_ins.get_dict(ResourceID.password_login_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
                 self.uia_ins.click(ResourceID.switch_login_way)
                 EMail(self.serial_num).send_login_alarm()
-                print('请手动输入密码后再继续向下执行程序')
+                print('请手动输入密码登录后再继续向下执行程序')
                 input()
         except (FileNotFoundError, ExpatError) as err:
             print_err(f'is_loading {err}')
             self.adb_ins.press_back_key(12)
             self.uia_ins.tap((90, 140), 12)
+            if Activity.PhoneLoginActivity in self.adb_ins.get_current_focus():
+                EMail(self.serial_num).send_login_alarm()
+                print('请手动输入密码登录后再继续向下执行程序')
+                input()
             return True
         if retry_cnt >= 3:
             self.adb_ins.press_back_key(9)
@@ -348,7 +352,7 @@ class Ksjsb(Project):
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
                 return self.shopping()
-        sleep(12)
+        sleep(9)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.KwaiYodaWebViewActivity in current_focus:
             self.dbu.update_last_shopping_date(date.today())
