@@ -282,7 +282,7 @@ class Qtt(Project):
         if self.uia_ins.click(ResourceID.a6u, '签到领'):
             while self.uia_ins.click_by_screen_text(text='看视频再领'):
                 self.exit_ad_activity()
-            self.uia_ins.click(text='知道了')
+            self.uia_ins.click_by_screen_text(text='知道了')
 
     def change_money(self):
         """把金币换成钱"""
@@ -336,10 +336,7 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        while self.uia_ins.click_by_screen_text(text='看视频再领'):
-            self.exit_ad_activity()
-        self.uia_ins.click(text='知道了')
-        # self.watch_detail()
-        # self.watch_bxs()
-        # show_datetime('mainloop')
-        # self.last_loop_datetime = datetime.now()
+        self.watch_detail()
+        self.watch_bxs()
+        show_datetime('mainloop')
+        self.last_loop_datetime = datetime.now()
