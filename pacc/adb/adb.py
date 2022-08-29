@@ -263,7 +263,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         x1_coordinate, y1_coordinate = start_coordinate
         x2_coordinate, y2_coordinate = end_coordinate
         if duration == -1:
-            duration = randint(2000, 2001)
+            duration = randint(2500, 2501)
         cmd = f'{self.cmd}shell input swipe {x1_coordinate} {y1_coordinate} ' \
               f'{x2_coordinate} {y2_coordinate} {duration}'
         system(cmd)
