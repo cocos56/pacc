@@ -11,5 +11,5 @@ class PddVideo(Project):
     @run_forever
     def mainloop(self):
         """主循环函数"""
-        self.adb_ins.swipe(600, 1860, 600, 360)
+        self.adb_ins.swipe((600, 1860), (600, 360))
         sleep(randint(12, 15))

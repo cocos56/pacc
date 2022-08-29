@@ -38,8 +38,8 @@ class Project:
         """
         x_min, x_max = x_range
         a_y, b_y, c_y, d_y = y_list
-        self.adb_ins.swipe(randint(x_min, x_max), randint(a_y, b_y), randint(x_min, x_max),
-                           randint(c_y, d_y))
+        self.adb_ins.swipe((randint(x_min, x_max), randint(a_y, b_y)), (randint(x_min, x_max),
+                           randint(c_y, d_y)))
 
     def tap_free_button(self):
         """点击清理按钮"""

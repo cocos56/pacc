@@ -166,10 +166,10 @@ class Ksjsb(Project):
             print('今天已经签过到了，无需重复操作')
             return True
         self.enter_wealth_interface()
-        self.adb_ins.swipe(600, 1860, 600, 60)
+        self.adb_ins.swipe((600, 1860), (600, 60))
         not_cnt = 0
         while not self.uia_ins.click_by_screen_text('签到领金币'):
-            self.adb_ins.swipe(600, 1860, 600, 660)
+            self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
@@ -199,10 +199,10 @@ class Ksjsb(Project):
         if enter_wealth_interface:
             self.enter_wealth_interface()
         print('开启看视频奖励翻倍特权')
-        self.adb_ins.swipe(600, 1860, 600, 500)
+        self.adb_ins.swipe((600, 1860), (600, 500))
         not_cnt = 0
         while not self.uia_ins.get_point_by_screen_text('开启看视频奖励翻倍特权'):
-            self.adb_ins.swipe(600, 1860, 600, 660)
+            self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
@@ -251,10 +251,10 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('正在看广告视频得5000金币')
-        self.adb_ins.swipe(600, 1600, 600, 960)
+        self.adb_ins.swipe((600, 1600), (600, 960))
         not_cnt = 0
         while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):
-            self.adb_ins.swipe(600, 1800, 600, 800)
+            self.adb_ins.swipe((600, 1800), (600, 800))
             not_cnt += 1
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
@@ -319,7 +319,7 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('看直播')
         while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
-            self.adb_ins.swipe(600, 1800, 600, 800)
+            self.adb_ins.swipe((600, 1800), (600, 800))
         while self.uia_ins.click_by_screen_text(text='看直播得1.5万金币'):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
@@ -344,11 +344,11 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('去逛街')
-        self.adb_ins.swipe(600, 1860, 600, 560)
+        self.adb_ins.swipe((600, 1860), (600, 560))
         sleep(6)
         not_cnt = 0
         while not self.uia_ins.click_by_screen_text('逛街领金币'):
-            self.adb_ins.swipe(600, 1860, 600, 660)
+            self.adb_ins.swipe((600, 1860), (600, 660))
             sleep(6)
             not_cnt += 1
             if not_cnt >= 6:
@@ -368,7 +368,7 @@ class Ksjsb(Project):
                 sleep(1)
                 countdown -= 1
                 print(countdown)
-                self.adb_ins.swipe(536, 1100, 536, 1000, 2000)
+                self.adb_ins.swipe((536, 1100), (536, 1000), 2000)
                 current_focus = self.adb_ins.get_current_focus()
                 if Activity.KwaiYodaWebViewActivity in current_focus:
                     break_while = True
@@ -418,10 +418,10 @@ class Ksjsb(Project):
             return True
         self.enter_wealth_interface()
         print('领饭补')
-        self.adb_ins.swipe(600, 1800, 600, 600)
+        self.adb_ins.swipe((600, 1800), (600, 600))
         not_cnt = 0
         while not self.uia_ins.click_by_screen_text('到饭点领饭补'):
-            self.adb_ins.swipe(600, 1860, 600, 660)
+            self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
@@ -506,7 +506,7 @@ class Ksjsb(Project):
                 sleep(1)
                 countdown -= 1
                 print(countdown)
-                self.adb_ins.swipe(536, 1100, 536, 1000)
+                self.adb_ins.swipe((536, 1100), (536, 1000), 1500)
                 current_focus = self.adb_ins.get_current_focus()
                 if Activity.KwaiYodaWebViewActivity in current_focus:
                     break
@@ -579,7 +579,7 @@ class Ksjsb(Project):
         if enter_wealth_interface:
             self.enter_wealth_interface()
         print('正在领取每日挑战奖励')
-        self.adb_ins.swipe(600, 1800, 600, 800)
+        self.adb_ins.swipe((600, 1800), (600, 800))
         while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
             sleep(6)
         self.dbu.update_last_daily_challenge_date(date.today())

@@ -254,15 +254,14 @@ class ADB:  # pylint: disable=too-many-public-methods
         system(cmd)
         print(cmd)
 
-    # pylint: disable=too-many-arguments
-    def swipe(self, x1_coordinate, y1_coordinate, x2_coordinate, y2_coordinate, duration=-1):
+    def swipe(self, start_coordinate, end_coordinate, duration=-1):
         """滑动
-        :param x1_coordinate: 起点的x轴坐标值
-        :param y1_coordinate: 起点的y轴坐标值
-        :param x2_coordinate: 终点的x轴坐标值
-        :param y2_coordinate: 终点的y轴坐标值
+        :param start_coordinate: 起点的坐标（x1, y1）
+        :param end_coordinate: 终点的坐标（x2, y2）
         :param duration: the default duration is a random integer from 500 to 600
         """
+        x1_coordinate, y1_coordinate = start_coordinate
+        x2_coordinate, y2_coordinate = end_coordinate
         if duration == -1:
             duration = randint(500, 600)
         cmd = f'{self.cmd}shell input swipe {x1_coordinate} {y1_coordinate} ' \
@@ -278,7 +277,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         if duration == -1:
             duration = randint(1000, 1500)
-        self.swipe(x_coordinate, y_coordinate, x_coordinate, y_coordinate, duration)
+        self.swipe((x_coordinate, y_coordinate), (x_coordinate, y_coordinate), duration)
 
     def reboot_by_cmd(self, cmd):
         """通过CMD指令重启设备

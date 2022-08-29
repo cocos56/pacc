@@ -100,7 +100,7 @@ class Qtt(Project):
                 sleep(20)
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(5)
             current_focus = self.adb_ins.get_current_focus()
@@ -187,7 +187,7 @@ class Qtt(Project):
             return
         cnt = 0
         while cnt < 30:
-            self.adb_ins.swipe(536, 1100, 536, 1000)
+            self.adb_ins.swipe((536, 1100), (536, 1000))
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
