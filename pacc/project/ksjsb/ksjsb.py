@@ -698,7 +698,8 @@ class Ksjsb(Project):
                         self.dbu.update_last_watch_video_date(date.today())
                     else:
                         self.adb_ins.press_back_key()
-            self.reopen_app()
+            else:
+                self.reopen_app()
         if not self.watch_video():
             self.free_memory()
             seconds = (datetime.fromisoformat(
