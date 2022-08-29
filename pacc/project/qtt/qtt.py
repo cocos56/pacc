@@ -42,7 +42,7 @@ class Qtt(Project):
                     click_cnt += 1
                     sleep(6)
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
-                        self.adb_ins.press_back_key(6)
+                        self.adb_ins.press_back_key(9)
                         if self.uia_ins.secure_get_current_ui_hierarchy() and self.uia_ins.click(
                                 text='有任务奖励未领取，是否继续？'):
                             self.adb_ins.press_back_key()
@@ -236,6 +236,8 @@ class Qtt(Project):
             print_err(err)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
+        if Activity.ADBrowser in current_focus:
+            return self.watch_detail()
         while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
                 naf='true', index='1'):
             self.refresh_detail()
@@ -247,6 +249,7 @@ class Qtt(Project):
             self.watch_news_detail()
         elif Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
+        return True
 
     def get_coins_by_bxs(self):
         """通过bxs（看5秒领金币、看视频领金币）来获取金币"""
