@@ -5,7 +5,12 @@ ROOT = 'com.jifen.qukan/com.'
 # pylint: disable=too-few-public-methods
 class Activity:
     """趣头条中央控制系统模块的安卓活动名类"""
-    MainActivity = f'{ROOT}jifen.qkbase.main.MainActivity'  # 主界面
+    # 【主界面】
+    MainActivity = f'{ROOT}jifen.qkbase.main.MainActivity'
+
+    # 【搜索界面】由主界面转入
+    H5SearchPreLoadActivity = f'{ROOT}jifen.qukan.content.search.H5SearchPreLoadActivity'
+
     BdShellActivity = f'{ROOT}baidu.mobads.sdk.api.BdShellActivity'
     WebActivity = f'{ROOT}jifen.qkbase.web.WebActivity'
     # 奖励广告活动

@@ -121,6 +121,8 @@ class Qtt(Project):
         print('正在退出发现好货广告活动页面')
         try:
             self.uia_ins.click(index='2', class_='android.widget.ImageView')
+            while Activity.H5SearchPreLoadActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key(6)
         except FileNotFoundError as err:
             print_err(err)
             sleep(20)
@@ -317,7 +319,17 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        self.watch_detail()
-        self.watch_bxs()
-        show_datetime('mainloop')
-        self.last_loop_datetime = datetime.now()
+        # self.watch_detail()
+        # self.watch_bxs()
+        # show_datetime('mainloop')
+        # self.last_loop_datetime = datetime.now()
+
+        while self.uia_ins.click_by_screen_text('再领'):
+            sleep(6)
+            if Activity.InciteADActivity in self.adb_ins.get_current_focus():
+                self.adb_ins.press_back_key(6)
+                if self.uia_ins.click(text='有任务奖励未领取，是否继续？'):
+                    self.adb_ins.press_back_key()
+                else:
+                    self.uia_ins.click(text='继续观看', xml=self.uia_ins.xml)
+            self.exit_ad_activity()
