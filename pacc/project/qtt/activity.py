@@ -11,6 +11,9 @@ class Activity:
     # 【搜索界面】由主界面转入
     H5SearchPreLoadActivity = f'{ROOT}jifen.qukan.content.search.H5SearchPreLoadActivity'
 
+    #  【小米商店应用详情】由主界面的新闻标题中的广告标题转入
+    AppDetailActivityInner = 'com.xiaomi.market/com.xiaomi.market.ui.detail.AppDetailActivityInner'
+
     BdShellActivity = f'{ROOT}baidu.mobads.sdk.api.BdShellActivity'
     WebActivity = f'{ROOT}jifen.qkbase.web.WebActivity'
     # 奖励广告活动

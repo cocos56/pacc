@@ -44,7 +44,7 @@ class Qtt(Project):
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                         self.adb_ins.press_back_key(6)
                         if self.uia_ins.secure_get_current_ui_hierarchy() and self.uia_ins.click(
-                                text='有任务奖励未领取，是否继续？', xml=self.uia_ins.xml):
+                                text='有任务奖励未领取，是否继续？'):
                             self.adb_ins.press_back_key()
                         else:
                             self.uia_ins.click(text='继续观看', xml=self.uia_ins.xml)
@@ -166,6 +166,11 @@ class Qtt(Project):
         self.uia_ins.tap((631, 633), 6)
         if self.uia_ins.get_dict(text='安装并打开', index='0'):
             self.refresh_detail()
+        elif Activity.AppDetailActivityInner in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key()
+            self.refresh_detail()
 
     def watch_news_detail(self):
         """进入新闻详情页"""
@@ -225,7 +230,8 @@ class Qtt(Project):
             print_err(err)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
-        while self.uia_ins.get_dict(text='安装并打开', index='0'):
+        while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
+                naf='true', index='1'):
             self.refresh_detail()
             current_focus = self.adb_ins.get_current_focus()
         if Activity.NewsDetailNewActivity in current_focus:
