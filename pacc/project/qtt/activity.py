@@ -24,6 +24,8 @@ class Activity:
     ADBrowser = f'{ROOT}iclicash.advlib.ui.front.ADBrowser'  # 广告浏览器
     KsRewardVideoActivity = f'{ROOT}kwad.sdk.api.proxy.app.KsRewardVideoActivity'
     AppActivity = f'{ROOT}baidu.mobads.sdk.api.AppActivity'  # 看5秒领金币
+    Stub_Standard_Portrait_Activity = f'{ROOT}bykv.vk.openvk.stub.activity.' \
+                                      f'Stub_Standard_Portrait_Activity'
     # 【详情页】
     # 新闻详情
     NewsDetailNewActivity = f'{ROOT}jifen.qukan.content.newsdetail.news.NewsDetailNewActivity'

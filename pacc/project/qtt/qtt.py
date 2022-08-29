@@ -75,7 +75,13 @@ class Qtt(Project):
             self.exit_ad_browser()
         elif Activity.KsRewardVideoActivity in current_focus:
             self.exit_ks_reward_video_activity()
+        elif Activity.Stub_Standard_Portrait_Activity in current_focus:
+            self.exit_stub_standard_portrait_activity()
         sleep(6)
+
+    def exit_stub_standard_portrait_activity(self):
+        """退出stub_standard_portrait活动页面"""
+        self.uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
 
     def exit_ks_reward_video_activity(self):
         """退出快手激励视频活动页面"""
@@ -274,7 +280,7 @@ class Qtt(Project):
         self.uia_ins.tap((765, 1833), 6)
         print('正在签到')
         if self.uia_ins.click(ResourceID.a6u, '签到领'):
-            while self.uia_ins.click(text='看视频再领'):
+            while self.uia_ins.click_by_screen_text(text='看视频再领'):
                 self.exit_ad_activity()
             self.uia_ins.click(text='知道了')
 
@@ -330,7 +336,10 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
-        self.watch_detail()
-        self.watch_bxs()
-        show_datetime('mainloop')
-        self.last_loop_datetime = datetime.now()
+        while self.uia_ins.click_by_screen_text(text='看视频再领'):
+            self.exit_ad_activity()
+        self.uia_ins.click(text='知道了')
+        # self.watch_detail()
+        # self.watch_bxs()
+        # show_datetime('mainloop')
+        # self.last_loop_datetime = datetime.now()
