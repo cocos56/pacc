@@ -105,9 +105,9 @@ class Qtt(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(5)
-            current_focus = self.adb_ins.get_current_focus()
-            if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
-                self.exit_incite_ad_activity()
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
+            self.exit_incite_ad_activity()
 
     def exit_portrait_ad_activity(self, err_cnt=0):
         """退出portrait广告活动页面"""
@@ -157,14 +157,19 @@ class Qtt(Project):
         self.uia_ins.tap((584, 335), 16)
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.adb_ins.press_back_key(16)
+        else:
+            return True
         self.uia_ins.tap((584, 335), 16)
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.adb_ins.press_back_key(16)
+        else:
+            return True
         self.uia_ins.tap((584, 335), 16)
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.adb_ins.press_back_key(16)
         if Activity.ADBrowser in self.adb_ins.get_current_focus():
             self.uia_ins.click(text='关闭', index='2')
+        return True
 
     def refresh_detail(self):
         """刷新详情页"""
@@ -241,7 +246,7 @@ class Qtt(Project):
             print_err(err)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
-        if Activity.ADBrowser in current_focus:
+        if Activity.ADBrowser in current_focus or Activity.AppActivity in current_focus:
             return self.watch_detail()
         if Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
@@ -298,7 +303,11 @@ class Qtt(Project):
         self.uia_ins.tap((977, 1839), 6)
         print('正在把金币换成钱')
         self.uia_ins.click(ResourceID.be2)
-        sleep(6)
+        if self.uia_ins.click(text='重试', index='2'):
+            sleep(6)
+        sleep(9)
+        if self.uia_ins.get_dict('recommendNewProduct'):
+            return self.change_money()
         price_number = self.uia_ins.get_dict('price_number').get('@text', '0')
         price_number = price_number.replace(',', '')
         price_number = int(price_number)
@@ -312,6 +321,9 @@ class Qtt(Project):
         self.uia_ins.click('alipay_quick')  # 立即提现
         if self.uia_ins.get_dict(text='提现成功，已到账'):
             print('提现成功，已到账')
+            return True
+        print('提现失败，可能由于签到时间不足')
+        return False
 
     def watch_little_videos(self):
         """看小视频"""

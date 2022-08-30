@@ -9,7 +9,7 @@ Config.set_debug(True)
 DEVICE_SN = '003001001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
-# uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
+uia_ins.click(text='重试', index='2')
 # uia_ins.click_by_screen_text('跳过')
 try:
     uia_ins.get_current_ui_hierarchy()
