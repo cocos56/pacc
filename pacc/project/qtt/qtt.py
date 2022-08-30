@@ -192,7 +192,7 @@ class Qtt(Project):
             return
         cnt = 0
         while cnt < 30:
-            self.adb_ins.swipe((536, 1100), (536, 1000))
+            self.adb_ins.swipe((536, 1100), (536, 1000), 500)
             sleep(2)
             print(f'cnt={cnt}')
             cnt += 1
