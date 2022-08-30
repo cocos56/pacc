@@ -614,7 +614,7 @@ class Ksjsb(Project):
         self.dbu.update_last_update_wealth_date(date.today())
         return True
 
-    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
+    def random_swipe(self, x_range=(360, 390), y_list=(1660, 1690, 260, 290)):
         """随机滑动一段长度
 
         :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
