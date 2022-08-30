@@ -52,13 +52,14 @@ class Qtt(Project):
                     if click_cnt >= 5:
                         break
 
-    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290)):
+    def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290), duration=500):
         """随机滑动一段长度
 
         :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
         :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
+        :param duration: the default duration value -1 means a random integer from 2500 to 2501
         """
-        super().random_swipe(x_range, y_list)
+        super().random_swipe(x_range, y_list, duration)
 
     def exit_ad_activity(self):
         """退出广告活动页面"""
@@ -95,7 +96,8 @@ class Qtt(Project):
         print('正在退出奖励广告活动页面')
         try:
             while not self.uia_ins.get_dict(text='点击重播'):
-                if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml):
+                if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
+                        text='安装并打开', xml=self.uia_ins.xml):
                     self.adb_ins.press_back_key()
                 sleep(20)
             self.adb_ins.press_back_key()
@@ -215,7 +217,7 @@ class Qtt(Project):
             print('进入视频详情页超过20分钟，需要退出')
             return
         print(f'距离退出视频详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
-        if Activity.VideoDetailsActivity:
+        if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
             self.watch_video_detail()
 
     def watch_detail(self, reopen_flag=True):
@@ -238,6 +240,8 @@ class Qtt(Project):
         current_focus = self.adb_ins.get_current_focus()
         if Activity.ADBrowser in current_focus:
             return self.watch_detail()
+        elif Activity.VideoDetailsActivity in current_focus:
+            self.watch_video_detail()
         while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
                 naf='true', index='1'):
             self.refresh_detail()
@@ -247,8 +251,6 @@ class Qtt(Project):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
             self.watch_news_detail()
-        elif Activity.VideoDetailsActivity in current_focus:
-            self.watch_video_detail()
         return True
 
     def get_coins_by_bxs(self):

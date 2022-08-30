@@ -30,11 +30,12 @@ class Project:
         self.adb_ins = ADB(serial_num)
         self.uia_ins = UIAutomator(serial_num)
 
-    def random_swipe(self, x_range, y_list):
+    def random_swipe(self, x_range, y_list, duration=-1):
         """随机滑动一段长度
 
         :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
         :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
+        :param duration: the default duration value -1 means a random integer from 2500 to 2501
         """
         x_min, x_max = x_range
         a_y, b_y, c_y, d_y = y_list
