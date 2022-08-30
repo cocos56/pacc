@@ -187,6 +187,9 @@ class Qtt(Project):
             self.refresh_detail()
         else:
             return
+        if Activity.NewsDetailNewActivity not in self.adb_ins.get_current_focus():
+            print('未检测到新闻详情页活动，需要退出')
+            return
         cnt = 0
         while cnt < 30:
             self.adb_ins.swipe((536, 1100), (536, 1000))
