@@ -614,13 +614,14 @@ class Ksjsb(Project):
         self.dbu.update_last_update_wealth_date(date.today())
         return True
 
-    def random_swipe(self, x_range=(360, 390), y_list=(1660, 1690, 160, 190)):
+    def random_swipe(self, x_range=(360, 390), y_list=(1660, 1690, 160, 190), duration=-1):
         """随机滑动一段长度
 
         :param x_range : x_min（A、C点的X轴坐标）与x_max（B、D点的X轴坐标）
         :param y_list: [A点的Y轴坐标，B点的Y轴坐标，C点的Y轴坐标，D点的Y轴坐标]
+        :param duration: the default duration value -1 means a random integer from 2500 to 2501
         """
-        super().random_swipe(x_range, y_list)
+        super().random_swipe(x_range, y_list, duration)
 
     def watch_video(self):
         """看视频赚金币

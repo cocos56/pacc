@@ -243,7 +243,7 @@ class Qtt(Project):
         current_focus = self.adb_ins.get_current_focus()
         if Activity.ADBrowser in current_focus:
             return self.watch_detail()
-        elif Activity.VideoDetailsActivity in current_focus:
+        if Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
         while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
                 naf='true', index='1'):
