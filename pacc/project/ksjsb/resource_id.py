@@ -27,6 +27,7 @@ class ResourceID:
     # 【登录界面】由观看视频页面->原登录后的左上方的三个杠所在的位置转入
     password_login_title = f'{ROOT}password_login_title'  # 登录后更精彩
     switch_login_way = f'{ROOT}switch_login_way'  # 密码登录
+    login_mode_switcher = f'{ROOT}login_mode_switcher'  # 20220901新版密码登录
 
     # 【观看广告页面】
     video_countdown = f'{NEO_VIDEO_ROOT}video_countdown'  # 广告视频倒计时
