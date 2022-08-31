@@ -105,6 +105,7 @@ class Qtt(Project):
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(5)
+            self.uia_ins.click_by_screen_text('关闭')
         current_focus = self.adb_ins.get_current_focus()
         if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
             self.exit_incite_ad_activity()
@@ -261,7 +262,7 @@ class Qtt(Project):
             if self.uia_ins.click(ResourceID.bhs):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            if self.uia_ins.click(ResourceID.a8h):
+            if self.uia_ins.get_dict(ResourceID.a8h):
                 self.watch_news_detail()
         return True
 

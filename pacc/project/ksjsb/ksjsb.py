@@ -34,11 +34,7 @@ class Ksjsb(Project):
         """
         print(f'is_loading retry_cnt={retry_cnt}')
         try:
-            if self.uia_ins.click(ResourceID.positive, '同意并继续'):
-                EMail(self.serial_num).send_login_alarm()
-                print('请手动输入密码登录后再继续向下执行程序')
-                input()
-            elif self.uia_ins.\
+            if self.uia_ins.\
                     get_dict(ResourceID.password_login_title, xml=self.uia_ins.xml) or self.uia_ins\
                     .click(ResourceID.login_text, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
