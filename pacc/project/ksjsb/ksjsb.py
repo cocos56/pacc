@@ -690,6 +690,7 @@ class Ksjsb(Project):
         """主循环"""
         if date.today() > date.fromisoformat(str(self.last_loop_datetime)[:10]) or datetime. \
                 now() - self.last_loop_datetime > timedelta(minutes=20):
+            self.adb_ins.keep_online()
             self.update_version_info()
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
