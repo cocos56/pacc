@@ -227,7 +227,7 @@ class Qtt(Project):
         if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
             self.watch_video_detail()
 
-    def watch_detail(self, reopen_flag=True):
+    def watch_detail(self, reopen_flag=True):  # pylint: disable=too-many-branches
         """进入视频或者新闻详情页赚金币"""
         print('正在进入视频或者新闻详情页赚金币')
         if reopen_flag:
