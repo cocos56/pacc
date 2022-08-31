@@ -199,6 +199,7 @@ class Ksjsb(Project):
             print('版本信息是最新版本，无需更新操作')
             return True
         self.dbu.update_version_info(version_info)
+        self.last_update_version_info_date = date.today()
         return True
 
     def get_double_bonus(self, enter_wealth_interface=True):
