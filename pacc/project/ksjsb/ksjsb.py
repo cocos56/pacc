@@ -38,7 +38,7 @@ class Ksjsb(Project):
                     ResourceID.password_login_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
                 if not self.uia_ins.click(ResourceID.login_mode_switcher):
-                    self.uia_ins.click(ResourceID.switch_login_way)
+                    self.uia_ins.click(ResourceID.switch_login_way, xml=self.uia_ins.xml)
                 EMail(self.serial_num).send_login_alarm()
                 print('请手动输入密码登录后再继续向下执行程序')
                 input()
