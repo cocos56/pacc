@@ -97,7 +97,8 @@ class Qtt(Project):
         try:
             while not self.uia_ins.get_dict(text='点击重播'):
                 if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
-                        text='安装并打开', xml=self.uia_ins.xml):
+                        text='安装并打开', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
+                        text='继续观看', xml=self.uia_ins.xml):
                     self.adb_ins.press_back_key()
                 sleep(20)
             self.adb_ins.press_back_key()
