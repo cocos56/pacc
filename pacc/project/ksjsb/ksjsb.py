@@ -22,6 +22,7 @@ class Ksjsb(Project):
         """
         super().__init__(serial_num)
         self.last_loop_datetime = datetime.now() - timedelta(minutes=30)
+        self.last_update_version_info_date = date.today() - timedelta(days=1)
         self.view_ads_cnt = 0
         self.dbr = RetrieveKsjsb(serial_num)
         self.dbu = UpdateKsjsb(serial_num)
@@ -187,6 +188,18 @@ class Ksjsb(Project):
             self.dbu.update_last_sign_in_date(date.today())
             return True
         return False
+
+    def update_version_info(self):
+        """更新版本信息"""
+        if self.last_update_version_info_date == date.today():
+            print('今天已经更新过版本信息了，无需重复操作')
+            return True
+        version_info = self.adb_ins.get_app_version_info('com.kuaishou.nebula')
+        if version_info == self.dbr.version_info:
+            print('版本信息是最新版本，无需更新操作')
+            return True
+        self.dbu.update_version_info(version_info)
+        return True
 
     def get_double_bonus(self, enter_wealth_interface=True):
         """点击翻倍：开启看视频奖励翻倍特权
@@ -676,6 +689,7 @@ class Ksjsb(Project):
         """主循环"""
         if date.today() > date.fromisoformat(str(self.last_loop_datetime)[:10]) or datetime. \
                 now() - self.last_loop_datetime > timedelta(minutes=20):
+            self.update_version_info()
             self.adb_ins.reboot_per_day()
             self.get_double_bonus()
             self.sign_in()

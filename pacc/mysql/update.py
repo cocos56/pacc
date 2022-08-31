@@ -120,6 +120,14 @@ class UpdateKsjsb(Update):
         self.dbr.last_sign_in_date = last_sign_in_date
         print(self.query('last_sign_in_date', last_sign_in_date))
 
+    def update_version_info(self, version_info):
+        """更新版本信息
+
+        :param version_info: 版本信息
+        """
+        self.dbr.version_info = version_info
+        print(self.query('version_info', version_info))
+
     def update_last_double_bonus_date(self, last_double_bonus_date):
         """更新上一次点击翻倍的日期
 
