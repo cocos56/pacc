@@ -34,9 +34,8 @@ class Ksjsb(Project):
         """
         print(f'is_loading retry_cnt={retry_cnt}')
         try:
-            if self.uia_ins.\
-                    get_dict(ResourceID.password_login_title) or self.uia_ins\
-                    .click(ResourceID.login_text, xml=self.uia_ins.xml):
+            if self.uia_ins.click(ResourceID.login_text) or self.uia_ins.get_dict(
+                    ResourceID.password_login_title, xml=self.uia_ins.xml):
                 self.adb_ins.press_back_key()
                 self.uia_ins.click(ResourceID.switch_login_way)
                 EMail(self.serial_num).send_login_alarm()
