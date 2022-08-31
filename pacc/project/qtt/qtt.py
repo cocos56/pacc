@@ -283,23 +283,25 @@ class Qtt(Project):
             return True
         return False
 
+    def enter_task_interface(self):
+        """进入任务界面"""
+        self.reopen_app()
+        print('正在进入任务界面')
+        self.uia_ins.tap((765, 1833), 6)
+        try:
+            if self.uia_ins.click(ResourceID.a6u, '签到领'):
+                while self.uia_ins.click_by_screen_text(text='看视频再领'):
+                    self.exit_ad_activity()
+                self.uia_ins.click_by_screen_text(text='知道了')
+        except FileNotFoundError as err:
+            print_err(err)
+
     def watch_bxs(self):
         """观看bxs（看5秒领金币、看视频领金币）"""
+        self.enter_task_interface()
         print('正在观看bxs（看5秒领金币、看视频领金币）')
-        self.reopen_app()
-        self.uia_ins.tap((757, 1836), 6)
         while self.get_coins_by_bxs():
             sleep(6)
-
-    def sign_in(self):
-        """签到"""
-        self.reopen_app()
-        self.uia_ins.tap((765, 1833), 6)
-        print('正在签到')
-        if self.uia_ins.click(ResourceID.a6u, '签到领'):
-            while self.uia_ins.click_by_screen_text(text='看视频再领'):
-                self.exit_ad_activity()
-            self.uia_ins.click_by_screen_text(text='知道了')
 
     def change_money(self):
         """把金币换成钱"""

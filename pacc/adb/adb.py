@@ -75,6 +75,18 @@ class ADB:  # pylint: disable=too-many-public-methods
             sleep(1)
             return -1
 
+    def get_app_version(self, package_name):
+        """获取指定APP的版本信息"""
+        res = popen(f'{self.cmd}shell pm dump {package_name} | findstr "versionName"').read()
+        res = find_all_with_re(res, 'versionName=(.+)\n')[0]
+        print(res)
+        return res
+
+    def get_app_list(self):
+        """获取已安装应用的列表"""
+        res = popen(f'{self.cmd}shell pm list package').read()
+        print(res)
+
     def get_data_from_clipboard(self):
         """从粘贴板获取数据
 
