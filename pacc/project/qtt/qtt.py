@@ -145,7 +145,6 @@ class Qtt(Project):
                 self.uia_ins.tap((991, 61))
             elif self.uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
-            return self.exit_mob_reward_video_activity()
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
             return self.exit_mob_reward_video_activity()
         return True
@@ -250,15 +249,20 @@ class Qtt(Project):
             return self.watch_detail()
         if Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
-        while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
-                naf='true', index='1'):
-            self.refresh_detail()
-            current_focus = self.adb_ins.get_current_focus()
+        try:
+            while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
+                    naf='true', index='1'):
+                self.refresh_detail()
+                current_focus = self.adb_ins.get_current_focus()
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.watch_detail()
         if Activity.NewsDetailNewActivity in current_focus:
             if self.uia_ins.click(ResourceID.bhs):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            self.watch_news_detail()
+            if self.uia_ins.click(ResourceID.a8h):
+                self.watch_news_detail()
         return True
 
     def get_coins_by_bxs(self):
