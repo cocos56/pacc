@@ -79,7 +79,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         """获取指定APP的版本信息"""
         res = popen(f'{self.cmd}shell pm dump {package_name} | findstr "versionName"').read()
         res = find_all_with_re(res, 'versionName=(.+)\n')[0]
-        print(res)
+        print(f'The version of {package_name} is {res}')
         return res
 
     def get_app_list(self):
