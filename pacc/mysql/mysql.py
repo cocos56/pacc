@@ -1,9 +1,9 @@
 """MySQL数据库模块"""
 from os import getenv
 
-from pymysql import connect, OperationalError
+from pymysql import connect, OperationalError, ProgrammingError
 
-from ..base import sleep
+from ..base import sleep, print_err
 
 
 class MySQL:
@@ -55,8 +55,8 @@ class MySQL:
         try:
             cls.cs.execute(cmd)
             res = cls.cs.fetchall()
-        except OperationalError as error:
-            print('query', error)
+        except (OperationalError, ProgrammingError) as error:
+            print_err('query', error)
             sleep(30)
             cls()
             return cls.query(cmd)
