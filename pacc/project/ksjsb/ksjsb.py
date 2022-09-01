@@ -556,6 +556,7 @@ class Ksjsb(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
+        sleep(3)
         self.uia_ins.tap((536, 1706), 50)
         self.uia_ins.click(text='立即提现')
         sleep(6)
