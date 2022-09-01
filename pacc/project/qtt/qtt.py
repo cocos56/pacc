@@ -317,6 +317,7 @@ class Qtt(Project):
         self.uia_ins.tap((977, 1839), 6)
         print('正在把金币换成钱')
         self.uia_ins.click(ResourceID.be2)
+        sleep(9)
         if self.uia_ins.click(text='重试', index='2'):
             sleep(6)
         sleep(9)
