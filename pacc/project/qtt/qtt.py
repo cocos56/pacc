@@ -190,9 +190,9 @@ class Qtt(Project):
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
             return self.refresh_detail()
-        elif Activity.PortraitADActivity in current_focus:
+        if Activity.PortraitADActivity in current_focus:
             return
-        elif self.uia_ins.get_dict(text='安装并打开', index='0'):
+        if self.uia_ins.get_dict(text='安装并打开', index='0'):
             return self.refresh_detail()
         return True
 
