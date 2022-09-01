@@ -56,7 +56,7 @@ class MySQL:
             cls.cs.execute(cmd)
             res = cls.cs.fetchall()
         except (OperationalError, ProgrammingError) as error:
-            print_err('query', error)
+            print_err(f'query {error}')
             sleep(30)
             cls()
             return cls.query(cmd)
