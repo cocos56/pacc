@@ -476,7 +476,7 @@ class Ksjsb(Project):
         try:
             enter_while = False
             while self.uia_ins.click(ResourceID.tv_get_coin_left):
-                sleep(6)
+                sleep(3)
                 enter_while = True
             if enter_while:
                 print('成功检测到并领取桌面组件奖励')
@@ -486,7 +486,10 @@ class Ksjsb(Project):
                 print('没有找到桌面组件奖励')
         except FileNotFoundError as err:
             print_err(err)
-            return
+            sleep(30)
+            if Activity.SearchActivity in self.adb_ins.get_current_focus():
+                sleep(16)
+                self.dbu.update_last_desktop_component_date(date.today())
 
     def buy_things_with_coins(self):
         """获取金币购划算页面内的所有奖励

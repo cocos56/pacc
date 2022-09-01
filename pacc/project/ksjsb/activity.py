@@ -5,6 +5,9 @@ ROOT = 'com.kuaishou.nebula/com.'
 # pylint: disable=too-few-public-methods
 class Activity:
     """快手极速版活动名类"""
+    # 【搜索界面】由桌面组件转入
+    SearchActivity = f'{ROOT}yxcorp.plugin.search.SearchActivity'
+
     #  【看视频界面（主界面）】
     HomeActivity = f'{ROOT}yxcorp.gifshow.HomeActivity'  # 主界面
 
