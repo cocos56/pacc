@@ -488,8 +488,11 @@ class Ksjsb(Project):
             print_err(err)
             sleep(30)
             if Activity.SearchActivity in self.adb_ins.get_current_focus():
+                print('成功检测到并领取桌面组件奖励')
                 sleep(16)
                 self.dbu.update_last_desktop_component_date(date.today())
+            else:
+                print('没有找到桌面组件奖励')
 
     def buy_things_with_coins(self):
         """获取金币购划算页面内的所有奖励
