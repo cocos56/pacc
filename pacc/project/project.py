@@ -15,8 +15,12 @@ class Activity:
 # pylint: disable=too-few-public-methods
 class ResourceID:
     """资源的ID类"""
+    # 小米手机
     clearAnimView = 'com.android.systemui:id/clearAnimView'  # 内存清理图标
     clearAnimView2 = 'com.miui.home:id/clearAnimView'  # 内存清理图标
+
+    # 华为手机
+    clear_all_recents_image_button = 'com.android.systemui:id/clear_all_recents_image_button'
 
 
 class Project:
@@ -55,6 +59,8 @@ class Project:
             self.uia_ins.click(ResourceID.clearAnimView)
         elif 'Redmi K20' in self.adb_ins.dbr.model:
             self.uia_ins.click(ResourceID.clearAnimView2)
+        else:
+            self.uia_ins.click(ResourceID.clear_all_recents_image_button)
 
     def reopen_app(self):
         """重新打开APP"""
@@ -81,7 +87,7 @@ class Project:
         """清理内存"""
         self.adb_ins.press_home_key()
         self.adb_ins.press_home_key()
-        self.adb_ins.press_menu_key()
+        self.adb_ins.press_app_switch_key()
         try:
             self.tap_free_button()
         except FileNotFoundError as error:

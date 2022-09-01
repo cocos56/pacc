@@ -165,9 +165,9 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.keep_online()
         self.press_key('KEYCODE_HOME', sleep_time)
 
-    def press_menu_key(self):
-        """按菜单键"""
-        self.press_key('KEYCODE_MENU')
+    def press_app_switch_key(self):
+        """按应用切换键"""
+        self.press_key('KEYCODE_APP_SWITCH')
 
     def press_back_key(self, sleep_time=1):
         """按返回键
