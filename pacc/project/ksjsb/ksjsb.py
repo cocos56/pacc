@@ -476,7 +476,7 @@ class Ksjsb(Project):
         try:
             enter_while = False
             while self.uia_ins.click(ResourceID.tv_get_coin_left):
-                sleep(3)
+                sleep(6)
                 enter_while = True
             if enter_while:
                 print('成功检测到并领取桌面组件奖励')
