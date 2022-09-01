@@ -82,7 +82,13 @@ class Qtt(Project):
 
     def exit_stub_standard_portrait_activity(self):
         """退出stub_standard_portrait活动页面"""
-        self.uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
+        print('正在退出stub_standard_portrait活动页面')
+        try:
+            self.uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
+        except FileNotFoundError as err:
+            print_err(err)
+            sleep(10)
+            self.exit_stub_standard_portrait_activity()
 
     def exit_ks_reward_video_activity(self):
         """退出快手激励视频活动页面"""

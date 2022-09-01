@@ -11,7 +11,7 @@ adb_ins = ADB(DEVICE_SN)
 # adb_ins.get_app_list()
 uia_ins = UIAutomator(DEVICE_SN)
 # uia_ins.click(text='重试', index='2')
-uia_ins.click_by_screen_text('关闭')
+# uia_ins.click_by_screen_text('关闭')
 try:
     uia_ins.get_current_ui_hierarchy()
 except FileNotFoundError as err:
