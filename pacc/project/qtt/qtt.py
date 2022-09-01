@@ -184,13 +184,17 @@ class Qtt(Project):
         self.adb_ins.press_back_key()
         self.adb_ins.press_back_key(6)
         self.uia_ins.tap((631, 633), 6)
-        if self.uia_ins.get_dict(text='安装并打开', index='0'):
-            self.refresh_detail()
-        elif Activity.AppDetailActivityInner in self.adb_ins.get_current_focus():
+        current_focus = self.adb_ins.get_current_focus()
+        if Activity.AppDetailActivityInner in current_focus:
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
-            self.refresh_detail()
+            return self.refresh_detail()
+        elif Activity.PortraitADActivity in current_focus:
+            return
+        elif self.uia_ins.get_dict(text='安装并打开', index='0'):
+            return self.refresh_detail()
+        return True
 
     def watch_news_detail(self):
         """进入新闻详情页"""
@@ -269,8 +273,9 @@ class Qtt(Project):
             if self.uia_ins.click(ResourceID.bhs):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
-            if self.uia_ins.get_dict(ResourceID.a8h):
-                self.watch_news_detail()
+        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and self.uia_ins.\
+                get_dict(ResourceID.a8h):
+            self.watch_news_detail()
         return True
 
     def get_coins_by_bxs(self):
@@ -318,6 +323,8 @@ class Qtt(Project):
         print('正在把金币换成钱')
         self.uia_ins.click(ResourceID.be2)
         sleep(9)
+        if Activity.MainActivity in self.adb_ins.get_current_focus():
+            return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
             sleep(6)
         sleep(9)

@@ -6,7 +6,7 @@ from pacc.config import Config
 
 
 Config.set_debug(True)
-DEVICE_SN = '002002003'
+DEVICE_SN = '002002002'
 adb_ins = ADB(DEVICE_SN)
 # adb_ins.get_app_list()
 uia_ins = UIAutomator(DEVICE_SN)
