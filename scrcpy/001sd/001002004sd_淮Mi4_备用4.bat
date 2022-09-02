@@ -1,1 +1,1 @@
-scrcpy -s 5b166543
+scrcpy -s 5b166543 --window-title 001002004sd_淮Mi4_备用4

@@ -195,9 +195,9 @@ class Qtt(Project):
             self.adb_ins.press_back_key()
             return self.refresh_detail()
         if Activity.PortraitADActivity in current_focus:
-            return
+            return False
         if Activity.VideoDetailsActivity in current_focus:
-            return
+            return True
         if self.uia_ins.get_dict(text='安装并打开', index='0'):
             return self.refresh_detail()
         return True
