@@ -196,6 +196,8 @@ class Qtt(Project):
             return self.refresh_detail()
         if Activity.PortraitADActivity in current_focus:
             return
+        if Activity.VideoDetailsActivity in current_focus:
+            return
         if self.uia_ins.get_dict(text='安装并打开', index='0'):
             return self.refresh_detail()
         return True
