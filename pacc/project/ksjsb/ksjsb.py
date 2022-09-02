@@ -558,9 +558,9 @@ class Ksjsb(Project):
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         sleep(3)
         self.uia_ins.tap((536, 1706), 50)
-        self.uia_ins.click(text='立即提现')
-        sleep(6)
         try:
+            self.uia_ins.click(text='立即提现')
+            sleep(6)
             if self.uia_ins.get_dict(text='去验证'):
                 EMail(self.serial_num).send_need_verification_alarm()
                 input('提现时需要验证才能继续，请手动处理')

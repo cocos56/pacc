@@ -196,6 +196,8 @@ class Qtt(Project):
             return self.refresh_detail()
         if Activity.PortraitADActivity in current_focus:
             return False
+        if Activity.AppActivity in current_focus:
+            return False
         if Activity.VideoDetailsActivity in current_focus:
             return True
         if self.uia_ins.get_dict(text='安装并打开', index='0'):
@@ -327,7 +329,9 @@ class Qtt(Project):
         self.reopen_app()
         self.uia_ins.tap((977, 1839), 6)
         print('正在把金币换成钱')
-        self.uia_ins.click(ResourceID.be2)
+        if self.uia_ins.click(ResourceID.aps):
+            self.uia_ins.xml = ''
+        self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
         sleep(9)
         if Activity.MainActivity in self.adb_ins.get_current_focus():
             return self.change_money()
