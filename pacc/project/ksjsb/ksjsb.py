@@ -34,7 +34,9 @@ class Ksjsb(Project):
         """
         print(f'is_loading retry_cnt={retry_cnt}')
         try:
-            if self.uia_ins.click(ResourceID.login_text):
+            if self.uia_ins.click(ResourceID.positive, '同意并继续'):
+                self.uia_ins.xml = ''
+            if self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml):
                 sleep(3)
                 self.adb_ins.press_back_key()
                 if not self.uia_ins.click(ResourceID.switch_login_way):

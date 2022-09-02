@@ -6,7 +6,7 @@ from pacc.config import Config
 
 
 Config.set_debug(True)
-DEVICE_SN = '001021001'
+DEVICE_SN = '002004001'
 adb_ins = ADB(DEVICE_SN)
 # adb_ins.get_app_list()
 # adb_ins.press_app_switch_key()
