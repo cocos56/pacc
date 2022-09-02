@@ -93,7 +93,11 @@ class Qtt(Project):
     def exit_ks_reward_video_activity(self):
         """退出快手激励视频活动页面"""
         print('正在退出快手激励视频活动页面')
-        self.uia_ins.click(naf='true', index='1')
+        try:
+            self.uia_ins.click(naf='true', index='1')
+        except FileNotFoundError as err:
+            print_err(err)
+            sleep(6)
         if Activity.KsRewardVideoActivity in self.adb_ins.get_current_focus():
             self.exit_ks_reward_video_activity()
 
