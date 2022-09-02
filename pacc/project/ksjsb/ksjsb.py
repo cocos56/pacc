@@ -545,7 +545,9 @@ class Ksjsb(Project):
         print('正在把金币兑换钱')
         self.uia_ins.tap((866, 349), 16)
         self.uia_ins.get_current_ui_hierarchy()
-        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView)
+        if self.uia_ins.get_dict(index='0', text='网页无法打开'):
+            return self.change_money()
+        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView, xml=self.uia_ins.xml)
         cash = float(webview_dic['node'][0]['node'][1]['@text'])
         dics = webview_dic['node'][1]['node']
         for dic in dics[4:0:-1]:
