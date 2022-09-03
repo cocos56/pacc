@@ -572,7 +572,7 @@ class Ksjsb(Project):
                 self.dbu.update_last_change_money_date(date.today())
                 return True
             return False
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             return self.change_money()
 
