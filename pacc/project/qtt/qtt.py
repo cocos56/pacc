@@ -35,7 +35,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             elif self.uia_ins.get_point_by_screen_text('我的金币'):
                 self.uia_ins.tap((115, 1860), 6)
-            else:
+            elif datetime.now().hour < 21:
                 sleep(6)
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text('再领'):
@@ -43,12 +43,13 @@ class Qtt(Project):
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                         self.adb_ins.press_back_key(9)
                         if self.uia_ins.secure_get_current_ui_hierarchy() and self.uia_ins.click(
-                                text='有任务奖励未领取，是否继续？'):
+                                text='有任务奖励未领取，是否继续？', xml=self.uia_ins.xml):
                             self.adb_ins.press_back_key()
                         else:
                             self.uia_ins.click(text='继续观看', xml=self.uia_ins.xml)
                     self.exit_ad_activity()
                     click_cnt += 1
+                    print(f'click_cnt={click_cnt}')
                     if click_cnt >= 10:
                         break
 
@@ -340,7 +341,7 @@ class Qtt(Project):
         if self.uia_ins.click(ResourceID.aps):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
-        sleep(9)
+        sleep(12)
         if Activity.MainActivity in self.adb_ins.get_current_focus():
             return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
@@ -352,17 +353,25 @@ class Qtt(Project):
         price_number = price_number.replace(',', '')
         price_number = int(price_number)
         print(price_number)
+        if price_number > 1000 and self.uia_ins.click(text='1000金币'):  # 绑定支付宝每天可以提现一次
+            self.uia_ins.click('alipay_quick')  # 立即提现
+            if self.uia_ins.get_dict(text='提现成功，已到账'):
+                print('提现成功，已到账')
+            return self.change_money()
         if price_number > 50000:
-            self.uia_ins.click(text='5元50000金币')
+            self.uia_ins.click(text='5元50000金币', xml=self.uia_ins.xml)
         elif price_number > 10000:
-            self.uia_ins.click(text='1元10000金币')
-        elif price_number > 1000:
-            self.uia_ins.click(text='1000金币')
+            self.uia_ins.click(text='1元10000金币', xml=self.uia_ins.xml)  # 每连续签到两天获取一次提现机会
+        else:
+            print('金币太少了，不能提现')
+            return False
         self.uia_ins.click('alipay_quick')  # 立即提现
         if self.uia_ins.get_dict(text='提现成功，已到账'):
             print('提现成功，已到账')
             return True
-        print('提现失败，可能由于签到时间不足')
+        info = self.uia_ins.get_dict(
+            'recommendNewProduct', xml=self.uia_ins.xml)['node']['node'][1]['@text']
+        print(f'提现失败，{info}')
         return False
 
     def watch_little_videos(self):

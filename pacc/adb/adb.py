@@ -134,10 +134,19 @@ class ADB:  # pylint: disable=too-many-public-methods
             res = res[:-1]
         return res
 
+    def is_awake(self):
+        """判断是否亮屏"""
+        res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
+        print(res)
+        if 'true' in res:
+            return True
+        return False
+
     def get_current_focus(self):
         """获取当前界面的Activity"""
         try:
-            res = popen(f'{self.cmd}shell dumpsys window | findstr mCurrentFocus').read()[2:-2]
+            res = popen(
+                f'{self.cmd}shell dumpsys window windows | findstr mCurrentFocus').read()[2:-2]
         except UnicodeDecodeError as err:
             print_err(f'{self.dbr.serial_num} {err}')
             self.reboot()
@@ -163,6 +172,8 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param sleep_time: 休息时间
         """
         self.keep_online()
+        if not self.is_awake():
+            self.press_power_key()
         self.press_key('KEYCODE_HOME', sleep_time)
 
     def press_app_switch_key(self):
@@ -230,6 +241,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             if self.dbr.id_num in online_devices:
                 return self.keep_online()
             elif retry_cnt < 6:
+                print(f'keep_online retry_cnt={retry_cnt}')
                 sleep(30)
                 return self.keep_online(retry_cnt+1)
             EMail(self.dbr.serial_num).send_offline_error()

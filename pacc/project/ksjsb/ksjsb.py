@@ -46,7 +46,7 @@ class Ksjsb(Project):
                 EMail(self.serial_num).send_login_alarm()
                 print('请手动输入密码登录后再继续向下执行程序')
                 input()
-        except (FileNotFoundError, ExpatError) as err:
+        except (FileNotFoundError, ExpatError, PermissionError) as err:
             print_err(f'is_loading {err}')
             self.adb_ins.press_back_key(12)
             self.uia_ins.tap((90, 140), 12)
