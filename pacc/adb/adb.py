@@ -137,7 +137,10 @@ class ADB:  # pylint: disable=too-many-public-methods
     def is_awake(self):
         """判断是否亮屏"""
         res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
+        if res[-1] == '\n':
+            res = res[:-1]
         print(res)
+        # print([res])
         if 'true' in res:
             return True
         return False
