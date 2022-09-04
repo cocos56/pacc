@@ -39,7 +39,6 @@ class Qtt(Project):
                 sleep(6)
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text('再领'):
-                    click_cnt += 1
                     sleep(6)
                     if Activity.InciteADActivity in self.adb_ins.get_current_focus():
                         self.adb_ins.press_back_key(9)
@@ -49,7 +48,8 @@ class Qtt(Project):
                         else:
                             self.uia_ins.click(text='继续观看', xml=self.uia_ins.xml)
                     self.exit_ad_activity()
-                    if click_cnt >= 5:
+                    click_cnt += 1
+                    if click_cnt >= 10:
                         break
 
     def random_swipe(self, x_range=(360, 390), y_list=(1160, 1190, 260, 290), duration=500):
@@ -111,6 +111,9 @@ class Qtt(Project):
                         text='继续观看', xml=self.uia_ins.xml):
                     self.adb_ins.press_back_key()
                 sleep(20)
+                if Activity.MainActivity in self.adb_ins.get_current_focus():
+                    return
+                self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
         except (FileNotFoundError, ExpatError) as err:
@@ -200,7 +203,12 @@ class Qtt(Project):
             return False
         if Activity.VideoDetailsActivity in current_focus:
             return True
-        if self.uia_ins.get_dict(text='安装并打开', index='0'):
+        try:
+            if self.uia_ins.get_dict(text='安装并打开', index='0'):
+                return self.refresh_detail()
+        except FileNotFoundError as err:
+            print_err(err)
+            sleep(9)
             return self.refresh_detail()
         return True
 

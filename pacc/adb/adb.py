@@ -218,7 +218,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.disconnect()
         self.connect()
 
-    def keep_online(self):
+    def keep_online(self, retry_cnt=0):
         """保持在线"""
         online_devices = get_online_devices()
         if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
@@ -229,6 +229,9 @@ class ADB:  # pylint: disable=too-many-public-methods
             sleep(6)
             if self.dbr.id_num in online_devices:
                 return self.keep_online()
+            elif retry_cnt < 6:
+                sleep(30)
+                return self.keep_online(retry_cnt+1)
             EMail(self.dbr.serial_num).send_offline_error()
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
                   f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
