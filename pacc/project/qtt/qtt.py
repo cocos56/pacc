@@ -233,8 +233,12 @@ class Qtt(Project):
             print('进入新闻详情页超过20分钟，需要退出')
             return
         print(f'距离退出新闻详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
-        if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
-                uia_ins.get_dict(ResourceID.bhs):
+        try:
+            if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
+                    uia_ins.get_dict(ResourceID.bhs):
+                self.watch_news_detail()
+        except ExpatError as err:
+            print_err(err)
             self.watch_news_detail()
 
     def watch_video_detail(self):
