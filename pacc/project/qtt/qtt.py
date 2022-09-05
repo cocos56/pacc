@@ -1,5 +1,5 @@
 """趣头条中央控制系统模块"""
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from random import randint
 from xml.parsers.expat import ExpatError
 
@@ -19,6 +19,7 @@ class Qtt(Project):
         """
         super().__init__(serial_num)
         self.last_loop_datetime = datetime.now()
+        self.last_change_money_date = date.today() - timedelta(days=1)
 
     def open_app(self):
         """打开趣头条APP"""
@@ -323,7 +324,7 @@ class Qtt(Project):
         print('正在进入任务界面')
         self.uia_ins.tap((765, 1833), 6)
         try:
-            if self.uia_ins.click(ResourceID.a6u, '签到领'):
+            while self.uia_ins.click(ResourceID.a6u, '签到领'):
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()
                 self.uia_ins.click_by_screen_text(text='知道了')
@@ -339,6 +340,9 @@ class Qtt(Project):
 
     def change_money(self):
         """把金币换成钱"""
+        if self.last_change_money_date >= date.today():
+            print('今天已经把金币换成钱过了，无需重复操作')
+            return True
         self.reopen_app()
         self.uia_ins.tap((977, 1839), 6)
         print('正在把金币换成钱')
@@ -362,6 +366,7 @@ class Qtt(Project):
             if self.uia_ins.get_dict(text='提现成功，已到账'):
                 print('提现成功，已到账')
             return self.change_money()
+        self.last_change_money_date = date.today()
         if price_number > 50000:
             self.uia_ins.click(text='5元50000金币', xml=self.uia_ins.xml)
         elif price_number > 10000:
@@ -409,6 +414,7 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
+        self.change_money()
         self.watch_detail()
         self.watch_bxs()
         show_datetime('mainloop')
