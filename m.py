@@ -7,7 +7,7 @@ from pacc.config import Config
 
 
 Config.set_debug(True)
-DEVICE_SN = '003001001'
+DEVICE_SN = '002002002'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 # print(adb_ins.is_awake())

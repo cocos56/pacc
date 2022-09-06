@@ -36,7 +36,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             elif self.uia_ins.get_point_by_screen_text('我的金币'):
                 self.uia_ins.tap((115, 1860), 6)
-            elif datetime.now().hour < 21:
+            elif datetime.now().hour < 13:
                 sleep(6)
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text('再领'):
@@ -116,6 +116,8 @@ class Qtt(Project):
                 if Activity.MainActivity in self.adb_ins.get_current_focus():
                     return
                 self.adb_ins.press_back_key()
+                if self.uia_ins.click(text='坚决放弃'):
+                    return
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
         except (FileNotFoundError, ExpatError) as err:

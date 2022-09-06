@@ -37,7 +37,10 @@ class Ksjsb(Project):
             if self.uia_ins.click(ResourceID.positive, '同意并继续'):
                 pass
             if self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml):
-                sleep(3)
+                sleep(6)
+                while Activity.PhoneLoginActivity not in self.adb_ins.get_current_focus():
+                    self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml)
+                    sleep(6)
                 self.adb_ins.press_back_key()
                 if not self.uia_ins.click(ResourceID.switch_login_way):
                     self.uia_ins.click(ResourceID.login_mode_switcher, xml=self.uia_ins.xml)
