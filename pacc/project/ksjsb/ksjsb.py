@@ -33,6 +33,8 @@ class Ksjsb(Project):
         :return: 正在加载资源返回True，否则返回False
         """
         print(f'is_loading retry_cnt={retry_cnt}')
+        if Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
+            self.adb_ins.press_back_key()
         try:
             if self.uia_ins.click(ResourceID.positive, '同意并继续'):
                 pass
