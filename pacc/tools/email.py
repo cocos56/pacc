@@ -45,6 +45,10 @@ class EMail:
         server.quit()  # 关闭连接
         sleep(30)
 
+    def send_unknown_error(self):
+        """发送未知错误的提醒"""
+        self.send_email('未知错误')
+
     def send_offline_error(self):
         """发送掉线提醒"""
         self.send_email('已掉线')

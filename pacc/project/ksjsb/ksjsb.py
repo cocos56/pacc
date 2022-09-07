@@ -248,9 +248,13 @@ class Ksjsb(Project):
                 sleep(6)
                 self.exit_award_video_play_activity()
                 self.uia_ins.txt = ''
-            elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):  # 532, 1367
-                sleep(96)
-                self.exit_live()
+            # elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):  # 532, 1367
+            #     sleep(96)
+            #     self.exit_live()
+            else:
+                EMail(self.serial_num).send_unknown_error()
+                input('遇见未知情况，请手动处理')
+                print('正在继续向下处理')
             # self.uia_ins.tap((530, 1330), 16)
             # while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
             #     sleep(3)
