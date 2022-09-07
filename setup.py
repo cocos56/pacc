@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pacc',  # 包名
-    version='0.0.490',  # 版本
+    version='0.0.491',  # 版本
     packages=find_packages(),  # 目录下所有文件
     # 简述信息
     description="""Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或WLAN
