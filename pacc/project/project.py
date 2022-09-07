@@ -57,7 +57,7 @@ class Project:
             self.uia_ins.click(ResourceID.clearAnimView, xml=self.uia_ins.xml)
         elif 'MI 6' in self.adb_ins.dbr.model:
             self.uia_ins.click(ResourceID.clearAnimView)
-        elif 'Redmi K20' in self.adb_ins.dbr.model:
+        elif self.adb_ins.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
             self.uia_ins.click(ResourceID.clearAnimView2)
         else:
             self.uia_ins.click(ResourceID.clear_all_recents_image_button)
