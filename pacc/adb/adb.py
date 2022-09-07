@@ -136,7 +136,11 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def is_awake(self):
         """判断是否亮屏"""
-        res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
+        window_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
+        if self.dbr.model in window_models:
+            res = popen(f'{self.cmd}shell dumpsys window | findstr mAwake').read()[63:-41]
+        else:
+            res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
         if res[-1] == '\n':
             res = res[:-1]
         print(res)
@@ -147,9 +151,14 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def get_current_focus(self):
         """获取当前界面的Activity"""
+        displays_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
         try:
-            res = popen(
-                f'{self.cmd}shell dumpsys window windows | findstr mCurrentFocus').read()[2:-2]
+            if self.dbr.model in displays_models:
+                res = popen(
+                    f'{self.cmd}shell dumpsys window displays | findstr mCurrentFocus').read()[2:-2]
+            else:
+                res = popen(
+                    f'{self.cmd}shell dumpsys window windows | findstr mCurrentFocus').read()[2:-2]
         except UnicodeDecodeError as err:
             print_err(f'{self.dbr.serial_num} {err}')
             self.reboot()
