@@ -244,17 +244,24 @@ class Ksjsb(Project):
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
             sleep(3)
-            self.uia_ins.tap((530, 1330), 16)
-            while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
-                sleep(3)
-            current_focus = self.adb_ins.get_current_focus()
-            if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
-                sleep(80)
-                self.exit_live()
-            elif Activity.KwaiYodaWebViewActivity in current_focus:
-                return self.open_treasure_box()
-            else:
+            if self.uia_ins.click_by_screen_text('看广告再得'):
+                sleep(6)
                 self.exit_award_video_play_activity()
+                self.uia_ins.txt = ''
+            elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):  # 532, 1367
+                sleep(96)
+                self.exit_live()
+            # self.uia_ins.tap((530, 1330), 16)
+            # while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
+            #     sleep(3)
+            # current_focus = self.adb_ins.get_current_focus()
+            # if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
+            #     sleep(80)
+            #     self.exit_live()
+            # elif Activity.KwaiYodaWebViewActivity in current_focus:
+            #     return self.open_treasure_box()
+            # else:
+            #     self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_date(date.today())
