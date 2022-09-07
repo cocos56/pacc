@@ -486,7 +486,7 @@ class Ksjsb(Project):
 
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
-        if self.dbr.last_desktop_component_date >= date.today():
+        if self.dbr.last_desktop_component_date == date.today():
             print('今天已经领完桌面组件奖励了，无需重复操作')
             return
         self.reopen_app()
