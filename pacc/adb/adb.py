@@ -136,9 +136,9 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def is_awake(self):
         """判断是否亮屏"""
-        window_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
-        if self.dbr.model in window_models:
-            res = popen(f'{self.cmd}shell dumpsys window | findstr mAwake').read()[63:-41]
+        displays_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
+        if self.dbr.model in displays_models:
+            res = popen(f'{self.cmd}shell dumpsys window displays | findstr mAwake').read()[4:-43]
         else:
             res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
         if res[-1] == '\n':
@@ -155,7 +155,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         try:
             if self.dbr.model in displays_models:
                 res = popen(
-                    f'{self.cmd}shell dumpsys window displays | findstr mCurrentFocus').read()[2:-2]
+                    f'{self.cmd}shell dumpsys window displays | findstr mCurrentFocus').read()[2:-1]
             else:
                 res = popen(
                     f'{self.cmd}shell dumpsys window windows | findstr mCurrentFocus').read()[2:-2]
@@ -164,6 +164,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             self.reboot()
             return self.get_current_focus()
         print(res)
+        # print([res])
         if res.count('mCurrentFocus=Window{') > 1:
             self.reboot()
         return res
