@@ -67,6 +67,10 @@ class ADB:  # pylint: disable=too-many-public-methods
 
         :return: 摄氏度的数值
         """
+        # res = popen(f'{self.cmd}shell dumpsys battery ').read()
+        # print(res)
+        # res = popen(f'{self.cmd}shell ls sys/class/thermal/').read()
+        # print(res)
         try:
             res = popen(f'{self.cmd}shell cat /sys/class/thermal/thermal_zone9/temp').read()
             return find_all_ints_with_re(res)[0]

@@ -312,15 +312,24 @@ class Qtt(Project):
             return True
         if self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
             self.exit_ad_activity()
+            click_cnt = 0
             while self.uia_ins.click_by_screen_text('看视频再领'):
                 sleep(6)
                 while Activity.MainActivity in self.adb_ins.get_current_focus():
                     self.uia_ins.click_by_screen_text('看视频再领', txt=self.uia_ins.txt)
                     sleep(6)
+                    click_cnt += 1
+                    print(f'click_cnt={click_cnt}')
+                    if click_cnt >= 6:
+                        return False
                 if Activity.BdShellActivity in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key(3)
                 else:
                     self.exit_ad_activity()
+                click_cnt += 1
+                print(f'click_cnt={click_cnt}')
+                if click_cnt >= 6:
+                    return False
             return True
         return False
 
