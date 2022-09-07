@@ -1,1 +1,0 @@
-scrcpy -s nz9lbugi8hbqeivg

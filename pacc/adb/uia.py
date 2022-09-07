@@ -336,6 +336,8 @@ class UIAutomator:
             return False
         if self.node.index:
             if self.node.index == dic['@index']:
+                if self.node.resource_id and dic['@resource-id'] == self.node.resource_id:
+                    return True
                 if self.node.naf and '@NAF' in dic and self.node.naf == dic['@NAF']:
                     return True
                 if self.node.text:

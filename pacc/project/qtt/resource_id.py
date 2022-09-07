@@ -23,4 +23,5 @@ class ResourceID:
     ch1 = f'{ROOT}ch1'  # 看视频赚钱
     a0m = f'{ROOT}a0m'  # 看视频再领xx金币
     bh4 = f'{ROOT}bh4'  # 阅读奖励图标
-    bhs = f'{ROOT}bhs'  # 20220828新版阅读奖励图标
+    bhs = f'{ROOT}bhs'  # 20220828版阅读奖励图标
+    bhu = f'{ROOT}bhu'  # 20220906版阅读奖励图标

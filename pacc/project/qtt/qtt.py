@@ -238,7 +238,7 @@ class Qtt(Project):
         print(f'距离退出新闻详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         try:
             if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
-                    uia_ins.get_dict(ResourceID.bhs):
+                    uia_ins.get_dict(resource_id=ResourceID.bhu, index='0'):
                 self.watch_news_detail()
         except ExpatError as err:
             print_err(err)
@@ -290,11 +290,11 @@ class Qtt(Project):
                     naf='true', index='1'):
                 self.refresh_detail()
                 current_focus = self.adb_ins.get_current_focus()
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             return self.watch_detail()
         if Activity.NewsDetailNewActivity in current_focus:
-            if self.uia_ins.click(ResourceID.bhs):
+            if self.uia_ins.click(resource_id=ResourceID.bhu, index='0'):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and self.uia_ins.\
@@ -313,6 +313,10 @@ class Qtt(Project):
         if self.uia_ins.click_by_screen_text(text='看视频领金币', txt=self.uia_ins.txt):
             self.exit_ad_activity()
             while self.uia_ins.click_by_screen_text('看视频再领'):
+                sleep(6)
+                while Activity.MainActivity in self.adb_ins.get_current_focus():
+                    self.uia_ins.click_by_screen_text('看视频再领', txt=self.uia_ins.txt)
+                    sleep(6)
                 if Activity.BdShellActivity in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key(3)
                 else:
@@ -346,12 +350,12 @@ class Qtt(Project):
             print('今天已经把金币换成钱过了，无需重复操作')
             return True
         self.reopen_app()
-        self.uia_ins.tap((977, 1839), 6)
+        self.uia_ins.tap((977, 1839), 9)
         print('正在把金币换成钱')
         if self.uia_ins.click(ResourceID.aps):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
-        sleep(12)
+        sleep(15)
         if Activity.MainActivity in self.adb_ins.get_current_focus():
             return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
@@ -416,6 +420,7 @@ class Qtt(Project):
     @run_forever
     def mainloop(self):
         """趣头条中央控制系统类的主循环成员方法"""
+        self.adb_ins.reboot_per_day()
         self.change_money()
         self.watch_detail()
         self.watch_bxs()
