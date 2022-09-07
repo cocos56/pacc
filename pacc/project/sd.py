@@ -72,8 +72,8 @@ class SD(Project):
                 self.reopen_app()
             except FileNotFoundError as err:
                 print_err(err)
-                self.uia_ins.get_screen()
-                input('出现未知错误，请手动处理')
+                # self.uia_ins.get_screen()
+                # input('出现未知错误，请手动处理')
         elif Activity.LoginActivity in current_focus:
             self.adb_ins.reboot()
             self.open_app()
