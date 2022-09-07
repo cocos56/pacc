@@ -413,8 +413,11 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(60)
         if break_while:
             return False
-        self.dbu.update_last_shopping_date(date.today())
-        return True
+        if self.uia_ins.get_point_by_screen_text('今日福利已领取') or self.uia_ins.\
+                get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
+            self.dbu.update_last_shopping_date(date.today())
+            return True
+        return False
 
     # pylint: disable=too-many-return-statements
     def open_meal_allowance(self):
