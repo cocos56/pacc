@@ -36,7 +36,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key(6)
             elif self.uia_ins.get_point_by_screen_text('我的金币'):
                 self.uia_ins.tap((115, 1860), 6)
-            elif datetime.now().hour < 13:
+            elif datetime.now().hour < 12:
                 sleep(6)
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text('再领'):

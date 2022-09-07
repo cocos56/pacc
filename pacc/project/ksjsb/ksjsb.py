@@ -282,11 +282,12 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('正在看广告视频得5000金币')
         self.adb_ins.swipe((600, 1600), (600, 960))
-        not_cnt = 0
+        swipe_cnt = 0
         while not self.uia_ins.get_point_by_screen_text(text='看视频得5000金币'):
             self.adb_ins.swipe((600, 1800), (600, 800))
-            not_cnt += 1
-            if not_cnt >= 6:
+            swipe_cnt += 1
+            print(f'swipe_cnt={swipe_cnt}')
+            if swipe_cnt >= 8:
                 print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
                 return self.view_ads()
         click_cnt = 0
