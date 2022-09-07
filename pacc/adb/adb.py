@@ -138,7 +138,9 @@ class ADB:  # pylint: disable=too-many-public-methods
         """判断是否亮屏"""
         displays_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
         if self.dbr.model in displays_models:
-            res = popen(f'{self.cmd}shell dumpsys window displays | findstr mAwake').read()[4:-43]
+            res = popen(f'{self.cmd}shell dumpsys window displays | findstr mAwake').read()[4:-41]
+            if 'false' in res:
+                res = res[:-2]
         else:
             res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
         if res[-1] == '\n':
