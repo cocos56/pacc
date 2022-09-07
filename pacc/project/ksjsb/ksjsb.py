@@ -253,7 +253,7 @@ class Ksjsb(Project):
             #     self.exit_live()
             else:
                 EMail(self.serial_num).send_unknown_error()
-                input('遇见未知情况，请手动处理')
+                input('open_treasure_box遇见未知情况，请手动处理')
                 print('正在继续向下处理')
             # self.uia_ins.tap((530, 1330), 16)
             # while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
@@ -460,9 +460,14 @@ class Ksjsb(Project):
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
             sleep(6)
-            self.uia_ins.tap((530, 1220), 12)
-            self.exit_award_video_play_activity()
-            sleep(6)
+            if self.uia_ins.click_by_screen_text('看广告再领'):
+                sleep(12)
+                self.exit_award_video_play_activity()
+                sleep(6)
+            else:
+                EMail(self.serial_num).send_unknown_error()
+                input('open_meal_allowance遇见未知情况，请手动处理')
+                print('正在继续向下处理')
         if not self.uia_ins.get_point_by_screen_text('点击立得'):
             self.dbu.update_last_meal_allowance_datetime(datetime.now())
             return True
