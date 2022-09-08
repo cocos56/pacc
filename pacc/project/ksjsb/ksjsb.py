@@ -352,8 +352,7 @@ class Ksjsb(Project):
                     break
                 self.adb_ins.press_back_key(3)
 
-    # pylint: disable=too-many-return-statements
-    def shopping(self):
+    def shopping(self):  # pylint: disable=too-many-return-statements, too-many-branches
         """去逛街
 
         :return: 今天成功逛完街或者已经逛完街返回True，无法确定是否成功逛完则返回False
@@ -407,8 +406,7 @@ class Ksjsb(Project):
             return True
         return False
 
-    # pylint: disable=too-many-return-statements
-    def open_meal_allowance(self):
+    def open_meal_allowance(self):  # pylint: disable=too-many-return-statements
         """领饭补
 
         :return: 成功领取或者已经领取返回True，否则返回False
