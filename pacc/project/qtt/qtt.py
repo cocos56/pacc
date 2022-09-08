@@ -191,7 +191,7 @@ class Qtt(Project):
             self.uia_ins.click(text='关闭', index='2')
         return True
 
-    def refresh_detail(self):
+    def refresh_detail(self):  # pylint: disable=too-many-return-statements
         """刷新详情页"""
         print('正在刷新详情页')
         self.adb_ins.press_back_key()
@@ -356,7 +356,7 @@ class Qtt(Project):
         while self.get_coins_by_bxs():
             sleep(6)
 
-    def change_money(self):
+    def change_money(self):  # pylint: disable=too-many-return-statements
         """把金币换成钱"""
         if self.last_change_money_date >= date.today():
             print('今天已经把金币换成钱过了，无需重复操作')

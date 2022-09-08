@@ -253,17 +253,6 @@ class Ksjsb(Project):
                 EMail(self.serial_num).send_unknown_error()
                 input('open_treasure_box遇见未知情况，请手动处理')
                 print('正在继续向下处理')
-            # self.uia_ins.tap((530, 1330), 16)
-            # while 'mCurrentFocus=null' in self.adb_ins.get_current_focus():
-            #     sleep(3)
-            # current_focus = self.adb_ins.get_current_focus()
-            # if Activity.LiveSlideActivity in self.adb_ins.get_current_focus():
-            #     sleep(80)
-            #     self.exit_live()
-            # elif Activity.KwaiYodaWebViewActivity in current_focus:
-            #     return self.open_treasure_box()
-            # else:
-            #     self.exit_award_video_play_activity()
         elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt) or self.uia_ins.\
                 get_point_by_screen_text('明曰再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')

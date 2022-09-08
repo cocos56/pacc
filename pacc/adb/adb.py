@@ -270,7 +270,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             sleep(6)
             if self.dbr.id_num in online_devices:
                 return self.keep_online()
-            elif retry_cnt < 6:
+            if retry_cnt < 6:
                 print(f'keep_online retry_cnt={retry_cnt}')
                 sleep(30)
                 return self.keep_online(retry_cnt+1)
@@ -279,6 +279,7 @@ class ADB:  # pylint: disable=too-many-public-methods
                   f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
             input('请手动处理后按回车键以继续')
             print('正在继续向下处理')
+            return self.keep_online()
         elif self.dbr.ipv4_addr not in get_online_devices():
             print(f'{self.dbr.serial_num}所对应的的IP:{self.dbr.ipv4_addr}离线，但ID:'
                   f'{self.dbr.id_num}在线，正在尝试自动修复该问题')
