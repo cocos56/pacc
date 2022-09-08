@@ -59,7 +59,7 @@ class Project:
             self.uia_ins.click(ResourceID.clearAnimView)
         elif self.adb_ins.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
             if not self.uia_ins.click(ResourceID.clearAnimView2):
-                self.adb_ins.press_back_key()
+                self.adb_ins.press_home_key()
         else:
             self.uia_ins.click(ResourceID.clear_all_recents_image_button)
 
