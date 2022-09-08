@@ -152,7 +152,8 @@ class Qtt(Project):
         """退出发现好货广告活动页面"""
         print('正在退出发现好货广告活动页面')
         try:
-            self.uia_ins.click(index='2', class_='android.widget.ImageView')
+            if not self.uia_ins.click(naf='true', index='2'):
+                self.uia_ins.click(naf='true', index='3')
             while Activity.H5SearchPreLoadActivity in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(6)
         except FileNotFoundError as err:
@@ -162,6 +163,7 @@ class Qtt(Project):
                 return True
             if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.tap((991, 61))
+                # self.uia_ins.tap((987, 104))
             elif self.uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
@@ -297,6 +299,7 @@ class Qtt(Project):
             if self.uia_ins.click(resource_id=ResourceID.bhu, index='0'):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
+                self.uia_ins.click_by_screen_text('我知道了', txt=self.uia_ins.txt)
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and self.uia_ins.\
                 get_dict(ResourceID.a8h):
             self.watch_news_detail()
