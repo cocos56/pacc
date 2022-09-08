@@ -448,7 +448,7 @@ class Ksjsb(Project):
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):
-            sleep(6)
+            sleep(9)
             if self.uia_ins.click_by_screen_text('看广告再领'):
                 sleep(12)
                 self.exit_award_video_play_activity()
