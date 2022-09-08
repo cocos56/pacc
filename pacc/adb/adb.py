@@ -62,18 +62,29 @@ class ADB:  # pylint: disable=too-many-public-methods
             if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6)
 
+    def get_battery_temperature(self):
+        """获取电池温度
+
+        :return: 摄氏度的数值
+        """
+        res = popen(f'{self.cmd}shell dumpsys battery | findstr "temperature"').read()
+        # print(res)
+        return find_all_ints_with_re(res)[0]/10
+
     def get_cpu_temperature(self):
         """获取CPU温度
 
         :return: 摄氏度的数值
         """
-        # res = popen(f'{self.cmd}shell dumpsys battery ').read()
-        # print(res)
+        # 获取热的区域
         # res = popen(f'{self.cmd}shell ls sys/class/thermal/').read()
         # print(res)
         try:
             res = popen(f'{self.cmd}shell cat /sys/class/thermal/thermal_zone9/temp').read()
-            return find_all_ints_with_re(res)[0]
+            temperature = find_all_ints_with_re(res)[0]
+            if 'MI 5' in self.dbr.model:
+                temperature /= 10
+            return temperature
         except IndexError as err:
             print_err(err)
             sleep(1)

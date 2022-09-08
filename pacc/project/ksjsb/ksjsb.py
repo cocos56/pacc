@@ -667,7 +667,9 @@ class Ksjsb(Project):
               f'{self.last_loop_datetime - datetime.now() + timedelta(minutes=20)}')
         self.random_swipe()
         print(f'当前活动为：{self.adb_ins.get_current_focus()}')
-        print(f'当前的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
+        print(f'当前设备的电池温度为：{self.adb_ins.get_battery_temperature()}摄氏度')
+        if not self.adb_ins.dbr.model == 'M2007J22C':
+            print(f'当前设备的CPU温度为：{self.adb_ins.get_cpu_temperature()}摄氏度')
         sleep(randint(15, 18))
         self.adb_ins.press_back_key()
         return True
