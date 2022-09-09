@@ -246,12 +246,10 @@ class Ksjsb(Project):
             if self.uia_ins.click_by_screen_text('看视频最高得'):
                 sleep(6)
                 self.exit_award_video_play_activity()
-            elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt):
+            elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt)\
+                    or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
                 sleep(96)
                 self.exit_live()
-            # elif self.uia_ins.click_by_screen_text(text='直播再', txt=self.uia_ins.txt):
-            #     sleep(96)
-            #     self.exit_live()
             else:
                 EMail(self.serial_num).send_unknown_error()
                 input('open_treasure_box遇见未知情况，请手动处理')

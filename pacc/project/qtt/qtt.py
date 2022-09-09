@@ -137,6 +137,7 @@ class Qtt(Project):
                         index='1', class_='android.widget.ImageView', xml=self.uia_ins.xml):
                     self.uia_ins.click(
                         index='2', class_='android.widget.ImageView', xml=self.uia_ins.xml)
+            self.adb_ins.press_back_key()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             sleep(10)

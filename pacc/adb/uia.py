@@ -16,7 +16,8 @@ class Node:
     """节点类"""
     # pylint: disable=too-many-arguments
     def __init__(
-            self, resource_id='', text='', content_desc='', bounds='', class_='', index='', naf=''):
+            self, resource_id='', text='', content_desc='', bounds='', class_='', index='', naf='',
+            start_count=1):
         """构造函数
 
         :param resource_id: 资源的ID
@@ -30,6 +31,7 @@ class Node:
          text nor content-description. Such controls configuration indicate an
          interactive control is present in the UI and is most likely not
          accessibility friendly. We refer to such controls here as NAF controls.
+        :param start_count: 多个匹配项符合条件时目标项的索引值的计数器
         """
         self.resource_id = resource_id
         self.text = text
@@ -38,6 +40,7 @@ class Node:
         self.class_ = class_
         self.index = index
         self.naf = naf
+        self.start_count = start_count
 
 
 # pylint: disable=too-many-public-methods
@@ -160,7 +163,7 @@ class UIAutomator:
 
     # pylint: disable=too-many-arguments
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-              index='', naf='', offset_x=0, offset_y=0):
+              index='', naf='', start_index=1, offset_x=0, offset_y=0):
         """点击目标点
 
         :param resource_id: 资源的ID
@@ -175,11 +178,13 @@ class UIAutomator:
          content-description. Such controls configuration indicate an interactive control
          is present in the UI and is most likely not accessibility friendly. We refer to
          such controls here as NAF controls.
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :param offset_x: x轴坐标的偏移量
         :param offset_y: y轴坐标的偏移量
         :return: 找到后立即点击并返回True，未找到返回False
         """
-        point = self.get_point(resource_id, text, content_desc, xml, bounds, class_, index, naf)
+        point = self.get_point(
+            resource_id, text, content_desc, xml, bounds, class_, index, naf, start_index)
         if not point:
             return False
         x_coordinate, y_coordinate = point
@@ -196,7 +201,7 @@ class UIAutomator:
         self.tap(point)
 
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                  index='', naf=''):
+                  index='', naf='', start_index=1):
         """获取目标点的坐标
 
         :param resource_id: 资源的ID
@@ -211,15 +216,17 @@ class UIAutomator:
          content-description. Such controls configuration indicate an interactive control
          is present in the UI and is most likely not accessibility friendly. We refer to
          such controls here as NAF controls.
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 找到后返回目标点的坐标，未找到返回False
         """
-        bounds = self.get_bounds(resource_id, text, content_desc, xml, bounds, class_, index, naf)
+        bounds = self.get_bounds(
+            resource_id, text, content_desc, xml, bounds, class_, index, naf, start_index)
         if not bounds:
             return False
         return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_='',
-                   index='', naf=''):
+                   index='', naf='', start_index=1):
         """获取目标点所在的边界的斜对角两点的坐标
 
         :param resource_id: 资源的ID
@@ -234,9 +241,11 @@ class UIAutomator:
          content-description. Such controls configuration indicate an interactive control
          is present in the UI and is most likely not accessibility friendly. We refer to
          such controls here as NAF controls.
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 找到后返回目边界的斜对角两点的坐标，未找到返回False
         """
-        dic = self.get_dict(resource_id, text, content_desc, xml, bounds, class_, index, naf)
+        dic = self.get_dict(
+            resource_id, text, content_desc, xml, bounds, class_, index, naf, start_index)
         if dic:
             return dic['@bounds']
         return False
@@ -257,7 +266,7 @@ class UIAutomator:
 
     # pylint: disable=too-many-branches
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                 index='', naf=''):
+                 index='', naf='', start_index=1):
         """获取目标对象的字典信息
 
         :param resource_id: 资源的身份码
@@ -272,14 +281,15 @@ class UIAutomator:
          content-description. Such controls configuration indicate an interactive control
          is present in the UI and is most likely not accessibility friendly. We refer to
          such controls here as NAF controls.
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 返回通过深度优先方式获取到的字典信息（若找不到目标则返回的字典信息的值为False）
         """
-        self.node = Node(resource_id, text, content_desc, bounds, class_, index, naf)
+        self.node = Node(resource_id, text, content_desc, bounds, class_, index, naf, start_count=1)
         if xml:
             self.xml = xml
         else:
             self.xml = self.get_current_ui_hierarchy()
-        dic = self.depth_first_search(xmltodict.parse(self.xml))
+        dic = self.depth_first_search(xmltodict.parse(self.xml), start_index)
         if dic:
             dic.update({'@text': unescape(dic['@text'])})
         if text:
@@ -324,10 +334,11 @@ class UIAutomator:
         return self.dicts
 
     # pylint: disable=too-many-return-statements,too-many-branches
-    def is_target_node(self, dic):
+    def is_target_node(self, dic, start_index=1):
         """通过字典信息判断是否是目标点
 
         :param dic: 待比对点的字典信息
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 比对成功返回True，否则返回False
         """
         if type(dic) in (str, list):
@@ -339,7 +350,11 @@ class UIAutomator:
                 if self.node.resource_id and dic['@resource-id'] == self.node.resource_id:
                     return True
                 if self.node.naf and '@NAF' in dic and self.node.naf == dic['@NAF']:
-                    return True
+                    if self.node.start_count == start_index:
+                        return True
+                    else:
+                        self.node.start_count += 1
+                        return False
                 if self.node.text:
                     if self.node.text in unescape(dic['@text']):
                         return True
@@ -394,24 +409,25 @@ class UIAutomator:
         return x1_value in (-1, x3_value) and y1_value in (-1, y3_value) and x2_value in (
             -1, x4_value) and y2_value in (-1, y4_value)
 
-    def depth_first_search(self, dic):
+    def depth_first_search(self, dic, start_index=1):
         """通过深度优先来搜索目标对象
 
         :param dic: 待搜索对象的字典信息
+        :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 搜索到返回目标对象，否则返回False
         """
         if isinstance(dic, dict):
-            if self.is_target_node(dic):
+            if self.is_target_node(dic, start_index):
                 return dic
             for i in dic.keys():
-                if self.is_target_node(dic[i]):
+                if self.is_target_node(dic[i], start_index):
                     return dic[i]
-                res = self.depth_first_search(dic[i])
+                res = self.depth_first_search(dic=dic[i], start_index=start_index)
                 if res:
                     return res
         elif isinstance(dic, list):
             for i in dic:
-                res = self.depth_first_search(i)
+                res = self.depth_first_search(dic=i, start_index=start_index)
                 if res:
                     return res
         return False
