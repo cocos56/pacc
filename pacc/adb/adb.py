@@ -69,7 +69,12 @@ class ADB:  # pylint: disable=too-many-public-methods
         """
         res = popen(f'{self.cmd}shell dumpsys battery | findstr "temperature"').read()
         # print(res)
-        return find_all_ints_with_re(res)[0]/10
+        try:
+            return find_all_ints_with_re(res)[0]/10
+        except IndexError as err:
+            print_err(err)
+            self.keep_online()
+            return self.get_battery_temperature()
 
     def get_cpu_temperature(self):
         """获取CPU温度
