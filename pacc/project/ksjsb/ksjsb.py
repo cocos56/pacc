@@ -558,7 +558,12 @@ class Ksjsb(Project):
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         sleep(3)
-        self.uia_ins.tap((536, 1706), 50)
+        if self.uia_ins.click(text='极速到账'):
+            sleep(50)
+        else:
+            EMail(self.serial_num).send_unknown_error()
+            input('change_money遇见未知情况，请手动处理')
+            print('正在继续向下处理')
         try:
             self.uia_ins.click(text='立即提现')
             sleep(6)

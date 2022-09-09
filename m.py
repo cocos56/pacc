@@ -15,10 +15,10 @@ adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 # print(adb_ins.is_awake())
 # uia_ins.click(naf='true', index='2')
-uia_ins.click(naf='true', index='1', start_index=2)
+# uia_ins.click(naf='true', index='1', start_index=2)
 # print(uia_ins.get_dict(naf='true', index='1', start_index=2))
 # uia_ins.click_by_screen_text('关闭')
-# try:
-#     uia_ins.get_current_ui_hierarchy()
-# except FileNotFoundError as err:
-#     print_err(err)
+try:
+    uia_ins.get_current_ui_hierarchy()
+except FileNotFoundError as err:
+    print_err(err)

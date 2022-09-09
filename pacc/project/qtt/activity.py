@@ -11,6 +11,10 @@ class Activity:
     # 【搜索界面】由主界面转入
     H5SearchPreLoadActivity = f'{ROOT}jifen.qukan.content.search.H5SearchPreLoadActivity'
 
+    # 【直播界面】由主界面转入
+    VideoLiveAutoLoadActivity = f'{ROOT}jifen.qukan.content.newslist.video.' \
+                                f'VideoLiveAutoLoadActivity'
+
     #  【小米商店应用详情】由主界面的新闻标题中的广告标题转入
     AppDetailActivityInner = 'com.xiaomi.market/com.xiaomi.market.ui.detail.AppDetailActivityInner'
 

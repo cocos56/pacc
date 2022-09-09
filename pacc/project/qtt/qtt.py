@@ -41,16 +41,20 @@ class Qtt(Project):
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text('再领'):
                     sleep(6)
-                    if Activity.InciteADActivity in self.adb_ins.get_current_focus():
+                    current_focus = self.adb_ins.get_current_focus()
+                    if Activity.InciteADActivity in current_focus:
                         self.adb_ins.press_back_key(9)
                         if self.uia_ins.secure_get_current_ui_hierarchy() and self.uia_ins.click(
                                 text='有任务奖励未领取，是否继续？', xml=self.uia_ins.xml):
                             self.adb_ins.press_back_key()
                         else:
                             self.uia_ins.click(text='继续观看', xml=self.uia_ins.xml)
+                    elif Activity.VideoLiveAutoLoadActivity in current_focus:
+                        self.adb_ins.press_back_key()
+                        break
                     self.exit_ad_activity()
                     click_cnt += 1
-                    print(f'click_cnt={click_cnt}')
+                    print(f'open_app click_cnt={click_cnt}')
                     if click_cnt >= 10:
                         break
 
@@ -343,6 +347,8 @@ class Qtt(Project):
         print('正在进入任务界面')
         self.uia_ins.tap((765, 1833), 6)
         try:
+            if not self.uia_ins.get_dict(ResourceID.a6u, '签到领'):
+                self.uia_ins.click('立即签到', xml=self.uia_ins.xml)
             while self.uia_ins.click(ResourceID.a6u, '签到领'):
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()
@@ -364,8 +370,20 @@ class Qtt(Project):
             return True
         self.reopen_app()
         self.uia_ins.tap((977, 1839), 9)
+        if self.uia_ins.click(ResourceID.bdb, '签到'):
+            self.uia_ins.click_by_screen_text('立即签到')
+            while self.uia_ins.click(ResourceID.a6u, '签到领'):
+                click_cnt = 0
+                while self.uia_ins.click_by_screen_text(text='看视频再领'):
+                    self.exit_ad_activity()
+                    click_cnt += 1
+                    print(f'change_money click_cnt={click_cnt}')
+                    if click_cnt >= 10:
+                        break
+                self.uia_ins.click_by_screen_text(text='知道了')
+            return self.change_money()
         print('正在把金币换成钱')
-        if self.uia_ins.click(ResourceID.aps):
+        if self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
         sleep(18)
