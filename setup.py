@@ -1,9 +1,10 @@
 """安装模块"""
 from setuptools import setup, find_packages
+from pacc.pacc import get_version
 
 setup(
     name='pacc',  # 包名
-    version='0.0.505',  # 版本
+    version=get_version(),  # 版本
     packages=find_packages(),  # 目录下所有文件
     # 简述信息
     description="""Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或WLAN
