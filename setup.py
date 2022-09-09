@@ -1,6 +1,6 @@
 """安装模块"""
 from setuptools import setup, find_packages
-from pacc.pacc import get_version
+from pacc import get_version
 
 setup(
     name='pacc',  # 包名
