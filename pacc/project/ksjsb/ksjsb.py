@@ -558,7 +558,7 @@ class Ksjsb(Project):
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         sleep(3)
-        if self.uia_ins.click(text='极速到账'):
+        if self.uia_ins.click(index='0', text='极速到账'):
             sleep(50)
         else:
             EMail(self.serial_num).send_unknown_error()
