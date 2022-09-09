@@ -11,8 +11,7 @@ from ..mysql import RetrieveMobileInfo
 from ..tools import create_dir, get_pretty_xml, get_xml, find_all_ints_with_re, average
 
 
-# pylint: disable=too-few-public-methods
-class Node:
+class Node:  # pylint: disable=too-few-public-methods, too-many-instance-attributes
     """节点类"""
     # pylint: disable=too-many-arguments
     def __init__(
@@ -352,9 +351,8 @@ class UIAutomator:
                 if self.node.naf and '@NAF' in dic and self.node.naf == dic['@NAF']:
                     if self.node.start_count == start_index:
                         return True
-                    else:
-                        self.node.start_count += 1
-                        return False
+                    self.node.start_count += 1
+                    return False
                 if self.node.text:
                     if self.node.text in unescape(dic['@text']):
                         return True
