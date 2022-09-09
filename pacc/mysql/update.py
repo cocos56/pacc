@@ -176,14 +176,6 @@ class UpdateKsjsb(Update):
         self.dbr.last_meal_allowance_datetime = last_meal_allowance_datetime
         print(self.query('last_meal_allowance_datetime', last_meal_allowance_datetime))
 
-    def update_last_flash_benefits_date(self, last_flash_benefits_date):
-        """更新上一次领完限时福利的日期
-
-        param last_flash_benefits_date: 上一次领完限时福利的日期
-        """
-        self.dbr.last_flash_benefits_date = last_flash_benefits_date
-        print(self.query('last_flash_benefits_date', last_flash_benefits_date))
-
     def update_last_desktop_component_date(self, last_desktop_component_date):
         """更新上一次领完桌面组件奖励的日期
 
@@ -207,14 +199,6 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_change_money_date = last_change_money_date
         print(self.query('last_change_money_date', last_change_money_date))
-
-    def update_last_daily_challenge_date(self, last_daily_challenge_date):
-        """更新上一次把金币兑换钱的日期
-
-        :param last_daily_challenge_date: 上一次把金币兑换钱的日期
-        """
-        self.dbr.last_daily_challenge_date = last_daily_challenge_date
-        print(self.query('last_daily_challenge_date', last_daily_challenge_date))
 
     def update_last_update_wealth_date(self, last_update_wealth_date):
         """更新上一次更新完财富值的日期

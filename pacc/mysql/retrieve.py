@@ -164,11 +164,9 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.last_watch_live_date = self.query('last_watch_live_date')
         self.last_shopping_date = self.query('last_shopping_date')
         self.last_meal_allowance_datetime = self.query('last_meal_allowance_datetime')
-        self.last_flash_benefits_date = self.query('last_flash_benefits_date')
         self.last_desktop_component_date = self.query('last_desktop_component_date')
         self.last_buy_things_date = self.query('last_buy_things_date')
         self.last_change_money_date = self.query('last_change_money_date')
-        self.last_daily_challenge_date = self.query('last_daily_challenge_date')
         self.last_update_wealth_date = self.query('last_update_wealth_date')
         self.last_watch_video_date = self.query('last_watch_video_date')
 

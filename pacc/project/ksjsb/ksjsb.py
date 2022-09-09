@@ -463,22 +463,6 @@ class Ksjsb(Project):
             return True
         return False
 
-    def get_flash_benefits(self):
-        """"领取限时福利：限时福利14天领"""
-        if not self.dbr.last_flash_benefits_date:
-            print('从未领取过限时福利')
-        elif self.dbr.last_flash_benefits_date >= date.today():
-            print('今天已经领完限时福利了，无需重复操作')
-            return
-        self.enter_wealth_interface()
-        print('正在领取限时福利')
-        if not self.uia_ins.get_point_by_screen_text(text='限时福利14天领', txt=self.uia_ins.txt):
-            self.dbu.update_last_flash_benefits_date(date.today())
-            return
-        if self.uia_ins.click_by_screen_text(text='立即领取', txt=self.uia_ins.txt):
-            sleep(12)
-            self.dbu.update_last_flash_benefits_date(date.today())
-
     def get_desktop_component_coin(self):
         """获取桌面组件奖励"""
         if self.dbr.last_desktop_component_date == date.today():
@@ -588,23 +572,6 @@ class Ksjsb(Project):
             print_err(err)
             return self.change_money()
 
-    def get_daily_challenge_coins(self, enforce=False, enter_wealth_interface=True):
-        """领取每日挑战奖励"""
-        if enforce:
-            print('正在强制执行领取每日挑战奖励的操作')
-        elif not self.dbr.last_daily_challenge_date:
-            print('从未领取过每日挑战奖励')
-        elif self.dbr.last_daily_challenge_date >= date.today():
-            print('今天已经领过每日挑战奖励了，无需重复操作')
-            return True
-        if enter_wealth_interface:
-            self.enter_wealth_interface()
-        print('正在领取每日挑战奖励')
-        self.adb_ins.swipe((600, 1800), (600, 800))
-        while self.uia_ins.click_by_screen_text(text='点击领取', start_index=1):
-            sleep(6)
-        self.dbu.update_last_daily_challenge_date(date.today())
-
     def get_wealth(self):
         """获取财富值"""
         print('正在获取财富值')
@@ -710,12 +677,10 @@ class Ksjsb(Project):
             self.watch_live()
             self.shopping()
             self.open_meal_allowance()
-            self.get_flash_benefits()
             self.get_desktop_component_coin()
             self.buy_things_with_coins()
             if datetime.now().hour > 5:
                 self.change_money()
-                self.get_daily_challenge_coins()
                 self.update_wealth()
                 if not self.dbr.last_watch_video_date:
                     self.dbu.update_last_watch_video_date(date.min)
