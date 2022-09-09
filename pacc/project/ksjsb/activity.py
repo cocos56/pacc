@@ -30,6 +30,9 @@ class Activity:
     # 【逛街界面】由财富界面->去逛街转入
     AdKwaiRnActivity = f'{ROOT}yxcorp.gifshow.ad.rn.AdKwaiRnActivity'
 
+    # 【选择使用的应用界面】提现时会让分享，多开应用时会出现让选择应用的情况
+    ResolverActivity = 'android/com.android.internal.app.ResolverActivity'
+
     LiveSlideActivity = f'{ROOT}kuaishou.live.core.basic.activity.LiveSlideActivity'  # 游戏直播
     UserProfileActivity = f'{ROOT}yxcorp.gifshow.profile.activity.UserProfileActivity'  # 用户主页
     AdYodaActivity = f'{ROOT}yxcorp.gifshow.ad.webview.AdYodaActivity'  # 广告（看视频时出现）

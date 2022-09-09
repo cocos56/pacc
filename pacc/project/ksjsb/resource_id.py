@@ -55,7 +55,7 @@ class ResourceID:
                                            'live_red_packet_container_close_view'
 
     award_title_prefix = f'{ROOT}award_title_prefix'  # 观看精彩直播，可领
-    button2 = 'android:id/button2'  # 等待按钮（应用长时间无反应）
+    button2 = 'android:id/button2'  # 等待按钮（应用长时间无反应）、取消按钮（选择多开应用时取消选择）
     animated_image = f'{ROOT}animated_image'  # 主界面左上方关闭奥运福娃按钮
     choose_tv = f'{ROOT}choose_tv'  # 请选择你要进行的操作（不感兴趣、关注）
     close = f'{ROOT}close'  # 关闭邀请新朋友（面对面邀请一个朋友赚51元）
