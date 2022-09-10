@@ -21,9 +21,9 @@ class Activity:
 # pylint: disable=too-few-public-methods
 class ResourceID:
     """淘宝/拼多多全自动远程刷单APP中央控制系统模块的安卓资源ID类"""
-    # 确定（联机业务异常，请重新联机）、立即连接（连接异常,正在重新连接......）、
-    # （切换账号将会结束您当前的挂机,是否继续?）
-    button2 = 'android:id/button2'
+    # 确定（联机业务异常，请重新联机）、立即连接（连接异常，正在重新连接......）
+    # （切换账号将会结束您当前的挂机，是否继续？）
+    button2 = 'android:id/button2'  # 确定或等待（滴滴助手无响应。要将其关闭吗？）
     button1 = 'android:id/button1'  # 取消
     auto_wait_btn = 'com.dd.rclient:id/auto_wait_btn'
     # 连接状态信息：【正在连接服务器...】、【已连接到服务器,等待控制端连接】
@@ -63,7 +63,10 @@ class SD(Project):
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
             self.uia_ins.xml = ''
-        self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
+        click_cnt = 0
+        while self.uia_ins.click(ResourceID.button2, '等待'):
+            click_cnt += 1
+            print(f'click_cnt={click_cnt}')
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
         if dic and dic['@text'] == '正在连接服务器...':
             self.reopen_app()
@@ -72,8 +75,6 @@ class SD(Project):
                 self.reopen_app()
             except FileNotFoundError as err:
                 print_err(err)
-                # self.uia_ins.get_screen()
-                # input('出现未知错误，请手动处理')
         elif Activity.LoginActivity in current_focus:
             self.adb_ins.reboot()
             self.open_app()
