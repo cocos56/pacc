@@ -495,6 +495,7 @@ class Ksjsb(Project):
         if self.uia_ins.click_by_screen_text(text='去签到'):  # 明日再来
             sleep(3)
             self.uia_ins.txt = ''
+        click_cnt = 0
         while self.uia_ins.click_by_screen_text(text='领福利', txt=self.uia_ins.txt):  # 已完成
             sleep(6)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
@@ -502,6 +503,11 @@ class Ksjsb(Project):
                 self.exit_live(Activity.AwardFeedFlowActivity)
                 self.adb_ins.press_back_key(9)
             self.uia_ins.txt = ''
+            click_cnt += 1
+            print(f'buy_things_with_coins 领福利 click_cnt={click_cnt}')
+            if click_cnt >= 10:
+                print('在获取金币购划算页面内的领福利奖励过程中已经累计领了10次福利，无需继续')
+                break
         click_cnt = 0
         while self.uia_ins.click_by_screen_text('去逛街', txt=self.uia_ins.txt):  # 已领取
             countdown = 96
@@ -520,6 +526,7 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(30)
             self.uia_ins.txt = ''
             click_cnt += 1
+            print(f'buy_things_with_coins 去逛街 click_cnt={click_cnt}')
             if click_cnt >= 10:
                 print('在获取金币购划算页面内的去逛街奖励过程中已经累计逛了10次街，无需继续')
                 break
