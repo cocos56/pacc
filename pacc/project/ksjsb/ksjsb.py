@@ -524,7 +524,7 @@ class Ksjsb(Project):
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
-            self.uia_ins.click('继续逛街')
+            self.uia_ins.click(text='继续逛街')
             self.uia_ins.txt = ''
             click_cnt += 1
             print(f'buy_things_with_coins 去逛街 click_cnt={click_cnt}')
