@@ -376,6 +376,8 @@ class UIAutomator:
                     return False
                 return True
         if self.node.text:
+            if self.node.resource_id:
+                return False
             if self.node.text in unescape(dic['@text']):
                 return True
             return False
