@@ -31,7 +31,7 @@ class MySQL:
             self.__class__.conn = connect(host=host, port=port, database=database, user=user,
                                           password=password, charset=charset)
         except OperationalError as error:
-            print(error)
+            print_err(f'{self.__class__} {error}')
             sleep(30)
             # pylint: disable=non-parent-init-called
             self.__init__(host=host, port=port, database=database, user=user, password=password,
@@ -56,7 +56,7 @@ class MySQL:
             cls.cs.execute(cmd)
             res = cls.cs.fetchall()
         except (OperationalError, ProgrammingError) as error:
-            print_err(f'query {error}')
+            print_err(f'{cls} query {error}')
             sleep(30)
             cls()
             return cls.query(cmd)

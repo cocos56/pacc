@@ -564,8 +564,8 @@ class Ksjsb(Project):
                 self.uia_ins.click_by_bounds(dic['@bounds'])
                 break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
-        sleep(9)
-        if self.uia_ins.click(index='0', text='极速到账'):
+        sleep(3)
+        if self.uia_ins.click_by_screen_text('极速到账'):
             if Activity.ResolverActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.click(ResourceID.button2)
             sleep(50)
