@@ -16,7 +16,7 @@ class Node:  # pylint: disable=too-few-public-methods, too-many-instance-attribu
     # pylint: disable=too-many-arguments
     def __init__(
             self, resource_id='', text='', content_desc='', bounds='', class_='', index='', naf='',
-            start_count=1):
+            start_count=0):
         """构造函数
 
         :param resource_id: 资源的ID
@@ -162,7 +162,7 @@ class UIAutomator:
 
     # pylint: disable=too-many-arguments
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-              index='', naf='', start_index=1, offset_x=0, offset_y=0):
+              index='', naf='', start_index=0, offset_x=0, offset_y=0):
         """点击目标点
 
         :param resource_id: 资源的ID
@@ -200,7 +200,7 @@ class UIAutomator:
         self.tap(point)
 
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                  index='', naf='', start_index=1):
+                  index='', naf='', start_index=0):
         """获取目标点的坐标
 
         :param resource_id: 资源的ID
@@ -225,7 +225,7 @@ class UIAutomator:
         return self.get_point_from_two_points(find_all_ints_with_re(bounds))
 
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_='',
-                   index='', naf='', start_index=1):
+                   index='', naf='', start_index=0):
         """获取目标点所在的边界的斜对角两点的坐标
 
         :param resource_id: 资源的ID
@@ -265,7 +265,7 @@ class UIAutomator:
 
     # pylint: disable=too-many-branches
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-                 index='', naf='', start_index=1):
+                 index='', naf='', start_index=0):
         """获取目标对象的字典信息
 
         :param resource_id: 资源的身份码
@@ -283,7 +283,7 @@ class UIAutomator:
         :param start_index: 多个匹配项符合条件时目标项的索引值
         :return: 返回通过深度优先方式获取到的字典信息（若找不到目标则返回的字典信息的值为False）
         """
-        self.node = Node(resource_id, text, content_desc, bounds, class_, index, naf, start_count=1)
+        self.node = Node(resource_id, text, content_desc, bounds, class_, index, naf, start_count=0)
         if xml:
             self.xml = xml
         else:
@@ -333,7 +333,7 @@ class UIAutomator:
         return self.dicts
 
     # pylint: disable=too-many-return-statements,too-many-branches
-    def is_target_node(self, dic, start_index=1):
+    def is_target_node(self, dic, start_index=0):
         """通过字典信息判断是否是目标点
 
         :param dic: 待比对点的字典信息
@@ -407,7 +407,7 @@ class UIAutomator:
         return x1_value in (-1, x3_value) and y1_value in (-1, y3_value) and x2_value in (
             -1, x4_value) and y2_value in (-1, y4_value)
 
-    def depth_first_search(self, dic, start_index=1):
+    def depth_first_search(self, dic, start_index=0):
         """通过深度优先来搜索目标对象
 
         :param dic: 待搜索对象的字典信息

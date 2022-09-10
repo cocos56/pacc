@@ -313,7 +313,7 @@ class Ksjsb(Project):
             while True:
                 self.adb_ins.press_back_key(18)
                 if self.uia_ins.click(text='退出直播间') or self.uia_ins.click(
-                        text='退出', start_index=2) or self.uia_ins.click(text='退出'):
+                        text='退出', start_index=1) or self.uia_ins.click(text='退出'):
                     sleep(18)
                 current_focus = self.adb_ins.get_current_focus()
                 if break_activity in self.adb_ins.get_current_focus():
