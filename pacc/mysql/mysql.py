@@ -11,7 +11,7 @@ class MySQL:
     conn = connect(host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
                    password=getenv('MySQL_PW'))
     cs = conn.cursor()
-    conn.close()
+    # conn.close()
 
     instance = None
 
