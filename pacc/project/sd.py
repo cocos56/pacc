@@ -52,6 +52,9 @@ class SD(Project):
         if PDD_ROOT in current_focus:
             print('拼多多正在运行，无需额外检查\n')
             return
+        if 'com.miui.home/com.miui.home.launcher.Launcher' in current_focus:
+            print('桌面正在运行，无需额外检查\n')
+            return
         if 'mCurrentFocus=null' in current_focus:
             print('无法正常获取当前正在运行的程序信息，无法进行检查\n')
             return
