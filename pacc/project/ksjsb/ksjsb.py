@@ -524,7 +524,10 @@ class Ksjsb(Project):
                 if Activity.AdKwaiRnActivity not in current_focus:
                     self.adb_ins.press_back_key(9)
             self.adb_ins.press_back_key(30)
-            self.uia_ins.click(text='继续逛街')
+            try:
+                self.uia_ins.click(text='继续逛街')
+            except ExpatError as err:
+                print_err(err)
             self.uia_ins.txt = ''
             click_cnt += 1
             print(f'buy_things_with_coins 去逛街 click_cnt={click_cnt}')
