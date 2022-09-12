@@ -248,7 +248,12 @@ class Ksjsb(Project):
                 self.exit_award_video_play_activity()
             elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt)\
                     or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
-                sleep(96)
+                sleep(30)
+                if self.uia_ins.get_dict('kwai-captcha'):
+                    EMail(self.serial_num).send_verification_code_alarm()
+                    input('open_treasure_box出现验证码，请手动处理')
+                    print('正在继续向下处理')
+                sleep(66)
                 self.exit_live()
             else:
                 EMail(self.serial_num).send_unknown_error()
