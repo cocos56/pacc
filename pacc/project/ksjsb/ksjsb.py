@@ -400,6 +400,10 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(60)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(60)
+            try:
+                self.uia_ins.click(text='继续逛街')
+            except (ExpatError, ExpatError) as err:
+                print_err(err)
         if break_while:
             return False
         if self.uia_ins.get_point_by_screen_text('今日福利已领取') or self.uia_ins.\
