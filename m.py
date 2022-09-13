@@ -7,7 +7,7 @@ from pacc.config import Config
 
 
 Config.set_debug(True)
-DEVICE_SN = '002004002'
+DEVICE_SN = '001021002'
 adb_ins = ADB(DEVICE_SN)
 # adb_ins.get_cpu_temperature()
 # print(adb_ins.get_battery_temperature())

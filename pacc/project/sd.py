@@ -25,6 +25,7 @@ class ResourceID:
     # （切换账号将会结束您当前的挂机，是否继续？）
     button2 = 'android:id/button2'  # 确定或等待（滴滴助手无响应。要将其关闭吗？）
     button1 = 'android:id/button1'  # 取消
+    aerr_wait = 'android:id/aerr_wait'  # 华为手机等待按钮（滴滴助手 无响应。是否将其关闭？）
     auto_wait_btn = 'com.dd.rclient:id/auto_wait_btn'
     # 连接状态信息：【正在连接服务器...】、【已连接到服务器,等待控制端连接】
     mec_connect_state = 'com.dd.rclient:id/mec_connect_state'
@@ -67,7 +68,8 @@ class SD(Project):
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
             self.uia_ins.xml = ''
         click_cnt = 0
-        while self.uia_ins.click(ResourceID.button2, '等待'):
+        while self.uia_ins.click(ResourceID.button2, '等待') or self.uia_ins.click(
+                ResourceID.aerr_wait, '等待', xml=self.uia_ins.xml):
             click_cnt += 1
             print(f'click_cnt={click_cnt}')
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
