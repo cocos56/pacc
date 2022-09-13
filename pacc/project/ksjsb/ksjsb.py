@@ -347,9 +347,9 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看直播')
-        while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
+        while not self.uia_ins.get_point_by_screen_text(text='看直播得1'):
             self.adb_ins.swipe((600, 1800), (600, 800))
-        while self.uia_ins.click_by_screen_text(text='看直播得1.5万金币'):
+        while self.uia_ins.click_by_screen_text(text='看直播得1'):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
