@@ -407,7 +407,7 @@ class Ksjsb(Project):
                 self.adb_ins.press_back_key(60)
             try:
                 self.uia_ins.click(text='继续逛街')
-            except (ExpatError, ExpatError) as err:
+            except (FileNotFoundError, ExpatError) as err:
                 print_err(err)
         if break_while:
             return False
@@ -535,7 +535,7 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(30)
             try:
                 self.uia_ins.click(text='继续逛街')
-            except (ExpatError, ExpatError) as err:
+            except (FileNotFoundError, ExpatError) as err:
                 print_err(err)
             self.uia_ins.txt = ''
             click_cnt += 1
