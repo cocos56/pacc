@@ -291,7 +291,12 @@ class UIAutomator:
         dic = self.depth_first_search(xmltodict.parse(self.xml), start_index)
         if dic:
             dic.update({'@text': unescape(dic['@text'])})
-        if text:
+        if text and start_index:
+            if dic:
+                print(f'检测到【text={text}, start_index={start_index}】')
+            else:
+                print(f'未找到【text={text}】, start_index={start_index}')
+        elif text:
             if dic:
                 print(f'检测到【text={text}】')
             else:
