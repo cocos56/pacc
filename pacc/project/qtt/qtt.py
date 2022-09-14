@@ -386,7 +386,7 @@ class Qtt(Project):
         if self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
-        sleep(18)
+        sleep(26)
         if Activity.MainActivity in self.adb_ins.get_current_focus():
             return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
