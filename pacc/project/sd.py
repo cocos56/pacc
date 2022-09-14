@@ -68,10 +68,13 @@ class SD(Project):
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
             self.uia_ins.xml = ''
         click_cnt = 0
-        while self.uia_ins.click(ResourceID.button2, '等待') or self.uia_ins.click(
-                ResourceID.aerr_wait, '等待', xml=self.uia_ins.xml):
-            click_cnt += 1
-            print(f'click_cnt={click_cnt}')
+        try:
+            while self.uia_ins.click(ResourceID.button2, '等待') or self.uia_ins.click(
+                    ResourceID.aerr_wait, '等待', xml=self.uia_ins.xml):
+                click_cnt += 1
+                print(f'click_cnt={click_cnt}')
+        except FileNotFoundError as err:
+            print_err(err)
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
         if dic and dic['@text'] == '正在连接服务器...':
             self.reopen_app()
