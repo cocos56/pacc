@@ -242,7 +242,7 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
-            sleep(9)
+            sleep(12)
             if self.uia_ins.click_by_screen_text('看视频最高得'):
                 sleep(6)
                 self.exit_award_video_play_activity()

@@ -1,1 +1,1 @@
-scrcpy -s 4c26f6a6 --window-title 001002002sd_淮Mi4_备用2
+scrcpy -s a1022960 --window-title 001002002sd_淮Mi4_备用2
