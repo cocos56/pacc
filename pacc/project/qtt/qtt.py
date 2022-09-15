@@ -284,7 +284,7 @@ class Qtt(Project):
                     self.exit_ad_activity()
             elif self.uia_ins.get_dict(ResourceID.ae6, xml=self.uia_ins.xml):  # 您已获得提取0.3元现金机会
                 self.adb_ins.press_back_key()
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
