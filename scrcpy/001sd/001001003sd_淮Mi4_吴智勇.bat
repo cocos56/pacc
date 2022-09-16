@@ -1,4 +1,4 @@
-echo Ó¦ÓÃÉý¼¶£º20220503
-echo ÌÔ±¦ÏûÏ¢£º20220503
-echo Æ´¶à¶àÏûÏ¢£º20220503
-scrcpy -s 95f1cca9 --window-title 001002001sd_»´Mi4_±¸ÓÃ1
+echo åº”ç”¨å‡çº§ï¼š20220503
+echo æ·˜å®æ¶ˆæ¯ï¼š20220503
+echo æ‹¼å¤šå¤šæ¶ˆæ¯ï¼š20220503
+scrcpy -s 95f1cca9 --window-title 001001003sd_æ·®Mi4_å´æ™ºå‹‡|

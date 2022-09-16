@@ -289,7 +289,7 @@ class Qtt(Project):
                 self.adb_ins.press_back_key()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-        while self.uia_ins.click_by_screen_text('点击领取'):
+        if self.uia_ins.click_by_screen_text('点击领取'):
             sleep(15)
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key(6)

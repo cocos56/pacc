@@ -1,1 +1,1 @@
-scrcpy -s 965596a --window-title 001002001sd_淮Mi4_备用1
+scrcpy -s 965596a --window-title 001001006sd_淮Mi4_徐其锋|
