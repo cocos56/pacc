@@ -120,7 +120,10 @@ class Qtt(Project):
                 if Activity.MainActivity in self.adb_ins.get_current_focus():
                     return
                 self.adb_ins.press_back_key()
-                if self.uia_ins.click(text='坚决放弃'):
+                if self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
+                    self.adb_ins.press_back_key()
+                    return self.exit_incite_ad_activity()
+                elif self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
                     return
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
@@ -245,7 +248,7 @@ class Qtt(Project):
         print(f'距离退出新闻详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         try:
             if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
-                    uia_ins.get_dict(resource_id=ResourceID.bhu, index='0'):
+                    uia_ins.get_dict(resource_id=ResourceID.bmr, index='0'):
                 self.watch_news_detail()
         except ExpatError as err:
             print_err(err)
@@ -286,6 +289,10 @@ class Qtt(Project):
                 self.adb_ins.press_back_key()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
+        while self.uia_ins.click_by_screen_text('点击领取'):
+            sleep(18)
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key(6)
         self.uia_ins.tap((631, 633), 6)
         current_focus = self.adb_ins.get_current_focus()
         if Activity.ADBrowser in current_focus or Activity.AppActivity in current_focus:
@@ -301,12 +308,12 @@ class Qtt(Project):
             print_err(err)
             return self.watch_detail()
         if Activity.NewsDetailNewActivity in current_focus:
-            if self.uia_ins.click(resource_id=ResourceID.bhu, index='0'):
+            if self.uia_ins.click(resource_id=ResourceID.bmr, index='0'):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
                 self.uia_ins.click_by_screen_text('我知道了', txt=self.uia_ins.txt)
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and self.uia_ins.\
-                get_dict(ResourceID.a8h):
+                get_dict(ResourceID.a8w, index='0', class_='android.widget.ImageView'):
             self.watch_news_detail()
         return True
 
@@ -347,9 +354,9 @@ class Qtt(Project):
         print('正在进入任务界面')
         self.uia_ins.tap((765, 1833), 6)
         try:
-            if not self.uia_ins.get_dict(ResourceID.a6u, '签到领'):
+            if not self.uia_ins.get_dict(ResourceID.a77, '签到领'):
                 self.uia_ins.click('立即签到', xml=self.uia_ins.xml)
-            while self.uia_ins.click(ResourceID.a6u, '签到领'):
+            while self.uia_ins.click(ResourceID.a77, '签到领'):
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()
                 self.uia_ins.click_by_screen_text(text='知道了')
@@ -370,9 +377,9 @@ class Qtt(Project):
             return True
         self.reopen_app()
         self.uia_ins.tap((977, 1839), 9)
-        if self.uia_ins.click(ResourceID.bdb, '签到'):
+        if self.uia_ins.click(ResourceID.bia, '签到'):
             self.uia_ins.click_by_screen_text('立即签到')
-            while self.uia_ins.click(ResourceID.a6u, '签到领'):
+            while self.uia_ins.click(ResourceID.a77, '签到领'):
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()
@@ -385,7 +392,7 @@ class Qtt(Project):
         print('正在把金币换成钱')
         if self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml):
             self.uia_ins.xml = ''
-        self.uia_ins.click(ResourceID.be2, xml=self.uia_ins.xml)
+        self.uia_ins.click(ResourceID.bj3, '提现兑换', xml=self.uia_ins.xml)
         sleep(26)
         if Activity.MainActivity in self.adb_ins.get_current_focus():
             return self.change_money()
