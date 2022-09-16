@@ -390,6 +390,9 @@ class UIAutomator:
             if self.node.resource_id:
                 return False
             if self.node.text in unescape(dic['@text']):
+                if self.node.start_count == start_index:
+                    return True
+                self.node.start_count += 1
                 return True
             return False
         if self.node.bounds:
