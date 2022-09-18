@@ -5,6 +5,9 @@ ROOT = 'com.jifen.qukan:id/'
 # pylint: disable=too-few-public-methods
 class ResourceID:
     """趣头条中央控制系统模块的安卓资源身份码类"""
+    #  【启动界面】
+    ah2 = f'{ROOT}ah2'  # 同意（我们将通过《隐私政策》和《用户协议》帮助您了解我们收集、使用、储存和共享个人...）
+
     # 【头条界面】
     b2d = f'{ROOT}b2d'  # 文章标题
     ap7 = f'{ROOT}ap7'  # 关闭图标（恭喜你获得一个5400金币的问卷任务）

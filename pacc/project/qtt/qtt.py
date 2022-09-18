@@ -90,10 +90,12 @@ class Qtt(Project):
         """退出stub_standard_portrait活动页面"""
         print('正在退出stub_standard_portrait活动页面')
         try:
-            self.uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
+            if Activity.Stub_Standard_Portrait_Activity in self.adb_ins.get_current_focus():
+                self.uia_ins.click('com.bykv.vk:id/tt_video_ad_close_layout')
         except FileNotFoundError as err:
             print_err(err)
             sleep(10)
+            self.uia_ins.tap((966, 102))
             self.exit_stub_standard_portrait_activity()
 
     def exit_ks_reward_video_activity(self):
@@ -367,8 +369,13 @@ class Qtt(Project):
         """观看bxs（看5秒领金币、看视频领金币）"""
         self.enter_task_interface()
         print('正在观看bxs（看5秒领金币、看视频领金币）')
+        get_cnt = 0
         while self.get_coins_by_bxs():
             sleep(6)
+            get_cnt += 1
+            print(f'get_cnt={get_cnt}')
+            if get_cnt >= 10:
+                break
 
     def change_money(self):  # pylint: disable=too-many-return-statements, too-many-branches
         """把金币换成钱"""
@@ -394,7 +401,7 @@ class Qtt(Project):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.bj3, '提现兑换', xml=self.uia_ins.xml)
         sleep(26)
-        if Activity.MainActivity in self.adb_ins.get_current_focus():
+        if Activity.WebActivity not in self.adb_ins.get_current_focus():
             return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
             sleep(6)

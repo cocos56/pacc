@@ -11,5 +11,10 @@ class PddVideo(Project):
     @run_forever
     def mainloop(self):
         """主循环函数"""
-        self.adb_ins.swipe((600, 1860), (600, 360))
+        self.adb_ins.swipe((600, 1560), (600, 260))
         sleep(randint(12, 15))
+        if 'com.xunmeng.pinduoduo/com.xunmeng.pinduoduo.ui.activity.HomeActivity' not in self.\
+                adb_ins.get_current_focus():
+            print('未检测到拼多多视频的活动，请手动处理')
+            input()
+            print('正在往下继续执行')
