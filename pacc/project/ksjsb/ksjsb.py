@@ -353,7 +353,7 @@ class Ksjsb(Project):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            sleep(6)
+            sleep(9)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 progress = find_all_ints_with_re(self.uia_ins.get_dict(
                     ResourceID.progress_display)['@text'])
