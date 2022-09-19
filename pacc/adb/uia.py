@@ -393,7 +393,7 @@ class UIAutomator:
                 if self.node.start_count == start_index:
                     return True
                 self.node.start_count += 1
-                return True
+                return False
             return False
         if self.node.bounds:
             if self.is_target_bounds(self.node.bounds, dic['@bounds']):
