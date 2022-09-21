@@ -19,16 +19,18 @@ class Qtt(Project):
         """
         super().__init__(serial_num)
         self.last_loop_datetime = datetime.now()
-        self.last_change_money_date = date.today() - timedelta(days=1)
+        self.last_change_money_date = date.today()
+        # self.last_change_money_date = date.today() - timedelta(days=1)
 
     def open_app(self):
         """打开趣头条APP"""
-        print('正在打开快手极速版APP')
+        print('正在打开趣头条APP')
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(16)
         try:
-            if not self.uia_ins.click(ResourceID.ap7):
-                self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml)
+            if not self.uia_ins.click(ResourceID.ap7) and not self.uia_ins.click(
+                    ResourceID.aps, xml=self.uia_ins.xml):
+                self.uia_ins.click(ResourceID.aq6, xml=self.uia_ins.xml)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
         if self.uia_ins.click_by_screen_text('领取'):
@@ -113,16 +115,19 @@ class Qtt(Project):
         """退出奖励广告活动页面"""
         print('正在退出奖励广告活动页面')
         try:
+            continue_cnt = 0
             while not self.uia_ins.get_dict(text='点击重播'):
                 if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
                         text='安装并打开', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
                         text='继续观看', xml=self.uia_ins.xml):
                     self.adb_ins.press_back_key()
                 sleep(20)
+                continue_cnt += 1
                 if Activity.MainActivity in self.adb_ins.get_current_focus():
                     return
                 self.adb_ins.press_back_key()
-                if self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
+                print(f'continue_cnt={continue_cnt}')
+                if continue_cnt < 6 and self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
                     self.adb_ins.press_back_key()
                     return self.exit_incite_ad_activity()
                 elif self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
@@ -173,7 +178,6 @@ class Qtt(Project):
                 return True
             if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.tap((991, 61))
-                # self.uia_ins.tap((987, 104))
             elif self.uia_ins.get_point_by_screen_text('立即下载', self.uia_ins.txt):
                 self.uia_ins.tap((980, 106))
         if Activity.MobRewardVideoActivity in self.adb_ins.get_current_focus():
@@ -201,12 +205,16 @@ class Qtt(Project):
             self.uia_ins.click(text='关闭', index='2')
         return True
 
+    def click_detail_title(self):
+        """点击详情页的标题以进入详情页"""
+        self.uia_ins.tap((80, 460), 6)
+
     def refresh_detail(self):  # pylint: disable=too-many-return-statements
         """刷新详情页"""
         print('正在刷新详情页')
         self.adb_ins.press_back_key()
-        self.adb_ins.press_back_key(6)
-        self.uia_ins.tap((631, 633), 6)
+        self.adb_ins.swipe((600, 319), (600, 819))
+        self.click_detail_title()
         current_focus = self.adb_ins.get_current_focus()
         if Activity.AppDetailActivityInner in current_focus:
             self.adb_ins.press_back_key()
@@ -291,16 +299,20 @@ class Qtt(Project):
                 self.adb_ins.press_back_key()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-        if self.uia_ins.click_by_screen_text('点击领取'):
-            sleep(15)
-            self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key(6)
-        self.uia_ins.tap((631, 633), 6)
+        # if self.uia_ins.click_by_screen_text('点击领取'):
+        #     sleep(15)
+        #     self.adb_ins.press_back_key()
+        #     self.adb_ins.press_back_key(6)
+        self.click_detail_title()
         current_focus = self.adb_ins.get_current_focus()
         if Activity.ADBrowser in current_focus or Activity.AppActivity in current_focus:
             return self.watch_detail()
         if Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
+        if Activity.NewsDetailNewActivity in current_focus and not self.uia_ins.get_dict(
+                resource_id=ResourceID.bmr, index='0') and not self.uia_ins.get_dict(
+                resource_id=ResourceID.a8w, index='0', xml=self.uia_ins.xml):
+            return self.watch_detail()
         try:
             while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
                     naf='true', index='1'):
@@ -421,7 +433,7 @@ class Qtt(Project):
         if price_number > 50000:
             self.uia_ins.click(text='5元50000金币', xml=self.uia_ins.xml)
         elif price_number > 10000:
-            self.uia_ins.click(text='1元10000金币', xml=self.uia_ins.xml)  # 每连续签到两天获取一次提现机会
+            self.uia_ins.click(text='10000金币', xml=self.uia_ins.xml)  # 每连续签到两天获取一次提现机会
         else:
             print('金币太少了，不能提现')
             return False
@@ -430,7 +442,7 @@ class Qtt(Project):
             print('提现成功，已到账')
             return True
         info = self.uia_ins.get_dict(
-            'recommendNewProduct', xml=self.uia_ins.xml)['node']['node'][1]['@text']
+            'withdrawDialog', xml=self.uia_ins.xml)['node']['node']['node'][3]['@text']
         print(f'提现失败，{info}')
         return False
 

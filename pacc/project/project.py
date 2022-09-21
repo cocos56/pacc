@@ -51,7 +51,7 @@ class Project:
         if 'MI 4' in self.adb_ins.dbr.model:
             self.uia_ins.click(ResourceID.clearAnimView)
         elif 'MI 5' in self.adb_ins.dbr.model:
-            if self.uia_ins.get_dict('miui:id/alertTitle', '快手极速版没有响应'):
+            if self.uia_ins.get_dict('miui:id/alertTitle', '没有响应'):
                 self.uia_ins.click('android:id/button2', '等待')
                 self.uia_ins.xml = ''
             self.uia_ins.click(ResourceID.clearAnimView, xml=self.uia_ins.xml)

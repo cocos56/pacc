@@ -11,6 +11,7 @@ class ResourceID:
     # 【头条界面】
     b2d = f'{ROOT}b2d'  # 文章标题
     ap7 = f'{ROOT}ap7'  # 关闭图标（恭喜你获得一个5400金币的问卷任务）
+    aq6 = f'{ROOT}aq6'  # 关闭图标（天降惊喜任务，+10000，去完成）
     adh = f'{ROOT}adh'  # 领50金币
     ae3 = f'{ROOT}ae3'  # 20220828新版领50金币
     ae6 = f'{ROOT}ae6'  # 您已获得提取0.3元现金机会
