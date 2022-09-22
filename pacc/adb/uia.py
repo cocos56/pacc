@@ -2,6 +2,7 @@
 from html import unescape
 from os import system, remove
 from os.path import exists
+from xml.parsers.expat import ExpatError
 
 import xmltodict
 
@@ -291,7 +292,17 @@ class UIAutomator:
         dic = self.depth_first_search(xmltodict.parse(self.xml), start_index)
         if dic:
             dic.update({'@text': unescape(dic['@text'])})
-        if text:
+        if text and start_index:
+            if dic:
+                print(f'检测到【text={text}, start_index={start_index}】')
+            else:
+                print(f'未找到【text={text}】, start_index={start_index}')
+        elif resource_id and text:
+            if dic:
+                print(f'检测到【resource_id={resource_id}, text={text}】')
+            else:
+                print(f'未找到【resource_id={resource_id}, text={text}】')
+        elif text:
             if dic:
                 print(f'检测到【text={text}】')
             else:
@@ -379,7 +390,10 @@ class UIAutomator:
             if self.node.resource_id:
                 return False
             if self.node.text in unescape(dic['@text']):
-                return True
+                if self.node.start_count == start_index:
+                    return True
+                self.node.start_count += 1
+                return False
             return False
         if self.node.bounds:
             if self.is_target_bounds(self.node.bounds, dic['@bounds']):
@@ -483,6 +497,6 @@ class UIAutomator:
         """
         try:
             return self.get_current_ui_hierarchy()
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(f'secure_get_current_ui_hierarchy {err}')
             return False

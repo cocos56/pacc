@@ -242,13 +242,21 @@ class Ksjsb(Project):
         self.enter_wealth_interface()
         print('开宝箱')
         if self.uia_ins.click_by_screen_text('开宝箱得金币', txt=self.uia_ins.txt):
-            sleep(3)
+            sleep(12)
             if self.uia_ins.click_by_screen_text('看视频最高得'):
                 sleep(6)
                 self.exit_award_video_play_activity()
             elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt)\
                     or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
-                sleep(96)
+                sleep(30)
+                try:
+                    if self.uia_ins.get_dict('kwai-captcha'):
+                        EMail(self.serial_num).send_verification_code_alarm()
+                        input('open_treasure_box出现验证码，请手动处理')
+                        print('正在继续向下处理')
+                except (FileNotFoundError, ExpatError) as err:
+                    print_err(err)
+                sleep(66)
                 self.exit_live()
             else:
                 EMail(self.serial_num).send_unknown_error()
@@ -339,13 +347,13 @@ class Ksjsb(Project):
             return
         self.enter_wealth_interface()
         print('看直播')
-        while not self.uia_ins.get_point_by_screen_text(text='看直播得1.5万金币'):
+        while not self.uia_ins.get_point_by_screen_text(text='看直播得1'):
             self.adb_ins.swipe((600, 1800), (600, 800))
-        while self.uia_ins.click_by_screen_text(text='看直播得1.5万金币'):
+        while self.uia_ins.click_by_screen_text(text='看直播得1'):
             sleep(6)
             self.uia_ins.tap((240, 848), 96)
             self.exit_live(Activity.AwardFeedFlowActivity)
-            sleep(6)
+            sleep(9)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 progress = find_all_ints_with_re(self.uia_ins.get_dict(
                     ResourceID.progress_display)['@text'])
@@ -400,6 +408,10 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(60)
             if Activity.KwaiYodaWebViewActivity not in self.adb_ins.get_current_focus():
                 self.adb_ins.press_back_key(60)
+            try:
+                self.uia_ins.click(text='继续逛街')
+            except (FileNotFoundError, ExpatError) as err:
+                print_err(err)
         if break_while:
             return False
         if self.uia_ins.get_point_by_screen_text('今日福利已领取') or self.uia_ins.\
@@ -526,7 +538,7 @@ class Ksjsb(Project):
             self.adb_ins.press_back_key(30)
             try:
                 self.uia_ins.click(text='继续逛街')
-            except ExpatError as err:
+            except (FileNotFoundError, ExpatError) as err:
                 print_err(err)
             self.uia_ins.txt = ''
             click_cnt += 1
