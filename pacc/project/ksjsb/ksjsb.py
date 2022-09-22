@@ -574,24 +574,26 @@ class Ksjsb(Project):
         print('正在把金币兑换钱')
         self.uia_ins.tap((866, 349), 16)
         self.uia_ins.get_current_ui_hierarchy()
+        expat_err_flag = False
         try:
             if self.uia_ins.get_dict(index='0', text='网页无法打开'):
                 return self.change_money()
         except ExpatError as err:
             print_err(err)
-            return self.change_money()
-        webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView, xml=self.uia_ins.xml)
-        cash = float(webview_dic['node'][0]['node'][1]['@text'])
-        dics = webview_dic['node'][1]['node']
-        for dic in dics[4:0:-1]:
-            dic = dic['node']
-            if isinstance(dic, list):
-                dic = dic[0]
-            money = float(dic['@text'][:-1])
-            if cash >= money:
-                print(money)
-                self.uia_ins.click_by_bounds(dic['@bounds'])
-                break
+            expat_err_flag = True
+        if not expat_err_flag:
+            webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView, xml=self.uia_ins.xml)
+            cash = float(webview_dic['node'][0]['node'][1]['@text'])
+            dics = webview_dic['node'][1]['node']
+            for dic in dics[4:0:-1]:
+                dic = dic['node']
+                if isinstance(dic, list):
+                    dic = dic[0]
+                money = float(dic['@text'][:-1])
+                if cash >= money:
+                    print(money)
+                    self.uia_ins.click_by_bounds(dic['@bounds'])
+                    break
         self.uia_ins.click(text='立即兑换', xml=self.uia_ins.xml)
         sleep(3)
         if self.uia_ins.click_by_screen_text('极速到账', start_index=1):
