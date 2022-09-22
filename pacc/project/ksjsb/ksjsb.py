@@ -613,7 +613,8 @@ class Ksjsb(Project):
                 EMail(self.serial_num).send_need_verification_alarm()
                 input('提现时需要验证才能继续，请手动处理')
             if self.uia_ins.get_dict(resource_id=ResourceID.pay_title_tv, text='提现结果'):
-                print(f"预计到账{self.uia_ins.get_dict('app')['node'][1]['@text']}元")
+                print(f"预计到账"
+                      f"{self.uia_ins.get_dict('app', xml=self.uia_ins.xml)['node'][1]['@text']}元")
                 self.dbu.update_last_change_money_date(date.today())
                 return True
             return False
