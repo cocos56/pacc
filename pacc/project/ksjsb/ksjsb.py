@@ -508,7 +508,8 @@ class Ksjsb(Project):
             sleep(3)
             self.uia_ins.txt = ''
         click_cnt = 0
-        while self.uia_ins.click_by_screen_text(text='领福利', txt=self.uia_ins.txt):  # 已完成
+        while self.uia_ins.click_by_screen_text(text='领福利', txt=self.uia_ins.txt) or self.\
+                uia_ins.click_by_screen_text(text='去完成', txt=self.uia_ins.txt):  # 已完成
             sleep(6)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.tap((240, 848), 96)
