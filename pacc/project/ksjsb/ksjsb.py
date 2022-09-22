@@ -527,8 +527,7 @@ class Ksjsb(Project):
                 if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                     self.uia_ins.tap((240, 848), 39)
                     self.exit_live(Activity.KwaiYodaWebViewActivity)
-                info = self.uia_ins.get_dict('app')['node'][2]['node'][2]['node'][0]['node']
-                if int(info[3]['@text']) == int(info[4]['@text'][1:-1]):
+                if self.uia_ins.get_dict(text='明日看直播可领'):
                     break
         click_cnt = 0
         while self.uia_ins.click_by_screen_text('去逛街', txt=self.uia_ins.txt):  # 已领取
