@@ -4,7 +4,7 @@ from pacc.config import Config
 
 Config.set_debug(True)
 SD.mainloop([
-    '001001001',
+    # '001001001',
     '001001002',
     '001001003',
     '001001004',

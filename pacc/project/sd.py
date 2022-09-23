@@ -105,7 +105,9 @@ class SD(Project):
     def open_app(self):
         """打开淘宝/拼多多全自动远程刷单APP"""
         self.free_memory()
-        self.uia_ins.click(text='滴滴助手')
+        if not self.uia_ins.click(text='滴滴助手'):
+            self.uia_ins.tap((858, 1858))
+            self.uia_ins.click(text='滴滴助手')
         sleep(12)
         self.uia_ins.click(ResourceID.auto_wait_btn)
         self.uia_ins.click(ResourceID.button1)
