@@ -8,13 +8,13 @@ from pacc.config import Config
 
 Config.set_debug(True)
 # print(False and not True or not False)
-DEVICE_SN = '002001001'
+DEVICE_SN = '001001006'
 adb_ins = ADB(DEVICE_SN)
 # adb_ins.get_cpu_temperature()
 # print(adb_ins.get_battery_temperature())
 # adb_ins.get_current_focus()
 uia_ins = UIAutomator(DEVICE_SN)
-print(uia_ins.get_dict('app')['node'][1]['@text'])
+# print(uia_ins.get_dict('app')['node'][1]['@text'])
 # print(uia_ins.get_dict('withdrawDialog')['node']['node']['node'][3]['@text'])
 # print(adb_ins.is_awake())
 # uia_ins.click('com.jifen.qukan:id/a8w')

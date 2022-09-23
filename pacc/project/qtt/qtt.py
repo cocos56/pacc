@@ -19,8 +19,8 @@ class Qtt(Project):
         """
         super().__init__(serial_num)
         self.last_loop_datetime = datetime.now()
-        self.last_change_money_date = date.today()
-        # self.last_change_money_date = date.today() - timedelta(days=1)
+        # self.last_change_money_date = date.today()
+        self.last_change_money_date = date.today() - timedelta(days=1)
 
     def open_app(self):
         """打开趣头条APP"""
@@ -111,11 +111,10 @@ class Qtt(Project):
         if Activity.KsRewardVideoActivity in self.adb_ins.get_current_focus():
             self.exit_ks_reward_video_activity()
 
-    def exit_incite_ad_activity(self):
+    def exit_incite_ad_activity(self, continue_cnt=0):
         """退出奖励广告活动页面"""
         print('正在退出奖励广告活动页面')
         try:
-            continue_cnt = 0
             while not self.uia_ins.get_dict(text='点击重播'):
                 if self.uia_ins.get_dict(text='关闭', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
                         text='安装并打开', xml=self.uia_ins.xml) or self.uia_ins.get_dict(
@@ -129,7 +128,7 @@ class Qtt(Project):
                 print(f'continue_cnt={continue_cnt}')
                 if continue_cnt < 6 and self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
                     self.adb_ins.press_back_key()
-                    return self.exit_incite_ad_activity()
+                    return self.exit_incite_ad_activity(continue_cnt)
                 elif self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
                     return
             self.adb_ins.press_back_key()
@@ -207,13 +206,13 @@ class Qtt(Project):
 
     def click_detail_title(self):
         """点击详情页的标题以进入详情页"""
-        self.uia_ins.tap((80, 460), 6)
+        self.adb_ins.swipe((600, 319), (600, 819))
+        self.uia_ins.tap((80, 460), 3)
 
     def refresh_detail(self):  # pylint: disable=too-many-return-statements
         """刷新详情页"""
         print('正在刷新详情页')
         self.adb_ins.press_back_key()
-        self.adb_ins.swipe((600, 319), (600, 819))
         self.click_detail_title()
         current_focus = self.adb_ins.get_current_focus()
         if Activity.AppDetailActivityInner in current_focus:
@@ -283,13 +282,11 @@ class Qtt(Project):
         if Activity.VideoDetailsActivity in self.adb_ins.get_current_focus():
             self.watch_video_detail()
 
-    def watch_detail(self, reopen_flag=True):  # pylint: disable=too-many-branches
+    def watch_detail(self):  # pylint: disable=too-many-branches
         """进入视频或者新闻详情页赚金币"""
         print('正在进入视频或者新闻详情页赚金币')
-        if reopen_flag:
-            self.reopen_app()
-            self.uia_ins.tap((693, 253), 6)
-            self.adb_ins.press_back_key(6)
+        self.reopen_app()
+        self.uia_ins.tap((693, 253), 6)
         try:
             if self.uia_ins.click(ResourceID.ae3):  # 领50金币
                 self.exit_ad_activity()
@@ -299,10 +296,6 @@ class Qtt(Project):
                 self.adb_ins.press_back_key()
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-        # if self.uia_ins.click_by_screen_text('点击领取'):
-        #     sleep(15)
-        #     self.adb_ins.press_back_key()
-        #     self.adb_ins.press_back_key(6)
         self.click_detail_title()
         current_focus = self.adb_ins.get_current_focus()
         if Activity.ADBrowser in current_focus or Activity.AppActivity in current_focus:

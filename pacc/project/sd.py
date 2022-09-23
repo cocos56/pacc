@@ -32,6 +32,7 @@ class ResourceID:
     btn_exit_app = 'com.dd.rclient:id/btn_exit_app'  # 退出程序
     icon_title = 'com.miui.home:id/icon_title'  # 桌面图标
     message = 'android:id/message'  # 切换账号将会结束您当前的挂机,是否继续?
+    miui_message = 'miui:id/message'  # 淘宝无响应。要将其关闭吗？
 
 
 class SD(Project):
@@ -47,6 +48,10 @@ class SD(Project):
             return
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
+        if 'Application Not Responding' in current_focus:
+            print(self.uia_ins.get_dict(ResourceID.miui_message))
+            self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
+            return
         if TB_ROOT in current_focus:
             print('淘宝正在运行，无需额外检查\n')
             return
