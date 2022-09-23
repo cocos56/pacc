@@ -49,7 +49,7 @@ class SD(Project):
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
         if 'Application Not Responding' in current_focus:
-            print(self.uia_ins.get_dict(ResourceID.miui_message))
+            print(self.uia_ins.get_dict(ResourceID.miui_message)['@text'])
             self.uia_ins.click(ResourceID.button2, xml=self.uia_ins.xml)
             return
         if TB_ROOT in current_focus:
