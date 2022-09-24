@@ -94,7 +94,8 @@ class SD(Project):
                 self.reopen_app()
             except FileNotFoundError as err:
                 print_err(err)
-        elif Activity.LoginActivity in current_focus:
+            return self.check()
+        if Activity.LoginActivity in current_focus:
             self.adb_ins.reboot()
             self.open_app()
             if Activity.LoginActivity in self.adb_ins.get_current_focus():
