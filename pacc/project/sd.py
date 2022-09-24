@@ -34,7 +34,7 @@ class ResourceID:
     # 【小米手机】
     miui_message = 'miui:id/message'  # 淘宝无响应。要将其关闭吗？
     # 【华为手机】
-    alertTitle = 'android:id/alertTitle'  # 滴滴助手 无响应。是否将其关闭？
+    alertTitle = 'android:id/alertTitle'  # 【滴滴助手 无响应。是否将其关闭？】
     aerr_wait = 'android:id/aerr_wait'  # 华为手机等待按钮（滴滴助手 无响应。是否将其关闭？）
 
 
@@ -51,12 +51,6 @@ class SD(Project):
             return
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
-        if 'Application Not Responding' in current_focus and self.uia_ins.get_dict(
-                ResourceID.miui_message) and '淘宝无响应。要将其关闭吗？' in self.\
-                uia_ins.get_dict(ResourceID.miui_message, xml=self.uia_ins.xml)['@text']:
-            print('淘宝无响应，正在将其关闭。')
-            self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
-            return
         if TB_ROOT in current_focus:
             print('淘宝正在运行，无需额外检查\n')
             return
@@ -74,15 +68,22 @@ class SD(Project):
         except (FileNotFoundError, ExpatError):
             print('无法正常获取当前用户界面上元素的层次布局信息，无法进行检查')
             return
+        if 'Application Not Responding' in current_focus and self.uia_ins.get_dict(
+                ResourceID.miui_message, xml=self.uia_ins.xml) and '淘宝无响应。要将其关闭吗？' in self.\
+                uia_ins.get_dict(ResourceID.miui_message, xml=self.uia_ins.xml)['@text']:
+            print('淘宝无响应，正在将其关闭。')
+            self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
+            return
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
             self.uia_ins.xml = ''
         click_cnt = 0
         try:
-            while self.uia_ins.click(ResourceID.button2, '等待') or self.uia_ins.click(
-                    ResourceID.aerr_wait, '等待', xml=self.uia_ins.xml):
+            while self.uia_ins.click(ResourceID.button2, '等待', xml=self.uia_ins.xml) or self.\
+                    uia_ins.click(ResourceID.aerr_wait, '等待', xml=self.uia_ins.xml):
                 click_cnt += 1
                 print(f'click_cnt={click_cnt}')
+                self.uia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
