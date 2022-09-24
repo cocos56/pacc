@@ -25,14 +25,17 @@ class ResourceID:
     # （切换账号将会结束您当前的挂机，是否继续？）
     button2 = 'android:id/button2'  # 确定或等待（滴滴助手无响应。要将其关闭吗？）
     button1 = 'android:id/button1'  # 取消或【确定（淘宝无响应。要将其关闭吗？）】
-    aerr_wait = 'android:id/aerr_wait'  # 华为手机等待按钮（滴滴助手 无响应。是否将其关闭？）
     auto_wait_btn = 'com.dd.rclient:id/auto_wait_btn'
     # 连接状态信息：【正在连接服务器...】、【已连接到服务器,等待控制端连接】
     mec_connect_state = 'com.dd.rclient:id/mec_connect_state'
     btn_exit_app = 'com.dd.rclient:id/btn_exit_app'  # 退出程序
     icon_title = 'com.miui.home:id/icon_title'  # 桌面图标
     message = 'android:id/message'  # 切换账号将会结束您当前的挂机,是否继续?
+    # 【小米手机】
     miui_message = 'miui:id/message'  # 淘宝无响应。要将其关闭吗？
+    # 【华为手机】
+    alertTitle = 'android:id/alertTitle'  # 滴滴助手 无响应。是否将其关闭？
+    aerr_wait = 'android:id/aerr_wait'  # 华为手机等待按钮（滴滴助手 无响应。是否将其关闭？）
 
 
 class SD(Project):
@@ -48,11 +51,12 @@ class SD(Project):
             return
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
-        if 'Application Not Responding' in current_focus:
-            if '淘宝无响应' in self.uia_ins.get_dict(ResourceID.miui_message)['@text']:
-                print('淘宝无响应，正在将其关闭。')
-                self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
-                return
+        if 'Application Not Responding' in current_focus and self.uia_ins.get_dict(
+                ResourceID.miui_message) and '淘宝无响应。要将其关闭吗？' in self.\
+                uia_ins.get_dict(ResourceID.miui_message, xml=self.uia_ins.xml)['@text']:
+            print('淘宝无响应，正在将其关闭。')
+            self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
+            return
         if TB_ROOT in current_focus:
             print('淘宝正在运行，无需额外检查\n')
             return
