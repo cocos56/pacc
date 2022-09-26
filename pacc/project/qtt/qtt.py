@@ -424,9 +424,9 @@ class Qtt(Project):
             return self.change_money()
         self.last_change_money_date = date.today()
         if price_number > 50000:
-            self.uia_ins.click(text='5元50000金币', xml=self.uia_ins.xml)
+            self.uia_ins.click(text='5元50000金币', xml=self.uia_ins.xml)  # 每连续签到9天获取一次提现机会
         elif price_number > 10000:
-            self.uia_ins.click(text='10000金币', xml=self.uia_ins.xml)  # 每连续签到两天获取一次提现机会
+            self.uia_ins.click(text='10000金币', xml=self.uia_ins.xml)  # 每连续签到2天获取一次提现机会
         else:
             print('金币太少了，不能提现')
             return False

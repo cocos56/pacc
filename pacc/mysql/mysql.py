@@ -11,9 +11,9 @@ class MySQL:
     conn = connect(host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
                    password=getenv('MySQL_PW'))
     cs = conn.cursor()
-    conn.close()
+    # conn.close()
 
-    instance = None
+    # instance = None
 
     # pylint: disable=too-many-arguments
     def __init__(self, host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
@@ -31,6 +31,7 @@ class MySQL:
             self.__class__.conn = connect(host=host, port=port, database=database, user=user,
                                           password=password, charset=charset)
         except OperationalError as error:
+            print(f'database={database}')
             print_err(f'{self.__class__} {error}')
             sleep(30)
             # pylint: disable=non-parent-init-called
@@ -43,8 +44,9 @@ class MySQL:
         self.__class__.instance = self
 
     def __del__(self):
+        """析构函数"""
         print(f'已成功与{self.database}数据库断开连接')
-        self.__class__.cs.close()
+        # self.__class__.cs.close()
 
     @classmethod
     def query(cls, cmd):
