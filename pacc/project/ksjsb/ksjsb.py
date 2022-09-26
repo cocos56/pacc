@@ -249,6 +249,10 @@ class Ksjsb(Project):
             elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt)\
                     or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
                 sleep(30)
+                while Activity.LiveSlideActivity not in self.adb_ins.get_current_focus():
+                    if not self.uia_ins.click_by_screen_text(text='看直播最高赚'):
+                        self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt)
+                    sleep(30)
                 try:
                     if self.uia_ins.get_dict('kwai-captcha'):
                         EMail(self.serial_num).send_verification_code_alarm()
