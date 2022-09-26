@@ -220,6 +220,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
         :param sleep_time: 休息时间
         """
+        self.keep_online()
         self.press_key('KEYCODE_BACK', sleep_time)
 
     def press_power_key(self):
