@@ -7,7 +7,7 @@ from time import sleep
 from easyocr import Reader
 from websocket_server import WebsocketServer
 
-from ..adb import UIAutomator
+from ..adb import UIAutomator, ADB
 from ..base import show_datetime
 from ..config import Language, ServerStatus
 
@@ -58,6 +58,7 @@ def message_received(client: dict, server: WebsocketServer, serial_num: str):
     UCCServer.last_datetime = datetime.now()
     print(f"Client({client['id']}) said: {serial_num}")
     pkl_path = abspath(f'CurrentUIHierarchy/{serial_num}.pkl')
+    ADB(serial_num)
     with open(pkl_path, 'wb') as pkl_file:
         dump(Reader(['ch_sim', 'en']).readtext(UIAutomator(serial_num).get_screen()), pkl_file)
     server.send_message(client, pkl_path)
