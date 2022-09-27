@@ -36,7 +36,7 @@ class Ksjsb(Project):
         if Activity.PhotoDetailActivity in self.adb_ins.get_current_focus():
             self.adb_ins.press_back_key()
         try:
-            if self.uia_ins.click(ResourceID.positive, '同意并继续'):
+            if self.uia_ins.click(ResourceID.positive):
                 pass
             if self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml):
                 sleep(6)
@@ -524,9 +524,9 @@ class Ksjsb(Project):
             if click_cnt >= 10:
                 print('在获取金币购划算页面内的领福利奖励过程中已经累计领了10次福利，无需继续')
                 break
-        err_cnt = 0
         if self.uia_ins.click_by_screen_text(text='去完成', txt=self.uia_ins.txt):  # 已完成
             self.uia_ins.txt = ''
+            err_cnt = 0
             while True:
                 self.adb_ins.swipe((600, 1833), (600, 560))
                 if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
