@@ -86,6 +86,8 @@ class SD(Project):
                 self.uia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
+        if click_cnt:
+            return self.check()
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
         if dic and dic['@text'] == '正在连接服务器...':
             self.reopen_app()

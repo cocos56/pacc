@@ -3,6 +3,7 @@ from pacc.project import SD
 from pacc.config import Config
 
 Config.set_debug(True)
+SD.mainloop(['001021003'])
 SD.mainloop([
     # '001001001',
     '001001002',
