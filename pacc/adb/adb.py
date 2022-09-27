@@ -185,8 +185,8 @@ class ADB:  # pylint: disable=too-many-public-methods
             print_err(f'{self.dbr.serial_num} {err}')
             self.reboot()
             return self.get_current_focus()
-        print(res)
-        # print([res])
+        # print(res)
+        print([res])
         if res.count('mCurrentFocus=Window{') > 1:
             self.reboot()
         return res
