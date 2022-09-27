@@ -524,6 +524,7 @@ class Ksjsb(Project):
             if click_cnt >= 10:
                 print('在获取金币购划算页面内的领福利奖励过程中已经累计领了10次福利，无需继续')
                 break
+        click_cnt = 0
         if self.uia_ins.click_by_screen_text(text='去完成', txt=self.uia_ins.txt):  # 已完成
             self.uia_ins.txt = ''
             while True:
@@ -531,7 +532,8 @@ class Ksjsb(Project):
                 if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
                     self.uia_ins.tap((240, 848), 39)
                     self.exit_live(Activity.KwaiYodaWebViewActivity)
-                if self.uia_ins.get_dict(text='明日看直播可领'):
+                click_cnt += 1
+                if click_cnt >= 6 and self.uia_ins.get_dict(text='明日看直播可领'):
                     break
         click_cnt = 0
         while self.uia_ins.click_by_screen_text('去逛街', txt=self.uia_ins.txt):  # 已领取
