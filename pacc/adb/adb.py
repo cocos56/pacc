@@ -28,7 +28,6 @@ class ADB:  # pylint: disable=too-many-public-methods
         :param serial_num: 设备序列号
         :param offline_cnt: 离线次数计数器
         """
-        system('adb reconnect offline')
         self.dbr = RetrieveMobileInfo.get_ins(serial_num)
         self.dbu = UpdateMobileInfo(serial_num)
         if self.dbr.id_num not in get_online_devices():
@@ -40,11 +39,12 @@ class ADB:  # pylint: disable=too-many-public-methods
                 print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
                 sleep(30)
                 # pylint: disable=non-parent-init-called
+                system('adb reconnect offline')
                 self.__init__(serial_num, offline_cnt+1)
         self.cmd = f'adb -s {self.dbr.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
-            sleep(30)
+            sleep(60)
             # pylint: disable=non-parent-init-called
             self.__init__(serial_num)
         if not self.get_ipv4_address() == self.dbr.ipv4_addr:
@@ -185,8 +185,8 @@ class ADB:  # pylint: disable=too-many-public-methods
             print_err(f'{self.dbr.serial_num} {err}')
             self.reboot()
             return self.get_current_focus()
-        # print(res)
-        print([res])
+        print(res)
+        # print([res])
         if res.count('mCurrentFocus=Window{') > 1:
             self.reboot()
         return res
