@@ -163,8 +163,14 @@ class ADB:  # pylint: disable=too-many-public-methods
                 res = res[:-2]
         else:
             res = popen(f'{self.cmd}shell dumpsys window policy | findstr mAwake').read()[4:-1]
-        if res[-1] == '\n':
-            res = res[:-1]
+        try:
+            if res[-1] == '\n':
+                res = res[:-1]
+        except IndexError as err:
+            print_err(err)
+            sleep(96)
+            self.keep_online()
+            return self.is_awake()
         print(res)
         # print([res])
         if 'true' in res:
