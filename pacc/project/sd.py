@@ -87,6 +87,11 @@ class SD(Project):
         except FileNotFoundError as err:
             print_err(err)
         if click_cnt:
+            sleep(60)
+            if 'Application Not Responding: com.dd.rclient' in self.adb_ins.get_current_focus():
+                print('滴滴助手无响应，正在将其关闭。')
+                self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
+                self.reopen_app()
             return self.check()
         dic = self.uia_ins.get_dict(ResourceID.mec_connect_state, xml=self.uia_ins.xml)
         if dic and dic['@text'] == '正在连接服务器...':
