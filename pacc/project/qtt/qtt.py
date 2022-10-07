@@ -304,7 +304,7 @@ class Qtt(Project):
             self.watch_video_detail()
         if Activity.NewsDetailNewActivity in current_focus and not self.uia_ins.get_dict(
                 resource_id=ResourceID.bmr, index='0') and not self.uia_ins.get_dict(
-                resource_id=ResourceID.a8w, index='0', xml=self.uia_ins.xml):
+                resource_id=ResourceID.a98, index='0', xml=self.uia_ins.xml):
             return self.watch_detail()
         try:
             while self.uia_ins.get_dict(text='安装并打开', index='0') or self.uia_ins.get_dict(
@@ -320,7 +320,7 @@ class Qtt(Project):
                     self.exit_ad_activity()
                 self.uia_ins.click_by_screen_text('我知道了', txt=self.uia_ins.txt)
         if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and self.uia_ins.\
-                get_dict(ResourceID.a8w, index='0', class_='android.widget.ImageView'):
+                get_dict(ResourceID.a98, index='0', class_='android.widget.ImageView'):
             self.watch_news_detail()
         return True
 
@@ -404,7 +404,7 @@ class Qtt(Project):
         print('正在把金币换成钱')
         if self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml):
             self.uia_ins.xml = ''
-        self.uia_ins.click(ResourceID.bj3, '提现兑换', xml=self.uia_ins.xml)
+        self.uia_ins.click(ResourceID.bjx, '提现兑换', xml=self.uia_ins.xml)
         sleep(26)
         if Activity.WebActivity not in self.adb_ins.get_current_focus():
             return self.change_money()

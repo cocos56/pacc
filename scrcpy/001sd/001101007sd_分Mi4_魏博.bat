@@ -1,1 +1,0 @@
-scrcpy -s 99726d4c --window-title 001101007sd_分Mi4_魏博

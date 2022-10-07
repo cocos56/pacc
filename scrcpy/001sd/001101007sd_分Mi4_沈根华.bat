@@ -1,0 +1,1 @@
+scrcpy -s 43539872 --window-title 001101007sd_分Mi4_沈根华|

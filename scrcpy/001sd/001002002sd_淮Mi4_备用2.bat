@@ -1,1 +1,0 @@
-scrcpy -s 965596a --window-title 001002002sd_淮Mi4_备用2

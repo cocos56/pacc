@@ -4,4 +4,3 @@ from pacc.project import Qtt
 
 Config.set_debug(True)
 Qtt('003001001').mainloop()
-
