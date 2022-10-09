@@ -41,6 +41,7 @@ class Ksjsb(Project):
             if self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml):
                 sleep(6)
                 while Activity.PhoneLoginActivity not in self.adb_ins.get_current_focus():
+                    self.adb_ins.press_back_key()
                     self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml)
                     sleep(6)
                 self.adb_ins.press_back_key()
