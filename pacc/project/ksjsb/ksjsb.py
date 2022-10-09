@@ -43,6 +43,8 @@ class Ksjsb(Project):
                 while Activity.PhoneLoginActivity not in self.adb_ins.get_current_focus():
                     self.adb_ins.press_back_key()
                     self.uia_ins.click(ResourceID.login_text, xml=self.uia_ins.xml)
+                    if Activity.FullScreenLoginActivity in self.adb_ins.get_current_focus():
+                        self.uia_ins.click(text='手机号登录')
                     sleep(6)
                 self.adb_ins.press_back_key()
                 if not self.uia_ins.click(ResourceID.switch_login_way):

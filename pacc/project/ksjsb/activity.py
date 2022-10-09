@@ -11,7 +11,10 @@ class Activity:
     #  【看视频界面（主界面）】
     HomeActivity = f'{ROOT}yxcorp.gifshow.HomeActivity'  # 主界面
 
-    #  【登录界面】由主界面转入
+    # 【选择登录方式的界面】由主界面转入
+    FullScreenLoginActivity = f'{ROOT}yxcorp.login.userlogin.activity.FullScreenLoginActivity'
+
+    # 【手机号登录界面】由主界面或选择登录界面转入
     PhoneLoginActivity = f'{ROOT}yxcorp.login.userlogin.activity.PhoneLoginActivity'
 
     #  【财富界面】
