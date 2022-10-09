@@ -1,0 +1,1 @@
+scrcpy -s 18b2afbc --window-title 001101011sd_分Mi4_宋小晖|

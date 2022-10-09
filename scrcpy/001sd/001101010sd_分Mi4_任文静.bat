@@ -1,0 +1,1 @@
+scrcpy -s a1022960 --window-title 001101010sd_分Mi4_任文静|

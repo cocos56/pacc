@@ -226,6 +226,8 @@ class Qtt(Project):
             return False
         if Activity.VideoDetailsActivity in current_focus:
             return True
+        # if Activity.AdWebViewActivity in current_focus:
+        #     return False
         try:
             if self.uia_ins.get_dict(text='安装并打开', index='0'):
                 return self.refresh_detail()
@@ -257,7 +259,7 @@ class Qtt(Project):
         print(f'距离退出新闻详情页还剩：{self.last_loop_datetime+timedelta(minutes=20)-datetime.now()}')
         try:
             if Activity.NewsDetailNewActivity in self.adb_ins.get_current_focus() and not self.\
-                    uia_ins.get_dict(resource_id=ResourceID.bmr, index='0'):
+                    uia_ins.get_dict(resource_id=ResourceID.bnl, index='0'):
                 self.watch_news_detail()
         except ExpatError as err:
             print_err(err)
@@ -303,7 +305,7 @@ class Qtt(Project):
         if Activity.VideoDetailsActivity in current_focus:
             self.watch_video_detail()
         if Activity.NewsDetailNewActivity in current_focus and not self.uia_ins.get_dict(
-                resource_id=ResourceID.bmr, index='0') and not self.uia_ins.get_dict(
+                resource_id=ResourceID.bnl, index='0') and not self.uia_ins.get_dict(
                 resource_id=ResourceID.a98, index='0', xml=self.uia_ins.xml):
             return self.watch_detail()
         try:
@@ -315,7 +317,7 @@ class Qtt(Project):
             print_err(err)
             return self.watch_detail()
         if Activity.NewsDetailNewActivity in current_focus:
-            if self.uia_ins.click(resource_id=ResourceID.bmr, index='0'):
+            if self.uia_ins.click(resource_id=ResourceID.bnl, index='0'):
                 while self.uia_ins.click_by_screen_text('看视频再领'):
                     self.exit_ad_activity()
                 self.uia_ins.click_by_screen_text('我知道了', txt=self.uia_ins.txt)
@@ -361,11 +363,16 @@ class Qtt(Project):
         print('正在进入任务界面')
         self.uia_ins.tap((765, 1833), 6)
         try:
-            if not self.uia_ins.get_dict(ResourceID.a77, '签到领'):
-                self.uia_ins.click('立即签到', xml=self.uia_ins.xml)
-            while self.uia_ins.click(ResourceID.a77, '签到领'):
+            if not self.uia_ins.get_dict(ResourceID.a7i, '签到领'):
+                self.uia_ins.click(text='立即签到', xml=self.uia_ins.xml)
+            while self.uia_ins.click(ResourceID.a7i, '签到领'):
+                click_cnt = 0
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()
+                    click_cnt += 1
+                    print(f'进入任务界面 click_cnt={click_cnt}')
+                    if click_cnt >= 6:
+                        break
                 self.uia_ins.click_by_screen_text(text='知道了')
         except FileNotFoundError as err:
             print_err(err)
@@ -391,7 +398,7 @@ class Qtt(Project):
         self.uia_ins.tap((977, 1839), 9)
         if self.uia_ins.click(ResourceID.bia, '签到'):
             self.uia_ins.click_by_screen_text('立即签到')
-            while self.uia_ins.click(ResourceID.a77, '签到领'):
+            while self.uia_ins.click(ResourceID.a7i, '签到领'):
                 click_cnt = 0
                 while self.uia_ins.click_by_screen_text(text='看视频再领'):
                     self.exit_ad_activity()

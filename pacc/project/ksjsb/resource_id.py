@@ -38,6 +38,8 @@ class ResourceID:
                                               f'award_video_close_dialog_abandon_button'
     # 点击重试（无法连接网络，请稍后重试）
     retry_btn = f'{ROOT}retry_btn'
+    # 谢谢参与，下次再试试吧！
+    empty_msg = 'com.kuaishou.nebula.neo_video:id/empty_msg'
 
     # 【分享领现金页面】
     WebView = 'android.webkit.WebView'

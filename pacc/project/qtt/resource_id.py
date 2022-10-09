@@ -22,6 +22,7 @@ class ResourceID:
     bhs = f'{ROOT}bhs'  # 20220828版阅读奖励图标
     bhu = f'{ROOT}bhu'  # 20220906版阅读奖励图标
     bmr = f'{ROOT}bmr'  # 20220916版阅读奖励图标
+    bnl = f'{ROOT}bnl'  # 20221008版阅读奖励图标
     a8h = f'{ROOT}a8h'  # 阅读收益图标
     a8w = f'{ROOT}a8w'  # 20220916版阅读收益图标
     a98 = f'{ROOT}a98'  # 20221007版阅读收益图标
@@ -29,6 +30,7 @@ class ResourceID:
     #  【任务界面】
     a6u = f'{ROOT}a6u'  # 签到领x金币、看视频再领x金币
     a77 = f'{ROOT}a77'  # 20220916版签到领x金币、看视频再领x金币
+    a7i = f'{ROOT}a7i'  # 20221008版签到领x金币、看视频再领x金币
 
     #  【我的界面】
     be2 = f'{ROOT}be2'  # 提现兑换

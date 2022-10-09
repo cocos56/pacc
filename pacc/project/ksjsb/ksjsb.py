@@ -90,7 +90,11 @@ class Ksjsb(Project):
             self.uia_ins.get_current_ui_hierarchy()
             while not self.uia_ins.get_dict(
                     resource_id=ResourceID.video_countdown, text='已成功领取奖励'):
-                self.uia_ins.click(resource_id=ResourceID.retry_btn, xml=self.uia_ins.xml)
+                if not self.uia_ins.click(resource_id=ResourceID.retry_btn, xml=self.uia_ins.xml):
+                    if self.uia_ins.get_dict(resource_id=ResourceID.empty_msg,
+                                             text='谢谢参与，下次再试试吧！', xml=self.uia_ins.xml):
+                        self.adb_ins.press_back_key()
+                        break
                 sleep(10)
         except FileNotFoundError as err:
             print_err(err)
@@ -178,7 +182,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行签到领金币的操作步骤')
                 return self.sign_in()
         sleep(9)
         if self.uia_ins.click_by_screen_text('看广告再得'):
@@ -223,7 +228,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行点击翻倍的操作步骤')
                 return self.get_double_bonus()
         if self.uia_ins.click_by_screen_text(text='开启看视频奖励翻倍特权', txt=self.uia_ins.txt):
             self.dbu.update_last_double_bonus_date(date.today())
@@ -246,7 +252,7 @@ class Ksjsb(Project):
             if self.uia_ins.click_by_screen_text('看视频最高得'):
                 sleep(6)
                 self.exit_award_video_play_activity()
-            elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt)\
+            elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt) \
                     or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
                 sleep(30)
                 while Activity.LiveSlideActivity not in self.adb_ins.get_current_focus():
@@ -271,7 +277,8 @@ class Ksjsb(Project):
                 EMail(self.serial_num).send_unknown_error()
                 input('open_treasure_box遇见未知情况，请手动处理')
                 print('正在继续向下处理')
-        elif self.uia_ins.get_point_by_screen_text('明日再来', txt=self.uia_ins.txt) or self.uia_ins.\
+        elif self.uia_ins.get_point_by_screen_text('明日再来',
+                                                   txt=self.uia_ins.txt) or self.uia_ins. \
                 get_point_by_screen_text('明曰再来', txt=self.uia_ins.txt):
             print('今天已经开完宝箱了，请明日再来')
             self.dbu.update_last_treasure_box_date(date.today())
@@ -294,7 +301,8 @@ class Ksjsb(Project):
             swipe_cnt += 1
             print(f'swipe_cnt={swipe_cnt}')
             if swipe_cnt >= 8:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行看广告视频得金币的操作步骤')
                 return self.view_ads()
         click_cnt = 0
         while self.uia_ins.click_by_screen_text(text='看视频得5000金币'):
@@ -311,8 +319,8 @@ class Ksjsb(Project):
         if Activity.KwaiYodaWebViewActivity in self.adb_ins.get_current_focus():
             print(f'view_ads_cnt={self.view_ads_cnt}')
             if self.uia_ins.get_point_by_screen_text(
-                    text='明日看广告最高领取', txt=self.uia_ins.txt) or self.uia_ins.\
-                    get_point_by_screen_text(text='明天再来', txt=self.uia_ins.txt) or self.\
+                    text='明日看广告最高领取', txt=self.uia_ins.txt) or self.uia_ins. \
+                    get_point_by_screen_text(text='明天再来', txt=self.uia_ins.txt) or self. \
                     view_ads_cnt > 2:
                 self.view_ads_cnt = 0
                 self.dbu.update_last_view_ads_date(date.today())
@@ -395,7 +403,8 @@ class Ksjsb(Project):
             sleep(6)
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行去逛街的操作步骤')
                 return self.shopping()
         sleep(9)
         current_focus = self.adb_ins.get_current_focus()
@@ -429,7 +438,7 @@ class Ksjsb(Project):
                 print_err(err)
         if break_while:
             return False
-        if self.uia_ins.get_point_by_screen_text('今日福利已领取') or self.uia_ins.\
+        if self.uia_ins.get_point_by_screen_text('今日福利已领取') or self.uia_ins. \
                 get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
             self.dbu.update_last_shopping_date(date.today())
             return True
@@ -473,7 +482,8 @@ class Ksjsb(Project):
             self.adb_ins.swipe((600, 1860), (600, 660))
             not_cnt += 1
             if not_cnt >= 6:
-                print('检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
+                print(
+                    '检测到本次操作时滑动距离过长，取消向下继续滑动并重新从头开始执行领饭补的操作步骤')
                 return self.open_meal_allowance()
         sleep(30)
         if self.uia_ins.click_by_screen_text(text='领取饭补'):

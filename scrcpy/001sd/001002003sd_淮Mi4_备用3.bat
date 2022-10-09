@@ -1,1 +1,0 @@
-scrcpy -s 18b2afbc --window-title 001002003sd_淮Mi4_备用3
