@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from pacc.mysql.retrieve import RetrieveSD
 
 DOMAIN = 'http://sd.coco56.top/'
-START_INDEX = 7
+START_INDEX = 0
 DEPARTING_STAFF = [
     '郭志勇',
 ]
