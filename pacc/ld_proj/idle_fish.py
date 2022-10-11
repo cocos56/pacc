@@ -1,7 +1,7 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
 from .ld_proj import LDProj
 from ..adb.ld_console import LDConsole
-from ..base import run_forever
+from ..base import sleep
 
 
 # pylint: disable=too-few-public-methods
@@ -11,7 +11,7 @@ class Activity:
 
 
 class IdleFish(LDProj):
-    """含羞草传媒模块"""
+    """咸鱼模块"""
 
     def __init__(self, start_index=1):
         super().__init__()
@@ -24,11 +24,14 @@ class IdleFish(LDProj):
         """进入我的界面"""
 
     @classmethod
-    @run_forever
-    def mainloop(cls, start_index=1):
+    def mainloop(cls, start_index):
         """主循环"""
-        LDConsole.quit_all()
-        cls(start_index).run_app()
-        print('请按回车键以继续')
-        input()
-        start_index += 1
+        while True:
+            cls(start_index).run_app()
+            sleep(300)
+            LDConsole.quit(start_index)
+            print(f'第{start_index}项已执行完毕')
+            start_index += 1
+            if start_index >= 16:
+                print('所有项已执行完毕')
+                input()

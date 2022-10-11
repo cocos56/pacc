@@ -17,6 +17,11 @@ class LDConsole:
         system(f'{LDC}quitall')
         sleep(13)
 
+    @classmethod
+    def quit(cls, dn_index):
+        system(f'{LDC}quit --index {dn_index}')
+        sleep(13)
+
     def run_app(self, packagename):
         # launchex : 启动扩展命令(启动模拟器后自动打开某一应用)
         cmd = f'{LDC}launchex --index {self.dn_index} --packagename {packagename}'
