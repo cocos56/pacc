@@ -1,5 +1,25 @@
 """雷电模拟器安卓调试桥模块"""
+import os
+
+from ..tools import find_all_with_re
+
+
+def get_online_devices():
+    """获取所有在线设备"""
+    res = os.popen('adb devices').read()
+    res = find_all_with_re(res, r'(127.0.0.1:.+)\tdevice')
+    return res
 
 
 class LDADB:
     """雷电模拟器安卓调试桥类"""
+
+    def __init__(self, ip):
+        self.ip = ip
+
+    def get_current_focus(self):
+        cmd = 'adb -s %s shell dumpsys window | findstr mCurrentFocus' % self.ip
+        r = os.popen(cmd).read()[2:-2]
+        print(cmd)
+        print(r)
+        return r

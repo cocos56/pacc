@@ -11,7 +11,8 @@ class LDConsole:
         self.dn_index = dn_index
 
     def run_app(self, packagename):
-        cmd = f'ldconsole.exe runapp --index {self.dn_index} --packagename {packagename}'
+        # launchex : 启动扩展命令(启动模拟器后自动打开某一应用)
+        cmd = f'ldconsole.exe launchex --index {self.dn_index} --packagename {packagename}'
         print(cmd)
         popen(cmd)
         sleep(5, False, False)
