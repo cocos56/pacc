@@ -24,14 +24,18 @@ class IdleFish(LDProj):
         """进入我的界面"""
 
     @classmethod
-    def mainloop(cls, start_index):
-        """主循环"""
+    def mainloop(cls, start_index, end_index):
+        """主循环
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
         while True:
             cls(start_index).run_app()
             sleep(300)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕')
-            start_index += 1
-            if start_index >= 16:
-                print('所有项已执行完毕')
+            if start_index >= end_index:
+                print(f'所有共{end_index-start_index+1}项已执行完毕')
                 input()
+            start_index += 1
