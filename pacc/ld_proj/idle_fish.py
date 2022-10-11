@@ -30,12 +30,13 @@ class IdleFish(LDProj):
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         """
+        src_start_index = start_index
         while True:
             cls(start_index).run_app()
             sleep(300)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕')
             if start_index >= end_index:
-                print(f'所有共{end_index-start_index+1}项已执行完毕')
+                print(f'所有共{end_index-src_start_index+1}项已执行完毕')
                 input()
             start_index += 1
