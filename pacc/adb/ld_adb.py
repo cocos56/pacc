@@ -14,11 +14,16 @@ def get_online_devices():
 class LDADB:
     """雷电模拟器安卓调试桥类"""
 
-    def __init__(self, ip):
-        self.ip = ip
+    def __init__(self, ipv4_addr):
+        """构造函数：初始化雷电模拟器安卓调试桥类的对象
+
+        :param ipv4_addr: IPv4地址
+        """
+        self.ipv4_addr = ipv4_addr
 
     def get_current_focus(self):
-        cmd = 'adb -s %s shell dumpsys window | findstr mCurrentFocus' % self.ip
+        """获取当前界面的Activity"""
+        cmd = f'adb -s {self.ipv4_addr} shell dumpsys window | findstr mCurrentFocus'
         r = os.popen(cmd).read()[2:-2]
         print(cmd)
         print(r)
