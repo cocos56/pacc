@@ -1,7 +1,8 @@
 """雷电模拟器工程基类"""
 import os
 
-from ..adb.ld_adb import get_online_devices, LDADB
+from ..adb import LDADB
+from ..adb.ld_adb import get_online_devices
 
 
 class LDProj:
