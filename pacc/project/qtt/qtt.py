@@ -426,6 +426,7 @@ class Qtt(Project):
         print(price_number)
         if price_number > 1000 and self.uia_ins.click(text='1000金币'):  # 绑定支付宝每天可以提现一次
             self.uia_ins.click('alipay_quick')  # 立即提现
+            sleep(3)
             if self.uia_ins.get_dict(text='提现成功，已到账'):
                 print('提现成功，已到账')
             return self.change_money()
