@@ -1,5 +1,7 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
 from .ld_proj import LDProj
+from ..adb import LDADB
+from ..adb.ld_adb import get_online_devices
 from ..adb.ld_console import LDConsole
 from ..base import sleep
 
@@ -33,7 +35,14 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             cls(start_index).run_app()
-            sleep(300)
+            sleep(90)
+            adb_ins = LDADB(get_online_devices()[0])
+            if 'Application Not Responding: com.taobao.idlefish' in adb_ins.get_current_focus():
+                print('检测到咸鱼无响应，正在重启模拟器')
+                LDConsole.quit(start_index)
+                cls(start_index).run_app()
+                sleep(90)
+            sleep(210)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕')
             if start_index >= end_index:
