@@ -4,4 +4,4 @@ from pacc.adb.ld_console import LDConsole
 
 IdleFish(0)
 LDConsole.quit_all()
-IdleFish.mainloop(2, 59)
+IdleFish.mainloop(3, 59)

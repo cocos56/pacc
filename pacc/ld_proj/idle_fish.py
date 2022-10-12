@@ -43,6 +43,12 @@ class IdleFish(LDProj):
                 cls(start_index).run_app()
                 sleep(90)
             sleep(210)
+            if 'Application Error: com.taobao.idlefish' in adb_ins.get_current_focus():
+                print('检测到咸鱼已停止运行，正在重启模拟器')
+                LDConsole.quit(start_index)
+                cls(start_index).run_app()
+                sleep(90)
+            sleep(210)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕')
             if start_index >= end_index:

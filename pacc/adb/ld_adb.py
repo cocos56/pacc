@@ -17,7 +17,7 @@ class LDADB:  # pylint: disable=too-few-public-methods
     def __init__(self, ipv4_addr):
         """构造函数：初始化雷电模拟器安卓调试桥类的对象
 
-        :param ipv4_addr: IPv4地址
+        :param ipv4_addr: 目标设备的IPv4地址
         """
         self.ipv4_addr = ipv4_addr
 
