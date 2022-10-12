@@ -11,7 +11,7 @@ def get_online_devices():
     return res
 
 
-class LDADB:
+class LDADB:  # pylint: disable=too-few-public-methods
     """雷电模拟器安卓调试桥类"""
 
     def __init__(self, ipv4_addr):
@@ -24,7 +24,7 @@ class LDADB:
     def get_current_focus(self):
         """获取当前界面的Activity"""
         cmd = f'adb -s {self.ipv4_addr} shell dumpsys window | findstr mCurrentFocus'
-        r = os.popen(cmd).read()[2:-2]
+        res = os.popen(cmd).read()[2:-2]
         print(cmd)
-        print(r)
-        return r
+        print(res)
+        return res
