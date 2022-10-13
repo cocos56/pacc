@@ -141,7 +141,7 @@ class Qtt(Project):
         if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
             self.exit_incite_ad_activity()
 
-    def exit_portrait_ad_activity(self, err_cnt=0):
+    def exit_portrait_ad_activity(self, err_cnt=0, retry_cnt=0):
         """退出portrait广告活动页面"""
         print('正在退出portrait广告活动页面')
         try:
@@ -157,9 +157,12 @@ class Qtt(Project):
             if err_cnt > 6:
                 self.uia_ins.tap((1016, 63), 6)
             if Activity.MainActivity not in self.adb_ins.get_current_focus():
-                return self.exit_portrait_ad_activity(err_cnt+1)
+                return self.exit_portrait_ad_activity(err_cnt=err_cnt+1)
+        sleep(10)
+        if retry_cnt > 6:
+            self.uia_ins.tap((1016, 63), 6)
         if Activity.PortraitADActivity in self.adb_ins.get_current_focus():
-            return self.exit_portrait_ad_activity()
+            return self.exit_portrait_ad_activity(retry_cnt=retry_cnt+1)
         return True
 
     def exit_mob_reward_video_activity(self):
