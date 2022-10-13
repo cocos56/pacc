@@ -6,8 +6,7 @@ from ..adb.ld_console import LDConsole
 from ..base import sleep
 
 
-# pylint: disable=too-few-public-methods
-class Activity:
+class Activity:  # pylint: disable=too-few-public-methods
     """咸鱼全自动刷咸鱼币中央监控系统模块的安卓活动名类"""
     MainActivity = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.MainActivity'
 
@@ -46,13 +45,13 @@ class IdleFish(LDProj):
                 print('检测到咸鱼无响应，正在重启模拟器')
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-            sleep(60)
+            sleep(120)
             if 'Application Error: com.taobao.idlefish' in adb_ins.get_current_focus():
                 print('检测到咸鱼已停止运行，正在重启模拟器')
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-                sleep(60)
-            sleep(150)
+                sleep(120)
+            sleep(90)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕\n')
             if start_index >= end_index:
