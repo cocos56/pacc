@@ -30,7 +30,7 @@ class LDConsole:
         :param dn_index: 待关闭雷电模拟器的索引值
         """
         system(f'{LDC}quit --index {dn_index}')
-        sleep(13)
+        sleep(6)
 
     def run_app(self, packagename):
         """启动雷电模拟器并自动打开某一指定的应用
