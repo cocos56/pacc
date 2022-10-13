@@ -9,13 +9,14 @@ def get_version():
 
 
 def get_description():
+    """获取简述信息"""
     description = """Python Android Cluster Control 为在Windows上使用Python通过USB（通用串行总线）或WLAN
         （基于IPv4的无线局域网）对Android手机集群（包含模拟器以及雷电模拟器或夜神模拟器）的控制提供支持"""
     return description
 
 
 def get_long_description():
-    """"""
+    """获取详述信息"""
     long_description = """该Python模块用于通过USB或WiFi对Android集群（包含模拟器，目前正在适配雷电模拟器
         LDConsole）进行控制，集成了ADB、UIAutomator、数据库、中央控制系统、计算机视觉（图像识别）、验证码破解、
         人工智能（自然语言处理）等功能。\n
