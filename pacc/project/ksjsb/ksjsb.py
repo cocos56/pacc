@@ -258,22 +258,21 @@ class Ksjsb(Project):
             elif self.uia_ins.click_by_screen_text(text='看直播最高赚', txt=self.uia_ins.txt) \
                     or self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt):
                 sleep(30)
+                not_cnt = 0
                 while Activity.LiveSlideActivity not in self.adb_ins.get_current_focus():
                     if not self.uia_ins.click_by_screen_text(text='看直播最高赚'):
                         self.uia_ins.click_by_screen_text(text='秒直播再赚', txt=self.uia_ins.txt)
                     sleep(30)
-                    # try:
-                    #     if self.uia_ins.get_dict('kwai-captcha'):
-                    #         EMail(self.serial_num).send_verification_code_alarm()
-                    #         input('open_treasure_box出现验证码，请手动处理')
-                    #         print('正在继续向下处理')
-                    # except (FileNotFoundError, ExpatError) as err:
-                    #     print_err(err)
                     try:
                         if self.uia_ins.get_dict('kwai-captcha'):
                             self.adb_ins.press_back_key()
                     except (FileNotFoundError, ExpatError) as err:
                         print_err(err)
+                    not_cnt += 1
+                    if not_cnt >= 6:
+                        print(
+                            '检测到本次操作时重试次数过多，取消向下继续重试并重新从头开始执行开宝箱得金币的操作步骤')
+                        return self.open_treasure_box()
                 sleep(66)
                 self.exit_live()
             else:
