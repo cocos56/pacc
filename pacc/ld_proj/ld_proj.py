@@ -6,8 +6,12 @@ from ..adb.ld_adb import get_online_devices
 
 
 class LDProj:
-
+    """雷电模拟器的工程类"""
     def __init__(self, ld_work_path=r'F:\leidian\LDPlayer4'):
+        """构造函数
+
+        :param ld_work_path: 雷电模拟器的工作路径
+        """
         self.ld_work_path = ld_work_path
         os.chdir(self.ld_work_path)
 
