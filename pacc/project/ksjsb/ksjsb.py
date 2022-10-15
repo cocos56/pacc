@@ -590,9 +590,8 @@ class Ksjsb(Project):
             if click_cnt >= 10:
                 print('在获取金币购划算页面内的去逛街奖励过程中已经累计逛了10次街，无需继续')
                 break
-        if self.uia_ins.get_point_by_screen_text('明日再来') and not self.uia_ins. \
-                get_point_by_screen_text(text='领福利', txt=self.uia_ins.txt) and self.uia_ins. \
-                get_point_by_screen_text(text='已领取', txt=self.uia_ins.txt):
+        if self.uia_ins.get_point_by_screen_text('明日再来') and self.uia_ins. \
+                get_point_by_screen_text(text='已完成', txt=self.uia_ins.txt):
             self.dbu.update_last_buy_things_date(date.today())
             return True
         return False
