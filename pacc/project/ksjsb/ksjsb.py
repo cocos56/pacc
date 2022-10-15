@@ -269,6 +269,7 @@ class Ksjsb(Project):
                     except (FileNotFoundError, ExpatError) as err:
                         print_err(err)
                     not_cnt += 1
+                    print(f'not_cnt={not_cnt}')
                     if not_cnt >= 6:
                         print(
                             '检测到本次操作时重试次数过多，取消向下继续重试并重新从头开始执行开宝箱得金币的操作步骤')

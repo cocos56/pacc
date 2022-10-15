@@ -3,7 +3,7 @@
 
 def get_version():
     """获取当前PACC的版本号"""
-    version = '0.0.582'
+    version = '0.0.583'
     print(f'Your PACC version is {version}')
     return version
 
