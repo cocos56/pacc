@@ -1,8 +1,9 @@
 """自动远程控制手机APP中央控制系统工程模块"""
 from random import randint
+from xml.parsers.expat import ExpatError
 
 from ..adb import ADB, UIAutomator
-from ..base import sleep
+from ..base import sleep, print_err
 
 
 # pylint: disable=too-few-public-methods
@@ -51,9 +52,12 @@ class Project:
         if 'MI 4' in self.adb_ins.dbr.model:
             self.uia_ins.click(ResourceID.clearAnimView)
         elif 'MI 5' in self.adb_ins.dbr.model:
-            if self.uia_ins.get_dict('miui:id/alertTitle', '没有响应'):
-                self.uia_ins.click('android:id/button2', '等待')
-                self.uia_ins.xml = ''
+            try:
+                if self.uia_ins.get_dict('miui:id/alertTitle', '没有响应'):
+                    self.uia_ins.click('android:id/button2', '等待')
+                    self.uia_ins.xml = ''
+            except ExpatError as err:
+                print_err(err)
             self.uia_ins.click(ResourceID.clearAnimView, xml=self.uia_ins.xml)
         elif 'MI 6' in self.adb_ins.dbr.model:
             self.uia_ins.click(ResourceID.clearAnimView)
