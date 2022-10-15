@@ -102,7 +102,8 @@ class ADB:  # pylint: disable=too-many-public-methods
             res = find_all_with_re(res, 'versionName=(.+)\n')[0]
             print(f'The version of {package_name} is {res}')
             return res
-        except IndexError:
+        except IndexError as err:
+            print_err(err)
             sleep(6)
             return self.get_app_version_info(package_name)
 
