@@ -1,5 +1,5 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
 from ..adb import LDADB
@@ -44,7 +44,12 @@ class IdleFish(LDProj):
         # start_day = date.today()
         while True:
             while not start_day == date.today():
-                sleep(3600)
+                seconds = (datetime.fromisoformat(
+                    f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
+                if seconds > 3600:
+                    sleep(3600)
+                else:
+                    sleep(seconds)
             cls(start_index).run_app()
             adb_ins = LDADB(get_online_devices()[0])
             if 'Application Not Responding: com.taobao.idlefish' in adb_ins.get_current_focus():
