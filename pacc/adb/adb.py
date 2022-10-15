@@ -98,9 +98,13 @@ class ADB:  # pylint: disable=too-many-public-methods
     def get_app_version_info(self, package_name):
         """获取指定APP的版本信息"""
         res = popen(f'{self.cmd}shell pm dump {package_name} | findstr "versionName"').read()
-        res = find_all_with_re(res, 'versionName=(.+)\n')[0]
-        print(f'The version of {package_name} is {res}')
-        return res
+        try:
+            res = find_all_with_re(res, 'versionName=(.+)\n')[0]
+            print(f'The version of {package_name} is {res}')
+            return res
+        except IndexError:
+            sleep(6)
+            return self.get_app_version_info()
 
     def get_app_list(self):
         """获取已安装应用的列表"""
