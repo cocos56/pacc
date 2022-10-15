@@ -104,7 +104,7 @@ class ADB:  # pylint: disable=too-many-public-methods
             return res
         except IndexError:
             sleep(6)
-            return self.get_app_version_info()
+            return self.get_app_version_info(package_name)
 
     def get_app_list(self):
         """获取已安装应用的列表"""
