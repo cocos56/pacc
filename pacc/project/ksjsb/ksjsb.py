@@ -276,6 +276,8 @@ class Ksjsb(Project):
                         return self.open_treasure_box()
                 sleep(66)
                 self.exit_live()
+            elif self.uia_ins.click_by_screen_text('开宝箱得金币'):
+                return self.open_treasure_box()
             else:
                 EMail(self.serial_num).send_unknown_error()
                 input('open_treasure_box遇见未知情况，请手动处理')
