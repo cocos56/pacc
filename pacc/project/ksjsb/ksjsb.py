@@ -381,8 +381,12 @@ class Ksjsb(Project):
             self.exit_live(Activity.AwardFeedFlowActivity)
             sleep(9)
             if Activity.AwardFeedFlowActivity in self.adb_ins.get_current_focus():
-                progress = find_all_ints_with_re(self.uia_ins.get_dict(
-                    ResourceID.progress_display)['@text'])
+                try:
+                    progress = find_all_ints_with_re(self.uia_ins.get_dict(
+                        ResourceID.progress_display)['@text'])
+                except TypeError as err:
+                    print_err(err)
+                    return self.watch_live()
                 if progress[0] == progress[1]:
                     self.dbu.update_last_watch_live_date(date.today())
                     break
