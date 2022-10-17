@@ -8,7 +8,7 @@ from pacc.config import Config
 
 Config.set_debug(True)
 # print(False and not True or not False)
-DEVICE_SN = '002005001'
+DEVICE_SN = '003001001'
 adb_ins = ADB(DEVICE_SN)
 uia_ins = UIAutomator(DEVICE_SN)
 # uia_ins.click('com.jifen.qukan:id/a98')

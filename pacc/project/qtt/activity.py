@@ -15,6 +15,9 @@ class Activity:
     VideoLiveAutoLoadActivity = f'{ROOT}jifen.qukan.content.newslist.video.' \
                                 f'VideoLiveAutoLoadActivity'
 
+    # 【直播界面2】
+    library = 'com.jifen.qukan/qukan.jifen.com.library.STD$1'
+
     #  【小米商店应用详情】由主界面的新闻标题中的广告标题转入
     AppDetailActivityInner = 'com.xiaomi.market/com.xiaomi.market.ui.detail.AppDetailActivityInner'
 
