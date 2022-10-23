@@ -40,7 +40,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
-        if datetime.now().hour > 6:
+        if datetime.now().hour > 7:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
