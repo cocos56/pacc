@@ -16,12 +16,13 @@ class Activity:  # pylint: disable=too-few-public-methods
 class IdleFish(LDProj):
     """咸鱼类"""
 
-    def __init__(self, ld_index=1):
+    def __init__(self, ld_index=1, ld_work_path=r'F:\leidian\LDPlayer4'):
         """构造函数
 
         :param ld_index: 目标雷电模拟器的索引值
+        :param ld_work_path: 雷电模拟器的工作路径
         """
-        super().__init__()
+        super().__init__(ld_work_path)
         self.ld_index = ld_index
 
     def run_app(self):
