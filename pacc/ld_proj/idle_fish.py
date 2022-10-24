@@ -45,7 +45,7 @@ class IdleFish(LDProj):
         else:
             start_day = date.today()
         while True:
-            while not start_day == date.today():
+            while start_day != date.today():
                 seconds = (datetime.fromisoformat(
                     f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
                 if seconds > 3600:
