@@ -43,7 +43,7 @@ class SD(Project):
 
     instances = []
 
-    def check(self):  # pylint: disable=too-many-return-statements, too-many-branches
+    def check(self):  # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
         """检查"""
         show_datetime('检查', start_br=True)
         if datetime.now().hour == 3:
