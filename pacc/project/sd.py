@@ -45,36 +45,39 @@ class SD(Project):
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     def check(self):
-        """检查"""
+        """检查
+
+        :return: 状态正常返回True，否则返回False
+        """
         show_datetime('检查', start_br=True)
         if datetime.now().hour == 3:
             print('当前正值自动开关机时段，，无需额外检查\n')
-            return
+            return True
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
         if TB_ROOT in current_focus:
             print('淘宝正在运行，无需额外检查\n')
-            return
+            return True
         if PDD_ROOT in current_focus:
             print('拼多多正在运行，无需额外检查\n')
-            return
+            return True
         if 'com.miui.home/com.miui.home.launcher.Launcher' in current_focus:
             print('桌面正在运行，无需额外检查\n')
-            return
+            return True
         if 'mCurrentFocus=null' in current_focus:
             print('无法正常获取当前正在运行的程序信息，无法进行检查\n')
-            return
+            return False
         try:
             dic = self.uia_ins.get_dict(ResourceID.message)
         except (FileNotFoundError, ExpatError):
             print('无法正常获取当前用户界面上元素的层次布局信息，无法进行检查')
-            return
+            return False
         if 'Application Not Responding' in current_focus and self.uia_ins.get_dict(
                 ResourceID.miui_message, xml=self.uia_ins.xml) and '淘宝无响应。要将其关闭吗？' in self.\
                 uia_ins.get_dict(ResourceID.miui_message, xml=self.uia_ins.xml)['@text']:
             print('淘宝无响应，正在将其关闭。')
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
-            return
+            return False
         if dic and dic['@text'] == '切换账号将会结束您当前的挂机,是否继续?':
             self.uia_ins.click(ResourceID.button1, xml=self.uia_ins.xml)
             self.uia_ins.xml = ''

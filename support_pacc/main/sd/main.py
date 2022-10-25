@@ -1,8 +1,9 @@
 """淘宝/拼多多全自动远程刷单程序入口"""
+# pylint: disable=duplicate-code
 from pacc.project import SD
 from pacc.config import Config
 
-Config.set_debug(True)  # pylint: disable=duplicate-code
+Config.set_debug(True)
 SD.mainloop([
     '001001001',
     '001001002',
