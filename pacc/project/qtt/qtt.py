@@ -9,7 +9,7 @@ from ..project import Project
 from ...base import run_forever, sleep, print_err, show_datetime
 
 
-class Qtt(Project):
+class Qtt(Project):  # pylint: disable=too-many-public-methods
     """趣头条中央控制系统类"""
 
     def __init__(self, serial_num):
