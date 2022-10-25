@@ -366,7 +366,7 @@ class Ksjsb(Project):
         """看直播"""
         if self.dbr.last_watch_live_date == date.today():
             print('今天已经把直播看完了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('看直播')
         not_cnt = 0
@@ -393,6 +393,7 @@ class Ksjsb(Project):
                     self.dbu.update_last_watch_live_date(date.today())
                     break
                 self.adb_ins.press_back_key(3)
+        return True
 
     def shopping(self):  # pylint: disable=too-many-return-statements, too-many-branches
         """去逛街
@@ -525,7 +526,7 @@ class Ksjsb(Project):
             self.adb_ins.press_home_key(9)
         self.dbu.update_last_desktop_component_date(date.today())
 
-    def buy_things_with_coins(self):
+    def buy_things_with_coins(self):  # pylint: disable=too-many-branches, too-many-statements
         """获取金币购划算页面内的所有奖励
 
         :return: 成功获取或者已经获取返回True，否则返回False
@@ -602,7 +603,7 @@ class Ksjsb(Project):
             return True
         return False
 
-    def change_money(self):
+    def change_money(self):  # pylint: disable=too-many-branches
         """把金币兑换成钱
 
         :return: 兑换成功返回True，否则返回False

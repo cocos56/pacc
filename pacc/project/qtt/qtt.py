@@ -9,7 +9,7 @@ from ..project import Project
 from ...base import run_forever, sleep, print_err, show_datetime
 
 
-class Qtt(Project):
+class Qtt(Project):  # pylint: disable=too-many-public-methods
     """趣头条中央控制系统类"""
 
     def __init__(self, serial_num):
@@ -123,14 +123,14 @@ class Qtt(Project):
                 sleep(20)
                 continue_cnt += 1
                 if Activity.MainActivity in self.adb_ins.get_current_focus():
-                    return
+                    return True
                 self.adb_ins.press_back_key()
                 print(f'continue_cnt={continue_cnt}')
                 if continue_cnt < 6 and self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
                     self.adb_ins.press_back_key()
                     return self.exit_incite_ad_activity(continue_cnt)
-                elif self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
-                    return
+                if self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
+                    return True
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')
         except (FileNotFoundError, ExpatError) as err:
@@ -140,6 +140,7 @@ class Qtt(Project):
         current_focus = self.adb_ins.get_current_focus()
         if Activity.InciteADActivity in current_focus or Activity.ADBrowser in current_focus:
             self.exit_incite_ad_activity()
+        return True
 
     def exit_portrait_ad_activity(self, err_cnt=0, retry_cnt=0):
         """退出portrait广告活动页面"""

@@ -16,6 +16,7 @@ class LDUIAutomator:  # pylint: disable=too-few-public-methods
         self.ipv4_addr = ipv4_addr
         self.xml = ''
 
+    # pylint: disable=duplicate-code
     def get_current_ui_hierarchy(self):
         """获取当前用户界面上元素的层次布局信息
 
