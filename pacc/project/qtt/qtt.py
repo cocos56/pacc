@@ -129,7 +129,7 @@ class Qtt(Project):  # pylint: disable=too-many-public-methods
                 if continue_cnt < 6 and self.uia_ins.get_dict(text='有任务奖励未领取，是否继续？'):
                     self.adb_ins.press_back_key()
                     return self.exit_incite_ad_activity(continue_cnt)
-                elif self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
+                if self.uia_ins.click(text='坚决放弃', xml=self.uia_ins.xml):
                     return True
             self.adb_ins.press_back_key()
             self.uia_ins.click(text='坚决放弃')

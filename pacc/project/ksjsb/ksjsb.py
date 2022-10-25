@@ -525,7 +525,7 @@ class Ksjsb(Project):
             self.adb_ins.press_home_key(9)
         self.dbu.update_last_desktop_component_date(date.today())
 
-    def buy_things_with_coins(self):
+    def buy_things_with_coins(self):  # pylint: disable=too-many-branches
         """获取金币购划算页面内的所有奖励
 
         :return: 成功获取或者已经获取返回True，否则返回False
@@ -602,7 +602,7 @@ class Ksjsb(Project):
             return True
         return False
 
-    def change_money(self):
+    def change_money(self):  # pylint: disable=too-many-branches
         """把金币兑换成钱
 
         :return: 兑换成功返回True，否则返回False
