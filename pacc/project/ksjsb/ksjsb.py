@@ -366,7 +366,7 @@ class Ksjsb(Project):
         """看直播"""
         if self.dbr.last_watch_live_date == date.today():
             print('今天已经把直播看完了，无需重复操作')
-            return
+            return True
         self.enter_wealth_interface()
         print('看直播')
         not_cnt = 0
@@ -393,6 +393,7 @@ class Ksjsb(Project):
                     self.dbu.update_last_watch_live_date(date.today())
                     break
                 self.adb_ins.press_back_key(3)
+        return True
 
     def shopping(self):  # pylint: disable=too-many-return-statements, too-many-branches
         """去逛街
