@@ -43,6 +43,7 @@ class SD(Project):
 
     instances = []
 
+    # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     def check(self):
         """检查"""
         show_datetime('检查', start_br=True)
@@ -109,6 +110,7 @@ class SD(Project):
                 EMail(self.serial_num).send_offline_error()
                 sleep(600)
         print('检查结束，未发现不可处理异常\n')
+        return True
 
     def reopen_app(self):
         """重新打开APP"""
