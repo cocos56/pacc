@@ -2,7 +2,7 @@
 from pacc.project import SD
 from pacc.config import Config
 
-Config.set_debug(True)
+Config.set_debug(True)  # pylint: disable=duplicate-code
 SD.mainloop([
     '001001001',
     '001001002',
