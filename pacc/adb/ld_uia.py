@@ -16,7 +16,7 @@ class LDUIAutomator:  # pylint: disable=too-few-public-methods
         self.ipv4_addr = ipv4_addr
         self.xml = ''
 
-    def get_current_ui_hierarchy(self):
+    def get_current_ui_hierarchy(self):  # pylint: disable=R0801
         """获取当前用户界面上元素的层次布局信息
 
         :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
