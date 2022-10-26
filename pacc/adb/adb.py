@@ -151,8 +151,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         res = popen(f'{self.cmd}shell getprop ro.product.model').read()[:-1]
         if not res:
             self.reconnect()
-            # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.dbr.serial_num)
+            self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
             return
         while res[-1] == '\n':
             res = res[:-1]
@@ -277,7 +276,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self, retry_cnt=0):
         """保持在线"""
-        self.__init__(self.dbr.serial_num)
+        self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
         online_devices = get_online_devices()
         if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'

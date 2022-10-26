@@ -3,7 +3,6 @@ from datetime import datetime
 from xml.parsers.expat import ExpatError
 
 from .project import Project
-from ..adb import ADB
 from ..base import show_datetime, sleep, print_err
 from ..tools import EMail
 
