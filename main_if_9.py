@@ -5,4 +5,4 @@ from pacc.ld_proj.idle_fish import IdleFish
 
 Config.set_ld_work_path(r'F:\leidian\LDPlayer9')
 LDConsole.quit_all()
-IdleFish.mainloop(1, 26)
+IdleFish.mainloop(1, 63)
