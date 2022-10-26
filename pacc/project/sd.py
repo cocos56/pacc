@@ -54,7 +54,6 @@ class SD(Project):
         if datetime.now().hour == 3:
             print('当前正值自动开关机时段，，无需额外检查\n')
             return True
-        self.adb_ins = ADB(self.serial_num)
         self.adb_ins.keep_online()
         current_focus = self.adb_ins.get_current_focus()
         if TB_ROOT in current_focus:

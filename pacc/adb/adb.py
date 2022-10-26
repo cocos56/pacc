@@ -277,6 +277,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def keep_online(self, retry_cnt=0):
         """保持在线"""
+        self.__init__(self.dbr.serial_num)
         online_devices = get_online_devices()
         if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
