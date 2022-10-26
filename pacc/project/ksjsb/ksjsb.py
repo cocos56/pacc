@@ -386,7 +386,7 @@ class Ksjsb(Project):
                 try:
                     progress = find_all_ints_with_re(self.uia_ins.get_dict(
                         ResourceID.progress_display)['@text'])
-                except TypeError as err:
+                except (TypeError, ExpatError) as err:
                     print_err(err)
                     return self.watch_live()
                 if progress[0] == progress[1]:
