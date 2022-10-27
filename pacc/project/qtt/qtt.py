@@ -416,7 +416,7 @@ class Qtt(Project):  # pylint: disable=too-many-public-methods
         if self.uia_ins.click(ResourceID.aps, xml=self.uia_ins.xml):
             self.uia_ins.xml = ''
         self.uia_ins.click(ResourceID.bjx, '提现兑换', xml=self.uia_ins.xml)
-        sleep(26)
+        sleep(56)
         if Activity.WebActivity not in self.adb_ins.get_current_focus():
             return self.change_money()
         if self.uia_ins.click(text='重试', index='2'):
