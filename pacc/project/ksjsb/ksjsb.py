@@ -99,7 +99,7 @@ class Ksjsb(Project):
                         self.adb_ins.press_back_key()
                         break
                 sleep(10)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             if retry_cnt > 2 or self.uia_ins.get_point_by_screen_text(text='成功领取奖励'):
                 self.adb_ins.press_back_key(6)
