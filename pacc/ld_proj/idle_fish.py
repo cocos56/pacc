@@ -53,6 +53,8 @@ class IdleFish(LDProj):
                     sleep(3600)
                 else:
                     sleep(seconds)
+            if LDConsole.is_running(start_index):
+                LDConsole.quit(start_index)
             cls(start_index).run_app()
             adb_ins = LDADB(get_online_devices()[-1])
             if 'Application Not Responding: com.taobao.idlefish' in adb_ins.get_current_focus():
@@ -64,7 +66,12 @@ class IdleFish(LDProj):
                 print('检测到咸鱼已停止运行，正在重启模拟器')
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-                sleep(120)
+                sleep(69)
+            if 'com.android.launcher3/com.android.launcher3.Launcher' in adb_ins.get_current_focus():
+                print('检测到咸鱼未正常运行，正在重启模拟器')
+                LDConsole.quit(start_index)
+                cls(start_index).run_app()
+                sleep(69)
             if Activity.UserLoginActivity in adb_ins.get_current_focus():
                 print('检测到已掉线，请登录')
             LDConsole.quit(start_index)
