@@ -603,7 +603,7 @@ class Ksjsb(Project):
             return True
         return False
 
-    def change_money(self):  # pylint: disable=too-many-branches
+    def change_money(self):  # pylint: disable=too-many-branches, too-many-statements
         """把金币兑换成钱
 
         :return: 兑换成功返回True，否则返回False
