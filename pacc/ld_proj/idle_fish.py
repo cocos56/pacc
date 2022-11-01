@@ -12,6 +12,7 @@ class Activity:  # pylint: disable=too-few-public-methods
     """咸鱼全自动刷咸鱼币中央监控系统模块的安卓活动名类"""
     MainActivity = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.MainActivity'
     UserLoginActivity = 'com.taobao.idlefish/com.ali.user.mobile.login.ui.UserLoginActivity'
+    Launcher = 'com.android.launcher3/com.android.launcher3.Launcher'
 
 
 class IdleFish(LDProj):
@@ -67,7 +68,7 @@ class IdleFish(LDProj):
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
                 sleep(69)
-            if 'com.android.launcher3/com.android.launcher3.Launcher' in adb_ins.get_current_focus():
+            if Activity.Launcher in adb_ins.get_current_focus():
                 print('检测到咸鱼未正常运行，正在重启模拟器')
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
