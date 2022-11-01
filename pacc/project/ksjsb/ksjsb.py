@@ -624,7 +624,11 @@ class Ksjsb(Project):
             expat_err_flag = True
         if not expat_err_flag:
             webview_dic = self.uia_ins.get_dict(class_=ResourceID.WebView, xml=self.uia_ins.xml)
-            cash = float(webview_dic['node'][0]['node'][1]['@text'])
+            try:
+                cash = float(webview_dic['node'][0]['node'][1]['@text'])
+            except KeyError as err:
+                print_err(err)
+                return self.change_money()
             dics = webview_dic['node'][1]['node']
             for dic in dics[4:0:-1]:
                 dic = dic['node']
