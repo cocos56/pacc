@@ -3,4 +3,6 @@ from pacc.config import Config
 from pacc.ld_proj.idle_fish import IdleFish
 
 Config.set_ld_work_path(r'F:\leidian\LDPlayer9')
-IdleFish.mainloop(1, 209)
+start_index, end_index = 71, 245
+IdleFish.check(start_index, end_index)
+IdleFish.mainloop(start_index, end_index)

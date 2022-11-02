@@ -37,6 +37,32 @@ class IdleFish(LDProj):
         """进入我的界面"""
 
     @classmethod
+    def check(cls, start_index, end_index):
+        """检查是否存在问题
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if LDConsole.is_running(start_index):
+                LDConsole.quit(start_index)
+            cls(start_index).run_app()
+            current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+            while Activity.Launcher in current_focus:
+                LDConsole.quit(start_index)
+                cls(start_index).run_app()
+                current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+            if Activity.UserLoginActivity in current_focus:
+                print('检测到已掉线，请登录')
+            LDConsole.quit(start_index)
+            print(f'第{start_index}项已检查完毕\n')
+            if start_index >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
+                break
+            start_index += 1
+
+    @classmethod
     def should_restart(cls):
         """判断是否需要重启
 
