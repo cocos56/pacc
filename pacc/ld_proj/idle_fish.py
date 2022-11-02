@@ -48,12 +48,17 @@ class IdleFish(LDProj):
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
             cls(start_index).run_app()
-            if Activity.UserLoginActivity in LDADB(get_online_devices()[-1]).get_current_focus():
+            current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+            while Activity.Launcher in current_focus:
+                LDConsole.quit(start_index)
+                cls(start_index).run_app()
+                current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+            if Activity.UserLoginActivity in current_focus:
                 print('检测到已掉线，请登录')
             LDConsole.quit(start_index)
             print(f'第{start_index}项已检查完毕\n')
             if start_index >= end_index:
-                print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
+                print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
             start_index += 1
 
