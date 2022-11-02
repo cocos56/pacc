@@ -647,6 +647,8 @@ class Ksjsb(Project):
             if Activity.ResolverActivity in self.adb_ins.get_current_focus():
                 self.uia_ins.click(ResourceID.button2)
             sleep(50)
+        elif self.uia_ins.get_dict(text='立即提现'):
+            pass
         else:
             EMail(self.serial_num).send_unknown_error()
             input('change_money遇见未知情况，请手动处理')
