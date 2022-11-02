@@ -242,6 +242,7 @@ class ADB:  # pylint: disable=too-many-public-methods
 
     def usb(self, sleep_time=2):
         """restart adbd listening on USB
+
         :param sleep_time: 超时
         """
         cmd = f'{self.cmd}usb'

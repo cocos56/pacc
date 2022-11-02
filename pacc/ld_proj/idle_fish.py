@@ -13,6 +13,8 @@ class Activity:  # pylint: disable=too-few-public-methods
     MainActivity = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.MainActivity'
     UserLoginActivity = 'com.taobao.idlefish/com.ali.user.mobile.login.ui.UserLoginActivity'
     Launcher = 'com.android.launcher3/com.android.launcher3.Launcher'
+    ApplicationNotResponding = 'Application Not Responding: com.taobao.idlefish'
+    ApplicationError = 'Application Error: com.taobao.idlefish'
 
 
 class IdleFish(LDProj):
@@ -29,10 +31,30 @@ class IdleFish(LDProj):
     def run_app(self):
         """启动雷电模拟器并运行咸鱼APP"""
         LDConsole(self.ld_index).run_app('com.taobao.idlefish')
-        sleep(90)
+        sleep(60)
 
     def enter_my_interface(self):
         """进入我的界面"""
+
+    @classmethod
+    def should_restart(cls):
+        """判断是否需要重启
+
+        :return: 需要重启True，否则返回False
+        """
+        current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+        if Activity.ApplicationNotResponding in current_focus:
+            print('检测到咸鱼无响应，正在重启模拟器')
+            return True
+        if Activity.ApplicationError in current_focus:
+            print('检测到咸鱼已停止运行，正在重启模拟器')
+            return True
+        if Activity.Launcher in current_focus:
+            print('检测到咸鱼未正常运行，正在重启模拟器')
+            return True
+        if Activity.UserLoginActivity in current_focus:
+            print('检测到已掉线，请登录')
+        return False
 
     @classmethod
     def mainloop(cls, start_index, end_index):
@@ -42,7 +64,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
-        if datetime.now().hour >= 8:
+        if datetime.now().hour >= 10:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
@@ -57,24 +79,10 @@ class IdleFish(LDProj):
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
             cls(start_index).run_app()
-            adb_ins = LDADB(get_online_devices()[-1])
-            if 'Application Not Responding: com.taobao.idlefish' in adb_ins.get_current_focus():
-                print('检测到咸鱼无响应，正在重启模拟器')
+            while cls.should_restart():
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-            sleep(69)
-            if 'Application Error: com.taobao.idlefish' in adb_ins.get_current_focus():
-                print('检测到咸鱼已停止运行，正在重启模拟器')
-                LDConsole.quit(start_index)
-                cls(start_index).run_app()
-                sleep(69)
-            if Activity.Launcher in adb_ins.get_current_focus():
-                print('检测到咸鱼未正常运行，正在重启模拟器')
-                LDConsole.quit(start_index)
-                cls(start_index).run_app()
-                sleep(69)
-            if Activity.UserLoginActivity in adb_ins.get_current_focus():
-                print('检测到已掉线，请登录')
+            sleep(99)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕\n')
             if start_index >= end_index:
