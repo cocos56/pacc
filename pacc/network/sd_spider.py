@@ -1,16 +1,17 @@
 """淘宝拼多多刷单爬虫模块"""
-from time import sleep
-
 import pyperclip
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 from pacc.mysql.retrieve import RetrieveSD
+from pacc.base import sleep, print_err
 
 DOMAIN = 'http://sd.coco56.top/'
-START_INDEX = 0
+START_INDEX = 19
 DEPARTING_STAFF = [
-    '郭志勇',
+    '候勇康',
+    '万德永'
 ]
 
 
@@ -33,7 +34,7 @@ class Spider:
         for index, username in enumerate(RetrieveSD.all_accounts[START_INDEX:]):
             cls.driver.get(DOMAIN)
             cls.driver.maximize_window()
-            sleep(4)
+            sleep(4, False, False)
             print(index + START_INDEX + 1, username, end=' ')
             password = 'k187397'
             cls.driver.find_element(By.ID, "username").send_keys(username)
@@ -41,18 +42,25 @@ class Spider:
             cls.driver.find_element(
                 By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span'
             ).click()
-            sleep(3)
+            sleep(3, False, False)
             cls.open_url_in_new_window(f'{DOMAIN}record/trades')
             cls.open_url_in_new_window(f'{DOMAIN}record/linked')
             cls.open_url_in_new_window(f'{DOMAIN}account/buyers')
             cls.open_url_in_new_window(f'{DOMAIN}account/wallet')
             cls.driver.switch_to.window(cls.driver.window_handles[1])
-            sleep(5)
+            sleep(5, False, False)
             while True:
-                sleep(1)
-                recorded_amount = cls.driver.find_element(
-                    By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]/div'
-                              '/div/div/div/div/div/table/tbody/tr[1]/td[1]/div/span[2]')
+                sleep(1, False, False)
+                try:
+                    recorded_amount = cls.driver.find_element(
+                        By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]'
+                                  '/div/div/div/div/div/div/table/tbody/tr[1]/td[1]/div/span[2]')
+                except NoSuchElementException as err:
+                    print_err(err)
+                    sleep(3, False, False)
+                    recorded_amount = cls.driver.find_element(
+                        By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]'
+                                  '/div/div/div/div/div/div/table/tbody/tr[1]/td[1]/div/span[2]')
                 recorded_amount = float(recorded_amount.text)
                 to_be_recorded_amount = cls.driver.find_element(
                     By.XPATH, '//*[@id="root"]/div[1]/section/div[2]/main/div/div[1]/div/div[2]/'
@@ -76,7 +84,7 @@ class Spider:
                 cls.driver.find_element(
                     By.XPATH, '//*[@class="ant-modal-footer"]//*[@class="ant-btn ant-btn-primary"]'
                 ).click()
-                sleep(3)
+                sleep(3, False, False)
                 cls.driver.refresh()
             else:
                 print(f'已入账金额：{recorded_amount}，待入账金额：{to_be_recorded_amount}')
