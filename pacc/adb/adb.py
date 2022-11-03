@@ -228,12 +228,13 @@ class ADB:  # pylint: disable=too-many-public-methods
         """按应用切换键"""
         self.press_key('KEYCODE_APP_SWITCH')
 
-    def press_back_key(self, sleep_time=1):
+    def press_back_key(self, sleep_time=1, init_flag=True):
         """按返回键
 
         :param sleep_time: 休息时间
+        :param init_flag: 是否需要重新初始化的标志
         """
-        self.keep_online()
+        self.keep_online(init_flag=init_flag)
         self.press_key('KEYCODE_BACK', sleep_time)
 
     def press_power_key(self):
@@ -279,9 +280,14 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.disconnect()
         self.connect()
 
-    def keep_online(self, retry_cnt=0):
-        """保持在线"""
-        self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
+    def keep_online(self, retry_cnt=0, init_flag=True):
+        """保持在线
+
+        :param retry_cnt: 是否需要重新初始化的标志
+        :param init_flag: 是否需要重新初始化的标志
+        """
+        if init_flag:
+            self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
         online_devices = get_online_devices()
         if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
             print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
