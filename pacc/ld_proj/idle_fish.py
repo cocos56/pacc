@@ -2,7 +2,7 @@
 from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
-from ..adb.ld_console import LDConsole
+from ..adb import LDConsole, LDADB
 from ..base import sleep
 
 
@@ -46,11 +46,11 @@ class IdleFish(LDProj):
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
             cls(start_index).run_app(50)
-            current_focus = LDConsole.get_current_focus(start_index)
+            current_focus = LDADB(start_index).get_current_focus()
             while Activity.Launcher in current_focus:
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-                current_focus = LDConsole.get_current_focus(start_index)
+                current_focus = LDADB(start_index).get_current_focus()
             if Activity.UserLoginActivity in current_focus:
                 print('检测到已掉线，请登录')
             LDConsole.quit(start_index)
@@ -66,7 +66,7 @@ class IdleFish(LDProj):
 
         :return: 需要重启True，否则返回False
         """
-        current_focus = LDConsole.get_current_focus(dn_index)
+        current_focus = LDADB(dn_index).get_current_focus()
         if Activity.ApplicationNotResponding in current_focus:
             print('检测到咸鱼无响应，正在重启模拟器')
             return True

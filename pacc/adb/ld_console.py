@@ -36,19 +36,6 @@ class LDConsole:
         print(f'编号为{dn_index}的雷电模拟器已正常退出')
 
     @classmethod
-    def get_current_focus(cls, dn_index):
-        """获取当前界面的Activity
-
-        :param dn_index: 待获取界面Activity雷电模拟器的索引值
-        """
-        cmd = f'{LDC}adb --index {dn_index} --command ' \
-              f'"shell dumpsys window windows" | findstr mCurrentFocus'
-        res = popen(cmd).read()[2:-2]
-        print(cmd)
-        print(res)
-        return res
-
-    @classmethod
     def is_running(cls, dn_index):
         """判断某一指定的雷电模拟器是否正在运行
 
