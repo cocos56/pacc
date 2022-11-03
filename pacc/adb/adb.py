@@ -181,7 +181,10 @@ class ADB:  # pylint: disable=too-many-public-methods
         return False
 
     def get_current_focus(self):
-        """获取当前界面的Activity"""
+        """获取当前界面的Activity
+
+        :return: 当前界面的Activity
+        """
         displays_models = ['M2007J22C', 'Redmi K20 Pro Premium Edition']
         try:
             if self.dbr.model in displays_models:

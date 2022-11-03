@@ -2,9 +2,8 @@
 from os import popen
 
 from ..base import sleep
+from ..config import LDC
 from ..tools import system
-
-LDC = 'ldconsole.exe '
 
 
 class LDConsole:
@@ -30,11 +29,24 @@ class LDConsole:
         :param dn_index: 待关闭雷电模拟器的索引值
         """
         system(f'{LDC}quit --index {dn_index}')
-        sleep(6)
+        sleep(3)
         if cls.is_running(dn_index):
             print(f'检测到编号为{dn_index}的雷电模拟器未正常退出，正在重复执行退出操作')
             cls.quit(dn_index)
         print(f'编号为{dn_index}的雷电模拟器已正常退出')
+
+    @classmethod
+    def get_current_focus(cls, dn_index):
+        """获取当前界面的Activity
+
+        :param dn_index: 待获取界面Activity雷电模拟器的索引值
+        """
+        cmd = f'{LDC}adb --index {dn_index} --command ' \
+              f'"shell dumpsys window windows" | findstr mCurrentFocus'
+        res = popen(cmd).read()[2:-2]
+        print(cmd)
+        print(res)
+        return res
 
     @classmethod
     def is_running(cls, dn_index):

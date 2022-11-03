@@ -1,30 +1,36 @@
 """雷电模拟器安卓调试桥模块"""
-import os
+from os import popen
 
-from ..tools import find_all_with_re
-
-
-def get_online_devices():
-    """获取所有在线设备"""
-    res = os.popen('adb devices').read()
-    res = find_all_with_re(res, r'(127.0.0.1:.+)\tdevice')
-    return res
+from ..config import LDC
 
 
-class LDADB:  # pylint: disable=too-few-public-methods
+class LDADB:
     """雷电模拟器安卓调试桥类"""
 
-    def __init__(self, ipv4_addr):
+    def __init__(self, dn_index):
         """构造函数：初始化雷电模拟器安卓调试桥类的对象
 
-        :param ipv4_addr: 目标设备的IPv4地址
+        :param dn_index: 雷电模拟器的索引
         """
-        self.ipv4_addr = ipv4_addr
+        self.dn_index = dn_index
+
+    def exe_cmd(self, command='', ext='', return_flag=False):
+        """执行命令函数
+
+        :param command: adb命令
+        :param ext: 命令的扩展参数
+        :param return_flag: 是否需要返回值，默认不需要
+        """
+        cmd = f'{LDC}adb --index {self.dn_index} --command "{command}"{ext}'
+        print(cmd)
+        if return_flag:
+            return popen(cmd).read()
 
     def get_current_focus(self):
-        """获取当前界面的Activity"""
-        cmd = f'adb -s {self.ipv4_addr} shell dumpsys window | findstr mCurrentFocus'
-        res = os.popen(cmd).read()[2:-2]
-        print(cmd)
+        """获取当前界面的Activity
+
+        :return: 当前界面的Activity
+        """
+        res = self.exe_cmd('shell dumpsys window windows', ' | findstr mCurrentFocus', True)[2:-2]
         print(res)
         return res

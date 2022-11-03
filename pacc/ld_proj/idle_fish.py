@@ -2,8 +2,6 @@
 from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
-from ..adb import LDADB
-from ..adb.ld_adb import get_online_devices
 from ..adb.ld_console import LDConsole
 from ..base import sleep
 
@@ -28,10 +26,10 @@ class IdleFish(LDProj):
         super().__init__()
         self.ld_index = ld_index
 
-    def run_app(self):
+    def run_app(self, sleep_time=60):
         """启动雷电模拟器并运行咸鱼APP"""
         LDConsole(self.ld_index).run_app('com.taobao.idlefish')
-        sleep(60)
+        sleep(sleep_time)
 
     def enter_my_interface(self):
         """进入我的界面"""
@@ -47,12 +45,12 @@ class IdleFish(LDProj):
         while True:
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
-            cls(start_index).run_app()
-            current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+            cls(start_index).run_app(50)
+            current_focus = LDConsole.get_current_focus(start_index)
             while Activity.Launcher in current_focus:
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
-                current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+                current_focus = LDConsole.get_current_focus(start_index)
             if Activity.UserLoginActivity in current_focus:
                 print('检测到已掉线，请登录')
             LDConsole.quit(start_index)
@@ -63,12 +61,12 @@ class IdleFish(LDProj):
             start_index += 1
 
     @classmethod
-    def should_restart(cls):
+    def should_restart(cls, dn_index):
         """判断是否需要重启
 
         :return: 需要重启True，否则返回False
         """
-        current_focus = LDADB(get_online_devices()[-1]).get_current_focus()
+        current_focus = LDConsole.get_current_focus(dn_index)
         if Activity.ApplicationNotResponding in current_focus:
             print('检测到咸鱼无响应，正在重启模拟器')
             return True
@@ -90,7 +88,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
-        if datetime.now().hour >= 10:
+        if datetime.now().hour >= 12:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
@@ -105,7 +103,7 @@ class IdleFish(LDProj):
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
             cls(start_index).run_app()
-            while cls.should_restart():
+            while cls.should_restart(start_index):
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
             sleep(99)
