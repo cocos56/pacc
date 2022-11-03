@@ -60,6 +60,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
             print('检测到Settings$UsbDetailsActivity')
+            print(f'self.dbr.model={self.dbr.model}')
             if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6)
 
