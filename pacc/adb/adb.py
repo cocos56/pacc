@@ -59,10 +59,12 @@ class ADB:  # pylint: disable=too-many-public-methods
             self.dbu.update_model(model)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
-            print('检测到Settings$UsbDetailsActivity')
-            print(f'self.dbr.model={[self.dbr.model]}')
-            if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
+            # print('检测到Settings$UsbDetailsActivity')
+            # print(f'self.dbr.model={[self.dbr.model]}')
+            if 'M2007J22C' in self.dbr.model:
                 self.press_back_key(6)
+            # if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
+            #     self.press_back_key(6)
 
     def get_battery_temperature(self):
         """获取电池温度
