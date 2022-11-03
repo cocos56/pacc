@@ -102,15 +102,23 @@ class IdleFish(LDProj):
                     sleep(seconds)
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
+            if LDConsole.is_running(start_index+1):
+                LDConsole.quit(start_index+1)
             cls(start_index).run_app()
+            cls(start_index+1).run_app()
             while cls.should_restart(start_index):
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
+            while cls.should_restart(start_index+1):
+                LDConsole.quit(start_index+1)
+                cls(start_index+1).run_app()
             sleep(99)
             LDConsole.quit(start_index)
             print(f'第{start_index}项已执行完毕\n')
-            if start_index >= end_index:
+            LDConsole.quit(start_index+1)
+            print(f'第{start_index+1}项已执行完毕\n')
+            if start_index+1 >= end_index:
                 print(f'所有共{end_index-src_start_index+1}项已执行完毕')
-                start_index = src_start_index - 1
+                start_index = src_start_index - 2
                 start_day = date.today() + timedelta(days=1)
-            start_index += 1
+            start_index += 2
