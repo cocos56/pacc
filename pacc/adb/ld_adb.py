@@ -25,6 +25,7 @@ class LDADB:
         print(cmd)
         if return_flag:
             return popen(cmd).read()
+        return None
 
     def get_current_focus(self):
         """获取当前界面的Activity
