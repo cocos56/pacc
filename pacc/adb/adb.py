@@ -38,9 +38,8 @@ class ADB:  # pylint: disable=too-many-public-methods
                     EMail(self.dbr.serial_num).send_offline_error()
                 print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
                 sleep(30)
-                # pylint: disable=non-parent-init-called
                 system('adb reconnect offline')
-                self.__init__(serial_num, offline_cnt+1)
+                self.__init__(serial_num, offline_cnt+1)  # pylint: disable=non-parent-init-called
         self.cmd = f'adb -s {self.dbr.id_num} '
         if not self.get_ipv4_address():
             print(self.get_ipv4_address())
@@ -59,10 +58,6 @@ class ADB:  # pylint: disable=too-many-public-methods
             self.dbu.update_model(model)
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
-            print('检测到Settings$UsbDetailsActivity')
-            # print(f'self.dbr.model={[self.dbr.model]}, {"M2007J22C" in self.dbr.model}')
-            # if 'M2007J22C' in self.dbr.model:
-            #     self.press_back_key(6, init_flag=False)
             if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
                 self.press_back_key(6, init_flag=False)
 
