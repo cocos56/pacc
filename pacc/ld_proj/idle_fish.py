@@ -81,6 +81,38 @@ class IdleFish(LDProj):
         return False
 
     @classmethod
+    def run_task(cls, start_index):
+        """启动任务
+
+        :param start_index: 起始索引值
+        """
+        if LDConsole.is_running(start_index):
+            LDConsole.quit(start_index)
+        if LDConsole.is_running(start_index + 1):
+            LDConsole.quit(start_index + 1)
+        if LDConsole.is_running(start_index + 2):
+            LDConsole.quit(start_index + 2)
+        cls(start_index).run_app(20)
+        cls(start_index + 1).run_app(20)
+        cls(start_index + 2).run_app()
+        while cls.should_restart(start_index):
+            LDConsole.quit(start_index)
+            cls(start_index).run_app()
+        while cls.should_restart(start_index + 1):
+            LDConsole.quit(start_index + 1)
+            cls(start_index + 1).run_app()
+        while cls.should_restart(start_index + 2):
+            LDConsole.quit(start_index + 2)
+            cls(start_index + 2).run_app()
+        sleep(99)
+        LDConsole.quit(start_index)
+        print(f'第{start_index}项已执行完毕')
+        LDConsole.quit(start_index + 1)
+        print(f'第{start_index + 1}项已执行完毕')
+        LDConsole.quit(start_index + 2)
+        print(f'第{start_index + 2}项已执行完毕\n')
+
+    @classmethod
     def mainloop(cls, start_index, end_index):
         """主循环
 
@@ -100,31 +132,7 @@ class IdleFish(LDProj):
                     sleep(3600)
                 else:
                     sleep(seconds)
-            if LDConsole.is_running(start_index):
-                LDConsole.quit(start_index)
-            if LDConsole.is_running(start_index+1):
-                LDConsole.quit(start_index+1)
-            if LDConsole.is_running(start_index+2):
-                LDConsole.quit(start_index+2)
-            cls(start_index).run_app(20)
-            cls(start_index+1).run_app(20)
-            cls(start_index+2).run_app()
-            while cls.should_restart(start_index):
-                LDConsole.quit(start_index)
-                cls(start_index).run_app()
-            while cls.should_restart(start_index+1):
-                LDConsole.quit(start_index+1)
-                cls(start_index+1).run_app()
-            while cls.should_restart(start_index+2):
-                LDConsole.quit(start_index+2)
-                cls(start_index+2).run_app()
-            sleep(99)
-            LDConsole.quit(start_index)
-            print(f'第{start_index}项已执行完毕')
-            LDConsole.quit(start_index+1)
-            print(f'第{start_index+1}项已执行完毕')
-            LDConsole.quit(start_index+2)
-            print(f'第{start_index+2}项已执行完毕\n')
+            cls.run_task(start_index)
             if start_index+2 >= end_index:
                 print(f'所有共{end_index-src_start_index+1}项已执行完毕')
                 start_index = src_start_index - 3
