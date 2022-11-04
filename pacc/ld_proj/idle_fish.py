@@ -92,8 +92,8 @@ class IdleFish(LDProj):
             LDConsole.quit(start_index + 1)
         if LDConsole.is_running(start_index + 2):
             LDConsole.quit(start_index + 2)
-        cls(start_index).run_app(20)
-        cls(start_index + 1).run_app(20)
+        cls(start_index).run_app(10)
+        cls(start_index + 1).run_app(30)
         cls(start_index + 2).run_app()
         while cls.should_restart(start_index):
             LDConsole.quit(start_index)
