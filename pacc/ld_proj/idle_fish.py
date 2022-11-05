@@ -2,7 +2,7 @@
 from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
-from ..adb import LDConsole, LDADB
+from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep
 
 
@@ -45,14 +45,18 @@ class IdleFish(LDProj):
         while True:
             if LDConsole.is_running(start_index):
                 LDConsole.quit(start_index)
-            cls(start_index).run_app(50)
+            cls(start_index).run_app(20)
             current_focus = LDADB(start_index).get_current_focus()
             while Activity.Launcher in current_focus:
                 LDConsole.quit(start_index)
                 cls(start_index).run_app()
                 current_focus = LDADB(start_index).get_current_focus()
+
             if Activity.UserLoginActivity in current_focus:
                 print('检测到已掉线，请登录')
+            else:
+                LDUIA(start_index).tap((50, 70), 10)
+            LDUIA(start_index).get_screen()
             LDConsole.quit(start_index)
             print(f'第{start_index}项已检查完毕\n')
             if start_index >= end_index:

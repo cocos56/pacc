@@ -1,5 +1,5 @@
 """雷电模拟器安卓调试桥模块"""
-from os import popen
+from os import popen, system
 
 from ..config import LDC
 
@@ -25,6 +25,7 @@ class LDADB:
         print(cmd)
         if return_flag:
             return popen(cmd).read()
+        system(cmd)
         return None
 
     def get_current_focus(self):

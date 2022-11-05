@@ -1,23 +1,63 @@
 """雷电自动化测试模块"""
-from os import system, remove
+from os import system, remove, popen
 from os.path import exists
 
-from ..config import Config
+from ..base import sleep
+from ..config import Config, LDC
 from ..tools import create_dir, get_pretty_xml, get_xml
 
 
-class LDUIAutomator:  # pylint: disable=too-few-public-methods
+class LDUIA:  # pylint: disable=too-few-public-methods
     """雷电模拟器UI自动化测试类"""
-    def __init__(self, ipv4_addr):
+    def __init__(self, dn_index):
         """构造函数
 
-        :param ipv4_addr: 目标设备的IPv4地址
+       :param dn_index: 雷电模拟器的索引
         """
-        self.ipv4_addr = ipv4_addr
+        self.dn_index = dn_index
+        self.ipv4_addr = ''
         self.xml = ''
 
-    # pylint: disable=duplicate-code
-    def get_current_ui_hierarchy(self):
+    def exe_cmd(self, command='', ext='', return_flag=False):
+        """执行命令函数
+
+        :param command: adb命令
+        :param ext: 命令的扩展参数
+        :param return_flag: 是否需要返回值，默认不需要
+        """
+        cmd = f'{LDC}adb --index {self.dn_index} --command "{command}"{ext}'
+        print(cmd)
+        if return_flag:
+            return popen(cmd).read()
+        system(cmd)
+        return None
+
+    def tap(self, point, interval=1):
+        """点击
+
+        :param point: 点的x和y坐标
+        :param interval: 停顿时间
+        """
+        x_coordinate, y_coordinate = point
+        print(f'正在让编号为{self.dn_index}的模拟器点击({x_coordinate},{y_coordinate})')
+        self.exe_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
+        sleep(interval, Config.debug, Config.debug)
+
+    def get_screen(self):
+        """获取屏幕（截屏）
+
+        :return: 截图文件的路径
+        """
+        dir_name = 'CurrentUIHierarchy'
+        create_dir(dir_name)
+        png_path = f'{dir_name}/{self.dn_index}.png'
+        self.exe_cmd(f'shell rm /sdcard/{self.dn_index}.png')
+        self.exe_cmd(f'shell screencap -p /sdcard/{self.dn_index}.png')
+        self.exe_cmd(f'pull /sdcard/{self.dn_index}.png CurrentUIHierarchy')
+        sleep(1)
+        return png_path
+
+    def get_current_ui_hierarchy(self):  # pylint: disable=duplicate-code
         """获取当前用户界面上元素的层次布局信息
 
         :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
