@@ -23,17 +23,39 @@ class LDConsole:
         sleep(6)
 
     @classmethod
-    def quit(cls, dn_index):
+    def list(cls):
+        """获取所有虚拟机的列表
+
+        :return: 字典，键是索引值，值是虚拟机名
+        """
+        cmd = f'{LDC}list2'
+        print(cmd)
+        res = popen(cmd).read()[:-1]
+        res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()[:-1]]]
+        # print(res, len(res))
+        dic = dict(res)
+        print(dic)
+        return dic
+
+    def is_exist(self):
+        return self.dn_index in self.list()
+
+    @classmethod
+    def quit(cls, dn_index, print_flag=False):
         """关闭某一指定的雷电模拟器
 
         :param dn_index: 待关闭雷电模拟器的索引值
+        :param print_flag: 是否打印正常退出的信息
         """
-        system(f'{LDC}quit --index {dn_index}')
-        sleep(3)
+        if cls.is_running(dn_index):
+            system(f'{LDC}quit --index {dn_index}')
+            sleep(3)
+            print_flag = True
         if cls.is_running(dn_index):
             print(f'检测到编号为{dn_index}的雷电模拟器未正常退出，正在重复执行退出操作')
-            cls.quit(dn_index)
-        print(f'编号为{dn_index}的雷电模拟器已正常退出')
+            cls.quit(dn_index, print_flag=True)
+        if print_flag:
+            print(f'编号为{dn_index}的雷电模拟器已正常退出')
 
     @classmethod
     def is_running(cls, dn_index):

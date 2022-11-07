@@ -27,12 +27,35 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     def run_app(self, sleep_time=60):
-        """启动雷电模拟器并运行咸鱼APP"""
+        """启动雷电模拟器并运行咸鱼APP
+
+        :param sleep_time: 等待时间
+        """
+        LDConsole.quit(self.ld_index)
         LDConsole(self.ld_index).run_app('com.taobao.idlefish')
         sleep(sleep_time)
 
     def enter_my_interface(self):
         """进入我的界面"""
+
+    @classmethod
+    def check_target_device(cls, index):
+        """检查目标设备是否存在问题
+
+        :param index: 目标设备的索引值
+        """
+        current_focus = LDADB(index).get_current_focus()
+        while Activity.Launcher in current_focus:
+            LDConsole.quit(index)
+            cls(index).run_app()
+            current_focus = LDADB(index).get_current_focus()
+        if Activity.UserLoginActivity in current_focus:
+            print('检测到已掉线，请登录')
+        else:
+            LDUIA(index).tap((50, 85), 10)
+        LDUIA(index).get_screen()
+        LDConsole.quit(index)
+        print(f'第{index}项已检查完毕\n')
 
     @classmethod
     def check(cls, start_index, end_index):
@@ -43,26 +66,24 @@ class IdleFish(LDProj):
         """
         src_start_index = start_index
         while True:
-            if LDConsole.is_running(start_index):
-                LDConsole.quit(start_index)
-            cls(start_index).run_app(20)
-            current_focus = LDADB(start_index).get_current_focus()
-            while Activity.Launcher in current_focus:
-                LDConsole.quit(start_index)
-                cls(start_index).run_app()
-                current_focus = LDADB(start_index).get_current_focus()
-
-            if Activity.UserLoginActivity in current_focus:
-                print('检测到已掉线，请登录')
+            cls(start_index).run_app(10)
+            if start_index+1 <= end_index:
+                cls(start_index+1).run_app(10)
             else:
-                LDUIA(start_index).tap((50, 70), 10)
-            LDUIA(start_index).get_screen()
-            LDConsole.quit(start_index)
-            print(f'第{start_index}项已检查完毕\n')
-            if start_index >= end_index:
+                sleep(10)
+            if start_index+2 <= end_index:
+                cls(start_index+2).run_app(10)
+            else:
+                sleep(10)
+            cls.check_target_device(start_index)
+            if start_index+1 <= end_index:
+                cls.check_target_device(start_index+1)
+            if start_index + 2 <= end_index:
+                cls.check_target_device(start_index+2)
+            if start_index+2 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
-            start_index += 1
+            start_index += 3
 
     @classmethod
     def should_restart(cls, dn_index):
@@ -90,12 +111,6 @@ class IdleFish(LDProj):
 
         :param start_index: 起始索引值
         """
-        if LDConsole.is_running(start_index):
-            LDConsole.quit(start_index)
-        if LDConsole.is_running(start_index + 1):
-            LDConsole.quit(start_index + 1)
-        if LDConsole.is_running(start_index + 2):
-            LDConsole.quit(start_index + 2)
         cls(start_index).run_app(10)
         cls(start_index + 1).run_app(30)
         cls(start_index + 2).run_app()
@@ -124,7 +139,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
-        if datetime.now().hour >= 12:
+        if datetime.now().hour >= 8:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()

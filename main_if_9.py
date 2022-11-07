@@ -2,7 +2,8 @@
 from pacc.config import Config
 from pacc.ld_proj.idle_fish import IdleFish
 
+Config.debug = True
 Config.set_ld_work_path()
-start_index, end_index = 5, 273
+start_index, end_index = 84, 285
 IdleFish.check(start_index, end_index)
 IdleFish.mainloop(start_index, end_index)
