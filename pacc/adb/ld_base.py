@@ -4,7 +4,7 @@ from os import popen, system
 from ..config import LDC
 
 
-class LDBase:
+class LDBase:  # pylint: disable=too-few-public-methods
     """雷电模拟器基类"""
 
     def __init__(self, dn_index):
