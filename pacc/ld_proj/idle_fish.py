@@ -67,18 +67,18 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             cls(start_index).run_app(10)
-            if start_index+1 <= end_index:
+            if LDConsole(start_index+1).is_exist():
                 cls(start_index+1).run_app(10)
             else:
                 sleep(10)
-            if start_index+2 <= end_index:
+            if LDConsole(start_index+2).is_exist():
                 cls(start_index+2).run_app(10)
             else:
                 sleep(10)
             cls.check_target_device(start_index)
-            if start_index+1 <= end_index:
+            if LDConsole(start_index+1).is_exist():
                 cls.check_target_device(start_index+1)
-            if start_index + 2 <= end_index:
+            if LDConsole(start_index+2).is_exist():
                 cls.check_target_device(start_index+2)
             if start_index+2 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')

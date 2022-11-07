@@ -1,36 +1,23 @@
 """雷电自动化测试模块"""
-from os import system, remove, popen
+from os import system, remove
 from os.path import exists
 
+from .ld_base import LDBase
 from ..base import sleep
-from ..config import Config, LDC
+from ..config import Config
 from ..tools import create_dir, get_pretty_xml, get_xml
 
 
-class LDUIA:  # pylint: disable=too-few-public-methods
+class LDUIA(LDBase):
     """雷电模拟器UI自动化测试类"""
     def __init__(self, dn_index):
         """构造函数
 
        :param dn_index: 雷电模拟器的索引
         """
-        self.dn_index = dn_index
+        super().__init__(dn_index)
         self.ipv4_addr = ''
         self.xml = ''
-
-    def exe_cmd(self, command='', ext='', return_flag=False):
-        """执行命令函数
-
-        :param command: adb命令
-        :param ext: 命令的扩展参数
-        :param return_flag: 是否需要返回值，默认不需要
-        """
-        cmd = f'{LDC}adb --index {self.dn_index} --command "{command}"{ext}'
-        print(cmd)
-        if return_flag:
-            return popen(cmd).read()
-        system(cmd)
-        return None
 
     def tap(self, point, interval=1):
         """点击

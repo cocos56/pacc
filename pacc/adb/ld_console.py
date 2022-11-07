@@ -29,15 +29,19 @@ class LDConsole:
         :return: 字典，键是索引值，值是虚拟机名
         """
         cmd = f'{LDC}list2'
-        print(cmd)
+        # print(cmd)
         res = popen(cmd).read()[:-1]
         res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()[:-1]]]
         # print(res, len(res))
         dic = dict(res)
-        print(dic)
+        # print(dic)
         return dic
 
     def is_exist(self):
+        """判断虚拟机是否存在
+
+        :return: 布尔值，存在返回True，否则返回False
+        """
         return self.dn_index in self.list()
 
     @classmethod
@@ -71,6 +75,7 @@ class LDConsole:
         :param packagename: 待自动打开应用的包名
         """
         cmd = f'{LDC}launchex --index {self.dn_index} --packagename {packagename}'
-        print(cmd)
+        # print(cmd)
         popen(cmd)
+        print(f'正在启动编号为{self.dn_index}的虚拟机')
         sleep(5, False, False)
