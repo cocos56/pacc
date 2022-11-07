@@ -1,20 +1,19 @@
 """雷电模拟器控制台模块"""
-from os import popen
+from os import popen, system
 
 from ..base import sleep
 from ..config import LDC
-from ..tools import system
 
 
 class LDConsole:
     """雷电模拟器控制台类"""
 
-    def __init__(self, dn_index):
+    def __init__(self, ld_index):
         """构造函数：初始化雷电模拟器控制台类的对象
 
-        :param dn_index: 雷电模拟器的索引
+        :param ld_index: 雷电模拟器的索引
         """
-        self.dn_index = dn_index
+        self.ld_index = ld_index
 
     @classmethod
     def quit_all(cls):
@@ -42,40 +41,41 @@ class LDConsole:
 
         :return: 布尔值，存在返回True，否则返回False
         """
-        return self.dn_index in self.list()
+        return self.ld_index in self.list()
 
     @classmethod
-    def quit(cls, dn_index, print_flag=False):
+    def quit(cls, ld_index, print_flag=False):
         """关闭某一指定的雷电模拟器
 
-        :param dn_index: 待关闭雷电模拟器的索引值
+        :param ld_index: 待关闭雷电模拟器的索引值
         :param print_flag: 是否打印正常退出的信息
         """
-        if cls.is_running(dn_index):
-            system(f'{LDC}quit --index {dn_index}')
+        if cls.is_running(ld_index):
+            print(f'正在退出编号为{ld_index}的雷电模拟器')
+            system(f'{LDC}quit --index {ld_index}')
             sleep(3)
             print_flag = True
-        if cls.is_running(dn_index):
-            print(f'检测到编号为{dn_index}的雷电模拟器未正常退出，正在重复执行退出操作')
-            cls.quit(dn_index, print_flag=True)
+        if cls.is_running(ld_index):
+            print(f'检测到编号为{ld_index}的雷电模拟器未正常退出，正在重复执行退出操作')
+            return cls.quit(ld_index, print_flag=True)
         if print_flag:
-            print(f'编号为{dn_index}的雷电模拟器已正常退出')
+            print(f'编号为{ld_index}的雷电模拟器已正常退出')
 
     @classmethod
-    def is_running(cls, dn_index):
+    def is_running(cls, ld_index):
         """判断某一指定的雷电模拟器是否正在运行
 
-        :param dn_index: 待关闭雷电模拟器的索引值
+        :param ld_index: 待关闭雷电模拟器的索引值
         """
-        return popen(f'{LDC}isrunning --index {dn_index}').read() == 'running'
+        return popen(f'{LDC}isrunning --index {ld_index}').read() == 'running'
 
     def run_app(self, packagename):
         """启动雷电模拟器并自动打开某一指定的应用
 
         :param packagename: 待自动打开应用的包名
         """
-        cmd = f'{LDC}launchex --index {self.dn_index} --packagename {packagename}'
+        cmd = f'{LDC}launchex --index {self.ld_index} --packagename {packagename}'
         # print(cmd)
         popen(cmd)
-        print(f'正在启动编号为{self.dn_index}的虚拟机')
+        print(f'正在启动编号为{self.ld_index}的虚拟机')
         sleep(5, False, False)

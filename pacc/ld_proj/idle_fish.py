@@ -86,12 +86,12 @@ class IdleFish(LDProj):
             start_index += 3
 
     @classmethod
-    def should_restart(cls, dn_index):
+    def should_restart(cls, ld_index):
         """判断是否需要重启
 
         :return: 需要重启True，否则返回False
         """
-        current_focus = LDADB(dn_index).get_current_focus()
+        current_focus = LDADB(ld_index).get_current_focus()
         if Activity.ApplicationNotResponding in current_focus:
             print('检测到咸鱼无响应，正在重启模拟器')
             return True

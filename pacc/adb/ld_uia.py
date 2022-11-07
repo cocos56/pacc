@@ -1,5 +1,5 @@
 """雷电自动化测试模块"""
-from os import system, remove
+from os import remove
 from os.path import exists
 
 from .ld_base import LDBase
@@ -10,13 +10,12 @@ from ..tools import create_dir, get_pretty_xml, get_xml
 
 class LDUIA(LDBase):
     """雷电模拟器UI自动化测试类"""
-    def __init__(self, dn_index):
+    def __init__(self, ld_index):
         """构造函数
 
-       :param dn_index: 雷电模拟器的索引
+       :param ld_index: 雷电模拟器的索引
         """
-        super().__init__(dn_index)
-        self.ipv4_addr = ''
+        super().__init__(ld_index)
         self.xml = ''
 
     def tap(self, point, interval=1):
@@ -26,7 +25,7 @@ class LDUIA(LDBase):
         :param interval: 停顿时间
         """
         x_coordinate, y_coordinate = point
-        print(f'正在让编号为{self.dn_index}的模拟器点击({x_coordinate},{y_coordinate})')
+        print(f'正在让编号为{self.ld_index}的模拟器点击({x_coordinate},{y_coordinate})')
         self.exe_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
@@ -37,10 +36,10 @@ class LDUIA(LDBase):
         """
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        png_path = f'{dir_name}/{self.dn_index}.png'
-        self.exe_cmd(f'shell rm /sdcard/{self.dn_index}.png')
-        self.exe_cmd(f'shell screencap -p /sdcard/{self.dn_index}.png')
-        self.exe_cmd(f'pull /sdcard/{self.dn_index}.png CurrentUIHierarchy')
+        png_path = f'{dir_name}/{self.ld_index}.png'
+        self.exe_cmd(f'shell rm /sdcard/{self.ld_index}.png')
+        self.exe_cmd(f'shell screencap -p /sdcard/{self.ld_index}.png')
+        self.exe_cmd(f'pull /sdcard/{self.ld_index}.png CurrentUIHierarchy')
         sleep(1)
         return png_path
 
@@ -49,19 +48,15 @@ class LDUIA(LDBase):
 
         :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
         """
-        system(f'adb -s {self.ipv4_addr} shell rm /sdcard/window_dump.xml')
-        # pylint: disable=duplicate-code
-        cmd = f'adb -s {self.ipv4_addr} shell uiautomator dump /sdcard/window_dump.xml'
-        if Config.debug:
-            print(cmd)
-        system(cmd)
+        self.exe_cmd(f'shell rm /sdcard/window_dump.xml')
+        self.exe_cmd(f'shell uiautomator dump /sdcard/window_dump.xml')
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        file_path = f"{dir_name}/{self.ipv4_addr.replace('127.0.0.1:', '')}.xml"
+        file_path = f"{dir_name}/{self.ld_index}.xml"
         print(file_path)
         if exists(file_path):
             remove(file_path)
-        system(f'adb -s {self.ipv4_addr} pull /sdcard/window_dump.xml {file_path}')
+        self.exe_cmd(f'pull /sdcard/window_dump.xml {file_path}')
         if Config.debug:
             return get_pretty_xml(file_path)
         return get_xml(file_path)
