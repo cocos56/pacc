@@ -62,7 +62,7 @@ class LDUIA(LDBase):
         return x1_value in (-1, x3_value) and y1_value in (-1, y3_value) and x2_value in (
             -1, x4_value) and y2_value in (-1, y4_value)
 
-    # pylint: disable=too-many-return-statements,too-many-branches
+    # pylint: disable=too-many-return-statements,too-many-branches, duplicate-cod
     def is_target_node(self, dic, start_index=0):
         """通过字典信息判断是否是目标点
 
@@ -216,8 +216,8 @@ class LDUIA(LDBase):
 
         :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
         """
-        self.exe_cmd(f'shell rm /sdcard/window_dump.xml')
-        self.exe_cmd(f'shell uiautomator dump /sdcard/window_dump.xml')
+        self.exe_cmd('shell rm /sdcard/window_dump.xml')
+        self.exe_cmd('shell uiautomator dump /sdcard/window_dump.xml')
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
         file_path = f"{dir_name}/{self.ld_index}.xml"
