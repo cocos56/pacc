@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
-from ..base import sleep
+from ..base import sleep, print_err
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -49,11 +49,18 @@ class IdleFish(LDProj):
             LDConsole.quit(index)
             cls(index).run_app()
             current_focus = LDADB(index).get_current_focus()
+        lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
             print('检测到已掉线，请登录')
         else:
-            LDUIA(index).tap((50, 85), 10)
-        LDUIA(index).get_screen()
+            lduia_ins.tap((50, 85), 10)
+        lduia_ins.get_screen()
+        try:
+            lduia_ins.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(err)
+            cls(index).run_app()
+            return cls.check_target_device(index)
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
 
@@ -85,13 +92,12 @@ class IdleFish(LDProj):
                 break
             start_index += 3
 
-    @classmethod
-    def should_restart(cls, ld_index):
+    def should_restart(self):
         """判断是否需要重启
 
         :return: 需要重启True，否则返回False
         """
-        current_focus = LDADB(ld_index).get_current_focus()
+        current_focus = LDADB(self.ld_index).get_current_focus()
         if Activity.ApplicationNotResponding in current_focus:
             print('检测到咸鱼无响应，正在重启模拟器')
             return True
@@ -101,35 +107,48 @@ class IdleFish(LDProj):
         if Activity.Launcher in current_focus:
             print('检测到咸鱼未正常运行，正在重启模拟器')
             return True
+        if 'mCurrentFocus=null' in current_focus:
+            print('检测到咸鱼未正常打开，正在重启模拟器')
+            return True
         if Activity.UserLoginActivity in current_focus:
             print('检测到已掉线，请登录')
         return False
 
+    def run_task_on_target_device(self):
+        """在指定设备上执行任务"""
+        while self.should_restart():
+            self.run_app()
+        lduia_ins = LDUIA(self.ld_index)
+        lduia_ins.tap((479, 916), 10)
+        lduia_ins.get_screen()
+        try:
+            lduia_ins.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(err)
+            self.run_app()
+            return self.run_task_on_target_device()
+        if self.should_restart():
+            return self.run_task_on_target_device()
+
     @classmethod
     def run_task(cls, start_index):
-        """启动任务
+        """执行任务
 
         :param start_index: 起始索引值
         """
-        cls(start_index).run_app(10)
-        cls(start_index + 1).run_app(30)
-        cls(start_index + 2).run_app()
-        while cls.should_restart(start_index):
-            LDConsole.quit(start_index)
-            cls(start_index).run_app()
-        while cls.should_restart(start_index + 1):
-            LDConsole.quit(start_index + 1)
-            cls(start_index + 1).run_app()
-        while cls.should_restart(start_index + 2):
-            LDConsole.quit(start_index + 2)
-            cls(start_index + 2).run_app()
-        sleep(99)
+        cls(start_index).run_app(1)
+        cls(start_index+1).run_app(26)
+        cls(start_index+2).run_app()
+        cls(start_index).run_task_on_target_device()
+        cls(start_index+1).run_task_on_target_device()
+        cls(start_index+2).run_task_on_target_device()
+        sleep(69)
         LDConsole.quit(start_index)
         print(f'第{start_index}项已执行完毕')
-        LDConsole.quit(start_index + 1)
-        print(f'第{start_index + 1}项已执行完毕')
-        LDConsole.quit(start_index + 2)
-        print(f'第{start_index + 2}项已执行完毕\n')
+        LDConsole.quit(start_index+1)
+        print(f'第{start_index+1}项已执行完毕')
+        LDConsole.quit(start_index+2)
+        print(f'第{start_index+2}项已执行完毕\n')
 
     @classmethod
     def mainloop(cls, start_index, end_index):
@@ -139,7 +158,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
-        if datetime.now().hour >= 8:
+        if datetime.now().hour >= 10:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
