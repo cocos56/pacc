@@ -62,7 +62,7 @@ class LDUIA(LDBase):
         return x1_value in (-1, x3_value) and y1_value in (-1, y3_value) and x2_value in (
             -1, x4_value) and y2_value in (-1, y4_value)
 
-    # pylint: disable=too-many-return-statements,too-many-branches, duplicate-cod
+    # pylint: disable=too-many-return-statements,too-many-branches, duplicate-code
     def is_target_node(self, dic, start_index=0):
         """通过字典信息判断是否是目标点
 
