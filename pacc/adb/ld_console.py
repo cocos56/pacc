@@ -60,6 +60,7 @@ class LDConsole:
             return cls.quit(ld_index, print_flag=True)
         if print_flag:
             print(f'编号为{ld_index}的雷电模拟器已正常退出')
+        return True
 
     @classmethod
     def is_running(cls, ld_index):
