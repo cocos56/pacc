@@ -43,6 +43,10 @@ class LDConsole:
         """
         return self.ld_index in self.list()
 
+    def get_name(self):
+        """获取虚拟机名"""
+        return self.list().get(self.ld_index)
+
     @classmethod
     def quit(cls, ld_index, print_flag=False):
         """关闭某一指定的雷电模拟器

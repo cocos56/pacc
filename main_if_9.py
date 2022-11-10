@@ -4,6 +4,6 @@ from pacc.ld_proj.idle_fish import IdleFish
 
 Config.debug = True
 Config.set_ld_work_path()
-start_index, end_index = 193, 289
-# IdleFish.check(start_index, end_index)
+start_index, end_index = 1, 302
+IdleFish.check(start_index, end_index)
 IdleFish.mainloop(start_index, end_index)

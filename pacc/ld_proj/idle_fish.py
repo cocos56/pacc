@@ -1,9 +1,11 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
+import os
 from datetime import date, datetime, timedelta
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
+from ..tools import create_dir
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -31,12 +33,12 @@ class IdleFish(LDProj):
 
         :param sleep_time: 等待时间
         """
-        LDConsole.quit(self.ld_index)
-        LDConsole(self.ld_index).run_app('com.taobao.idlefish')
+        if LDConsole(self.ld_index).is_exist():
+            LDConsole.quit(self.ld_index)
+            LDConsole(self.ld_index).run_app('com.taobao.idlefish')
+        else:
+            print(f'设备{self.ld_index}不存在，无法启动')
         sleep(sleep_time)
-
-    def enter_my_interface(self):
-        """进入我的界面"""
 
     @classmethod
     def check_target_device(cls, index):
@@ -44,23 +46,44 @@ class IdleFish(LDProj):
 
         :param index: 目标设备的索引值
         """
+        if not LDConsole(index).is_exist():
+            print('目标设备不存在，无需检查')
+            sleep(10)
+            return
         current_focus = LDADB(index).get_current_focus()
-        while Activity.Launcher in current_focus:
+        if cls(index).should_restart(current_focus):
             LDConsole.quit(index)
             cls(index).run_app()
-            current_focus = LDADB(index).get_current_focus()
+            return cls.check_target_device(index)
         lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
-            print('检测到已掉线，请登录')
+            return
         else:
             lduia_ins.tap((50, 85), 10)
-        lduia_ins.get_screen()
+        # if lduia_ins.get_dict(content_desc='数码店'):
+        #     pass
         try:
-            lduia_ins.get_current_ui_hierarchy()
+            dic = lduia_ins.get_dict('android:id/content')['node'][1]['node']['node']['node']
         except FileNotFoundError as err:
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
+        try:
+            coins = dic['node']['node'][1]['@content-desc']
+            if '万' in coins:
+                coins = float(coins[:-1]) * 10000
+            print(coins, type(coins))
+            coins = int(coins)
+            print(coins, type(coins))
+        except (KeyError, TypeError) as err:
+            print_err(err)
+            cls(index).run_app()
+            return cls.check_target_device(index)
+        png_path = lduia_ins.get_screen()
+        if coins >= 10000:
+            dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
+            create_dir(dir_name)
+            os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
 
@@ -74,30 +97,24 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             cls(start_index).run_app(10)
-            if LDConsole(start_index+1).is_exist():
-                cls(start_index+1).run_app(10)
-            else:
-                sleep(10)
-            if LDConsole(start_index+2).is_exist():
-                cls(start_index+2).run_app(10)
-            else:
-                sleep(10)
+            cls(start_index + 1).run_app(10)
+            cls(start_index + 2).run_app(10)
             cls.check_target_device(start_index)
-            if LDConsole(start_index+1).is_exist():
-                cls.check_target_device(start_index+1)
-            if LDConsole(start_index+2).is_exist():
-                cls.check_target_device(start_index+2)
+            cls.check_target_device(start_index+1)
+            cls.check_target_device(start_index+2)
             if start_index+2 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
             start_index += 3
 
-    def should_restart(self):
+    def should_restart(self, current_focus=''):
         """判断是否需要重启
 
+        :param current_focus: 当前界面的Activity
         :return: 需要重启True，否则返回False
         """
-        current_focus = LDADB(self.ld_index).get_current_focus()
+        if not current_focus:
+            current_focus = LDADB(self.ld_index).get_current_focus()
         if Activity.ApplicationNotResponding in current_focus:
             print('检测到咸鱼无响应，正在重启模拟器')
             return True
@@ -116,6 +133,10 @@ class IdleFish(LDProj):
 
     def run_task_on_target_device(self):
         """在指定设备上执行任务"""
+        if not LDConsole(self.ld_index).is_exist():
+            print('目标设备不存在，无需执行任务')
+            sleep(10)
+            return
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
