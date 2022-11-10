@@ -57,9 +57,10 @@ class IdleFish(LDProj):
         lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
             lduia_ins.get_screen()
+            LDConsole.quit(index)
+            print(f'第{index}项已检查完毕\n')
             return
-        else:
-            lduia_ins.tap((50, 85), 10)
+        lduia_ins.tap((50, 85), 10)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
@@ -95,6 +96,7 @@ class IdleFish(LDProj):
         os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
+        return
 
     @classmethod
     def check(cls, start_index, end_index):
