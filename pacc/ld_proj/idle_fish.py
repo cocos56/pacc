@@ -52,24 +52,28 @@ class IdleFish(LDProj):
             return
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
-            LDConsole.quit(index)
             cls(index).run_app()
             return cls.check_target_device(index)
         lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
+            lduia_ins.get_screen()
             return
         else:
             lduia_ins.tap((50, 85), 10)
-        # if lduia_ins.get_dict(content_desc='数码店'):
-        #     pass
         try:
-            dic = lduia_ins.get_dict('android:id/content')['node'][1]['node']['node']['node']
+            if lduia_ins.get_dict(content_desc='数码店'):
+                lduia_ins.tap((270, 652), 3)
+                lduia_ins.tap((268, 809), 6)
+                lduia_ins.get_screen()
+                cls(index).run_app()
+                return cls.check_target_device(index)
         except FileNotFoundError as err:
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
+        dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node'][1]['node']['node']
         try:
-            coins = dic['node']['node'][1]['@content-desc']
+            coins = dic['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
             print(coins, type(coins))
@@ -80,10 +84,15 @@ class IdleFish(LDProj):
             cls(index).run_app()
             return cls.check_target_device(index)
         png_path = lduia_ins.get_screen()
-        if coins >= 10000:
-            dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-            create_dir(dir_name)
-            os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
+        dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
+        if coins >= 20000:
+            dir_name = f'{dir_name}_20k'
+        elif coins >= 15000:
+            dir_name = f'{dir_name}_15k'
+        elif coins >= 10000:
+            dir_name = f'{dir_name}_10k'
+        create_dir(dir_name)
+        os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
 
