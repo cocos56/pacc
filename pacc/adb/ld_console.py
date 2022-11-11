@@ -28,7 +28,6 @@ class LDConsole:
         :return: 字典，键是索引值，值是虚拟机名
         """
         cmd = f'{LDC}list2'
-        # print(cmd)
         res = popen(cmd).read()[:-1]
         res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()[:-1]]]
         # print(res, len(res))
@@ -55,15 +54,15 @@ class LDConsole:
         :param print_flag: 是否打印正常退出的信息
         """
         if cls.is_running(ld_index):
-            print(f'正在退出编号为{ld_index}的雷电模拟器')
+            print(f'正在退出{ld_index}')
             system(f'{LDC}quit --index {ld_index}')
             sleep(3)
             print_flag = True
         if cls.is_running(ld_index):
-            print(f'检测到编号为{ld_index}的雷电模拟器未正常退出，正在重复执行退出操作')
+            print(f'检测到{ld_index}未正常退出，正在重复执行退出操作')
             return cls.quit(ld_index, print_flag=True)
         if print_flag:
-            print(f'编号为{ld_index}的雷电模拟器已正常退出')
+            print(f'{ld_index}已正常退出')
         return True
 
     @classmethod
@@ -82,5 +81,5 @@ class LDConsole:
         cmd = f'{LDC}launchex --index {self.ld_index} --packagename {packagename}'
         # print(cmd)
         popen(cmd)
-        print(f'正在启动编号为{self.ld_index}的虚拟机')
+        print(f'正在启动{self.ld_index}')
         sleep(5, False, False)

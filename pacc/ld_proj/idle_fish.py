@@ -49,7 +49,7 @@ class IdleFish(LDProj):
         if not LDConsole(index).is_exist():
             print('目标设备不存在，无需检查')
             sleep(10)
-            return
+            return False
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
             cls(index).run_app()
@@ -59,7 +59,7 @@ class IdleFish(LDProj):
             lduia_ins.get_screen()
             LDConsole.quit(index)
             print(f'第{index}项已检查完毕\n')
-            return
+            return False
         lduia_ins.tap((50, 85), 10)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
@@ -72,14 +72,14 @@ class IdleFish(LDProj):
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
-        dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node'][1]['node']['node']
+        dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
         try:
-            coins = dic['node']['node']['node'][1]['@content-desc']
+            coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
-            print(coins, type(coins))
+            # print(coins, type(coins))
             coins = int(coins)
-            print(coins, type(coins))
+            # print(coins, type(coins))
         except (KeyError, TypeError) as err:
             print_err(err)
             cls(index).run_app()
@@ -96,7 +96,7 @@ class IdleFish(LDProj):
         os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
-        return
+        return True
 
     @classmethod
     def check(cls, start_index, end_index):
@@ -207,4 +207,5 @@ class IdleFish(LDProj):
                 print(f'所有共{end_index-src_start_index+1}项已执行完毕')
                 start_index = src_start_index - 3
                 start_day = date.today() + timedelta(days=1)
+                cls.check(src_start_index, end_index)
             start_index += 3
