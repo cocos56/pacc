@@ -41,6 +41,38 @@ class IdleFish(LDProj):
         sleep(sleep_time)
 
     @classmethod
+    def check_version_target_device(cls, index):
+        """检查目标设备上的版本是否存在问题
+
+        :param index: 目标设备的索引值
+        """
+        if not LDConsole(index).is_exist():
+            print('目标设备不存在，无需检查')
+            sleep(10)
+            return False
+        version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
+        print(version_info)
+
+    @classmethod
+    def check_version(cls, start_index, end_index):
+        """检查版本是否存在问题
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            cls(start_index).run_app(30)
+            cls.check_version_target_device(start_index)
+            input()
+            cls(start_index + 1).run_app(10)
+            cls(start_index + 2).run_app(10)
+            if start_index + 2 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
+                break
+            start_index += 3
+
+    @classmethod
     def check_target_device(cls, index):
         """检查目标设备是否存在问题
 
@@ -73,6 +105,7 @@ class IdleFish(LDProj):
             cls(index).run_app()
             return cls.check_target_device(index)
         dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
+        # print(dic[1]['node'][1]['node'])
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
@@ -93,7 +126,10 @@ class IdleFish(LDProj):
         elif coins >= 10000:
             dir_name = f'{dir_name}_10k'
         create_dir(dir_name)
-        os.rename(png_path, f'{dir_name}/{LDConsole(index).get_name()}.png')
+        new_png = f'{dir_name}/{LDConsole(index).get_name()}.png'
+        if os.path.exists(new_png):
+            os.remove(new_png)
+        os.rename(png_path, new_png)
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
         return True
@@ -111,9 +147,9 @@ class IdleFish(LDProj):
             cls(start_index + 1).run_app(10)
             cls(start_index + 2).run_app(10)
             cls.check_target_device(start_index)
-            cls.check_target_device(start_index+1)
-            cls.check_target_device(start_index+2)
-            if start_index+2 >= end_index:
+            cls.check_target_device(start_index + 1)
+            cls.check_target_device(start_index + 2)
+            if start_index + 2 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
             start_index += 3
@@ -169,18 +205,18 @@ class IdleFish(LDProj):
         :param start_index: 起始索引值
         """
         cls(start_index).run_app(1)
-        cls(start_index+1).run_app(26)
-        cls(start_index+2).run_app()
+        cls(start_index + 1).run_app(26)
+        cls(start_index + 2).run_app()
         cls(start_index).run_task_on_target_device()
-        cls(start_index+1).run_task_on_target_device()
-        cls(start_index+2).run_task_on_target_device()
+        cls(start_index + 1).run_task_on_target_device()
+        cls(start_index + 2).run_task_on_target_device()
         sleep(69)
         LDConsole.quit(start_index)
         print(f'第{start_index}项已执行完毕')
-        LDConsole.quit(start_index+1)
-        print(f'第{start_index+1}项已执行完毕')
-        LDConsole.quit(start_index+2)
-        print(f'第{start_index+2}项已执行完毕\n')
+        LDConsole.quit(start_index + 1)
+        print(f'第{start_index + 1}项已执行完毕')
+        LDConsole.quit(start_index + 2)
+        print(f'第{start_index + 2}项已执行完毕\n')
 
     @classmethod
     def mainloop(cls, start_index, end_index):
@@ -203,8 +239,8 @@ class IdleFish(LDProj):
                 else:
                     sleep(seconds)
             cls.run_task(start_index)
-            if start_index+2 >= end_index:
-                print(f'所有共{end_index-src_start_index+1}项已执行完毕')
+            if start_index + 2 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
                 start_index = src_start_index - 3
                 start_day = date.today() + timedelta(days=1)
                 cls.check(src_start_index, end_index)
