@@ -12,7 +12,7 @@ class LDADB(LDBase):
         res = self.exe_cmd(f'shell pm dump {package_name}', ' | findstr versionName', True)
         try:
             res = find_all_with_re(res, 'versionName=(.+)\n')[0]
-            print(f'The version of {package_name} is {res}')
+            # print(f'The version of {package_name} is {res}')
             return res
         except IndexError as err:
             print_err(err)
