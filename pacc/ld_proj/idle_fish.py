@@ -28,17 +28,13 @@ class IdleFish(LDProj):
         super().__init__()
         self.ld_index = ld_index
 
-    def launch(self, sleep_time=1):
-        """启动某一指定的雷电模拟器
-
-        :param sleep_time: 等待时间
-        """
+    def launch(self):
+        """启动某一指定的雷电模拟器"""
         if LDConsole(self.ld_index).is_exist():
             LDConsole.quit(self.ld_index)
             LDConsole(self.ld_index).launch()
         else:
-            print(f'设备{self.ld_index}不存在，无法启动')
-        sleep(sleep_time)
+            print(f'模拟器{self.ld_index}不存在，无法启动')
 
     def run_app(self, sleep_time=60):
         """启动雷电模拟器并运行咸鱼APP
@@ -63,29 +59,31 @@ class IdleFish(LDProj):
             sleep(10)
             return False
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
+        if version_info == '7.5.41':
+            print('当前版本过老，需要升级')
         print(f'模拟器{index}上的咸鱼版本为：{version_info}')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
 
     @classmethod
-    def check_version(cls, start_index, end_index):
+    def check_version(cls, start_index, end_index, p_num=3):
         """检查版本是否存在问题
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
+        :param p_num: 并发数量
         """
         src_start_index = start_index
         while True:
-            cls(start_index).launch()
-            cls(start_index+1).launch()
-            cls(start_index+2).launch(10)
-            cls.check_version_target_device(start_index)
-            cls.check_version_target_device(start_index+1)
-            cls.check_version_target_device(start_index+2)
-            if start_index + 2 >= end_index:
+            for i in range(p_num):
+                cls(start_index + i).launch()
+            sleep(10)
+            for i in range(p_num):
+                cls.check_version_target_device(start_index + i)
+            if start_index + p_num - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
                 break
-            start_index += 3
+            start_index += p_num
 
     @classmethod
     def check_target_device(cls, index):
