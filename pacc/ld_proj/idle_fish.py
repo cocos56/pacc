@@ -88,7 +88,7 @@ class IdleFish(LDProj):
             start_index += p_num
 
     @classmethod
-    def check_target_device(cls, index):
+    def check_target_device(cls, index):  # pylint: disable=too-many-return-statements
         """检查目标设备是否存在问题
 
         :param index: 目标设备的索引值
@@ -194,11 +194,14 @@ class IdleFish(LDProj):
         return False
 
     def run_task_on_target_device(self):
-        """在指定设备上执行任务"""
+        """在指定设备上执行任务
+
+        :return: 目标设备不存在返回False，正常执行完毕返回True
+        """
         if not LDConsole(self.ld_index).is_exist():
             print('目标设备不存在，无需执行任务')
             sleep(10)
-            return
+            return False
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
@@ -212,6 +215,7 @@ class IdleFish(LDProj):
             return self.run_task_on_target_device()
         if self.should_restart():
             return self.run_task_on_target_device()
+        return True
 
     @classmethod
     def run_task(cls, start_index):
