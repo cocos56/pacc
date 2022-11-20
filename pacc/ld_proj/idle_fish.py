@@ -61,8 +61,8 @@ class IdleFish(LDProj):
             return False
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         if version_info == '7.5.41':
-            print('当前版本过老，需要升级')
-        print(f'模拟器{index}上的咸鱼版本为：{version_info}')
+            print('当前的闲鱼版本过老，需要升级')
+        print(f'模拟器{index}上的闲鱼版本为：{version_info}')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
         return True
@@ -161,12 +161,8 @@ class IdleFish(LDProj):
         while True:
             for i in range(p_num):
                 cls(start_index+i).run_app(10)
-            # cls(start_index + 1).run_app(10)
-            # cls(start_index + 2).run_app(10)
             for i in range(p_num):
                 cls.check_target_device(start_index+i)
-            # cls.check_target_device(start_index + 1)
-            # cls.check_target_device(start_index + 2)
             if start_index+p_num-1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
@@ -221,24 +217,25 @@ class IdleFish(LDProj):
         return True
 
     @classmethod
-    def run_task(cls, start_index):
+    def run_task(cls, start_index, p_num=3):
         """执行任务
 
         :param start_index: 起始索引值
+        :param p_num: 并发数量
         """
-        cls(start_index).run_app(1)
-        cls(start_index + 1).run_app(26)
-        cls(start_index + 2).run_app()
-        cls(start_index).run_task_on_target_device()
-        cls(start_index + 1).run_task_on_target_device()
-        cls(start_index + 2).run_task_on_target_device()
+        for i in range(p_num):
+            if i == 0:
+                cls(start_index+i).run_app(1)
+            elif i == p_num-1:
+                cls(start_index+i).run_app()
+            else:
+                cls(start_index+i).run_app(26)
+        for i in range(p_num):
+            cls(start_index+i).run_task_on_target_device()
         sleep(69)
-        LDConsole.quit(start_index)
-        print(f'第{start_index}项已执行完毕')
-        LDConsole.quit(start_index + 1)
-        print(f'第{start_index + 1}项已执行完毕')
-        LDConsole.quit(start_index + 2)
-        print(f'第{start_index + 2}项已执行完毕\n')
+        for i in range(p_num):
+            LDConsole.quit(start_index+i)
+            print(f'第{start_index+i}项已执行完毕')
 
     @classmethod
     def mainloop(cls, start_index, end_index, p_num=3):
@@ -261,10 +258,10 @@ class IdleFish(LDProj):
                     sleep(3600)
                 else:
                     sleep(seconds)
-            cls.run_task(start_index)
-            if start_index + 2 >= end_index:
+            cls.run_task(start_index, p_num)
+            if start_index + p_num - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
-                start_index = src_start_index - 3
+                start_index = src_start_index - p_num
                 start_day = date.today() + timedelta(days=1)
                 cls.check(src_start_index, end_index, p_num)
-            start_index += 3
+            start_index += p_num
