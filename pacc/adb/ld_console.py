@@ -81,13 +81,14 @@ class LDConsole:
         """
         return popen(f'{LDC}isrunning --index {ld_index}').read() == 'running'
 
-    def run_app(self, packagename):
+    def run_app(self, package_name, app_name):
         """启动雷电模拟器并自动打开某一指定的应用
 
-        :param packagename: 待自动打开应用的包名
+        :param package_name: 待自动打开应用的包名
+        :param app_name: 应用名
         """
-        cmd = f'{LDC}launchex --index {self.ld_index} --packagename {packagename}'
+        cmd = f'{LDC}launchex --index {self.ld_index} --packagename {package_name}'
         # print(cmd)
         popen(cmd)
-        print(f'正在启动模拟器{self.ld_index}并开启应用{packagename}')
+        print(f'正在启动模拟器{self.ld_index}并开启应用{app_name}')
         sleep(5, False, False)

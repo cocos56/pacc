@@ -29,7 +29,7 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     def launch(self):
-        """启动某一指定的雷电模拟器"""
+        """启动雷电模拟器"""
         if LDConsole(self.ld_index).is_exist():
             LDConsole.quit(self.ld_index)
             LDConsole(self.ld_index).launch()
@@ -43,7 +43,7 @@ class IdleFish(LDProj):
         """
         if LDConsole(self.ld_index).is_exist():
             LDConsole.quit(self.ld_index)
-            LDConsole(self.ld_index).run_app('com.taobao.idlefish')
+            LDConsole(self.ld_index).run_app('com.taobao.idlefish', '闲鱼')
         else:
             print(f'设备{self.ld_index}不存在，无法启动')
         sleep(sleep_time)
@@ -150,24 +150,27 @@ class IdleFish(LDProj):
         return True
 
     @classmethod
-    def check(cls, start_index, end_index):
+    def check(cls, start_index, end_index, p_num=3):
         """检查是否存在问题
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
+        :param p_num: 并发数量
         """
         src_start_index = start_index
         while True:
-            cls(start_index).run_app(10)
-            cls(start_index + 1).run_app(10)
-            cls(start_index + 2).run_app(10)
-            cls.check_target_device(start_index)
-            cls.check_target_device(start_index + 1)
-            cls.check_target_device(start_index + 2)
-            if start_index + 2 >= end_index:
+            for i in range(p_num):
+                cls(start_index+i).run_app(10)
+            # cls(start_index + 1).run_app(10)
+            # cls(start_index + 2).run_app(10)
+            for i in range(p_num):
+                cls.check_target_device(start_index+i)
+            # cls.check_target_device(start_index + 1)
+            # cls.check_target_device(start_index + 2)
+            if start_index+p_num-1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
                 break
-            start_index += 3
+            start_index += p_num
 
     def should_restart(self, current_focus=''):
         """判断是否需要重启
@@ -238,11 +241,12 @@ class IdleFish(LDProj):
         print(f'第{start_index + 2}项已执行完毕\n')
 
     @classmethod
-    def mainloop(cls, start_index, end_index):
+    def mainloop(cls, start_index, end_index, p_num=3):
         """主循环
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
+        :param p_num: 并发数量
         """
         src_start_index = start_index
         if datetime.now().hour >= 10:
@@ -262,5 +266,5 @@ class IdleFish(LDProj):
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
                 start_index = src_start_index - 3
                 start_day = date.today() + timedelta(days=1)
-                cls.check(src_start_index, end_index)
+                cls.check(src_start_index, end_index, p_num)
             start_index += 3
