@@ -53,6 +53,7 @@ class IdleFish(LDProj):
         """检查目标设备上的版本是否存在问题
 
         :param index: 目标设备的索引值
+        :return: 目标设备不存在返回False，正常检查完毕返回True
         """
         if not LDConsole(index).is_exist():
             print('目标设备不存在，无需检查')
@@ -64,6 +65,7 @@ class IdleFish(LDProj):
         print(f'模拟器{index}上的咸鱼版本为：{version_info}')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
+        return True
 
     @classmethod
     def check_version(cls, start_index, end_index, p_num=3):
@@ -90,6 +92,7 @@ class IdleFish(LDProj):
         """检查目标设备是否存在问题
 
         :param index: 目标设备的索引值
+        :return: 目标设备不存在返回False，正常检查完毕返回True
         """
         if not LDConsole(index).is_exist():
             print('目标设备不存在，无需检查')
@@ -118,21 +121,20 @@ class IdleFish(LDProj):
             cls(index).run_app()
             return cls.check_target_device(index)
         dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
-        # print(dic[1]['node'][1]['node'])
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
-            # print(coins, type(coins))
             coins = int(coins)
-            # print(coins, type(coins))
         except (KeyError, TypeError) as err:
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-        if coins >= 20000:
+        if coins >= 30000:
+            dir_name = f'{dir_name}_30k'
+        elif coins >= 20000:
             dir_name = f'{dir_name}_20k'
         elif coins >= 15000:
             dir_name = f'{dir_name}_15k'
