@@ -204,7 +204,7 @@ class IdleFish(LDProj):
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
-        lduia_ins.tap((479, 916), 10)
+        lduia_ins.tap((479, 916), 6)
         lduia_ins.get_screen()
         try:
             lduia_ins.get_current_ui_hierarchy()
@@ -224,10 +224,10 @@ class IdleFish(LDProj):
         :param p_num: 并发数量
         """
         for i in range(p_num):
-            if i == 0:
+            if i == p_num - 1:
+                cls(start_index + i).run_app()
+            elif i == 0:
                 cls(start_index+i).run_app(1)
-            elif i == p_num-1:
-                cls(start_index+i).run_app()
             else:
                 cls(start_index+i).run_app(26)
         for i in range(p_num):

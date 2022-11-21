@@ -1,5 +1,5 @@
 """雷电模拟器基类"""
-from os import popen
+from os import popen, system
 
 from ..config import LDC
 
@@ -24,5 +24,5 @@ class LDBase:  # pylint: disable=too-few-public-methods
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         if return_flag:
             return popen(cmd).read()
-        popen(cmd)
+        system(cmd)
         return None
