@@ -115,11 +115,11 @@ class IdleFish(LDProj):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
                 lduia_ins.get_screen()
-                cls(index).run_app()
+                cls(index).run_app(30)
                 return cls.check_target_device(index)
         except FileNotFoundError as err:
             print_err(err)
-            cls(index).run_app()
+            cls(index).run_app(30)
             return cls.check_target_device(index)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
@@ -130,14 +130,17 @@ class IdleFish(LDProj):
             return cls.check_target_device(index)
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600))
-        if ex_p >= 200:
-            if lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
-                lduia_ins.tap((283, 763), 3)
-            elif lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
-                lduia_ins.tap((264, 709), 3)
+        if ex_p >= 200 and lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
+            lduia_ins.tap((283, 763), 3)
+            cls(index).run_app(30)
+            return cls.check_target_device(index)
+        if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
+            lduia_ins.tap((264, 709), 3)
+            cls(index).run_app(30)
             return cls.check_target_device(index)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
+            lduia_ins.tap((267, 642), 3)
             lduia_ins.xml = ''
         dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
         try:
