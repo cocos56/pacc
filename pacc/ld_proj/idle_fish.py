@@ -151,7 +151,7 @@ class IdleFish(LDProj):
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
             coins = int(coins)
-        except (KeyError, TypeError) as err:
+        except (KeyError, TypeError, ValueError) as err:
             print_err(err)
             cls(index).run_app(30)
             return cls.check_target_device(index)
