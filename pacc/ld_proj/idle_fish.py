@@ -87,8 +87,9 @@ class IdleFish(LDProj):
                 break
             start_index += p_num
 
+    # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     @classmethod
-    def check_target_device(cls, index):  # pylint: disable=too-many-return-statements
+    def check_target_device(cls, index):
         """检查目标设备是否存在问题
 
         :param index: 目标设备的索引值
