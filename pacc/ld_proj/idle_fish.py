@@ -120,6 +120,10 @@ class IdleFish(LDProj):
             print_err(err)
             cls(index).run_app(30)
             return cls.check_target_device(index)
+        if lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
+            lduia_ins.tap((487, 596), 3)
+            cls(index).run_app(30)
+            return cls.check_target_device(index)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
             ex_p = int(dic['@content-desc'][5:])
@@ -182,7 +186,7 @@ class IdleFish(LDProj):
         while True:
             for i in range(p_num):
                 if i == p_num - 1:
-                    cls(start_index+i).run_app(20)
+                    cls(start_index+i).run_app(15)
                 elif i == 0:
                     cls(start_index + i).run_app(1)
                 else:

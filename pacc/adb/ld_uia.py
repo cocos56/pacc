@@ -30,7 +30,7 @@ class LDUIA(LDBase):
         :param interval: 停顿时间
         """
         x_coordinate, y_coordinate = point
-        print(f'正在让编号为{self.ld_index}的模拟器点击({x_coordinate},{y_coordinate})')
+        print(f'正在让设备{self.ld_index}点击({x_coordinate},{y_coordinate})')
         self.exe_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
