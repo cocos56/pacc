@@ -64,7 +64,6 @@ class LDConsole:
         if cls.is_running(ld_index):
             print(f'正在退出模拟器{ld_index}')
             system(f'{LDC}quit --index {ld_index}')
-            sleep(1)
             print_flag = True
         if cls.is_running(ld_index):
             print(f'检测到模拟器{ld_index}未正常退出，正在重复执行退出操作')

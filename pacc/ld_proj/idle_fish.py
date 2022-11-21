@@ -100,7 +100,7 @@ class IdleFish(LDProj):
             return False
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
-            cls(index).run_app()
+            cls(index).run_app(30)
             return cls.check_target_device(index)
         lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
@@ -108,7 +108,7 @@ class IdleFish(LDProj):
             LDConsole.quit(index)
             print(f'第{index}项已检查完毕\n')
             return False
-        lduia_ins.tap((50, 85), 10)
+        lduia_ins.tap((50, 85), 6)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
@@ -120,6 +120,9 @@ class IdleFish(LDProj):
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
+        if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
+            lduia_ins.tap((453, 492), 3)
+            lduia_ins.xml = ''
         dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
@@ -197,8 +200,9 @@ class IdleFish(LDProj):
 
         :return: 目标设备不存在返回False，正常执行完毕返回True
         """
+        print(f'准备在目标设备{self.ld_index}上执行任务')
         if not LDConsole(self.ld_index).is_exist():
-            print('目标设备不存在，无需执行任务')
+            print(f'目标设备{self.ld_index}不存在，无需执行任务')
             sleep(10)
             return False
         while self.should_restart():
@@ -263,5 +267,5 @@ class IdleFish(LDProj):
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
                 start_index = src_start_index - p_num
                 start_day = date.today() + timedelta(days=1)
-                cls.check(src_start_index, end_index, p_num)
+                cls.check(1, end_index, p_num)
             start_index += p_num
