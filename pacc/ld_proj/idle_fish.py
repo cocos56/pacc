@@ -109,7 +109,7 @@ class IdleFish(LDProj):
             LDConsole.quit(index)
             print(f'第{index}项已检查完毕\n')
             return False
-        lduia_ins.tap((50, 85), 6)
+        lduia_ins.tap((50, 85), 9)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
@@ -121,6 +121,10 @@ class IdleFish(LDProj):
             print_err(err)
             cls(index).run_app()
             return cls.check_target_device(index)
+        dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
+        ex_p = int(dic['@content-desc'][5:])
+        for i in range(int(ex_p/200)):
+            lduia_ins.tap((276, 600))
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.xml = ''
@@ -132,7 +136,7 @@ class IdleFish(LDProj):
             coins = int(coins)
         except (KeyError, TypeError) as err:
             print_err(err)
-            cls(index).run_app()
+            cls(index).run_app(30)
             return cls.check_target_device(index)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
