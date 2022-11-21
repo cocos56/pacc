@@ -125,6 +125,9 @@ class IdleFish(LDProj):
         ex_p = int(dic['@content-desc'][5:])
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600))
+        if ex_p >= 200 and lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
+            lduia_ins.tap((283, 763), 3)
+            return cls.check_target_device(index)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.xml = ''
