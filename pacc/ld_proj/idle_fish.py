@@ -123,7 +123,7 @@ class IdleFish(LDProj):
             return cls.check_target_device(index)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         ex_p = int(dic['@content-desc'][5:])
-        for i in range(int(ex_p/200)):
+        for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600))
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
