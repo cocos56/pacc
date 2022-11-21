@@ -114,7 +114,6 @@ class IdleFish(LDProj):
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
-                lduia_ins.get_screen()
                 cls(index).run_app(30)
                 return cls.check_target_device(index)
         except FileNotFoundError as err:
@@ -182,7 +181,12 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             for i in range(p_num):
-                cls(start_index+i).run_app(10)
+                if i == p_num - 1:
+                    cls(start_index+i).run_app(20)
+                elif i == 0:
+                    cls(start_index + i).run_app(1)
+                else:
+                    cls(start_index + i).run_app(10)
             for i in range(p_num):
                 cls.check_target_device(start_index+i)
             if start_index+p_num-1 >= end_index:
