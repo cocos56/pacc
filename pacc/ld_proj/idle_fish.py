@@ -145,7 +145,12 @@ class IdleFish(LDProj):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.tap((267, 642), 3)
             lduia_ins.xml = ''
-        dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
+        try:
+            dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
+        except FileNotFoundError as err:
+            print_err(err)
+            cls(index).run_app(30)
+            return cls.check_target_device(index)
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:

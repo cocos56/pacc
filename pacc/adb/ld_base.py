@@ -14,6 +14,16 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         self.ld_index = ld_index
 
+    def run_cmd(self, command='', ext=''):
+        """运行命令函数
+
+        :param command: adb命令
+        :param ext: 命令的扩展参数
+        """
+        cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
+        # print(cmd)
+        popen(cmd).close()
+
     def exe_cmd(self, command='', ext='', return_flag=False):
         """执行命令函数
 

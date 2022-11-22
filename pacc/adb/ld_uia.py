@@ -31,7 +31,7 @@ class LDUIA(LDBase):
         """
         x_coordinate, y_coordinate = point
         print(f'正在让设备{self.ld_index}点击({x_coordinate},{y_coordinate})')
-        self.exe_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
+        self.run_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
     def get_screen(self):
