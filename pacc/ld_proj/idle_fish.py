@@ -133,8 +133,13 @@ class IdleFish(LDProj):
             return cls.check_target_device(index)
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600))
-        if ex_p >= 200 and lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
-            lduia_ins.tap((283, 763), 3)
+        try:
+            if ex_p >= 200 and lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
+                lduia_ins.tap((283, 763), 3)
+                cls(index).run_app(30)
+                return cls.check_target_device(index)
+        except FileNotFoundError as err:
+            print_err(err)
             cls(index).run_app(30)
             return cls.check_target_device(index)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
@@ -178,6 +183,42 @@ class IdleFish(LDProj):
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
         return True
+
+    @classmethod
+    def check_even_devices(cls, start_index, end_index):
+        """检查索引值为奇数的设备是否存在问题
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        if start_index % 2:
+            start_index += 1
+        while True:
+            cls(start_index).run_app(15)
+            cls.check_target_device(start_index)
+            if start_index+1 >= end_index:
+                print(f'所有共{(end_index-src_start_index+1)/2}项已检查完毕')
+                break
+            start_index += 2
+
+    @classmethod
+    def check_odd_devices(cls, start_index, end_index):
+        """检查编号为奇数的设备是否存在问题
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        if not start_index % 2:
+            start_index += 1
+        while True:
+            cls(start_index).run_app(15)
+            cls.check_target_device(start_index)
+            if start_index+1 >= end_index:
+                print(f'所有共{(end_index-src_start_index+1)/2}项已检查完毕')
+                break
+            start_index += 2
 
     @classmethod
     def check(cls, start_index, end_index, p_num=3):
