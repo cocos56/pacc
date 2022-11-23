@@ -22,7 +22,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         # print(cmd)
-        popen(cmd).close()
+        popen(cmd)
 
     def exe_cmd(self, command='', ext='', return_flag=False):
         """执行命令函数
