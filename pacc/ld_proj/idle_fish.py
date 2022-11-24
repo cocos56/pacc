@@ -231,6 +231,10 @@ class IdleFish(LDProj):
         """
         src_start_index = start_index
         while True:
+            now = datetime.now()
+            if now.hour > 23 and now.minute > 50:
+                break
+            print(now)
             for i in range(p_num):
                 if i == p_num - 1:
                     cls(start_index+i).run_app(15)
