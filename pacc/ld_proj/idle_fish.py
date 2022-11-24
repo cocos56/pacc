@@ -99,6 +99,7 @@ class IdleFish(LDProj):
             print('目标设备不存在，无需检查')
             sleep(10)
             return False
+        print(f'正在准备检查设备{index}')
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
             cls(index).run_app(30)
