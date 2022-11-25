@@ -283,8 +283,7 @@ class IdleFish(LDProj):
             print(f'目标设备{self.ld_index}不存在，无需执行任务')
             sleep(10)
             return False
-        else:
-            print(f'目标设备{self.ld_index}存在，可以向下执行任务')
+        print(f'目标设备{self.ld_index}存在，可以向下执行任务')
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
