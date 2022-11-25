@@ -232,7 +232,7 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             now = datetime.now()
-            if now.hour > 23 and now.minute > 50:
+            if now.hour >= 23 and now.minute >= 50:
                 break
             print(now)
             for i in range(p_num):
@@ -283,6 +283,8 @@ class IdleFish(LDProj):
             print(f'目标设备{self.ld_index}不存在，无需执行任务')
             sleep(10)
             return False
+        else:
+            print(f'目标设备{self.ld_index}存在，可以向下执行任务')
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
@@ -345,5 +347,5 @@ class IdleFish(LDProj):
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
                 start_index = src_start_index - p_num
                 start_day = date.today() + timedelta(days=1)
-                cls.check(1, end_index, p_num)
+                cls.check(1, end_index)
             start_index += p_num
