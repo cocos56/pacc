@@ -68,7 +68,7 @@ class IdleFish(LDProj):
         return True
 
     @classmethod
-    def check_version(cls, start_index, end_index, p_num=3):
+    def check_version(cls, start_index, end_index, p_num=5):
         """检查版本是否存在问题
 
         :param start_index: 起始索引值
@@ -77,6 +77,10 @@ class IdleFish(LDProj):
         """
         src_start_index = start_index
         while True:
+            now = datetime.now()
+            if now.hour >= 23 and now.minute >= 50:
+                break
+            print(now)
             for i in range(p_num):
                 cls(start_index + i).launch()
             sleep(10)

@@ -5,6 +5,6 @@ from pacc.ld_proj.idle_fish import IdleFish
 Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, 400
-# IdleFish.check_version(start_index, end_index)
+IdleFish.check_version(start_index, end_index)
 # IdleFish.check(start_index, end_index, 3)
-IdleFish.mainloop(1, end_index, 5)
+# IdleFish.mainloop(1, end_index, 5)
