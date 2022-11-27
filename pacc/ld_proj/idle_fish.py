@@ -48,8 +48,11 @@ class IdleFish(LDProj):
             print(f'设备{self.ld_index}不存在，无法启动')
         sleep(sleep_time)
 
+    def use_best_deal_to_top_mobile_up(self):
+        """薅羊毛赚话费（使用最优方案充话费）"""
+
     @classmethod
-    def check_version_target_device(cls, index):
+    def check_version_on_target_device(cls, index):
         """检查目标设备上的版本是否存在问题
 
         :param index: 目标设备的索引值
@@ -85,7 +88,7 @@ class IdleFish(LDProj):
                 cls(start_index + i).launch()
             sleep(10)
             for i in range(p_num):
-                cls.check_version_target_device(start_index + i)
+                cls.check_version_on_target_device(start_index + i)
             if start_index + p_num - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
                 break
