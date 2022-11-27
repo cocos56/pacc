@@ -62,6 +62,7 @@ class IdleFish(LDProj):
             print('目标设备不存在，无需检查')
             sleep(10)
             return False
+        print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         if version_info == '7.5.41':
             print('当前的闲鱼版本过老，需要升级')
