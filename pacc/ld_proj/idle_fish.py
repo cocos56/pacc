@@ -253,7 +253,7 @@ class IdleFish(LDProj):
             for i in range(p_num):
                 cls.check_target_device(start_index+i)
             if start_index+p_num-1 >= end_index:
-                print(f'所有共{end_index - src_start_index + 1}项已检查完毕')
+                print(f'所有共{end_index-src_start_index+1}项已检查完毕，当前时间为：{datetime.now()}')
                 break
             start_index += p_num
 
