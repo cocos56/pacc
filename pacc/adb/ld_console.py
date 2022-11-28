@@ -1,7 +1,7 @@
 """雷电模拟器控制台模块"""
 from os import popen, system
 
-from ..base import sleep
+from ..base import sleep, print_err
 from ..config import LDC
 
 
@@ -28,7 +28,11 @@ class LDConsole:
         :return: 字典，键是索引值，值是虚拟机名
         """
         cmd = f'{LDC}list2'
-        res = popen(cmd).read()[:-1]
+        try:
+            res = popen(cmd).read()[:-1]
+        except UnicodeDecodeError as err:
+            print_err(err)
+            return cls.list()
         res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()[:-1]]]
         # print(res, len(res))
         dic = dict(res)
