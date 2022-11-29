@@ -104,7 +104,7 @@ class IdleFish(LDProj):
         :return: 目标设备不存在返回False，正常检查完毕返回True
         """
         if not LDConsole(index).is_exist():
-            print('目标设备不存在，无需检查')
+            print(f'目标设备{index}不存在，无需检查')
             sleep(10)
             return False
         print(f'正在准备检查设备{index}')
