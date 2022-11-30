@@ -130,8 +130,7 @@ class IdleFish(LDProj):
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
-            lduia_ins.tap((264, 709), 3)
-            return cls.check_target_device(index, reopen_flag=True)
+            lduia_ins.tap((264, 709), 6)
         if lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
             return cls.check_target_device(index, reopen_flag=True)
@@ -240,11 +239,11 @@ class IdleFish(LDProj):
             print(now)
             for i in range(p_num):
                 if i == p_num - 1:
-                    cls(start_index+i).run_app(15)
+                    cls(start_index+i).run_app(10)
                 elif i == 0:
                     cls(start_index + i).run_app(1)
                 else:
-                    cls(start_index + i).run_app(10)
+                    cls(start_index + i).run_app(5)
             for i in range(p_num):
                 cls.check_target_device(start_index+i)
             if start_index+p_num-1 >= end_index:
