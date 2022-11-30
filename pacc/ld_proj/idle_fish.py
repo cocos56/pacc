@@ -129,6 +129,10 @@ class IdleFish(LDProj):
             print_err(err)
             cls(index).run_app(30)
             return cls.check_target_device(index)
+        if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
+            lduia_ins.tap((264, 709), 3)
+            cls(index).run_app(30)
+            return cls.check_target_device(index)
         if lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
             cls(index).run_app(30)
@@ -149,10 +153,6 @@ class IdleFish(LDProj):
                 return cls.check_target_device(index)
         except FileNotFoundError as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
-        if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
-            lduia_ins.tap((264, 709), 3)
             cls(index).run_app(30)
             return cls.check_target_device(index)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
