@@ -131,8 +131,11 @@ class IdleFish(LDProj):
             return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
             lduia_ins.tap((264, 709), 6)
-        if lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
+        elif lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
+            return cls.check_target_device(index, reopen_flag=True)
+        elif lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店', xml=lduia_ins.xml):
+            lduia_ins.tap((283, 763), 3)
             return cls.check_target_device(index, reopen_flag=True)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
@@ -143,13 +146,6 @@ class IdleFish(LDProj):
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600), 0.1)
         if ex_p >= 200:
-            return cls.check_target_device(index, reopen_flag=True)
-        try:
-            if lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
-                lduia_ins.tap((283, 763), 3)
-                return cls.check_target_device(index, reopen_flag=True)
-        except FileNotFoundError as err:
-            print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
