@@ -143,7 +143,7 @@ class IdleFish(LDProj):
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600), 0.1)
         try:
-            if ex_p >= 200 and lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
+            if ex_p >= 200 or lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
                 lduia_ins.tap((283, 763), 3)
                 cls(index).run_app(30)
                 return cls.check_target_device(index)
