@@ -97,12 +97,15 @@ class IdleFish(LDProj):
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     @classmethod
-    def check_target_device(cls, index):
+    def check_target_device(cls, index, reopen_flag=False):
         """检查目标设备是否存在问题
 
         :param index: 目标设备的索引值
+        :param reopen_flag: 是否需要重启模拟器并打开闲鱼app
         :return: 目标设备不存在返回False，正常检查完毕返回True
         """
+        if reopen_flag:
+            cls(index).run_app(30)
         if not LDConsole(index).is_exist():
             print(f'目标设备{index}不存在，无需检查')
             sleep(10)
@@ -110,8 +113,7 @@ class IdleFish(LDProj):
         print(f'正在准备检查设备{index}')
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         lduia_ins = LDUIA(index)
         if Activity.UserLoginActivity in current_focus:
             lduia_ins.get_screen()
@@ -123,41 +125,33 @@ class IdleFish(LDProj):
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
-                cls(index).run_app(30)
-                return cls.check_target_device(index)
+                return cls.check_target_device(index, reopen_flag=True)
         except FileNotFoundError as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
             lduia_ins.tap((264, 709), 3)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
             ex_p = int(dic['@content-desc'][5:])
         except TypeError as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         for _ in range(int(ex_p/200)):
             lduia_ins.tap((276, 600), 0.1)
         if ex_p >= 200:
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         try:
             if lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店'):
                 lduia_ins.tap((283, 763), 3)
-                cls(index).run_app(30)
-                return cls.check_target_device(index)
+                return cls.check_target_device(index, reopen_flag=True)
         except FileNotFoundError as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.tap((267, 642), 3)
@@ -166,8 +160,7 @@ class IdleFish(LDProj):
             dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
         except FileNotFoundError as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
@@ -175,8 +168,7 @@ class IdleFish(LDProj):
             coins = int(coins)
         except (KeyError, TypeError, ValueError) as err:
             print_err(err)
-            cls(index).run_app(30)
-            return cls.check_target_device(index)
+            return cls.check_target_device(index, reopen_flag=True)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
         if coins >= 30000:
