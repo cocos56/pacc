@@ -170,12 +170,12 @@ class IdleFish(LDProj):
             return cls.check_target_device(index, reopen_flag=True)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-        if coins >= 30000:
+        if coins >= 60000:
+            dir_name = f'{dir_name}_60k'
+        elif coins >= 30000:
             dir_name = f'{dir_name}_30k'
         elif coins >= 20000:
             dir_name = f'{dir_name}_20k'
-        elif coins >= 15000:
-            dir_name = f'{dir_name}_15k'
         elif coins >= 10000:
             dir_name = f'{dir_name}_10k'
         create_dir(dir_name)
@@ -239,7 +239,7 @@ class IdleFish(LDProj):
             print(now)
             for i in range(p_num):
                 if i == p_num - 1:
-                    cls(start_index+i).run_app(10)
+                    cls(start_index+i).run_app(13)
                 elif i == 0:
                     cls(start_index + i).run_app(1)
                 else:
