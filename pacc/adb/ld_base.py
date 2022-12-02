@@ -21,7 +21,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param ext: 命令的扩展参数
         """
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
-        # print(cmd)
+        print(cmd)
         popen(cmd)
 
     def exe_cmd(self, command='', ext='', return_flag=False):
@@ -32,7 +32,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param return_flag: 是否需要返回值，默认不需要
         """
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
-        # print(cmd)
+        print(cmd)
         if return_flag:
             return popen(cmd).read()
         system(cmd)

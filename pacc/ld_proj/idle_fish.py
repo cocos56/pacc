@@ -87,7 +87,7 @@ class IdleFish(LDProj):
             print(now)
             for i in range(p_num):
                 cls(start_index + i).launch()
-            sleep(10)
+            sleep(5)
             for i in range(p_num):
                 cls.check_version_on_target_device(start_index + i)
             if start_index + p_num - 1 >= end_index:
