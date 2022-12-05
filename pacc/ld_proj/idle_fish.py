@@ -166,9 +166,7 @@ class IdleFish(LDProj):
             return cls.check_target_device(index, reopen_flag=True)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-        if coins >= 60000:
-            dir_name = f'{dir_name}_60k'
-        elif coins >= 30000:
+        if coins >= 30000:
             dir_name = f'{dir_name}_30k'
         elif coins >= 20000:
             dir_name = f'{dir_name}_20k'
