@@ -28,6 +28,20 @@ class IdleFish(LDProj):
         super().__init__()
         self.ld_index = ld_index
 
+    @classmethod
+    def backups(cls, start_index, end_index, wait_times=8):
+        """批量备份雷电模拟器的设备"""
+        src_start_index = start_index
+        dir_name = 'D:/ldbks/' + str(date.today()).replace('-', '_')
+        create_dir(dir_name)
+        while True:
+            print(datetime.now())
+            LDConsole(start_index).backup(dir_name, wait_times)
+            if start_index >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已备份完毕')
+                break
+            start_index += 1
+
     def launch(self):
         """启动雷电模拟器"""
         if LDConsole(self.ld_index).is_exist():

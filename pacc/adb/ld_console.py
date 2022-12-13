@@ -1,5 +1,5 @@
 """雷电模拟器控制台模块"""
-from os import popen, system
+from os import popen, system, path, remove
 
 from ..base import sleep, print_err
 from ..config import LDC
@@ -38,6 +38,22 @@ class LDConsole:
         dic = dict(res)
         # print(dic)
         return dic
+
+    def backup(self, dir_name, wait_times=8):
+        """备份雷电模拟器"""
+        if not self.is_exist():
+            print(f'目标设备{self.ld_index}不存在，无法备份')
+            return False
+        filepath = f'{dir_name}/{self.get_name()}.ldbk'
+        if path.exists(filepath):
+            remove(filepath)
+        cmd = f'{LDC}backup --index {self.ld_index} --file {filepath}'
+        print(cmd)
+        print(f'正在执行对设备{self.ld_index}的备份工作')
+        system(cmd)
+        sleep(wait_times)
+        print(f'已完成对设备{self.ld_index}的备份工作\n')
+        return True
 
     def is_exist(self):
         """判断虚拟机是否存在
