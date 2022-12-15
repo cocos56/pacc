@@ -29,10 +29,16 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     @classmethod
-    def backups(cls, start_index, end_index, wait_times=8):
-        """批量备份雷电模拟器的设备"""
+    def backups(cls, start_index, end_index, dir_path='D:/ldbks', wait_times=8):
+        """批量备份雷电模拟器的设备
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        :param dir_path: 备份文件夹的目录
+        :param wait_times: 等待时间
+        """
         src_start_index = start_index
-        dir_name = 'D:/ldbks/' + str(date.today()).replace('-', '_')
+        dir_name = f'{dir_path}/' + str(date.today()).replace('-', '_')
         create_dir(dir_name)
         while True:
             print(datetime.now())
