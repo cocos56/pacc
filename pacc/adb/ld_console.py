@@ -39,12 +39,16 @@ class LDConsole:
         # print(dic)
         return dic
 
-    def backup(self, dir_name, wait_times=8):
-        """备份雷电模拟器"""
+    def backup(self, dir_path, wait_times=8):
+        """备份雷电模拟器
+
+        :param dir_path: 备份文件夹的目录
+        :param wait_times: 等待时间
+        """
         if not self.is_exist():
             print(f'目标设备{self.ld_index}不存在，无法备份')
             return False
-        filepath = f'{dir_name}/{self.get_name()}.ldbk'
+        filepath = f'{dir_path}/{self.get_name()}.ldbk'
         if path.exists(filepath):
             remove(filepath)
         cmd = f'{LDC}backup --index {self.ld_index} --file {filepath}'
@@ -52,7 +56,7 @@ class LDConsole:
         print(f'正在执行对设备{self.ld_index}的备份工作')
         system(cmd)
         sleep(wait_times)
-        print(f'已完成对设备{self.ld_index}的备份工作\n')
+        print(f'已完成对设备{self.ld_index}的备份工作')
         return True
 
     def is_exist(self):

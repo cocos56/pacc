@@ -38,11 +38,18 @@ class IdleFish(LDProj):
         :param wait_times: 等待时间
         """
         src_start_index = start_index
-        dir_name = f'{dir_path}/' + str(date.today()).replace('-', '_')
-        create_dir(dir_name)
+        dir_path = f'{dir_path}/' + str(date.today()).replace('-', '_')
+        create_dir(dir_path)
+        start_datetime = datetime.now()
         while True:
-            print(datetime.now())
-            LDConsole(start_index).backup(dir_name, wait_times)
+            print(f'开始执行时的时间为{datetime.now()}')
+            LDConsole(start_index).backup(dir_path, wait_times)
+            now = datetime.now()
+            used_datetime = now-start_datetime
+            executed_num = start_index- src_start_index + 1
+            average_datetime = used_datetime/(start_index- src_start_index + 1)
+            print(f'执行完毕时的时间为{now}，已历时{used_datetime}，'
+                  f'已执行完{executed_num}个，单个平均用时{average_datetime}\n')
             if start_index >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已备份完毕')
                 break
