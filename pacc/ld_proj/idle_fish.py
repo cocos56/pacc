@@ -210,7 +210,7 @@ class IdleFish(LDProj):
 
     @classmethod
     def check_even_devices(cls, start_index, end_index):
-        """检查索引值为奇数的设备是否存在问题
+        """检查索引值为偶数的设备是否存在问题
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
