@@ -4,7 +4,7 @@ from pacc.ld_proj.idle_fish import IdleFish
 
 Config.debug = True
 Config.set_ld_work_path()
-start_index, end_index = 1, 156
+start_index, end_index = 1, 159
 IdleFish.backups(start_index, end_index, wait_times=0.1)
 # IdleFish.check_version(start_index, end_index)
 # IdleFish.check(start_index, end_index, 5)
