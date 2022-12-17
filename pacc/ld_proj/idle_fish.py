@@ -29,7 +29,7 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     @classmethod
-    def backups(cls, start_index, end_index, dir_path='D:/ldbks', wait_times=8):
+    def backups(cls, start_index, end_index, dir_path='E:/ldbks', wait_times=8):
         """批量备份雷电模拟器的设备
 
         :param start_index: 起始索引值
