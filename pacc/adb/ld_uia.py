@@ -31,7 +31,7 @@ class LDUIA(LDBase):
         """
         x_coordinate, y_coordinate = point
         print(f'正在让设备{self.ld_index}点击({x_coordinate},{y_coordinate})')
-        self.run_cmd(f'shell input tap {x_coordinate} {y_coordinate}')
+        self.sys_run(f'shell input tap {x_coordinate} {y_coordinate}')
         sleep(interval, Config.debug, Config.debug)
 
     def get_screen(self):
@@ -42,9 +42,9 @@ class LDUIA(LDBase):
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
         png_path = f'{dir_name}/{self.ld_index}.png'
-        self.exe_cmd(f'shell rm /sdcard/{self.ld_index}.png')
-        self.exe_cmd(f'shell screencap -p /sdcard/{self.ld_index}.png')
-        self.exe_cmd(f'pull /sdcard/{self.ld_index}.png CurrentUIHierarchy')
+        self.sys_run(f'shell rm /sdcard/{self.ld_index}.png')
+        self.sys_run(f'shell screencap -p /sdcard/{self.ld_index}.png')
+        self.sys_run(f'pull /sdcard/{self.ld_index}.png CurrentUIHierarchy')
         sleep(1)
         return png_path
 

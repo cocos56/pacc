@@ -1,6 +1,9 @@
 """雷电模拟器基类"""
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from os import popen, system
+from datetime import datetime
 
+from ..base import print_err
 from ..config import LDC
 
 
@@ -13,6 +16,25 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param ld_index: 雷电模拟器的索引
         """
         self.ld_index = ld_index
+
+    def sys_run(self, command='', ext='', timeout=1):
+        """运行命令函数
+
+        :param command: adb命令
+        :param ext: 命令的扩展参数
+        :param timeout: 超时中断时间，默认30秒
+        """
+        pool = ThreadPoolExecutor(max_workers=1)
+        cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
+        print(cmd)
+        start_datetime = datetime.now()
+        future = pool.submit(system, cmd)
+        try:
+            future.result(timeout=timeout)
+            print(datetime.now()-start_datetime)
+        except TimeoutError:
+            pool.shutdown()
+            print_err(f'线程{future}因超{timeout}秒而强制终止')
 
     def run_cmd(self, command='', ext=''):
         """运行命令函数
