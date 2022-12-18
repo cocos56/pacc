@@ -17,12 +17,12 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         self.ld_index = ld_index
 
-    def sys_run(self, command='', ext='', timeout=2):
+    def sys_run(self, command='', ext='', timeout=5):
         """使用system运行命令函数（带超时强制中断功能）
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :param timeout: 超时中断时间，默认2秒
+        :param timeout: 超时中断时间，默认5秒
         """
         pool = ThreadPoolExecutor(max_workers=1)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'

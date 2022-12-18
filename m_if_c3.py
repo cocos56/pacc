@@ -8,4 +8,4 @@ start_index, end_index = 1, 415
 # IdleFish.check_version(start_index, end_index)
 # IdleFish.check(346, end_index)
 # IdleFish.check_odd_devices(22, end_index)
-IdleFish.mainloop(288, end_index, 5)
+IdleFish.mainloop(303, end_index, 5)
