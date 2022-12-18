@@ -35,6 +35,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         except TimeoutError:
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
+            self.sys_run(command, ext, timeout)
 
     def run_cmd(self, command='', ext=''):
         """运行命令函数
