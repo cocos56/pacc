@@ -39,11 +39,10 @@ class LDConsole:
         # print(dic)
         return dic
 
-    def backup(self, dir_path, wait_times=8):
+    def backup(self, dir_path):
         """备份雷电模拟器
 
         :param dir_path: 备份文件夹的目录
-        :param wait_times: 等待时间
         """
         if not self.is_exist():
             print(f'目标设备{self.ld_index}不存在，无法备份')
@@ -55,7 +54,6 @@ class LDConsole:
         print(cmd)
         print(f'正在执行对设备{self.ld_index}的备份工作')
         system(cmd)
-        sleep(wait_times)
         print(f'已完成对设备{self.ld_index}的备份工作')
         return True
 

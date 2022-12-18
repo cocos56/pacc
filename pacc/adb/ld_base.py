@@ -40,15 +40,26 @@ class LDBase:  # pylint: disable=too-few-public-methods
             return False
         return True
 
-    def run_cmd(self, command='', ext=''):
+    def popen_run(self, command='', ext='', timeout=5):
         """运行命令函数
 
         :param command: adb命令
         :param ext: 命令的扩展参数
+        :param timeout: 超时中断时间，默认5秒
         """
+        pool = ThreadPoolExecutor(max_workers=1)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         print(cmd)
-        popen(cmd)
+        start_datetime = datetime.now()
+        future = pool.submit(popen, cmd)
+        try:
+            res = future.result(timeout=timeout).read()
+            print(datetime.now()-start_datetime)
+            return res
+        except TimeoutError:
+            pool.shutdown()
+            print_err(f'线程{future}因超{timeout}秒而强制终止')
+            return False
 
     def exe_cmd(self, command='', ext='', return_flag=False):
         """执行命令函数

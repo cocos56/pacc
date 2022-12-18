@@ -9,7 +9,7 @@ class LDADB(LDBase):
 
     def get_app_version_info(self, package_name):
         """获取指定APP的版本信息"""
-        res = self.exe_cmd(f'shell pm dump {package_name}', ' | findstr versionName', True)
+        res = self.popen_run(f'shell pm dump {package_name}', ' | findstr versionName')
         try:
             res = find_all_with_re(res, 'versionName=(.+)\n')[0]
             # print(f'The version of {package_name} is {res}')
