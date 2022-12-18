@@ -7,5 +7,5 @@ Config.set_ld_work_path()
 start_index, end_index = 1, 415
 # IdleFish.check_version(start_index, end_index)
 # IdleFish.check(start_index, end_index, 3)
-IdleFish.check_even_devices(408, end_index)
-IdleFish.backups(start_index, end_index, 'D:/ldbks')
+IdleFish.check_even_devices(28, end_index)
+# IdleFish.backups(start_index, end_index, 'D:/ldbks')

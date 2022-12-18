@@ -24,6 +24,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param command: adb命令
         :param ext: 命令的扩展参数
         :param timeout: 超时中断时间，默认5秒
+        :return: 成功执行（未超时中断）返回True，否则返回False
         """
         pool = ThreadPoolExecutor(max_workers=1)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
@@ -36,7 +37,8 @@ class LDBase:  # pylint: disable=too-few-public-methods
         except TimeoutError:
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
-            self.sys_run(command, ext, timeout)
+            return False
+        return True
 
     def run_cmd(self, command='', ext=''):
         """运行命令函数
