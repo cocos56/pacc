@@ -216,15 +216,15 @@ class LDUIA(LDBase):
 
         :return: 正常情况下会返回当前的用户界面上的元素的层次布局信息所构成的xml字符串，如果遇到异常则不做处理直接传递
         """
-        self.exe_cmd('shell rm /sdcard/window_dump.xml')
-        self.exe_cmd('shell uiautomator dump /sdcard/window_dump.xml')
+        self.sys_run('shell rm /sdcard/window_dump.xml')
+        self.sys_run('shell uiautomator dump /sdcard/window_dump.xml')
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
         file_path = f"{dir_name}/{self.ld_index}.xml"
         print(file_path)
         if exists(file_path):
             remove(file_path)
-        self.exe_cmd(f'pull /sdcard/window_dump.xml {file_path}')
+        self.sys_run(f'pull /sdcard/window_dump.xml {file_path}')
         if Config.debug:
             return get_pretty_xml(file_path)
         return get_xml(file_path)
