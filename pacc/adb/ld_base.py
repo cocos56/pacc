@@ -1,4 +1,5 @@
 """雷电模拟器基类"""
+# pylint: disable=redefined-builtin
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from os import popen, system
 from datetime import datetime
