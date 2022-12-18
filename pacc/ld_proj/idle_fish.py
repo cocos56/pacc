@@ -29,13 +29,12 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     @classmethod
-    def backups(cls, start_index, end_index, dir_path='E:/ldbks', wait_times=8):
+    def backups(cls, start_index, end_index, dir_path='E:/ldbks'):
         """批量备份雷电模拟器的设备
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         :param dir_path: 备份文件夹的目录
-        :param wait_times: 等待时间
         """
         src_start_index = start_index
         dir_path = f'{dir_path}/' + str(date.today()).replace('-', '_')
@@ -43,7 +42,7 @@ class IdleFish(LDProj):
         start_datetime = datetime.now()
         while True:
             print(f'开始执行时的时间为{datetime.now()}')
-            LDConsole(start_index).backup(dir_path, wait_times)
+            LDConsole(start_index).backup(dir_path)
             now = datetime.now()
             used_datetime = now-start_datetime
             executed_num = start_index- src_start_index + 1
