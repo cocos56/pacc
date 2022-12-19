@@ -45,6 +45,6 @@ class LDADB(LDBase):
 
         :return: 当前界面的Activity
         """
-        res = self.exe_cmd('shell dumpsys window windows', ' | findstr mCurrentFocus', True)[2:-2]
+        res = self.popen_run('shell dumpsys window windows', ' | findstr mCurrentFocus')[2:-2]
         print(res)
         return res
