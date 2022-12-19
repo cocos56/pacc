@@ -160,6 +160,9 @@ class IdleFish(LDProj):
         elif lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
             return cls.check_target_device(index, reopen_flag=True)
+        elif lduia_ins.get_dict(content_desc=r'HI，店长 ', xml=lduia_ins.xml):
+            lduia_ins.tap((266, 599), 3)
+            return cls.check_target_device(index, reopen_flag=True)
         elif lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店', xml=lduia_ins.xml):
             lduia_ins.tap((283, 763), 3)
             return cls.check_target_device(index, reopen_flag=True)
