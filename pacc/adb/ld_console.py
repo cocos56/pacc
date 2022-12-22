@@ -77,18 +77,13 @@ class LDConsole:
         sleep(5, False, False)
 
     @classmethod
-    def quit(cls, ld_index, print_flag=False, force_flag=False):
+    def quit(cls, ld_index, print_flag=False):
         """关闭某一指定的雷电模拟器
 
         :param ld_index: 待关闭雷电模拟器的索引值
         :param print_flag: 是否打印正常退出的信息
-        :param force_flag: 是否强制执行
         """
-        if force_flag:
-            print(f'正在强制退出设备{ld_index}')
-            system(f'{LDC}quit --index {ld_index}')
-            print_flag = True
-        elif cls.is_running(ld_index):
+        if cls.is_running(ld_index):
             print(f'正在退出设备{ld_index}')
             system(f'{LDC}quit --index {ld_index}')
             print_flag = True
