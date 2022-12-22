@@ -54,6 +54,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         print(cmd)
         start_datetime = datetime.now()
         future = pool.submit(system, cmd)
+        self.end_flag = False
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
             future.result(timeout=timeout)
@@ -79,6 +80,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         print(cmd)
         start_datetime = datetime.now()
         future = pool.submit(popen, cmd)
+        self.end_flag = False
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
             res = future.result(timeout=timeout).read()
