@@ -77,13 +77,18 @@ class LDConsole:
         sleep(5, False, False)
 
     @classmethod
-    def quit(cls, ld_index, print_flag=False):
+    def quit(cls, ld_index, print_flag=False, force_exe=False):
         """关闭某一指定的雷电模拟器
 
         :param ld_index: 待关闭雷电模拟器的索引值
         :param print_flag: 是否打印正常退出的信息
+        :param force_exe: 是否强制执行
         """
-        if cls.is_running(ld_index):
+        if force_exe:
+            print(f'正在强制退出设备{ld_index}')
+            system(f'{LDC}quit --index {ld_index}')
+            print_flag = True
+        elif cls.is_running(ld_index):
             print(f'正在退出设备{ld_index}')
             system(f'{LDC}quit --index {ld_index}')
             print_flag = True
@@ -100,7 +105,7 @@ class LDConsole:
 
         :param ld_index: 待关闭雷电模拟器的索引值
         """
-        return popen(f'{LDC}isrunning --index {ld_index}').read() == 'running'
+        return popen(f'{LDC}running --index {ld_index}').read() == 'running'
 
     def run_app(self, package_name, app_name):
         """启动雷电模拟器并自动打开某一指定的应用
