@@ -7,6 +7,7 @@ from time import sleep
 
 from ..base import print_err
 from ..config import LDC
+from .ld_console import LDConsole
 
 
 class LDBase:  # pylint: disable=too-few-public-methods
@@ -29,7 +30,6 @@ class LDBase:  # pylint: disable=too-few-public-methods
         used_datetime = datetime.now()-start_datetime
         print(f'{self.ld_index} timeout_monitoring starting : used_datetime.seconds='
               f'{used_datetime.seconds}s')
-        print(f'{self.ld_index} timeout_monitoring: {used_datetime.seconds - timeout}')
         while used_datetime.seconds < timeout and not self.end_flag:
             sleep(1)
             used_datetime = datetime.now() - start_datetime
@@ -38,6 +38,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
             print(f'{self.ld_index} timeout_monitoring: 无需处理')
             return True
         print(f'{self.ld_index} timeout_monitoring: 检测到设备{self.ld_index}已超时未响应，需要该设备关闭')
+        LDConsole.quit(self.ld_index)
 
     def sys_run(self, command='', ext='', timeout=5):
         """使用system运行命令函数（带超时强制中断功能）
