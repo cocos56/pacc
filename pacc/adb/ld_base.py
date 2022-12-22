@@ -74,7 +74,6 @@ class LDBase:  # pylint: disable=too-few-public-methods
         start_datetime = datetime.now()
         future = pool.submit(popen, cmd)
         pool.submit(self.timeout_monitoring, start_datetime)
-        sleep(3)
         try:
             res = future.result(timeout=timeout).read()
             print(datetime.now()-start_datetime)
