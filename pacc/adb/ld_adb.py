@@ -20,7 +20,7 @@ class LDADB(LDBase):
 
     def get_app_list(self):
         """获取已安装应用的列表"""
-        res = self.exe_cmd('shell pm list package', return_flag=True)
+        res = self.popen_run('shell pm list package')
         print(res)
 
     def press_key(self, keycode, sleep_time=1):
@@ -30,7 +30,7 @@ class LDADB(LDBase):
         :param sleep_time: 休息时间
         """
         print(f'正在让{self.ld_index}按{keycode}')
-        self.exe_cmd(f'shell input keyevent {keycode}')
+        self.sys_run(f'shell input keyevent {keycode}')
         sleep(sleep_time, True, True)
 
     def press_back_key(self, sleep_time=1):

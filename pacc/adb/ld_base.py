@@ -41,49 +41,49 @@ class LDBase:  # pylint: disable=too-few-public-methods
               f'超时未响应，需要该设备关闭')
         LDConsole.quit(self.ld_index)
 
-    def sys_run(self, command='', ext='', timeout=5):
-        """使用system运行命令函数（带超时强制中断功能）
+    def sys_run(self, command, ext=''):
+        """使用system运行命令函数
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :param timeout: 超时中断时间，默认5秒
         :return: 成功执行（未超时中断）返回True，否则返回False
         """
-        pool = ThreadPoolExecutor(max_workers=2)
-        cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
-        print(cmd)
-        start_datetime = datetime.now()
-        future = pool.submit(system, cmd)
-        self.end_flag = False
-        pool.submit(self.timeout_monitoring, start_datetime)
-        try:
-            future.result(timeout=timeout)
-            self.end_flag = True
-            print(datetime.now()-start_datetime)
-            pool.shutdown()
-            return True
-        except TimeoutError:
-            self.end_flag = True
-            pool.shutdown()
-            print_err(f'线程{future}因超{timeout}秒而强制终止')
-            return False
+        return self.exe_cmd(command, ext, return_flag=False)
 
-    def popen_run(self, command='', ext='', timeout=5):
-        """运行命令函数
+    def popen_run(self, command, ext=''):
+        """使用popen运行命令函数
+
+        :param command: adb命令
+        :param ext: 命令的扩展参数
+        :return: 成功执行（未超时中断）返回从管道中读取的结果，否则返回False
+        """
+        return self.exe_cmd(command, ext)
+
+    def exe_cmd(self, command='', ext='', timeout=5, return_flag=True):
+        """执行命令函数
 
         :param command: adb命令
         :param ext: 命令的扩展参数
         :param timeout: 超时中断时间，默认5秒
+        :param return_flag: 是否需要返回值，默认不需要
+        :return: 成功执行（未超时中断）返回从管道中读取的结果或True，否则返回False
         """
         pool = ThreadPoolExecutor(max_workers=2)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         print(cmd)
         start_datetime = datetime.now()
-        future = pool.submit(popen, cmd)
+        if return_flag:
+            future = pool.submit(popen, cmd)
+        else:
+            future = pool.submit(system, cmd)
         self.end_flag = False
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
-            res = future.result(timeout=timeout).read()
+            if return_flag:
+                res = future.result(timeout=timeout).read()
+            else:
+                future.result(timeout=timeout)
+                res = True
             self.end_flag = True
             print(datetime.now()-start_datetime)
             pool.shutdown()
@@ -93,17 +93,3 @@ class LDBase:  # pylint: disable=too-few-public-methods
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
             return False
-
-    def exe_cmd(self, command='', ext='', return_flag=False):
-        """执行命令函数
-
-        :param command: adb命令
-        :param ext: 命令的扩展参数
-        :param return_flag: 是否需要返回值，默认不需要
-        """
-        cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
-        print(cmd)
-        if return_flag:
-            return popen(cmd).read()
-        system(cmd)
-        return None
