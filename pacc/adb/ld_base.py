@@ -53,13 +53,15 @@ class LDBase:  # pylint: disable=too-few-public-methods
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
             future.result(timeout=timeout)
+            self.end_flag = True
             print(datetime.now()-start_datetime)
+            pool.shutdown()
+            return True
         except TimeoutError:
+            self.end_flag = True
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
             return False
-        pool.shutdown()
-        return True
 
     def popen_run(self, command='', ext='', timeout=5):
         """运行命令函数
@@ -76,8 +78,8 @@ class LDBase:  # pylint: disable=too-few-public-methods
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
             res = future.result(timeout=timeout).read()
-            print(datetime.now()-start_datetime)
             self.end_flag = True
+            print(datetime.now()-start_datetime)
             pool.shutdown()
             return res
         except TimeoutError:
