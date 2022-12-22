@@ -3,8 +3,9 @@
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from os import popen, system
 from datetime import datetime
+from time import sleep
 
-from ..base import print_err, sleep
+from ..base import print_err
 from ..config import LDC
 
 
@@ -17,6 +18,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param ld_index: 雷电模拟器的索引
         """
         self.ld_index = ld_index
+        self.end_flag = False
 
     def timeout_monitoring(self, start_datetime, timeout=10):
         """超时监控
@@ -25,10 +27,15 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param timeout: 超时退出时间，默认10秒
         """
         used_datetime = datetime.now()-start_datetime
-        while used_datetime < timeout:
+        print(f'timeout_monitoring starting : used_datetime.seconds={used_datetime.seconds}s')
+        print(f'timeout_monitoring: {used_datetime.seconds - timeout}')
+        while used_datetime.seconds < timeout and not self.end_flag:
             sleep(1)
             used_datetime = datetime.now() - start_datetime
             print(f'{self.ld_index} timeout_monitoring: used_datetime={used_datetime}s')
+        if self.end_flag:
+            return True
+        print(f'需要将{self.ld_index}关闭')
 
     def sys_run(self, command='', ext='', timeout=5):
         """使用system运行命令函数（带超时强制中断功能）
@@ -67,12 +74,15 @@ class LDBase:  # pylint: disable=too-few-public-methods
         start_datetime = datetime.now()
         future = pool.submit(popen, cmd)
         pool.submit(self.timeout_monitoring, start_datetime)
+        sleep(3)
         try:
             res = future.result(timeout=timeout).read()
             print(datetime.now()-start_datetime)
+            self.end_flag = True
             pool.shutdown()
             return res
         except TimeoutError:
+            self.end_flag = True
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
             return False
