@@ -105,7 +105,11 @@ class LDConsole:
 
         :param ld_index: 待关闭雷电模拟器的索引值
         """
-        return popen(f'{LDC}running --index {ld_index}').read() == 'running'
+        cmd = f'{LDC}isrunning --index {ld_index}'
+        # print(cmd)
+        res = popen(cmd).read()
+        # print(f'{ld_index} is {res}')
+        return res == 'running'
 
     def run_app(self, package_name, app_name):
         """启动雷电模拟器并自动打开某一指定的应用
