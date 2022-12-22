@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from os import popen, system
 from datetime import datetime
 
-from ..base import print_err
+from ..base import print_err, sleep
 from ..config import LDC
 
 
@@ -18,6 +18,18 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         self.ld_index = ld_index
 
+    def timeout_monitoring(self, start_datetime, timeout=10):
+        """超时监控
+
+        :param start_datetime: 开始时间
+        :param timeout: 超时退出时间，默认10秒
+        """
+        used_datetime = datetime.now()-start_datetime
+        while used_datetime < timeout:
+            sleep(1)
+            used_datetime = datetime.now() - start_datetime
+            print(f'{self.ld_index} timeout_monitoring: used_datetime={used_datetime}s')
+
     def sys_run(self, command='', ext='', timeout=5):
         """使用system运行命令函数（带超时强制中断功能）
 
@@ -26,11 +38,12 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param timeout: 超时中断时间，默认5秒
         :return: 成功执行（未超时中断）返回True，否则返回False
         """
-        pool = ThreadPoolExecutor(max_workers=1)
+        pool = ThreadPoolExecutor(max_workers=2)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         print(cmd)
         start_datetime = datetime.now()
         future = pool.submit(system, cmd)
+        pool.submit(self.timeout_monitoring, start_datetime)
         try:
             future.result(timeout=timeout)
             print(datetime.now()-start_datetime)
@@ -38,6 +51,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
             pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
             return False
+        pool.shutdown()
         return True
 
     def popen_run(self, command='', ext='', timeout=5):
@@ -47,14 +61,16 @@ class LDBase:  # pylint: disable=too-few-public-methods
         :param ext: 命令的扩展参数
         :param timeout: 超时中断时间，默认5秒
         """
-        pool = ThreadPoolExecutor(max_workers=1)
+        pool = ThreadPoolExecutor(max_workers=2)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         print(cmd)
         start_datetime = datetime.now()
         future = pool.submit(popen, cmd)
+        pool.submit(self.timeout_monitoring, start_datetime)
         try:
             res = future.result(timeout=timeout).read()
             print(datetime.now()-start_datetime)
+            pool.shutdown()
             return res
         except TimeoutError:
             pool.shutdown()
