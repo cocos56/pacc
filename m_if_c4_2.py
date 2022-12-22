@@ -7,7 +7,7 @@ from pacc.adb import LDConsole
 Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, 176
-LDConsole.quit(87, force_flag=True)
+LDConsole.quit(118)
 # IdleFish.backups(start_index, end_index)
 # IdleFish.check_version(start_index, end_index)
 # IdleFish.check(start_index, end_index, 5)
