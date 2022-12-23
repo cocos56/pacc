@@ -6,6 +6,7 @@ from pacc.adb import LDConsole
 from pacc.adb.ld_base import LDBase
 from pacc.config import Config
 from pacc.ld_proj.idle_fish import IdleFish
+from subprocess import Popen, PIPE
 
 Config.debug = True
 Config.set_ld_work_path()
@@ -13,6 +14,9 @@ start_index, end_index = 1, 3
 # LDConsole.quit(3)
 # LDBase(3).timeout_monitoring(datetime.now())
 # IdleFish.backups(start_index, end_index)
-# IdleFish.check_version(start_index, end_index)
+# res = Popen('ldconsole.exe adb --index 1 --command "shell pm dump com.taobao.idlefish" | '
+#             'findstr versionName', shell=True, stdout=PIPE, encoding="utf-8").stdout.read()
+# print([res], type(res))
+IdleFish.check_version(start_index, end_index, 1)
 # IdleFish.check(start_index, end_index, 5)
 # IdleFish.check_even_devices(101, end_index)
