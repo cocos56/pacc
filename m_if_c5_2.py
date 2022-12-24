@@ -14,7 +14,7 @@ start_index, end_index = 1, 7
 # LDConsole.quit(3)
 # LDBase(3).timeout_monitoring(datetime.now())
 # IdleFish.backups(start_index, end_index)
-MySQLDump.start()
+# MySQLDump.start()
 # IdleFish.check_version(end_index, end_index, 1)
 # IdleFish.check(start_index, end_index, 5)
 # IdleFish.check_even_devices(101, end_index)

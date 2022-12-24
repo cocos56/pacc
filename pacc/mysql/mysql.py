@@ -11,9 +11,6 @@ class MySQL:
     conn = connect(host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
                    password=getenv('MySQL_PW'))
     cs = conn.cursor()
-    # conn.close()
-
-    # instance = None
 
     # pylint: disable=too-many-arguments
     def __init__(self, host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
