@@ -72,11 +72,11 @@ class LDBase:  # pylint: disable=too-few-public-methods
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
         print(cmd)
         start_datetime = datetime.now()
+        self.end_flag = False
         if return_flag:
             future = pool.submit(popen, cmd)
         else:
             future = pool.submit(system, cmd)
-        self.end_flag = False
         pool.submit(self.timeout_monitoring, start_datetime)
         try:
             if return_flag:
@@ -90,6 +90,6 @@ class LDBase:  # pylint: disable=too-few-public-methods
             return res
         except TimeoutError:
             self.end_flag = True
-            pool.shutdown()
             print_err(f'线程{future}因超{timeout}秒而强制终止')
+            pool.shutdown()
             return False
