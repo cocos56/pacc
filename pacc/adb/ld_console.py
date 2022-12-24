@@ -28,6 +28,7 @@ class LDConsole:
         :return: 字典，键是索引值，值是虚拟机名
         """
         cmd = f'{LDC}list2'
+        # print(cmd)
         try:
             res = popen(cmd).read()[:-1]
         except UnicodeDecodeError as err:
@@ -38,6 +39,11 @@ class LDConsole:
         dic = dict(res)
         # print(dic)
         return dic
+
+    @classmethod
+    def get_last_device_num(cls):
+        """获取按编号排序时最后一个设备的索引值"""
+        return sorted(list(cls.list().keys()))[-1]
 
     def backup(self, dir_path):
         """备份雷电模拟器
