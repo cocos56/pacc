@@ -170,6 +170,8 @@ class IdleFish(LDProj):
         try:
             ex_p = int(dic['@content-desc'][5:])
         except TypeError as err:
+            print('正在尝试关闭因生日提醒窗导致的错误')
+            lduia_ins.tap((271, 765), 3)  # 关闭生日礼物
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
         for _ in range(int(ex_p/200)):

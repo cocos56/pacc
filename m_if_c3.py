@@ -6,6 +6,6 @@ Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, 415
 # IdleFish.check_version(start_index, end_index)
-# IdleFish.check(207, end_index)
+IdleFish.check(224, end_index)
 # IdleFish.check_odd_devices(97, end_index)
-IdleFish.mainloop(141, end_index, 5)
+IdleFish.mainloop(1, end_index, 5)
