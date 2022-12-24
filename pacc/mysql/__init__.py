@@ -2,6 +2,7 @@
 from .create import CreateKSJSB
 from .retrieve import RetrieveMobileInfo, RetrieveKsjsb, RetrieveEmail
 from .update import UpdateMobileInfo, UpdateKsjsb
+from .mysqldump import MySQLDump
 
 __all__ = [
     "CreateKSJSB",
@@ -10,4 +11,5 @@ __all__ = [
     "RetrieveEmail",
     "UpdateMobileInfo",
     "UpdateKsjsb",
+    'MySQLDump',
 ]
