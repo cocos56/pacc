@@ -8,7 +8,7 @@ Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, 415
 # IdleFish.check_version(start_index, end_index)
-IdleFish.check(380, end_index, 1)
+# IdleFish.check(380, end_index, 1)
 # IdleFish.check_even_devices(start_index, end_index)
 # IdleFish.backups(start_index, end_index, 'D:/ldbks')
-# LDConsole.quit(264)
+LDConsole.quit(243)

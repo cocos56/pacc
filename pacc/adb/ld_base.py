@@ -89,6 +89,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
             pool.shutdown()
             return res
         except TimeoutError:
+            LDConsole(self.ld_index).quit()
             self.end_flag = True
             print_err(f'线程{future}因超{timeout}秒而强制终止')
             pool.shutdown()
