@@ -125,8 +125,8 @@ class IdleFish(LDProj):
                 break
             start_index += p_num
 
-    # pylint: disable=too-many-return-statements, too-many-branches
-    # pylint: disable=too-many-statements, too-many-locals
+    # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
+    # pylint: disable=too-many-locals
     @classmethod
     def check_target_device(cls, index, reopen_flag=False):
         """检查目标设备是否存在问题
