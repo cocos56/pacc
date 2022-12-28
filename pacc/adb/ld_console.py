@@ -71,8 +71,12 @@ class LDConsole:
         return self.ld_index in self.list()
 
     def get_name(self):
-        """获取虚拟机名"""
+        """获取设备的名字"""
         return self.list().get(self.ld_index)
+
+    def get_job_number(self):
+        """获取设备的工号"""
+        return self.get_name()[:6]
 
     def launch(self):
         """启动某一指定的雷电模拟器"""

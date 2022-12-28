@@ -91,7 +91,7 @@ class IdleFish(LDProj):
             return False
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
-        job_number = LDConsole(index).get_name()[:6]
+        job_number = LDConsole(index).get_job_number()
         if version_info != RetrieveIdleFish(job_number).version:
             UpdateIdleFish(job_number).update_version(version_info)
         if version_info == '7.5.41':
@@ -199,6 +199,11 @@ class IdleFish(LDProj):
         except (KeyError, TypeError, ValueError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
+        job_number = LDConsole(index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        if coins != retrieve_idle_fish_ins.coins:
+            update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
         if coins >= 30000:
@@ -213,6 +218,9 @@ class IdleFish(LDProj):
             os.remove(new_png)
         os.rename(png_path, new_png)
         LDConsole.quit(index)
+        today = date.today()
+        if today != retrieve_idle_fish_ins.last_check_date:
+            update_idle_fish_ins.update_last_check_date(today)
         print(f'第{index}项已检查完毕\n')
         return True
 

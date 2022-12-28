@@ -261,3 +261,17 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param version: 新的版本号
         """
         print(self.query('version', version))
+
+    def update_coins(self, coins):
+        """更新设备的闲鱼币币值
+
+        :param coins: 新的闲鱼币币值
+        """
+        print(self.query('coins', coins))
+
+    def update_last_check_date(self, last_check_date):
+        """更新设备的上次检查日期
+
+        :param last_check_date: 新的上次检查日期
+        """
+        print(self.query('last_check_date', last_check_date))

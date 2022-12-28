@@ -223,6 +223,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         """从数据库中读取版本号信息"""
         return self.query('version')
 
+    @property
+    def coins(self):
+        """从数据库中读取闲鱼币币值"""
+        return self.query('coins')
+
+    @property
+    def last_check_date(self):
+        """从数据库中读取上次检查的日期"""
+        return self.query('last_check_date')
+
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
         """查询函数：查询数据
