@@ -92,7 +92,7 @@ class IdleFish(LDProj):
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         job_number = LDConsole(index).get_job_number()
-        if version_info != RetrieveIdleFish(job_number).version:
+        if version_info!= '0.0.0' and version_info != RetrieveIdleFish(job_number).version:
             UpdateIdleFish(job_number).update_version(version_info)
         if version_info == '7.5.41':
             print('当前的闲鱼版本过老，需要升级')
