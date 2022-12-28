@@ -218,15 +218,9 @@ class RetrieveIdleFishBase(Retrieve):
 class RetrieveIdleFish(RetrieveIdleFishBase):
     """该类用于从account数据库中的idle_fish表中查询数据"""
 
-    def __init__(self, job_number):
-        """构造函数
-
-        :param job_number: 工号
-        """
-        super().__init__(job_number)
-
     @property
     def version(self):
+        """从数据库中读取版本号信息"""
         return self.query('version')
 
     # pylint: disable=arguments-differ
