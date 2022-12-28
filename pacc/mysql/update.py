@@ -1,5 +1,5 @@
 """MySQL数据库包的改模块"""
-from .mysql import Mobile
+from .mysql import Mobile, Account
 from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
 
 
@@ -215,3 +215,49 @@ class UpdateKsjsb(Update):
         """
         self.dbr.last_watch_video_date = last_watch_video_date
         print(self.query('last_watch_video_date', last_watch_video_date))
+
+
+class UpdateIdleFishBase:
+    """该类用于为修改account数据库中的idle_fish表中的数据提供基础支持"""
+
+    def __init__(self, job_number):
+        """构造函数：初始化改类的对象
+
+        :param job_number: 工号
+        """
+        self.job_number = job_number
+
+    def query(self, field, value, table):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        cmd = f'update `{table}` set `{field}` = "{value}" where `Job_N` = "{self.job_number}"'
+        print(cmd)
+        res = Account.query(cmd)
+        Account.commit()
+        return res
+
+
+class UpdateIdleFish(UpdateIdleFishBase):
+    """该类用于修改account数据库中的idle_fish表中的数据"""
+
+    def query(self, field, value, table='idle_fish'):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        return super().query(field, value, table)
+
+    def update_version(self, version):
+        """更新设备的版本号
+
+        :param version: 新的版本号
+        """
+        print(self.query('version', version))

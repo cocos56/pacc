@@ -194,6 +194,52 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
+class RetrieveIdleFishBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
+
+    def __init__(self, job_number):
+        """构造函数
+
+        :param job_number: 工号
+        """
+        self.job_number = job_number
+
+    # pylint: disable=arguments-differ
+    def query(self, field, table):
+        """查询函数：查询数据
+
+        :param field: 字段名
+        :param table: 表名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(table, field, 'Job_N', f"'{self.job_number}'", Account)
+
+
+class RetrieveIdleFish(RetrieveIdleFishBase):
+    """该类用于从account数据库中的idle_fish表中查询数据"""
+
+    def __init__(self, job_number):
+        """构造函数
+
+        :param job_number: 工号
+        """
+        super().__init__(job_number)
+
+    @property
+    def version(self):
+        return self.query('version')
+
+    # pylint: disable=arguments-differ
+    def query(self, field, table='idle_fish'):
+        """查询函数：查询数据
+
+        :param field: 字段名
+        :param table: 表名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
+
+
 class RetrieveAccount(Retrieve):
     """该类用于从MySQL数据库中的account数据库中查询数据"""
 

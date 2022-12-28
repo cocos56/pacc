@@ -6,6 +6,7 @@ from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..tools import create_dir
+from ..mysql import RetrieveIdleFish, UpdateIdleFish
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -90,6 +91,9 @@ class IdleFish(LDProj):
             return False
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
+        job_number = LDConsole(index).get_name()[:6]
+        if not version_info == RetrieveIdleFish(job_number).version:
+            UpdateIdleFish(job_number).update_version(version_info)
         if version_info == '7.5.41':
             print('当前的闲鱼版本过老，需要升级')
         print(f'模拟器{index}上的闲鱼版本为：{version_info}')
