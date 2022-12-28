@@ -125,7 +125,8 @@ class IdleFish(LDProj):
                 break
             start_index += p_num
 
-    # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
+    # pylint: disable=too-many-return-statements, too-many-branches,
+    # too-many-statements, too-many-locals
     @classmethod
     def check_target_device(cls, index, reopen_flag=False):
         """检查目标设备是否存在问题
@@ -206,7 +207,9 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-        if coins >= 30000:
+        if coins >= retrieve_idle_fish_ins.rt:
+            dir_name = f'{dir_name}_rt'
+        elif coins >= 30000:
             dir_name = f'{dir_name}_30k'
         elif coins >= 20000:
             dir_name = f'{dir_name}_20k'

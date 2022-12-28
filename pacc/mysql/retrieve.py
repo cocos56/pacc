@@ -229,6 +229,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         return self.query('coins')
 
     @property
+    def rt(self):
+        """从数据库中读取提醒阈值"""
+        return self.query('RT')
+
+    @property
     def last_check_date(self):
         """从数据库中读取上次检查的日期"""
         return self.query('last_check_date')
