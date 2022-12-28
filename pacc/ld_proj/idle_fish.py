@@ -207,14 +207,19 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
         dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
-        if coins >= retrieve_idle_fish_ins.rt:
-            dir_name = f'{dir_name}_rt'
-        elif coins >= 30000:
-            dir_name = f'{dir_name}_30k'
-        elif coins >= 20000:
-            dir_name = f'{dir_name}_20k'
-        elif coins >= 10000:
-            dir_name = f'{dir_name}_10k'
+        reminder_threshold = retrieve_idle_fish_ins.reminder_threshold
+        if reminder_threshold:
+            if coins >= reminder_threshold:
+                dir_name = f'{dir_name}_rty'
+            else:
+                dir_name = f'{dir_name}_rtn'
+        else:
+            if coins >= 30000:
+                dir_name = f'{dir_name}_30k'
+            elif coins >= 20000:
+                dir_name = f'{dir_name}_20k'
+            elif coins >= 10000:
+                dir_name = f'{dir_name}_10k'
         create_dir(dir_name)
         new_png = f'{dir_name}/{LDConsole(index).get_name()}.png'
         if os.path.exists(new_png):

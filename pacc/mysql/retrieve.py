@@ -229,7 +229,7 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         return self.query('coins')
 
     @property
-    def rt(self):
+    def reminder_threshold(self):
         """从数据库中读取提醒阈值"""
         return self.query('RT')
 
