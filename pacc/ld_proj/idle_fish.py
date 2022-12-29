@@ -364,8 +364,16 @@ class IdleFish(LDProj):
             cls(start_index+i).run_task_on_target_device()
         sleep(69)
         for i in range(p_num):
-            LDConsole.quit(start_index+i)
-            print(f'第{start_index+i}项已执行完毕')
+            index = start_index + i
+            if not LDConsole(index).is_exist():
+                print(f'目标设备{index}不存在，无需进行执行任务后的收尾工作')
+                continue
+            LDConsole.quit(index)
+            job_number = LDConsole(index).get_job_number()
+            today = date.today()
+            if today != RetrieveIdleFish(job_number).last_run_date:
+                UpdateIdleFish(job_number).update_last_run_date(today)
+            print(f'第{index}项已执行完毕')
 
     @classmethod
     def mainloop(cls, start_index, end_index, p_num=3):
