@@ -269,6 +269,33 @@ class IdleFish(LDProj):
             start_index += 2
 
     @classmethod
+    def check_after_run(cls, start_index, end_index):
+        """从数据库中读取到运行过的状态之后再进行检查
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            now = datetime.now()
+            if now.hour >= 23 and now.minute >= 50:
+                break
+            print(now)
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            print(retrieve_idle_fish_ins.last_run_date)
+            print(retrieve_idle_fish_ins.last_check_date)
+            print(retrieve_idle_fish_ins.last_run_date > retrieve_idle_fish_ins.last_check_date)
+            input()
+            cls(start_index).run_app(13)
+            cls.check_target_device(start_index)
+            if start_index - 1 >= end_index:
+                print(
+                    f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：{datetime.now()}')
+                break
+            start_index += 1
+
+    @classmethod
     def check(cls, start_index, end_index, p_num=3):
         """检查是否存在问题
 
