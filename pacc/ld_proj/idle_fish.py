@@ -426,7 +426,7 @@ class IdleFish(LDProj):
             cls.run_task(start_index, p_num)
             if start_index + p_num - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
-                start_index = src_start_index - p_num
+                start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
                 cls.check(1, end_index)
             start_index += p_num
