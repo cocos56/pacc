@@ -85,9 +85,11 @@ Mobile()
 class Account(MySQL):
     """MySQL中名为account的数据库，该数据库用于存储网络账号相关的信息"""
 
-    def __init__(self):
+    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='account', user='root',
+                 password=getenv('MySQL_PW'), charset='utf8'):
         """构造函数"""
-        super().__init__(database='account')
+        super().__init__(host=host, port=port, database=database, user=user,
+                         password=password, charset=charset)
 
 
 Account()
