@@ -282,7 +282,7 @@ class IdleFish(LDProj):
                 break
             print(now)
             if not LDConsole(start_index).is_exist():
-                print(f'目标设备{start_index}不存在，无需检查')
+                print(f'目标设备{start_index}不存在，无需检查\n')
                 start_index += 1
                 if start_index - 1 >= end_index:
                     print(
