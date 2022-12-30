@@ -285,7 +285,10 @@ class IdleFish(LDProj):
                 print(f'目标设备{start_index}不存在，无需检查')
                 start_index += 1
                 if start_index - 1 >= end_index:
-                    start_index = 1
+                    print(
+                        f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
+                        f'{datetime.now()}')
+                    src_start_index = start_index = 1
                     sleep(600)
                 continue
             job_number = LDConsole(start_index).get_job_number()
@@ -299,11 +302,6 @@ class IdleFish(LDProj):
                 continue
             cls(start_index).run_app(13)
             cls.check_target_device(start_index)
-            if start_index - 1 >= end_index:
-                print(
-                    f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：{datetime.now()}')
-                src_start_index = start_index = 1
-                continue
             start_index += 1
 
     @classmethod
