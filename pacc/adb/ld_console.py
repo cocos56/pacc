@@ -76,7 +76,11 @@ class LDConsole:
 
     def get_job_number(self):
         """获取设备的工号"""
-        return self.get_name()[:6]
+        try:
+            return self.get_name()[:6]
+        except TypeError as err:
+            print_err(err)
+            return self.get_job_number()
 
     def launch(self):
         """启动某一指定的雷电模拟器"""
