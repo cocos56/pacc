@@ -284,13 +284,19 @@ class IdleFish(LDProj):
             if not LDConsole(start_index).is_exist():
                 print(f'目标设备{start_index}不存在，无需检查')
                 start_index += 1
+                if start_index - 1 >= end_index:
+                    start_index = 1
+                    sleep(600)
                 continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            print(start_index)
             print(retrieve_idle_fish_ins.last_run_date)
             print(retrieve_idle_fish_ins.last_check_date)
-            while not retrieve_idle_fish_ins.last_run_date > retrieve_idle_fish_ins.last_check_date:
-                sleep(1800)
+            if not retrieve_idle_fish_ins.last_run_date > retrieve_idle_fish_ins.last_check_date:
+                start_index += 1
+                print()
+                continue
             cls(start_index).run_app(13)
             cls.check_target_device(start_index)
             if start_index - 1 >= end_index:
@@ -433,5 +439,4 @@ class IdleFish(LDProj):
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕')
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
-                # cls.check(1, end_index)
             start_index += p_num
