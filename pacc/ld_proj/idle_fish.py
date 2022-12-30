@@ -278,8 +278,6 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             now = datetime.now()
-            if now.hour >= 23 and now.minute >= 50:
-                break
             print(now)
             if not LDConsole(start_index).is_exist():
                 print(f'目标设备{start_index}不存在，无需检查\n')
