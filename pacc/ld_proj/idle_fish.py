@@ -296,7 +296,13 @@ class IdleFish(LDProj):
             print(start_index)
             print(retrieve_idle_fish_ins.last_run_date)
             print(retrieve_idle_fish_ins.last_check_date)
-            if retrieve_idle_fish_ins.last_run_date <= retrieve_idle_fish_ins.last_check_date:
+            if not retrieve_idle_fish_ins.last_check_date:
+                pass
+            elif not retrieve_idle_fish_ins.last_run_date:
+                start_index += 1
+                print()
+                continue
+            elif retrieve_idle_fish_ins.last_run_date <= retrieve_idle_fish_ins.last_check_date:
                 start_index += 1
                 print()
                 continue
