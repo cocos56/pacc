@@ -1,6 +1,7 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
 import os
 from datetime import date, datetime, timedelta
+from psutil import cpu_percent
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
@@ -303,6 +304,12 @@ class IdleFish(LDProj):
                 start_index += 1
                 print()
                 continue
+            cpu_use = cpu_percent()
+            print(cpu_use)
+            while cpu_use > 60:
+                sleep(5)
+                cpu_use = cpu_percent(1)
+                print(cpu_use)
             cls(start_index).run_app(13)
             cls.check_target_device(start_index)
             start_index += 1

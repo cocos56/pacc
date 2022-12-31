@@ -1,3 +1,4 @@
+psutil
 opencv-python
 wheel
 twine
