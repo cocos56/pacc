@@ -78,6 +78,7 @@ class Retrieve:
         """
         res = database.query(
             f'select `{field}` from `{table}` where `{aimed_field}`={value}')
+        database.commit()
         if len(res) == 1:
             return res[0]
         return res
