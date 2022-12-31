@@ -398,7 +398,26 @@ class IdleFish(LDProj):
 
         :param start_index: 起始索引值
         :param p_num: 并发数量
+        :return: 正常执行完毕返回True，无需执行返回False
         """
+        should_run = False
+        for i in range(p_num):
+            index = start_index + i
+            job_number = LDConsole(index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            if LDConsole(index).is_exist():
+                today = date.today()
+                if not retrieve_idle_fish_ins.last_run_date:
+                    should_run = True
+                elif retrieve_idle_fish_ins.last_run_date < today:
+                    should_run = True
+                print(f'设备{index}存在，last_run_date={retrieve_idle_fish_ins.last_run_date}'
+                      f'，today={today}，{datetime.now()}')
+            else:
+                print(f'设备{index}不存在，{datetime.now()}')
+        if not should_run:
+            print('本轮设备全部不存在或者全部已检查，无需再次检查\n')
+            return False
         for i in range(p_num):
             if i == p_num - 1:
                 cls(start_index + i).run_app()
@@ -420,6 +439,7 @@ class IdleFish(LDProj):
             if today != RetrieveIdleFish(job_number).last_run_date:
                 UpdateIdleFish(job_number).update_last_run_date(today)
             print(f'第{index}项已执行完毕')
+        return True
 
     @classmethod
     def mainloop(cls, start_index, end_index, p_num=3):
