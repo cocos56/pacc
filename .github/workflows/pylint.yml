@@ -26,6 +26,7 @@ jobs:
         pip install websocket-server
         pip install pyperclip
         pip install selenium
+        pip install psutil
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2
