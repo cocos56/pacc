@@ -116,6 +116,27 @@ class IdleFish(LDProj):
             if now.hour >= 23 and now.minute >= 50:
                 break
             print(now)
+            should_run = False
+            for i in range(p_num):
+                index = start_index + i
+                if LDConsole(index).is_exist():
+                    job_number = LDConsole(index).get_job_number()
+                    retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+                    if not retrieve_idle_fish_ins.version:
+                        should_run = True
+                    elif retrieve_idle_fish_ins.version != '7.8.10':
+                        should_run = True
+                    print(f'设备{index}存在，version={retrieve_idle_fish_ins.version}'
+                          f'，{datetime.now()}')
+                else:
+                    print(f'设备{index}不存在，{datetime.now()}')
+            if not should_run:
+                print('本轮设备全部不存在或者全部已是最新版本，无需进行检查版本信息的操作\n')
+                start_index += p_num
+                if start_index + p_num - 1 >= end_index:
+                    print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
+                    break
+                continue
             for i in range(p_num):
                 cls(start_index + i).launch()
             sleep(5)
@@ -416,7 +437,7 @@ class IdleFish(LDProj):
             else:
                 print(f'设备{index}不存在，{datetime.now()}')
         if not should_run:
-            print('本轮设备全部不存在或者全部已检查，无需再次检查\n')
+            print('本轮设备全部不存在或者全部已检查，无需进行检查的操作\n')
             return False
         for i in range(p_num):
             if i == p_num - 1:
