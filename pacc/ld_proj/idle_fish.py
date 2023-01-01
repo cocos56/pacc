@@ -435,7 +435,7 @@ class IdleFish(LDProj):
             else:
                 print(f'设备{index}不存在，{datetime.now()}')
         if not should_run:
-            print('本轮设备全部不存在或者已检查，无需进行检查的操作\n')
+            print('本轮设备全部不存在或者已执行，无需进行执行任务的操作\n')
             return False
         for i in range(p_num):
             if i == p_num - 1:
