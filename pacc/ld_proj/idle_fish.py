@@ -112,6 +112,9 @@ class IdleFish(LDProj):
         """
         src_start_index = start_index
         while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
+                break
             now = datetime.now()
             if now.hour >= 23 and now.minute >= 50:
                 break
@@ -131,20 +134,14 @@ class IdleFish(LDProj):
                 else:
                     print(f'设备{index}不存在，{datetime.now()}')
             if not should_run:
-                print('本轮设备全部不存在或者全部已是最新版本，无需进行检查版本信息的操作\n')
+                print('本轮设备全部不存在或已是最新版本，无需进行检查版本信息的操作\n')
                 start_index += p_num
-                if start_index + p_num - 1 >= end_index:
-                    print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
-                    break
                 continue
             for i in range(p_num):
                 cls(start_index + i).launch()
             sleep(5)
             for i in range(p_num):
                 cls.check_version_on_target_device(start_index + i)
-            if start_index + p_num - 1 >= end_index:
-                print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
-                break
             start_index += p_num
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
@@ -437,7 +434,7 @@ class IdleFish(LDProj):
             else:
                 print(f'设备{index}不存在，{datetime.now()}')
         if not should_run:
-            print('本轮设备全部不存在或者全部已检查，无需进行检查的操作\n')
+            print('本轮设备全部不存在或者已检查，无需进行检查的操作\n')
             return False
         for i in range(p_num):
             if i == p_num - 1:
