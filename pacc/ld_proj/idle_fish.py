@@ -113,7 +113,8 @@ class IdleFish(LDProj):
         src_start_index = start_index
         while True:
             if start_index - 1 >= end_index:
-                print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕')
+                print(f'所有共{end_index - src_start_index + 1}项已检查版本完毕'
+                      f'，当前时间为：{datetime.now()}')
                 break
             now = datetime.now()
             if now.hour >= 23 and now.minute >= 50:
