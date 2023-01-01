@@ -403,9 +403,9 @@ class IdleFish(LDProj):
         should_run = False
         for i in range(p_num):
             index = start_index + i
-            job_number = LDConsole(index).get_job_number()
-            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             if LDConsole(index).is_exist():
+                job_number = LDConsole(index).get_job_number()
+                retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
                 today = date.today()
                 if not retrieve_idle_fish_ins.last_run_date:
                     should_run = True
