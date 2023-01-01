@@ -8,10 +8,11 @@ from pacc.mysql.retrieve import RetrieveSD
 from pacc.base import sleep, print_err
 
 DOMAIN = 'http://sd.coco56.top/'
-START_INDEX = 19
+START_INDEX = 0
 DEPARTING_STAFF = [
-    '候勇康',
-    '万德永'
+    '郁登宇',
+    '卢晓锋',
+    '张德任'
 ]
 
 
@@ -42,7 +43,7 @@ class Spider:
             cls.driver.find_element(
                 By.XPATH, '//*[@class="ant-btn ant-btn-primary ant-btn-lg submit___Q43EO"]/span'
             ).click()
-            sleep(3, False, False)
+            sleep(8, False, False)
             cls.open_url_in_new_window(f'{DOMAIN}record/trades')
             cls.open_url_in_new_window(f'{DOMAIN}record/linked')
             cls.open_url_in_new_window(f'{DOMAIN}account/buyers')
@@ -92,6 +93,7 @@ class Spider:
             cls.driver.quit()
             if not index == len(RetrieveSD.all_accounts) - 1:
                 cls.driver = webdriver.Chrome()
+        cls.driver.quit()
 
 
 if __name__ == '__main__':
