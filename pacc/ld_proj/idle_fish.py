@@ -310,7 +310,7 @@ class IdleFish(LDProj):
                 continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            print(start_index)
+            print(start_index, LDConsole(start_index).get_name())
             print(retrieve_idle_fish_ins.last_run_date)
             print(retrieve_idle_fish_ins.last_check_date)
             if not retrieve_idle_fish_ins.last_check_date:
