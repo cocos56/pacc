@@ -296,8 +296,16 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
+        start_day = date.today()
         while True:
             print(datetime.now())
+            while start_day != date.today():
+                seconds = (datetime.fromisoformat(
+                    f'{date.today() + timedelta(days=1)} 00:10:00') - datetime.now()).seconds
+                if seconds > 3600:
+                    sleep(3600)
+                else:
+                    sleep(seconds)
             if not LDConsole(start_index).is_exist():
                 print(f'目标设备{start_index}不存在，无需检查\n')
                 start_index += 1
@@ -306,7 +314,7 @@ class IdleFish(LDProj):
                         f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
                         f'{datetime.now()}\n')
                     src_start_index = start_index = 1
-                    sleep(600)
+                    start_day = date.today() + timedelta(days=1)
                 continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
