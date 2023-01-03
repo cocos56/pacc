@@ -307,17 +307,17 @@ class IdleFish(LDProj):
                     sleep(3600)
                 else:
                     sleep(seconds)
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
+                      f'{datetime.now()}\n')
+                if all_done:
+                    start_day = date.today() + timedelta(days=1)
+                src_start_index = start_index = 1
+                all_done = True
+                continue
             if not LDConsole(start_index).is_exist():
                 print(f'目标设备{start_index}不存在，无需检查\n')
                 start_index += 1
-                if start_index - 1 >= end_index:
-                    print(
-                        f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
-                        f'{datetime.now()}\n')
-                    if all_done:
-                        start_day = date.today() + timedelta(days=1)
-                    src_start_index = start_index = 1
-                    all_done = True
                 continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
