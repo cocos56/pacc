@@ -297,11 +297,12 @@ class IdleFish(LDProj):
         """
         src_start_index = start_index
         start_day = date.today()
+        all_done = True
         while True:
             print(datetime.now())
             while start_day != date.today():
                 seconds = (datetime.fromisoformat(
-                    f'{date.today() + timedelta(days=1)} 00:10:00') - datetime.now()).seconds
+                    f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
                 if seconds > 3600:
                     sleep(3600)
                 else:
@@ -313,14 +314,21 @@ class IdleFish(LDProj):
                     print(
                         f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
                         f'{datetime.now()}\n')
+                    if all_done:
+                        start_day = date.today() + timedelta(days=1)
                     src_start_index = start_index = 1
-                    start_day = date.today() + timedelta(days=1)
+                    all_done = True
                 continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             print(start_index, LDConsole(start_index).get_name())
-            print(retrieve_idle_fish_ins.last_run_date)
-            print(retrieve_idle_fish_ins.last_check_date)
+            today = date.today()
+            print(f'last_run_date={retrieve_idle_fish_ins.last_run_date}, '
+                  f'last_check_date={retrieve_idle_fish_ins.last_check_date}, '
+                  f'today={today}, '
+                  f'all_done={all_done}')
+            if retrieve_idle_fish_ins.last_check_date != today:
+                all_done = False
             if not retrieve_idle_fish_ins.last_check_date:
                 pass
             elif not retrieve_idle_fish_ins.last_run_date:
