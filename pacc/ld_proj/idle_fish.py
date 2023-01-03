@@ -307,7 +307,7 @@ class IdleFish(LDProj):
                     sleep(3600)
                 else:
                     sleep(seconds)
-            if start_index - 1 >= end_index:
+            if start_index > end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
                       f'{datetime.now()}\n')
                 if all_done:
