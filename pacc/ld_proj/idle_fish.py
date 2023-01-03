@@ -325,8 +325,7 @@ class IdleFish(LDProj):
             today = date.today()
             print(f'last_run_date={retrieve_idle_fish_ins.last_run_date}, '
                   f'last_check_date={retrieve_idle_fish_ins.last_check_date}, '
-                  f'today={today}, '
-                  f'all_done={all_done}')
+                  f'today={today}, all_done={all_done}')
             if retrieve_idle_fish_ins.last_check_date != today:
                 all_done = False
             if not retrieve_idle_fish_ins.last_check_date:
