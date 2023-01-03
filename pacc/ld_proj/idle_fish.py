@@ -331,11 +331,8 @@ class IdleFish(LDProj):
                 all_done = False
             if not retrieve_idle_fish_ins.last_check_date:
                 pass
-            elif not retrieve_idle_fish_ins.last_run_date:
-                start_index += 1
-                print()
-                continue
-            elif retrieve_idle_fish_ins.last_run_date <= retrieve_idle_fish_ins.last_check_date:
+            elif not retrieve_idle_fish_ins.last_run_date or \
+                    retrieve_idle_fish_ins.last_check_date >= retrieve_idle_fish_ins.last_run_date:
                 start_index += 1
                 print()
                 continue
