@@ -1,8 +1,10 @@
 """雷电模拟器控制台模块"""
 from os import popen, system, path, remove
+from datetime import date
 
 from ..base import sleep, print_err
 from ..config import LDC
+from ..mysql import RetrieveIdleFish, UpdateIdleFish
 
 
 class LDConsole:
@@ -49,11 +51,17 @@ class LDConsole:
         """备份雷电模拟器
 
         :param dir_path: 备份文件夹的目录
+        :return: 目标设备不存在或者今日已备份返回False，正常备份完毕返回True
         """
         if not self.is_exist():
             print(f'目标设备{self.ld_index}不存在，无法备份')
             return False
         filepath = f'{dir_path}/{self.get_name()}.ldbk'
+        today = date.today()
+        job_number = self.get_job_number()
+        if RetrieveIdleFish(job_number).last_bak_date == today:
+            print(f'目标设备{self.ld_index}今天已备份，无需重复备份工作')
+            return False
         if path.exists(filepath):
             remove(filepath)
         cmd = f'{LDC}backup --index {self.ld_index} --file {filepath}'
@@ -61,6 +69,7 @@ class LDConsole:
         print(f'正在执行对设备{self.ld_index}的备份工作')
         system(cmd)
         print(f'已完成对设备{self.ld_index}的备份工作')
+        UpdateIdleFish(job_number).update_last_bak_date(today)
         return True
 
     def is_exist(self):

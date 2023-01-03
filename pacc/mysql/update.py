@@ -282,3 +282,10 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_run_date: 新的上次运行日期
         """
         print(self.query('last_run_date', last_run_date))
+
+    def update_last_bak_date(self, last_bak_date):
+        """更新设备的上次备份日期
+
+        :param last_bak_date: 新的上次备份日期
+        """
+        print(self.query('last_bak_date', last_bak_date))

@@ -244,6 +244,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         """从数据库中读取上次运行的日期"""
         return self.query('last_run_date')
 
+    @property
+    def last_bak_date(self):
+        """从数据库中读取上次备份的日期"""
+        return self.query('last_bak_date')
+
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
         """查询函数：查询数据

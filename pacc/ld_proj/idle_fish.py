@@ -46,9 +46,9 @@ class IdleFish(LDProj):
             print(f'开始执行时的时间为{datetime.now()}')
             LDConsole(start_index).backup(dir_path)
             now = datetime.now()
-            used_datetime = now-start_datetime
-            executed_num = start_index- src_start_index + 1
-            average_datetime = used_datetime/(start_index- src_start_index + 1)
+            used_datetime = now - start_datetime
+            executed_num = start_index - src_start_index + 1
+            average_datetime = used_datetime / (start_index - src_start_index + 1)
             print(f'执行完毕时的时间为{now}，已历时{used_datetime}，'
                   f'已执行完{executed_num}个，单个平均用时{average_datetime}\n')
             if start_index >= end_index:
@@ -199,7 +199,7 @@ class IdleFish(LDProj):
             lduia_ins.tap((271, 765), 3)  # 关闭生日礼物
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
-        for _ in range(int(ex_p/200)):
+        for _ in range(int(ex_p / 200)):
             lduia_ins.tap((276, 600), 0.1)
         if ex_p >= 200:
             return cls.check_target_device(index, reopen_flag=True)
@@ -265,8 +265,8 @@ class IdleFish(LDProj):
         while True:
             cls(start_index).run_app(15)
             cls.check_target_device(start_index)
-            if start_index+1 >= end_index:
-                print(f'所有共{(end_index-src_start_index+1)/2}项已检查完毕')
+            if start_index + 1 >= end_index:
+                print(f'所有共{(end_index - src_start_index + 1) / 2}项已检查完毕')
                 break
             start_index += 2
 
@@ -283,8 +283,8 @@ class IdleFish(LDProj):
         while True:
             cls(start_index).run_app(15)
             cls.check_target_device(start_index)
-            if start_index+1 >= end_index:
-                print(f'所有共{(end_index-src_start_index+1)/2}项已检查完毕')
+            if start_index + 1 >= end_index:
+                print(f'所有共{(end_index - src_start_index + 1) / 2}项已检查完毕')
                 break
             start_index += 2
 
@@ -357,15 +357,16 @@ class IdleFish(LDProj):
             print(now)
             for i in range(p_num):
                 if i == p_num - 1:
-                    cls(start_index+i).run_app(13)
+                    cls(start_index + i).run_app(13)
                 elif i == 0:
                     cls(start_index + i).run_app(1)
                 else:
                     cls(start_index + i).run_app(5)
             for i in range(p_num):
-                cls.check_target_device(start_index+i)
-            if start_index+p_num-1 >= end_index:
-                print(f'所有共{end_index-src_start_index+1}项已检查完毕，当前时间为：{datetime.now()}')
+                cls.check_target_device(start_index + i)
+            if start_index + p_num - 1 >= end_index:
+                print(
+                    f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：{datetime.now()}')
                 break
             start_index += p_num
 
@@ -449,11 +450,11 @@ class IdleFish(LDProj):
             if i == p_num - 1:
                 cls(start_index + i).run_app()
             elif i == 0:
-                cls(start_index+i).run_app(1)
+                cls(start_index + i).run_app(1)
             else:
-                cls(start_index+i).run_app(26)
+                cls(start_index + i).run_app(26)
         for i in range(p_num):
-            cls(start_index+i).run_task_on_target_device()
+            cls(start_index + i).run_task_on_target_device()
         sleep(69)
         for i in range(p_num):
             index = start_index + i
