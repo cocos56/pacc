@@ -51,10 +51,13 @@ class LDConsole:
         """备份雷电模拟器
 
         :param dir_path: 备份文件夹的目录
-        :return: 目标设备不存在或者今日已备份返回False，正常备份完毕返回True
+        :return: 目标设备不存在或正在运行或今日已备份返回False，正常备份完毕返回True
         """
         if not self.is_exist():
             print(f'目标设备{self.ld_index}不存在，无法备份')
+            return False
+        if self.is_running(self.ld_index):
+            print(f'目标设备{self.ld_index}正在运行，无法备份')
             return False
         filepath = f'{dir_path}/{self.get_name()}.ldbk'
         today = date.today()
