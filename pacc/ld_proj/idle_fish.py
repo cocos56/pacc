@@ -1,13 +1,15 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
 import os
 from datetime import date, datetime, timedelta
+from xml.parsers.expat import ExpatError
+
 from psutil import cpu_percent
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
-from ..tools import create_dir
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
+from ..tools import create_dir
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -177,7 +179,7 @@ class IdleFish(LDProj):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
                 return cls.check_target_device(index, reopen_flag=True)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
