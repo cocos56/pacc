@@ -102,13 +102,13 @@ class IdleFish(LDProj):
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
             device_name = LDConsole(start_index).get_name()
-            ip = get_global_ipv4_addr()
-            print(f'start_index={start_index}, device_name={device_name}, ip={ip}, '
+            ipv4_addr = get_global_ipv4_addr()
+            print(f'start_index={start_index}, device_name={device_name}, ipv4_addr={ipv4_addr}, '
                   f'today_global_ipv4_addr={retrieve_idle_fish_ins.today_global_ipv4_addr}, '
                   f'last_update_ip_date={retrieve_idle_fish_ins.last_update_ip_date}, '
                   f'today={today}')
-            if ip != retrieve_idle_fish_ins.today_global_ipv4_addr:
-                UpdateIdleFish(job_number).update_today_global_ipv4_addr(ip)
+            if ipv4_addr != retrieve_idle_fish_ins.today_global_ipv4_addr:
+                UpdateIdleFish(job_number).update_today_global_ipv4_addr(ipv4_addr)
                 UpdateIdleFish(job_number).update_last_update_ip_date(today)
             start_index += 1
 

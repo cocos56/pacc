@@ -14,5 +14,4 @@ websocket_client
 websocket-server
 selenium
 pyperclip
-websocket-client
 requests
