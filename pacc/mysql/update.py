@@ -289,3 +289,17 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_bak_date: 新的上次备份日期
         """
         print(self.query('last_bak_date', last_bak_date))
+
+    def update_today_global_ipv4_addr(self, today_global_ipv4_addr):
+        """更新设备的本机今日公网IPv4地址
+
+        :param today_global_ipv4_addr: 本机今日的公网IPv4地址
+        """
+        print(self.query('today_global_ipv4_addr', today_global_ipv4_addr))
+
+    def update_last_update_ip_date(self, last_update_ip_date):
+        """更新设备上次更新本机公网IPv4地址的日期
+
+        :param last_update_ip_date: 上次更新本机公网IPv4地址的日期
+        """
+        print(self.query('last_update_ip_date', last_update_ip_date))

@@ -9,7 +9,7 @@ from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
-from ..tools import create_dir
+from ..tools import create_dir, get_global_ipv4_addr
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -80,6 +80,37 @@ class IdleFish(LDProj):
 
     def use_best_deal_to_top_mobile_up(self):
         """薅羊毛赚话费（使用最优方案充话费）"""
+
+    @classmethod
+    def update_ip(cls, start_index, end_index):
+        """更新本机今日的公网IP地址
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已更新今日的公网IPv4地址完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需更新当前设备的今日公网IPv4地址')
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            device_name = LDConsole(start_index).get_name()
+            ip = get_global_ipv4_addr()
+            print(f'start_index={start_index}, device_name={device_name}, ip={ip}, '
+                  f'today_global_ipv4_addr={retrieve_idle_fish_ins.today_global_ipv4_addr}, '
+                  f'last_update_ip_date={retrieve_idle_fish_ins.last_update_ip_date}, '
+                  f'today={today}')
+            if ip != retrieve_idle_fish_ins.today_global_ipv4_addr:
+                UpdateIdleFish(job_number).update_today_global_ipv4_addr(ip)
+                UpdateIdleFish(job_number).update_last_update_ip_date(today)
+            start_index += 1
 
     @classmethod
     def check_version_on_target_device(cls, index):

@@ -249,6 +249,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         """从数据库中读取上次备份的日期"""
         return self.query('last_bak_date')
 
+    @property
+    def today_global_ipv4_addr(self):
+        """从数据库中读取本机今日的公网IPv4地址"""
+        return self.query('today_global_ipv4_addr')
+
+    @property
+    def last_update_ip_date(self):
+        """从数据库中获取上次更新本机公网IPv4地址的日期"""
+        return self.query('last_update_ip_date')
+
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
         """查询函数：查询数据
