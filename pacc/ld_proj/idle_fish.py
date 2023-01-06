@@ -98,6 +98,8 @@ class IdleFish(LDProj):
             print(now)
             if not LDConsole(start_index).is_exist():
                 print(f'设备{start_index}不存在，无需更新当前设备的今日公网IPv4地址')
+                start_index += 1
+                continue
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
