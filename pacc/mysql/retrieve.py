@@ -221,7 +221,7 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
 
     @property
     def version(self):
-        """从数据库中读取版本号信息"""
+        """从数据库中读取版本号的信息"""
         return self.query('version')
 
     @property
@@ -258,6 +258,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
     def last_update_ip_date(self):
         """从数据库中获取上次更新本机公网IPv4地址的日期"""
         return self.query('last_update_ip_date')
+
+    @property
+    def hosts(self):
+        """从数据库中读取主机列表的信息"""
+        return self.query('hosts')
+
+    @property
+    def last_update_hosts_date(self):
+        """从数据库中获取上次更新本机公网IPv4地址的日期"""
+        return self.query('last_update_hosts_date')
 
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):

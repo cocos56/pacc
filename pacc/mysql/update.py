@@ -303,3 +303,17 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_update_ip_date: 上次更新本机公网IPv4地址的日期
         """
         print(self.query('last_update_ip_date', last_update_ip_date))
+
+    def update_hosts(self, hosts):
+        """更新设备在数据库中的主机列表值
+
+        :param hosts: 最新的设备所在主机列表值
+        """
+        print(self.query('hosts', hosts))
+
+    def update_last_update_hosts_date(self, last_update_hosts_date):
+        """更新设备在数据库中上次更新主机列表值的日期
+
+        :param last_update_hosts_date: 上次更新主机列表值的日期
+        """
+        print(self.query('last_update_hosts_date', last_update_hosts_date))

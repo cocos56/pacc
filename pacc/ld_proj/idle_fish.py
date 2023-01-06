@@ -82,6 +82,42 @@ class IdleFish(LDProj):
         """薅羊毛赚话费（使用最优方案充话费）"""
 
     @classmethod
+    def update_hosts(cls, start_index, end_index, host_name):
+        """更新设备所在的主机列表
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        :param host_name: 当前主机的主机名
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已更新主机列表完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需更新主机列表')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            device_name = LDConsole(start_index).get_name()
+            print(f'start_index={start_index}, device_name={device_name}, host_name={host_name}, '
+                  f'hosts={retrieve_idle_fish_ins.hosts}, update_last_update_hosts_date='
+                  f'{retrieve_idle_fish_ins.last_update_hosts_date}, today={today}')
+            if not retrieve_idle_fish_ins.hosts:
+                UpdateIdleFish(job_number).update_hosts(host_name)
+                UpdateIdleFish(job_number).update_last_update_hosts_date(today)
+            elif host_name not in retrieve_idle_fish_ins.hosts:
+                UpdateIdleFish(job_number).update_hosts(
+                    f'{host_name}+{retrieve_idle_fish_ins.hosts}')
+                UpdateIdleFish(job_number).update_last_update_hosts_date(today)
+            start_index += 1
+
+    @classmethod
     def update_ip(cls, start_index, end_index):
         """更新本机今日的公网IP地址
 
