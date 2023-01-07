@@ -9,7 +9,7 @@ class MySQLDump:
     @classmethod
     def start(cls):
         """开始进行备份"""
-        databases = ['account', 'mobile']
+        databases = ['account', 'mobile', 'record']
         suffix = str(date.today()).replace('-', '_')
         for database in databases:
             print(f'正在备份数据库{database}')
