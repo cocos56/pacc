@@ -1,8 +1,9 @@
 """IP地址模块"""
-import requests
-from requests.exceptions import ReadTimeout
 from datetime import datetime
 from random import randint
+
+import requests
+from requests.exceptions import ReadTimeout
 
 from ..base import print_err
 
