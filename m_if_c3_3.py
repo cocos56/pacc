@@ -7,6 +7,5 @@ Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, LDConsole.get_last_device_num()
 print(f'start_index={start_index}, end_index={end_index}')
-# IdleFish.backups(start_index, end_index)
-IdleFish.check_version(end_index, end_index, 1)
-# IdleFish.check_after_run(290, end_index)
+IdleFish.backups(start_index, end_index)
+# IdleFish.check_version(end_index, end_index, 1)
