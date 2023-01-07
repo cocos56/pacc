@@ -1,4 +1,5 @@
 """IP地址模块"""
+# pylint: disable=redefined-builtin
 from datetime import datetime
 from random import randint
 
