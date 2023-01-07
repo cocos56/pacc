@@ -21,7 +21,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         self.ld_index = ld_index
         self.end_flag = False
 
-    def timeout_monitoring(self, start_datetime, timeout=12):
+    def timeout_monitoring(self, start_datetime, timeout=15):
         """超时监控
 
         :param start_datetime: 开始时间
@@ -59,7 +59,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         return self.exe_cmd(command, ext)
 
-    def exe_cmd(self, command='', ext='', timeout=9, return_flag=True):
+    def exe_cmd(self, command='', ext='', timeout=12, return_flag=True):
         """执行命令函数
 
         :param command: adb命令
