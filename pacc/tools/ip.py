@@ -3,7 +3,7 @@ from datetime import datetime
 from random import randint
 
 import requests
-from requests.exceptions import ReadTimeout
+from requests.exceptions import ReadTimeout, ConnectionError
 
 from ..base import print_err
 
@@ -15,7 +15,7 @@ def get_global_ipv4_addr():
     """
     try:
         ipv4_addr = requests.get('https://ident.me', timeout=9).text
-    except ReadTimeout as err:
+    except (ReadTimeout, ConnectionError) as err:
         print_err(err)
         return get_global_ipv4_addr()
     return ipv4_addr

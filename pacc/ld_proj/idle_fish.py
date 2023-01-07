@@ -108,12 +108,13 @@ class IdleFish(LDProj):
             print(f'start_index={start_index}, device_name={device_name}, host_name={host_name}, '
                   f'hosts={retrieve_idle_fish_ins.hosts}, update_last_update_hosts_date='
                   f'{retrieve_idle_fish_ins.last_update_hosts_date}, today={today}')
+            new_host_name = f'{host_name}:{start_index}'
             if not retrieve_idle_fish_ins.hosts:
-                UpdateIdleFish(job_number).update_hosts(host_name)
+                UpdateIdleFish(job_number).update_hosts(new_host_name)
                 UpdateIdleFish(job_number).update_last_update_hosts_date(today)
-            elif host_name not in retrieve_idle_fish_ins.hosts:
+            elif new_host_name not in retrieve_idle_fish_ins.hosts:
                 UpdateIdleFish(job_number).update_hosts(
-                    f'{host_name}+{retrieve_idle_fish_ins.hosts}')
+                    f'{new_host_name}+{retrieve_idle_fish_ins.hosts}')
                 UpdateIdleFish(job_number).update_last_update_hosts_date(today)
             start_index += 1
 
