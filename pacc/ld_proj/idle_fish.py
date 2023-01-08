@@ -150,7 +150,8 @@ class IdleFish(LDProj):
                 f'coins={retrieve_idle_fish_ins.coins}, '
                 f'user_name={retrieve_idle_fish_ins.user_name}, today_global_ipv4_addr='
                 f'{retrieve_idle_fish_ins.today_global_ipv4_addr}')
-            if retrieve_idle_fish_ins.last_check_date < today:
+            if not retrieve_idle_fish_ins.last_check_date or \
+                    retrieve_idle_fish_ins.last_check_date < today:
                 print(f'设备{start_index}的闲鱼币信息今日未更新，请先更新闲鱼币信息')
                 start_index += 1
                 continue
