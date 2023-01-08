@@ -15,7 +15,7 @@ def get_global_ipv4_addr():
     :return: 本机的公网IPv4地址，形如：120.219.74.14
     """
     try:
-        ipv4_addr = requests.get('https://checkip.amazonaws.com', timeout=26).text
+        ipv4_addr = requests.get('https://checkip.amazonaws.com', timeout=26).text.strip()
     except (ReadTimeout, ConnectionError) as err:
         print_err(err)
         return get_global_ipv4_addr()
