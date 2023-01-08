@@ -1,9 +1,89 @@
 """MySQL数据库包的增模块"""
-from .mysql import Mobile
+from .mysql import Mobile, Record
 
 
 # pylint: disable=too-few-public-methods
 class Create:
+    """增类：往数据库中新增数据"""
+
+    @classmethod
+    def query(cls, table, fields, values, database=Mobile):
+        """查询函数：新增数据
+
+        :param table: 表名
+        :param fields: 字段名
+        :param values: 值
+        :param database: 数据库名
+        :return: 查询到的结果（单条）
+        """
+        cmd = f'insert into `{table}` %s values {str(values)}' % str(fields).replace("'", '`')
+        print(cmd)
+        res = database.query(cmd)
+        database.commit()
+        return res
+
+
+class CreateRecordIdleFish(Create):
+    """增类：往数据库中新增数据"""
+
+    def __init__(self, today, job_number, role, hosts, version, coins, user_name,
+                 today_global_ipv4_addr):
+        """构造函数：初始化增类的对象
+
+        :param today: 今天的日期
+        :param job_number: 工号
+        :param role: 角色
+        :param hosts: 主机列表
+        :param version: 版本号
+        :param coins: 闲鱼币
+        :param user_name: 闲鱼账号的会员名
+        :param today_global_ipv4_addr: 今日的公网IPv4地址
+        """
+        self.today = today
+        self.job_number = job_number
+        self.role = role
+        self.hosts = hosts
+        self.version = version
+        self.coins = coins
+        self.user_name = user_name
+        self.today_global_ipv4_addr = today_global_ipv4_addr
+        if self.exist:
+            print(f'记录today={self.today}, job_number={self.job_number}已存在，无需重复创建')
+            return
+        print('正在创建记录')
+        self.query(
+            'record_idle_fish',
+            (
+                'record_date', 'Job_N', 'role', 'hosts', 'version', 'coins',
+                'user_name', 'today_global_ipv4_addr'),
+            (
+                str(self.today), self.job_number, self.role, self.hosts, self.version, self.coins,
+                self.user_name, self.today_global_ipv4_addr)
+        )
+
+    @classmethod
+    def query(cls, table, fields, values, database=Record):
+        """查询函数：新增数据
+
+        :param table: 表名
+        :param fields: 字段名
+        :param values: 值
+        :param database: 数据库名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(table, fields, values, database)
+
+    @property
+    def exist(self):
+        """创建只读属性exist，该属性用于判断是否存在快手极速版数据库中存在指定设备的数据"""
+        return Record.query(
+            f'select 1 from `record_idle_fish` where `record_date`="{self.today}" and `Job_N`='
+            f'"{self.job_number}" limit 1'
+        ) == (1,)
+
+
+# pylint: disable=too-few-public-methods
+class CreateMobile(Create):
     """增类：往数据库中新增数据"""
 
     def __init__(self, device_sn):
@@ -14,23 +94,21 @@ class Create:
         self.device_sn = device_sn
 
     @classmethod
-    def query(cls, table, fields, values):
+    def query(cls, table, fields, values, database=Mobile):
         """查询函数：新增数据
 
         :param table: 表名
         :param fields: 字段名
         :param values: 值
+        :param database: 数据库名
         :return: 查询到的结果（单条）
         """
-        cmd = f'insert into `{table}` %s values {str(values)}' % str(fields).replace("'", '`')
-        print(cmd)
-        res = Mobile.query(cmd)
-        Mobile.commit()
-        return res
+        return super().query(table, fields, values, database)
 
 
-class CreateKSJSB(Create):
+class CreateKSJSB(CreateMobile):
     """增类：往快手极速版数据库中新增数据"""
+
     def __init__(self, device_sn):
         """构造函数：初始化增类的对象
 

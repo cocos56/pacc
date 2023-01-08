@@ -8,7 +8,7 @@ from psutil import cpu_percent
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, UpdateIdleFish
+from ..mysql import RetrieveIdleFish, UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr
 
 
@@ -105,10 +105,11 @@ class IdleFish(LDProj):
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
             device_name = LDConsole(start_index).get_name()
-            print(f'start_index={start_index}, device_name={device_name}, host_name={host_name}, '
-                  f'hosts={retrieve_idle_fish_ins.hosts}, update_last_update_hosts_date='
-                  f'{retrieve_idle_fish_ins.last_update_hosts_date}, today={today}')
             new_host_name = f'{host_name}:{start_index}'
+            print(f'start_index={start_index}, device_name={device_name},'
+                  f'new_host_name={new_host_name}, hosts={retrieve_idle_fish_ins.hosts}, '
+                  f'update_last_update_hosts_date='
+                  f'{retrieve_idle_fish_ins.last_update_hosts_date}, today={today}')
             if not retrieve_idle_fish_ins.hosts:
                 UpdateIdleFish(job_number).update_hosts(new_host_name)
                 UpdateIdleFish(job_number).update_last_update_hosts_date(today)
@@ -116,6 +117,40 @@ class IdleFish(LDProj):
                 UpdateIdleFish(job_number).update_hosts(
                     f'{new_host_name}+{retrieve_idle_fish_ins.hosts}')
                 UpdateIdleFish(job_number).update_last_update_hosts_date(today)
+            start_index += 1
+
+    @classmethod
+    def record(cls, start_index, end_index):
+        """记录设备今天的状态
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已记录设备今天的状态完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需记录设备今天的状态')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            print(
+                f'start_index={start_index}, today={today}, job_number={job_number}, role='
+                f'{retrieve_idle_fish_ins.role}, hosts={retrieve_idle_fish_ins.hosts}, version='
+                f'{retrieve_idle_fish_ins.version}, coins={retrieve_idle_fish_ins.coins}, '
+                f'user_name={retrieve_idle_fish_ins.user_name}, today_global_ipv4_addr='
+                f'{retrieve_idle_fish_ins.today_global_ipv4_addr}')
+            CreateRecordIdleFish(
+                today, job_number, retrieve_idle_fish_ins.role, retrieve_idle_fish_ins.hosts,
+                retrieve_idle_fish_ins.version, retrieve_idle_fish_ins.coins,
+                retrieve_idle_fish_ins.user_name, retrieve_idle_fish_ins.today_global_ipv4_addr)
             start_index += 1
 
     @classmethod

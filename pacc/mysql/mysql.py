@@ -94,3 +94,25 @@ class Account(MySQL):
 
 
 Account()
+
+
+class Record(MySQL):
+    """MySQL中名为record的数据库，该数据库用于存储记录相关的信息"""
+
+    # pylint: disable=too-many-arguments
+    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='record', user='root',
+                 password=getenv('MySQL_PW'), charset='utf8'):
+        """构造函数：初始化增类的对象
+
+        :param host: 主机，默认从Windows系统变量中获取
+        :param port: 端口号，默认访问3306端口
+        :param database: 数据库名，默认读取record数据库
+        :param user: 用户名，默认以root用户访问数据库
+        :param password: 用户密码，默认从Windows系统变量中获取
+        :param charset: 编码，默认使用utf8
+        """
+        super().__init__(host=host, port=port, database=database, user=user,
+                         password=password, charset=charset)
+
+
+Record()

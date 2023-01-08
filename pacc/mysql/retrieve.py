@@ -1,5 +1,5 @@
 """MySQL数据库包的查模块"""
-from .mysql import MySQL, Mobile, Account
+from .mysql import MySQL, Mobile, Account, Record
 
 
 class RetrieveSD:
@@ -195,6 +195,29 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
+class RetrieveRecordIdleFishBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
+
+    def __init__(self, job_number, today):
+        """构造函数
+
+        :param job_number: 工号
+        :param today: 今天的日期
+        """
+        self.job_number = job_number
+        self.today = today
+
+    # pylint: disable=arguments-differ
+    def query(self, field, table):
+        """查询函数：查询数据
+
+        :param field: 字段名
+        :param table: 表名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(table, field, 'Job_N', f"'{self.job_number}'", Record)
+
+
 class RetrieveIdleFishBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
 
@@ -220,6 +243,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
     """该类用于从account数据库中的idle_fish表中查询数据"""
 
     @property
+    def role(self):
+        """从数据库中读取角色的信息"""
+        return self.query('role')
+
+    @property
     def version(self):
         """从数据库中读取版本号的信息"""
         return self.query('version')
@@ -233,6 +261,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
     def reminder_threshold(self):
         """从数据库中读取提醒阈值"""
         return self.query('RT')
+
+    @property
+    def user_name(self):
+        """从数据库中读取闲鱼账号的会员名"""
+        return self.query('user_name')
 
     @property
     def last_check_date(self):
