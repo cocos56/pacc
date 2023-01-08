@@ -562,8 +562,8 @@ class IdleFish(LDProj):
                     should_run = True
                 elif retrieve_idle_fish_ins.last_run_date < today:
                     should_run = True
-                print(f'设备{index}存在，last_run_date={retrieve_idle_fish_ins.last_run_date}'
-                      f'，today={today}，{datetime.now()}')
+                print(f'设备{index}存在，name={LDConsole(index).get_name()}，last_run_date='
+                      f'{retrieve_idle_fish_ins.last_run_date}，today={today}，{datetime.now()}')
             else:
                 print(f'设备{index}不存在，{datetime.now()}')
         if not should_run:
@@ -606,13 +606,17 @@ class IdleFish(LDProj):
         else:
             start_day = date.today()
         while True:
-            while start_day != date.today():
+            today = date.today()
+            while start_day < today:
+                print(f'mainloop while start_day={start_day}, today={today}')
+                today = date.today()
                 seconds = (datetime.fromisoformat(
                     f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
                 if seconds > 3600:
                     sleep(3600)
                 else:
                     sleep(seconds)
+            print(f'mainloop start_day={start_day}, today={today}, {datetime.now()}')
             cls.run_task(start_index, p_num)
             if start_index + p_num - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕，'
