@@ -1,8 +1,8 @@
 """MySQL数据库包的改模块"""
+from datetime import date
+
 from .mysql import Mobile, Account
 from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
-
-from datetime import date
 
 
 # pylint: disable=too-few-public-methods
