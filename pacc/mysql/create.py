@@ -23,9 +23,11 @@ class Create:
         return res
 
 
+# pylint: disable=too-many-instance-attributes
 class CreateRecordIdleFish(Create):
     """增类：往数据库中新增数据"""
 
+    # pylint: disable=too-many-arguments
     def __init__(self, today, job_number, role, hosts, version, coins, user_name,
                  today_global_ipv4_addr):
         """构造函数：初始化增类的对象
@@ -50,7 +52,6 @@ class CreateRecordIdleFish(Create):
         if self.exist:
             print(f'记录today={self.today}, job_number={self.job_number}已存在，无需重复创建')
             return
-        print('正在创建记录')
         self.query(
             'record_idle_fish',
             (

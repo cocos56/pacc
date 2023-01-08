@@ -143,8 +143,9 @@ class IdleFish(LDProj):
             today = date.today()
             print(
                 f'start_index={start_index}, today={today}, job_number={job_number}, role='
-                f'{retrieve_idle_fish_ins.role}, hosts={retrieve_idle_fish_ins.hosts}, version='
-                f'{retrieve_idle_fish_ins.version}, coins={retrieve_idle_fish_ins.coins}, '
+                f'{retrieve_idle_fish_ins.role}, hosts={retrieve_idle_fish_ins.hosts}, '
+                f'last_update_hosts_date={retrieve_idle_fish_ins.last_update_hosts_date}, \n'
+                f'version={retrieve_idle_fish_ins.version}, coins={retrieve_idle_fish_ins.coins}, '
                 f'user_name={retrieve_idle_fish_ins.user_name}, today_global_ipv4_addr='
                 f'{retrieve_idle_fish_ins.today_global_ipv4_addr}')
             CreateRecordIdleFish(
