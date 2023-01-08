@@ -207,9 +207,10 @@ class IdleFish(LDProj):
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         job_number = LDConsole(index).get_job_number()
-        if version_info not in ('0.0.0', RetrieveIdleFish(job_number).version):
-            UpdateIdleFish(job_number).update_version(version_info)
+        if version_info != '0.0.0':
             UpdateIdleFish(job_number).update_last_update_version_date(today)
+            if version_info != RetrieveIdleFish(job_number).version:
+                UpdateIdleFish(job_number).update_version(version_info)
         if version_info == '7.5.41':
             print('当前的闲鱼版本过老，需要升级')
         print(f'模拟器{index}上的闲鱼版本为：{version_info}')
@@ -242,13 +243,13 @@ class IdleFish(LDProj):
                 if LDConsole(index).is_exist():
                     job_number = LDConsole(index).get_job_number()
                     retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-                    if not retrieve_idle_fish_ins.version or \
+                    if not retrieve_idle_fish_ins.last_update_version_date:
+                        should_run = True
+                    elif retrieve_idle_fish_ins.last_update_version_date >= today:
+                        pass
+                    elif not retrieve_idle_fish_ins.version or \
                             retrieve_idle_fish_ins.version != '7.8.10':
                         should_run = True
-                    if not should_run:
-                        if not retrieve_idle_fish_ins.last_update_version_date or \
-                                retrieve_idle_fish_ins.last_update_version_date < today:
-                            UpdateIdleFish(job_number).update_last_update_version_date(today)
                     print(f'设备{index}存在，version={retrieve_idle_fish_ins.version}，'
                           f'last_update_version_date='
                           f'{retrieve_idle_fish_ins.last_update_version_date}'
