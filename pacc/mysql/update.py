@@ -2,6 +2,8 @@
 from .mysql import Mobile, Account
 from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
 
+from datetime import date
+
 
 # pylint: disable=too-few-public-methods
 class Update:
@@ -317,3 +319,10 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_update_hosts_date: 上次更新主机列表值的日期
         """
         print(self.query('last_update_hosts_date', last_update_hosts_date))
+
+    def update_last_update_version_date(self, last_update_version_date: date.today()):
+        """更新设备在数据库中上次更新版本号的日期
+
+        :param last_update_version_date: 上次更新版本号的日期
+        """
+        print(self.query('last_update_version_date', last_update_version_date))

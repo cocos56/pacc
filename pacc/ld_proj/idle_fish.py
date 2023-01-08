@@ -145,9 +145,15 @@ class IdleFish(LDProj):
                 f'start_index={start_index}, today={today}, job_number={job_number}, role='
                 f'{retrieve_idle_fish_ins.role}, hosts={retrieve_idle_fish_ins.hosts}, '
                 f'last_update_hosts_date={retrieve_idle_fish_ins.last_update_hosts_date}, \n'
-                f'version={retrieve_idle_fish_ins.version}, coins={retrieve_idle_fish_ins.coins}, '
+                f'version={retrieve_idle_fish_ins.version}, '
+                f'last_update_version_date={retrieve_idle_fish_ins.last_update_version_date}, '
+                f'coins={retrieve_idle_fish_ins.coins}, '
                 f'user_name={retrieve_idle_fish_ins.user_name}, today_global_ipv4_addr='
                 f'{retrieve_idle_fish_ins.today_global_ipv4_addr}')
+            if retrieve_idle_fish_ins.last_check_date < today:
+                print(f'设备{start_index}的闲鱼币信息今日未更新，请先更新闲鱼币信息')
+                start_index += 1
+                continue
             CreateRecordIdleFish(
                 today, job_number, retrieve_idle_fish_ins.role, retrieve_idle_fish_ins.hosts,
                 retrieve_idle_fish_ins.version, retrieve_idle_fish_ins.coins,
@@ -188,21 +194,22 @@ class IdleFish(LDProj):
             start_index += 1
 
     @classmethod
-    def check_version_on_target_device(cls, index):
+    def check_version_on_target_device(cls, index: int, today: date.today()) -> bool:
         """检查目标设备上的版本是否存在问题
 
         :param index: 目标设备的索引值
+        :param today: 今日的日期
         :return: 目标设备不存在返回False，正常检查完毕返回True
         """
         if not LDConsole(index).is_exist():
             print('目标设备不存在，无需检查')
-            sleep(10)
             return False
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         job_number = LDConsole(index).get_job_number()
         if version_info not in ('0.0.0', RetrieveIdleFish(job_number).version):
             UpdateIdleFish(job_number).update_version(version_info)
+            UpdateIdleFish(job_number).update_last_update_version_date(today)
         if version_info == '7.5.41':
             print('当前的闲鱼版本过老，需要升级')
         print(f'模拟器{index}上的闲鱼版本为：{version_info}')
@@ -211,7 +218,7 @@ class IdleFish(LDProj):
         return True
 
     @classmethod
-    def check_version(cls, start_index, end_index, p_num=5):
+    def check_version(cls, start_index: int, end_index: int, p_num=5):
         """检查版本是否存在问题
 
         :param start_index: 起始索引值
@@ -229,28 +236,35 @@ class IdleFish(LDProj):
                 break
             print(now)
             should_run = False
+            today = date.today()
             for i in range(p_num):
                 index = start_index + i
                 if LDConsole(index).is_exist():
                     job_number = LDConsole(index).get_job_number()
                     retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-                    if not retrieve_idle_fish_ins.version:
+                    if not retrieve_idle_fish_ins.version or \
+                            retrieve_idle_fish_ins.version != '7.8.10':
                         should_run = True
-                    elif retrieve_idle_fish_ins.version != '7.8.10':
-                        should_run = True
-                    print(f'设备{index}存在，version={retrieve_idle_fish_ins.version}'
-                          f'，{datetime.now()}')
+                    if not should_run:
+                        if not retrieve_idle_fish_ins.last_update_version_date or \
+                                retrieve_idle_fish_ins.last_update_version_date < today:
+                            UpdateIdleFish(job_number).update_last_update_version_date(today)
+                    print(f'设备{index}存在，version={retrieve_idle_fish_ins.version}，'
+                          f'last_update_version_date='
+                          f'{retrieve_idle_fish_ins.last_update_version_date}'
+                          f'，today={today}，{datetime.now()}')
                 else:
                     print(f'设备{index}不存在，{datetime.now()}')
             if not should_run:
-                print('本轮设备全部不存在或已是最新版本，无需进行检查版本信息的操作\n')
+                print(
+                    '本轮中的设备全部属于不存在或已是最新版本或今日已更新过版本号的设备，无需进行检查版本信息的操作\n')
                 start_index += p_num
                 continue
             for i in range(p_num):
                 cls(start_index + i).launch()
             sleep(5)
             for i in range(p_num):
-                cls.check_version_on_target_device(start_index + i)
+                cls.check_version_on_target_device(start_index + i, today)
             start_index += p_num
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
