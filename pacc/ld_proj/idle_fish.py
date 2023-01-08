@@ -607,7 +607,7 @@ class IdleFish(LDProj):
             start_day = date.today()
         while True:
             today = date.today()
-            while start_day < today:
+            while start_day > today:
                 print(f'mainloop while start_day={start_day}, today={today}')
                 today = date.today()
                 seconds = (datetime.fromisoformat(
@@ -618,9 +618,9 @@ class IdleFish(LDProj):
                     sleep(seconds)
             print(f'mainloop start_day={start_day}, today={today}, {datetime.now()}')
             cls.run_task(start_index, p_num)
-            if start_index + p_num - 1 >= end_index:
+            start_index += p_num
+            if start_index > end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕，'
                       f'当前时间为：{datetime.now()}')
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
-            start_index += p_num
