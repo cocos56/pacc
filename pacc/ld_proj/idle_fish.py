@@ -519,12 +519,16 @@ class IdleFish(LDProj):
             print('本轮设备全部不存在或者已执行，无需进行执行任务的操作\n')
             return False
         for i in range(p_num):
+            index = start_index + i
             if i == p_num - 1:
-                cls(start_index + i).run_app()
+                cls(index).run_app()
             elif i == 0:
-                cls(start_index + i).run_app(1)
+                cls(index).run_app(1)
             else:
-                cls(start_index + i).run_app(26)
+                if LDConsole(index).is_exist():
+                    cls(index).run_app(26)
+                else:
+                    print(f'设备{index}不存在，正在执行下一项')
         for i in range(p_num):
             cls(start_index + i).run_task_on_target_device()
         sleep(69)
