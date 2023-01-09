@@ -264,6 +264,23 @@ class IdleFish(LDProj):
                 cls.check_version_on_target_device(start_index + i, today)
             start_index += p_num
 
+    @classmethod
+    def restart_before_check_target_device(cls, index):
+        """检查目标设备是否存在问题之前如果有需要先重启一次
+
+        :param index: 目标设备的索引值
+        :return: 不需要重启返回False，重启一次完毕返回True
+        """
+        if date(year=2023, month=1, day=21) >= date.today() >= date(year=2023, month=1, day=10):
+            print('当前正值抽福卡日期段，每天检查之前需要先重启一次')
+        else:
+            return False
+        print(f'正在准备检查设备{index}之前的重启操作')
+        lduia_ins = LDUIA(index)
+        lduia_ins.tap((50, 85), 9)
+        cls(index).run_app(13)
+        return True
+
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     # pylint: disable=too-many-locals
     @classmethod
@@ -276,10 +293,6 @@ class IdleFish(LDProj):
         """
         if reopen_flag:
             cls(index).run_app(30)
-        if not LDConsole(index).is_exist():
-            print(f'目标设备{index}不存在，无需检查')
-            sleep(10)
-            return False
         print(f'正在准备检查设备{index}')
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
@@ -372,42 +385,6 @@ class IdleFish(LDProj):
         return True
 
     @classmethod
-    def check_even_devices(cls, start_index, end_index):
-        """检查索引值为偶数的设备是否存在问题
-
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
-        """
-        src_start_index = start_index
-        if start_index % 2:
-            start_index += 1
-        while True:
-            cls(start_index).run_app(15)
-            cls.check_target_device(start_index)
-            if start_index + 1 >= end_index:
-                print(f'所有共{(end_index - src_start_index + 1) / 2}项已检查完毕')
-                break
-            start_index += 2
-
-    @classmethod
-    def check_odd_devices(cls, start_index, end_index):
-        """检查编号为奇数的设备是否存在问题
-
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
-        """
-        src_start_index = start_index
-        if not start_index % 2:
-            start_index += 1
-        while True:
-            cls(start_index).run_app(15)
-            cls.check_target_device(start_index)
-            if start_index + 1 >= end_index:
-                print(f'所有共{(end_index - src_start_index + 1) / 2}项已检查完毕')
-                break
-            start_index += 2
-
-    @classmethod
     def check_after_run(cls, start_index, end_index):
         """从数据库中读取到运行过的状态之后再进行检查
 
@@ -461,37 +438,9 @@ class IdleFish(LDProj):
                 cpu_use = cpu_percent(1)
                 print(cpu_use)
             cls(start_index).run_app(13)
+            cls.restart_before_check_target_device(start_index)
             cls.check_target_device(start_index)
             start_index += 1
-
-    @classmethod
-    def check(cls, start_index, end_index, p_num=3):
-        """检查是否存在问题
-
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
-        :param p_num: 并发数量
-        """
-        src_start_index = start_index
-        while True:
-            now = datetime.now()
-            if now.hour >= 23 and now.minute >= 50:
-                break
-            print(now)
-            for i in range(p_num):
-                if i == p_num - 1:
-                    cls(start_index + i).run_app(13)
-                elif i == 0:
-                    cls(start_index + i).run_app(1)
-                else:
-                    cls(start_index + i).run_app(5)
-            for i in range(p_num):
-                cls.check_target_device(start_index + i)
-            if start_index + p_num - 1 >= end_index:
-                print(
-                    f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：{datetime.now()}')
-                break
-            start_index += p_num
 
     def should_restart(self, current_focus=''):
         """判断是否需要重启
