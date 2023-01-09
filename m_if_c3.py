@@ -8,5 +8,4 @@ Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, LDConsole.get_last_device_num()
 print(f'start_index={start_index}, end_index={end_index}')
-# 2023-01-08: 1, 305
-IdleFish.mainloop(280, end_index, 5)
+IdleFish.mainloop(start_index, end_index, 5)
