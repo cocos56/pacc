@@ -336,7 +336,7 @@ class IdleFish(LDProj):
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
         for _ in range(int(ex_p / 200)):
-            lduia_ins.tap((276, 600), 0.1)
+            lduia_ins.tap((276, 600), 0.01)
         if ex_p >= 200:
             return cls.check_target_device(index, reopen_flag=True)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
