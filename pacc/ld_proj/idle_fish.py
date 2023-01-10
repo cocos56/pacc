@@ -278,7 +278,7 @@ class IdleFish(LDProj):
         print(f'正在准备检查设备{index}之前的重启操作')
         lduia_ins = LDUIA(index)
         lduia_ins.tap((50, 85), 9)
-        cls(index).run_app(13)
+        cls(index).run_app(19)
         return True
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
@@ -437,7 +437,7 @@ class IdleFish(LDProj):
                 sleep(5)
                 cpu_use = cpu_percent(1)
                 print(cpu_use)
-            cls(start_index).run_app(13)
+            cls(start_index).run_app(19)
             cls.restart_before_check_target_device(start_index)
             cls.check_target_device(start_index)
             start_index += 1
