@@ -471,7 +471,6 @@ class IdleFish(LDProj):
 
         :return: 目标设备不存在返回False，正常执行完毕返回True
         """
-        print(f'准备在目标设备{self.ld_index}上执行任务')
         if not LDConsole(self.ld_index).is_exist():
             print(f'目标设备{self.ld_index}不存在，无需执行任务')
             return False
