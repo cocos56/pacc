@@ -169,6 +169,7 @@ class IdleFish(LDProj):
         :param end_index: 终止索引值
         """
         src_start_index = start_index
+        ipv4_addr = get_global_ipv4_addr()
         while True:
             if start_index - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已更新今日的公网IPv4地址完毕'
@@ -184,7 +185,6 @@ class IdleFish(LDProj):
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
             device_name = LDConsole(start_index).get_name()
-            ipv4_addr = get_global_ipv4_addr()
             print(f'start_index={start_index}, device_name={device_name}, ipv4_addr={ipv4_addr}, '
                   f'today_global_ipv4_addr={retrieve_idle_fish_ins.today_global_ipv4_addr}, '
                   f'last_update_ip_date={retrieve_idle_fish_ins.last_update_ip_date}, '
