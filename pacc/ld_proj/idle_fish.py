@@ -474,7 +474,6 @@ class IdleFish(LDProj):
         print(f'准备在目标设备{self.ld_index}上执行任务')
         if not LDConsole(self.ld_index).is_exist():
             print(f'目标设备{self.ld_index}不存在，无需执行任务')
-            sleep(10)
             return False
         print(f'目标设备{self.ld_index}存在，可以向下执行任务')
         while self.should_restart():
