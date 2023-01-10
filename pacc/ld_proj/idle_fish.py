@@ -442,7 +442,7 @@ class IdleFish(LDProj):
                 cpu_use = cpu_percent(1)
                 print(cpu_use)
             cls(start_index).run_app(19)
-            cls.restart_before_check_target_device(start_index)
+            # cls.restart_before_check_target_device(start_index)
             cls.check_target_device(start_index)
             start_index += 1
 
