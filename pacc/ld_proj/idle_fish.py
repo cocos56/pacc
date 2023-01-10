@@ -556,7 +556,7 @@ class IdleFish(LDProj):
         :param p_num: 并发数量
         """
         src_start_index = start_index
-        if start_index <= 1 and datetime.now().hour >= 22:
+        if start_index <= 1 and datetime.now().hour > 22:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
