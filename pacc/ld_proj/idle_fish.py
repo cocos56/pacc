@@ -116,8 +116,10 @@ class IdleFish(LDProj):
                 continue
             if not retrieve_idle_fish_ins.last_top_up_mobile_date:
                 pass
-            elif retrieve_idle_fish_ins.last_top_up_mobile_date > today:
+            elif retrieve_idle_fish_ins.last_top_up_mobile_date >= today:
                 print(f'今天已在设备{start_index}上执行过薅羊毛赚话费的任务，无需重复执行')
+                start_index += 1
+                continue
             cls(start_index).run_app(19)
             lduia_ins = LDUIA(start_index)
             lduia_ins.tap((50, 85), 6)
