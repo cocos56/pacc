@@ -264,21 +264,21 @@ class UpdateIdleFish(UpdateIdleFishBase):
         """
         print(self.query('version', version))
 
-    def update_coins(self, coins):
+    def update_coins(self, coins: int):
         """更新设备的闲鱼币币值
 
         :param coins: 新的闲鱼币币值
         """
         print(self.query('coins', coins))
 
-    def update_last_check_date(self, last_check_date):
+    def update_last_check_date(self, last_check_date: date.today()):
         """更新设备的上次检查日期
 
         :param last_check_date: 新的上次检查日期
         """
         print(self.query('last_check_date', last_check_date))
 
-    def update_last_run_date(self, last_run_date):
+    def update_last_run_date(self, last_run_date: date.today()):
         """更新设备的上次运行日期
 
         :param last_run_date: 新的上次运行日期
@@ -313,7 +313,7 @@ class UpdateIdleFish(UpdateIdleFishBase):
         """
         print(self.query('hosts', hosts))
 
-    def update_last_update_hosts_date(self, last_update_hosts_date):
+    def update_last_update_hosts_date(self, last_update_hosts_date: date.today()):
         """更新设备在数据库中上次更新主机列表值的日期
 
         :param last_update_hosts_date: 上次更新主机列表值的日期
@@ -328,7 +328,7 @@ class UpdateIdleFish(UpdateIdleFishBase):
         print(self.query('last_update_version_date', last_update_version_date))
 
     def update_last_top_up_mobile_date(self, last_top_up_mobile_date: date.today()):
-        """更新设备在数据库中上次薅羊毛赚话费日期
+        """更新设备在数据库中上次薅羊毛赚话费的日期
 
         :param last_top_up_mobile_date: 上次薅羊毛赚话费的日期
         """
