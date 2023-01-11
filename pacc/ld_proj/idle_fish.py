@@ -122,14 +122,12 @@ class IdleFish(LDProj):
             lduia_ins = LDUIA(start_index)
             lduia_ins.tap((50, 85), 6)
             lduia_ins.tap((479, 596), 3)
-            lduia_ins.tap((460, 350), 20)
+            if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
+                lduia_ins.tap((460, 350), 20)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
+            UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
             input()
-            new_host_name = ''
-            if not retrieve_idle_fish_ins.hosts:
-                UpdateIdleFish(job_number).update_hosts(new_host_name)
-                UpdateIdleFish(job_number).update_last_update_hosts_date(today)
             start_index += 1
 
     @classmethod

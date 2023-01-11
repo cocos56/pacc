@@ -326,3 +326,10 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_update_version_date: 上次更新版本号的日期
         """
         print(self.query('last_update_version_date', last_update_version_date))
+
+    def update_last_top_up_mobile_date(self, last_top_up_mobile_date: date.today()):
+        """更新设备在数据库中上次薅羊毛赚话费日期
+
+        :param last_top_up_mobile_date: 上次薅羊毛赚话费的日期
+        """
+        print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
