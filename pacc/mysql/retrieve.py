@@ -307,6 +307,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         """从数据库中获取上次更新版本号的日期"""
         return self.query('last_update_version_date')
 
+    @property
+    def top_up_mobile(self):
+        """从数据库中读取是否执行薅羊毛赚话费的标志"""
+        return self.query('top_up_mobile')
+
+    @property
+    def last_top_up_mobile_date(self):
+        """从数据库中获取上次薅羊毛赚话费的日期"""
+        return self.query('last_top_up_mobile_date')
+
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
         """查询函数：查询数据

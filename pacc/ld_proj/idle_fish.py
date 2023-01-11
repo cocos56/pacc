@@ -78,8 +78,59 @@ class IdleFish(LDProj):
             print(f'设备{self.ld_index}不存在，无法启动')
         sleep(sleep_time)
 
-    def use_best_deal_to_top_mobile_up(self):
-        """薅羊毛赚话费（使用最优方案充话费）"""
+    @classmethod
+    def top_up_mobile(cls, start_index, end_index):
+        """薅羊毛赚话费（使用最优方案充话费，use_best_deal_to_top_up_mobile）
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已薅羊毛赚话费完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需薅羊毛赚话费')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'top_up_mobile={retrieve_idle_fish_ins.top_up_mobile}, '
+                  f'last_top_up_mobile_date={retrieve_idle_fish_ins.last_top_up_mobile_date}, '
+                  f'today={today}')
+            if retrieve_idle_fish_ins.user_name[:2] != 'xy':
+                print(f'设备{start_index}上的账号{retrieve_idle_fish_ins.user_name}不是以xy开头，'
+                      f'无需薅羊毛赚话费')
+                start_index += 1
+                continue
+            if not retrieve_idle_fish_ins.top_up_mobile:
+                print(f'设备{start_index}上的执行薅羊毛赚话费的标志为'
+                      f'{retrieve_idle_fish_ins.top_up_mobile}，无需薅羊毛赚话费')
+                start_index += 1
+                continue
+            if not retrieve_idle_fish_ins.last_top_up_mobile_date:
+                pass
+            elif retrieve_idle_fish_ins.last_top_up_mobile_date > today:
+                print(f'今天已在设备{start_index}上执行过薅羊毛赚话费的任务，无需重复执行')
+            cls(start_index).run_app(19)
+            lduia_ins = LDUIA(start_index)
+            lduia_ins.tap((50, 85), 6)
+            lduia_ins.tap((479, 596), 3)
+            lduia_ins.tap((460, 350), 20)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            input()
+            new_host_name = ''
+            if not retrieve_idle_fish_ins.hosts:
+                UpdateIdleFish(job_number).update_hosts(new_host_name)
+                UpdateIdleFish(job_number).update_last_update_hosts_date(today)
+            start_index += 1
 
     @classmethod
     def update_hosts(cls, start_index, end_index, host_name):
