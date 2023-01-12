@@ -124,7 +124,13 @@ class IdleFish(LDProj):
             lduia_ins = LDUIA(start_index)
             lduia_ins.tap((50, 85), 6)
             lduia_ins.tap((479, 596), 3)
-            if not lduia_ins.get_dict(content_desc='提醒签到'):
+            if lduia_ins.get_dict(content_desc=r'HI，店长 '):
+                print('当前界面需要先点击一下升级小店然后再点击赚经验')
+                lduia_ins.tap((266, 599), 3)
+                lduia_ins.tap((479, 596), 3)
+                lduia_ins.xml = ''
+            if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
+                print('当前界面不是赚经验的界面，正在重新执行')
                 continue
             if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
                 lduia_ins.tap((460, 350), 20)
