@@ -530,7 +530,7 @@ class IdleFish(LDProj):
             print('检测到已掉线，请登录')
         return False
 
-    def run_task_on_target_device(self):
+    def run_task_on_target_device(self, today: date.today()):
         """在指定设备上执行任务
 
         :return: 目标设备不存在返回False，正常执行完毕返回True
@@ -538,7 +538,11 @@ class IdleFish(LDProj):
         if not LDConsole(self.ld_index).is_exist():
             print(f'目标设备{self.ld_index}不存在，无需执行任务')
             return False
-        print(f'目标设备{self.ld_index}存在，可以向下执行任务')
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        if retrieve_idle_fish_ins.last_run_date == today:
+            print(f'设备{self.ld_index}今日已执行，无需执行任务')
+            return False
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
@@ -549,9 +553,9 @@ class IdleFish(LDProj):
         except FileNotFoundError as err:
             print_err(err)
             self.run_app()
-            return self.run_task_on_target_device()
+            return self.run_task_on_target_device(today)
         if self.should_restart():
-            return self.run_task_on_target_device()
+            return self.run_task_on_target_device(today)
         return True
 
     @classmethod
@@ -563,12 +567,12 @@ class IdleFish(LDProj):
         :return: 正常执行完毕返回True，无需执行返回False
         """
         should_run = False
+        today = date.today()
         for i in range(p_num):
             index = start_index + i
             if LDConsole(index).is_exist():
                 job_number = LDConsole(index).get_job_number()
                 retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-                today = date.today()
                 if not retrieve_idle_fish_ins.last_run_date:
                     should_run = True
                 elif retrieve_idle_fish_ins.last_run_date < today:
@@ -582,26 +586,39 @@ class IdleFish(LDProj):
             return False
         for i in range(p_num):
             index = start_index + i
+            if not LDConsole(index).is_exist():
+                print(f'设备{index}不存在，正在执行下一项')
+                if i == p_num - 1:
+                    sleep(60)
+                continue
+            job_number = LDConsole(index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            if retrieve_idle_fish_ins.last_run_date == today:
+                print(f'设备{index}今日已执行，正在执行下一项')
+                if i == p_num - 1:
+                    sleep(60)
+                continue
             if i == p_num - 1:
                 cls(index).run_app()
             elif i == 0:
                 cls(index).run_app(1)
             else:
-                if LDConsole(index).is_exist():
-                    cls(index).run_app(26)
-                else:
-                    print(f'设备{index}不存在，正在执行下一项')
+                cls(index).run_app(26)
         for i in range(p_num):
-            cls(start_index + i).run_task_on_target_device()
+            cls(start_index + i).run_task_on_target_device(today)
         sleep(69)
         for i in range(p_num):
             index = start_index + i
             if not LDConsole(index).is_exist():
                 print(f'目标设备{index}不存在，无需进行执行任务后的收尾工作')
                 continue
+            job_number = LDConsole(index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            if retrieve_idle_fish_ins.last_run_date == today:
+                print(f'目标设备{index}今日已执行，无需进行执行任务后的收尾工作')
+                continue
             LDConsole.quit(index)
             job_number = LDConsole(index).get_job_number()
-            today = date.today()
             if today != RetrieveIdleFish(job_number).last_run_date:
                 UpdateIdleFish(job_number).update_last_run_date(today)
             print(f'第{index}项已执行完毕')
