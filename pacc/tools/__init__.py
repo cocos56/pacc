@@ -1,6 +1,7 @@
 """工具包的初始化模块"""
 from .captcha import SliderCaptcha
 from .dir import create_dir
+from .disk import DiskUsage
 from .email import EMail
 from .file import File
 from .ip import get_global_ipv4_addr
@@ -11,6 +12,7 @@ from .xml import get_pretty_xml, get_xml
 __all__ = [
     'SliderCaptcha',
     'create_dir',
+    'DiskUsage',
     'EMail',
     'File',
     'get_global_ipv4_addr',

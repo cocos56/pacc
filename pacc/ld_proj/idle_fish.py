@@ -1,5 +1,7 @@
 """咸鱼全自动刷咸鱼币中央监控系统模块"""
 import os
+import shutil
+from os import listdir, path
 from datetime import date, datetime, timedelta
 from xml.parsers.expat import ExpatError
 
@@ -9,7 +11,7 @@ from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish, CreateRecordIdleFish
-from ..tools import create_dir, get_global_ipv4_addr
+from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -33,13 +35,24 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     @classmethod
-    def backups(cls, start_index, end_index, dir_path='E:/ldbks'):
+    def backups(cls, start_index, end_index, dir_path='E:/ldbks', reserved_gbs=6*1024):
         """批量备份雷电模拟器的设备
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         :param dir_path: 备份文件夹的目录
+        :param reserved_gbs: 保留的GB数
         """
+        print('正在进行备份设备')
+        usage = DiskUsage(dir_path[:2])
+        print(f'total={usage.total}, usage.used={usage.used}, usage.free={usage.free}, '
+              f'usage.percent={usage.percent}, reserved_gbs={reserved_gbs}')
+        if usage.free < reserved_gbs:
+            print(listdir(dir_path))
+            delete_dir = path.join(dir_path, listdir(dir_path)[0])
+            print(f'正在删除{delete_dir}目录, {datetime.now()}')
+            shutil.rmtree(delete_dir)
+            print(f'已删除{delete_dir}目录, {datetime.now()}')
         src_start_index = start_index
         dir_path = f'{dir_path}/' + str(date.today()).replace('-', '_')
         create_dir(dir_path)
@@ -438,7 +451,7 @@ class IdleFish(LDProj):
                 dir_name = f'{dir_name}_10k'
         create_dir(dir_name)
         new_png = f'{dir_name}/{LDConsole(index).get_name()}.png'
-        if os.path.exists(new_png):
+        if path.exists(new_png):
             os.remove(new_png)
         os.rename(png_path, new_png)
         LDConsole.quit(index)
