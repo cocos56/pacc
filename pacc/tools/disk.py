@@ -1,3 +1,4 @@
+"""磁盘模块"""
 from psutil import disk_usage
 
 
@@ -10,7 +11,7 @@ def get_gbs(number_of_bytes: int) -> int:
     return number_of_bytes//1024//1024//1024
 
 
-class DiskUsage:
+class DiskUsage:  # pylint: disable=too-few-public-methods
     """磁盘占用"""
 
     def __init__(self, path):
