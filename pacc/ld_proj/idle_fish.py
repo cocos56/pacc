@@ -640,14 +640,14 @@ class IdleFish(LDProj):
         while True:
             today = date.today()
             while start_day > today:
-                print(f'mainloop while start_day={start_day}, today={today}')
-                today = date.today()
+                print(f'mainloop while start_day={start_day}, today={today}, {datetime.now()}')
                 seconds = (datetime.fromisoformat(
                     f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
                 if seconds > 3600:
                     sleep(3600)
                 else:
                     sleep(seconds)
+                today = date.today()
             print(f'mainloop start_day={start_day}, today={today}, {datetime.now()}')
             cls.run_task(start_index, p_num)
             start_index += p_num
