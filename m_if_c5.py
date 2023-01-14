@@ -1,7 +1,7 @@
 """闲鱼程序入口C5_1模块"""
 from pacc.adb import LDConsole
 from pacc.config import Config
-from pacc.ld_proj.idle_fish import IdleFish
+from pacc.ld_proj import IdleFish
 
 Config.debug = True
 Config.set_ld_work_path()

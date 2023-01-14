@@ -1,4 +1,5 @@
-"""闲鱼全自动刷咸鱼币中央监控系统模块2"""
+"""闲鱼全自动刷闲鱼币中央监控系统模块2"""
+# pylint: disable=duplicate-code
 import os
 import shutil
 from os import listdir, path
