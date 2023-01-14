@@ -79,7 +79,7 @@ class LDUIA(LDBase):
         self.tap(point)
         return True
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments, duplicate-code
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                   index='', naf='', start_index=0):
         """获取目标点的坐标
@@ -117,7 +117,7 @@ class LDUIA(LDBase):
         y_coordinate = average(y1_value, y2_value)
         return x_coordinate, y_coordinate
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments, duplicate-code
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_='',
                    index='', naf='', start_index=0):
         """获取目标点所在的边界的斜对角两点的坐标
@@ -143,7 +143,7 @@ class LDUIA(LDBase):
             return dic['@bounds']
         return False
 
-    # pylint: disable=too-many-branches, too-many-arguments
+    # pylint: disable=too-many-branches, too-many-arguments, duplicate-code
     def get_dict(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                  index='', naf='', start_index=0):
         """获取目标对象的字典信息
@@ -203,7 +203,7 @@ class LDUIA(LDBase):
                 print(f'未找到【naf={naf}】')
         return dic
 
-    def depth_first_search(self, dic, start_index=0):
+    def depth_first_search(self, dic, start_index=0):  # pylint: disable=duplicate-code
         """通过深度优先来搜索目标对象
 
         :param dic: 待搜索对象的字典信息
