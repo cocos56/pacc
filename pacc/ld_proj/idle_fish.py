@@ -1,33 +1,18 @@
 """闲鱼全自动刷闲鱼币中央监控系统模块"""
 import os
 import shutil
-from os import listdir, path
 from datetime import date, datetime, timedelta
+from os import listdir, path
 from xml.parsers.expat import ExpatError
 
 from psutil import cpu_percent
 
+from .idle_fish_base import Activity, ResourceID
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
-
-
-class Activity:  # pylint: disable=too-few-public-methods
-    """闲鱼全自动刷咸鱼币中央监控系统模块的安卓活动名类"""
-    MainActivity = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.MainActivity'
-    UserLoginActivity = 'com.taobao.idlefish/com.ali.user.mobile.login.ui.UserLoginActivity'
-    Launcher = 'com.android.launcher3/com.android.launcher3.Launcher'
-    ApplicationNotResponding = 'Application Not Responding: com.taobao.idlefish'
-    ApplicationError = 'Application Error: com.taobao.idlefish'
-
-
-class ResourceID:  # pylint: disable=too-few-public-methods
-    """闲鱼全自动刷咸鱼币中央监控系统模块的安卓资源ID类"""
-    aliuser_login_mobile_et = 'com.taobao.idlefish:id/aliuser_login_mobile_et'
-    login_password_btn = 'com.taobao.idlefish:id/login_password_btn'
-    confirm = 'com.taobao.idlefish:id/confirm'
 
 
 class IdleFish(LDProj):
@@ -144,6 +129,7 @@ class IdleFish(LDProj):
                 print('手机号已是最新，无需更新')
             lduia_ins.click(ResourceID.login_password_btn)
             lduia_ins.click(ResourceID.confirm)
+            lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             update_idle_fish_ins.update_last_login_date(today)
