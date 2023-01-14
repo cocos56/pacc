@@ -563,7 +563,7 @@ class IdleFish(LDProj):
         lduia_ins.get_screen()
         try:
             lduia_ins.get_current_ui_hierarchy()
-        except FileNotFoundError as err:
+        except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.run_app()
             return self.run_task_on_target_device(today)
