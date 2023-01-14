@@ -143,3 +143,15 @@ class LDConsole:
         popen(cmd)
         print(f'正在启动设备{self.ld_index}并开启应用{app_name}')
         sleep(5, False, False)
+
+    @classmethod
+    def copy(cls, name):
+        """复制雷电模拟器设备
+
+        :param name: 设备名
+        """
+        print(f'正在复制设备{name}')
+        cmd = f'{LDC}copy --name {name} --from 0'
+        print(cmd)
+        system(cmd)
+        print(f'设备{name}已完成复制')

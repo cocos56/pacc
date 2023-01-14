@@ -385,3 +385,17 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_login_ipv4_addr: 上次登录的公网IPv4地址
         """
         print(self.query('last_login_ipv4_addr', last_login_ipv4_addr))
+
+    def update_create(self, create):
+        """更新设备是否需要创建的标志
+
+        :param create: 是否需要创建的标志
+        """
+        print(self.query2('create', create))
+
+    def update_last_create_date(self, last_create_date: date.today()):
+        """更新设备在数据库中上次创建的日期
+
+        :param last_create_date: 上次创建的日期
+        """
+        print(self.query('last_create_date', last_create_date))

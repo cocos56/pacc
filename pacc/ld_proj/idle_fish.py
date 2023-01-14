@@ -11,7 +11,8 @@ from .idle_fish_base import Activity, ResourceID
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, UpdateIdleFish, CreateRecordIdleFish
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishData, \
+    UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
 
 
@@ -84,6 +85,19 @@ class IdleFish(LDProj):
         sleep(sleep_time)
 
     @classmethod
+    def create(cls):
+        """创建"""
+        for Job_N, role in RetrieveIdleFishData.query_all_data():
+            today = date.today()
+            print(Job_N, role, today)
+            LDConsole.copy(Job_N+role)
+            update_idle_fish_ins = UpdateIdleFish(Job_N)
+            update_idle_fish_ins.update_create('NULL')
+            update_idle_fish_ins.update_login(1)
+            update_idle_fish_ins.update_last_create_date(today)
+        cls.login(1, LDConsole.get_last_device_num())
+
+    @classmethod
     def login(cls, start_index, end_index):
         """登录
 
@@ -138,13 +152,21 @@ class IdleFish(LDProj):
                 print(err)
                 continue
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
-            lduia_ins.click(ResourceID.aliuser_login_password_et)
+            lduia_ins.click(ResourceID.aliuser_login_password_et, xml=lduia_ins.xml)
             LDADB(start_index).input_text(retrieve_idle_fish_ins.login_pw)
             if len(if_mn) != 11:
-                lduia_ins.click(ResourceID.aliuser_login_account_et)
+                lduia_ins.click(ResourceID.aliuser_login_account_et, xml=lduia_ins.xml)
                 LDADB(start_index).input_text(retrieve_idle_fish_ins.user_name)
+            user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+            login_pw = lduia_ins.get_dict(
+                ResourceID.aliuser_login_password_et, xml=lduia_ins.xml).get('@text')
+            print(user_name, user_name==retrieve_idle_fish_ins.user_name)
+            print(login_pw, login_pw==retrieve_idle_fish_ins.login_pw)
             if len(if_mn) == 11:
-                lduia_ins.click(ResourceID.aliuser_login_login_btn)
+                lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
+            elif user_name==retrieve_idle_fish_ins.user_name and \
+                    login_pw==retrieve_idle_fish_ins.login_pw:
+                lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             update_idle_fish_ins.update_last_login_date(today)

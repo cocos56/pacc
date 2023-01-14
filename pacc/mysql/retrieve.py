@@ -60,9 +60,7 @@ class RetrieveSD:
 RetrieveSD.get_all_accounts()
 RetrieveSD.get_all_names()
 
-
-# pylint: disable=too-few-public-methods
-class Retrieve:
+class Retrieve:  # pylint: disable=too-few-public-methods
     """该类用于从MySQL数据库中查询数据"""
 
     # pylint: disable=too-many-arguments
@@ -83,9 +81,7 @@ class Retrieve:
             return res[0]
         return res
 
-
-# pylint: disable=too-few-public-methods
-class RetrieveMobile(Retrieve):
+class RetrieveMobile(Retrieve):  # pylint: disable=too-few-public-methods
     """该类用于从MySQL数据库中的mobile数据库中查询数据"""
 
     def __init__(self, serial_num):
@@ -194,28 +190,6 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         super().__init__(serial_num)
         self.__class__.instances.update({self.serial_num: self})
 
-
-class RetrieveRecordIdleFishBase(Retrieve):
-    """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
-
-    def __init__(self, job_number, today):
-        """构造函数
-
-        :param job_number: 工号
-        :param today: 今天的日期
-        """
-        self.job_number = job_number
-        self.today = today
-
-    # pylint: disable=arguments-differ
-    def query(self, field, table):
-        """查询函数：查询数据
-
-        :param field: 字段名
-        :param table: 表名
-        :return: 查询到的结果（单条）
-        """
-        return super().query(table, field, 'Job_N', f"'{self.job_number}'", Record)
 
 
 class RetrieveIdleFishBase(Retrieve):
@@ -352,6 +326,27 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         """
         return super().query(field, table)
 
+
+class RetrieveIdleFishData:
+    """该类用于从account数据库中的idle_fish表中查询数据"""
+
+    @classmethod
+    def query_all_data(cls, database=Account):
+        """查询函数：查询指定列的所有行数据
+
+        :param database: 数据库名
+        :return: 查询到的结果
+        """
+        cmd = f'select Job_N, role from `idle_fish` where `create`=1'
+        print(cmd)
+        res = database.query(cmd)
+        if res :
+            if isinstance(res[0], str):
+                res = [res]
+            else:
+                res = list(res)
+        print(res)
+        return res
 
 class RetrieveAccount(Retrieve):
     """该类用于从MySQL数据库中的account数据库中查询数据"""
