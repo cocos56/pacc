@@ -48,6 +48,7 @@ class LDUIA(LDBase):
         sleep(1)
         return png_path
 
+    # pylint: disable=too-many-arguments
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               index='', naf='', start_index=0, offset_x=0, offset_y=0):
         """点击目标点
@@ -78,6 +79,7 @@ class LDUIA(LDBase):
         self.tap(point)
         return True
 
+    # pylint: disable=too-many-arguments
     def get_point(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
                   index='', naf='', start_index=0):
         """获取目标点的坐标
@@ -115,6 +117,7 @@ class LDUIA(LDBase):
         y_coordinate = average(y1_value, y2_value)
         return x_coordinate, y_coordinate
 
+    # pylint: disable=too-many-arguments
     def get_bounds(self, resource_id, text='', content_desc='', xml='', bounds='', class_='',
                    index='', naf='', start_index=0):
         """获取目标点所在的边界的斜对角两点的坐标
