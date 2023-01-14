@@ -90,18 +90,18 @@ class IdleFish(LDProj):
 
         :param start_index: 起始索引值
         """
-        for Job_N, role in RetrieveIdleFishData.query_all_data():
+        for job_number, role in RetrieveIdleFishData.query_all_data():
             today = date.today()
-            print(Job_N, role, today)
-            LDConsole.copy(Job_N+role)
-            update_idle_fish_ins = UpdateIdleFish(Job_N)
+            print(job_number, role, today)
+            LDConsole.copy(job_number+role)
+            update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_create('NULL')
             update_idle_fish_ins.update_login(1)
             update_idle_fish_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
 
     @classmethod
-    def login(cls, start_index, end_index):
+    def login(cls, start_index, end_index):  # pylint: disable=too-many-statements
         """登录
 
         :param start_index: 起始索引值

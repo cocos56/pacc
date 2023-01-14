@@ -1,5 +1,5 @@
 """MySQL数据库包的查模块"""
-from .mysql import MySQL, Mobile, Account, Record
+from .mysql import MySQL, Mobile, Account
 
 
 class RetrieveSD:
@@ -337,7 +337,7 @@ class RetrieveIdleFishData:
         :param database: 数据库名
         :return: 查询到的结果
         """
-        cmd = f'select Job_N, role from `idle_fish` where `create`=1'
+        cmd = 'select Job_N, role from `idle_fish` where `create`=1'
         print(cmd)
         res = database.query(cmd)
         if res :
