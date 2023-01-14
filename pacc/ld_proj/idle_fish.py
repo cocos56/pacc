@@ -1,4 +1,4 @@
-"""咸鱼全自动刷咸鱼币中央监控系统模块"""
+"""闲鱼全自动刷咸鱼币中央监控系统模块"""
 import os
 import shutil
 from os import listdir, path
@@ -15,12 +15,19 @@ from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
 
 
 class Activity:  # pylint: disable=too-few-public-methods
-    """咸鱼全自动刷咸鱼币中央监控系统模块的安卓活动名类"""
+    """闲鱼全自动刷咸鱼币中央监控系统模块的安卓活动名类"""
     MainActivity = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.MainActivity'
     UserLoginActivity = 'com.taobao.idlefish/com.ali.user.mobile.login.ui.UserLoginActivity'
     Launcher = 'com.android.launcher3/com.android.launcher3.Launcher'
     ApplicationNotResponding = 'Application Not Responding: com.taobao.idlefish'
     ApplicationError = 'Application Error: com.taobao.idlefish'
+
+
+class ResourceID:  # pylint: disable=too-few-public-methods
+    """闲鱼全自动刷咸鱼币中央监控系统模块的安卓资源ID类"""
+    aliuser_login_mobile_et = 'com.taobao.idlefish:id/aliuser_login_mobile_et'
+    login_password_btn = 'com.taobao.idlefish:id/login_password_btn'
+    confirm = 'com.taobao.idlefish:id/confirm'
 
 
 class IdleFish(LDProj):
@@ -92,6 +99,60 @@ class IdleFish(LDProj):
         sleep(sleep_time)
 
     @classmethod
+    def login(cls, start_index, end_index):
+        """登录
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已登录完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需登录')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'user_name={retrieve_idle_fish_ins.user_name}, '
+                  f'login_pw={retrieve_idle_fish_ins.login_pw}, '
+                  f'if_mn={retrieve_idle_fish_ins.if_mn}, '
+                  f'login={retrieve_idle_fish_ins.login}, '
+                  f'last_login_date={retrieve_idle_fish_ins.last_login_date}, '
+                  f'last_login_ipv4_addr={retrieve_idle_fish_ins.last_login_ipv4_addr}, '
+                  f'today={today}')
+            if not retrieve_idle_fish_ins.login:
+                print(f'设备{start_index}上的是否需要登录的标志为'
+                      f'{retrieve_idle_fish_ins.login}，无需登录')
+                start_index += 1
+                continue
+            cls(start_index).run_app(19)
+            lduia_ins = LDUIA(start_index)
+            if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
+            print([if_mn], len(if_mn))
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            if len(if_mn) == 11 and if_mn != retrieve_idle_fish_ins.if_mn:
+                update_idle_fish_ins.update_if_mn(if_mn)
+            else:
+                print('手机号已是最新，无需更新')
+            lduia_ins.click(ResourceID.login_password_btn)
+            lduia_ins.click(ResourceID.confirm)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            update_idle_fish_ins.update_last_login_date(today)
+            update_idle_fish_ins.update_last_login_ipv4_addr(get_global_ipv4_addr())
+            update_idle_fish_ins.update_login('NULL')
+            input()
+            start_index += 1
+
+    @classmethod
     def top_up_mobile(cls, start_index, end_index):
         """薅羊毛赚话费（使用最优方案充话费，use_best_deal_to_top_up_mobile）
 
@@ -137,6 +198,7 @@ class IdleFish(LDProj):
             lduia_ins = LDUIA(start_index)
             lduia_ins.tap((50, 85), 6)
             lduia_ins.tap((479, 596), 3)
+            print(LDADB(start_index).get_current_focus())
             if lduia_ins.get_dict(content_desc=r'HI，店长 '):
                 print('当前界面需要先点击一下升级小店然后再点击赚经验')
                 lduia_ins.tap((266, 599), 3)

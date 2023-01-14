@@ -268,6 +268,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
         return self.query('user_name')
 
     @property
+    def login_pw(self):
+        """从数据库中读取闲鱼账号的登录密码"""
+        return self.query('login_pw')
+
+    @property
+    def if_mn(self):
+        """从数据库中读取闲鱼绑定的手机号（Idle Fish Mobile Number）"""
+        return self.query('if_mn')
+
+    @property
     def last_check_date(self):
         """从数据库中读取上次检查的日期"""
         return self.query('last_check_date')
@@ -316,6 +326,21 @@ class RetrieveIdleFish(RetrieveIdleFishBase):
     def last_top_up_mobile_date(self):
         """从数据库中获取上次薅羊毛赚话费的日期"""
         return self.query('last_top_up_mobile_date')
+
+    @property
+    def login(self):
+        """从数据库中读取是否需要登录的标志"""
+        return self.query('login')
+
+    @property
+    def last_login_date(self):
+        """从数据库中获取上次登录的日期"""
+        return self.query('last_login_date')
+
+    @property
+    def last_login_ipv4_addr(self):
+        """从数据库中获取上次登录的的公网IPv4地址"""
+        return self.query('last_login_ipv4_addr')
 
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):

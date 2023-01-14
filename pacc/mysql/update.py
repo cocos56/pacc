@@ -243,6 +243,20 @@ class UpdateIdleFishBase:
         Account.commit()
         return res
 
+    def query2(self, field, value, table):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        cmd = f'update `{table}` set `{field}` = {value} where `Job_N` = "{self.job_number}"'
+        print(cmd)
+        res = Account.query(cmd)
+        Account.commit()
+        return res
+
 
 class UpdateIdleFish(UpdateIdleFishBase):
     """该类用于修改account数据库中的idle_fish表中的数据"""
@@ -257,6 +271,16 @@ class UpdateIdleFish(UpdateIdleFishBase):
         """
         return super().query(field, value, table)
 
+    def query2(self, field, value, table='idle_fish'):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        return super().query2(field, value, table)
+
     def update_version(self, version):
         """更新设备的版本号
 
@@ -270,6 +294,13 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param coins: 新的闲鱼币币值
         """
         print(self.query('coins', coins))
+
+    def update_if_mn(self, if_mn):
+        """更新设备的闲鱼绑定的手机号（Idle Fish Mobile Number）
+
+        :param if_mn: 新的闲鱼绑定的手机号（Idle Fish Mobile Number）
+        """
+        print(self.query('if_mn', if_mn))
 
     def update_last_check_date(self, last_check_date: date.today()):
         """更新设备的上次检查日期
@@ -333,3 +364,24 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_top_up_mobile_date: 上次薅羊毛赚话费的日期
         """
         print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
+
+    def update_login(self, login):
+        """更新设备是否需要登录的标志
+
+        :param login: 是否需要登录的标志
+        """
+        print(self.query2('login', login))
+
+    def update_last_login_date(self, last_login_date: date.today()):
+        """更新设备在数据库中上次登录的日期
+
+        :param last_login_date: 上次登录的日期
+        """
+        print(self.query('last_login_date', last_login_date))
+
+    def update_last_login_ipv4_addr(self, last_login_ipv4_addr):
+        """更新设备上次登录的公网IPv4地址
+
+        :param last_login_ipv4_addr: 上次登录的公网IPv4地址
+        """
+        print(self.query('last_login_ipv4_addr', last_login_ipv4_addr))
