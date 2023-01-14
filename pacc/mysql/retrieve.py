@@ -102,7 +102,7 @@ class RetrieveMobile(Retrieve):  # pylint: disable=too-few-public-methods
         return super().query(table, field, 'SN', self.serial_num, Mobile)
 
 
-class RetrieveMobileInfoBase(RetrieveMobile):
+class RetrieveMobileInfoBase(RetrieveMobile):  # pylint: disable=too-few-public-methods
     """查询手机信息类"""
 
     def __init__(self, serial_num):
@@ -141,7 +141,7 @@ class RetrieveMobileInfo(RetrieveMobileInfoBase):
         return cls.instances.get(serial_num)
 
 
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes, too-few-public-methods
 class RetrieveKsjsbBase(RetrieveMobile):
     """查询快手极速版数据类基类"""
 

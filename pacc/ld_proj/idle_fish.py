@@ -85,8 +85,11 @@ class IdleFish(LDProj):
         sleep(sleep_time)
 
     @classmethod
-    def create(cls):
-        """创建"""
+    def create(cls, start_index=1):
+        """创建
+
+        :param start_index: 起始索引值
+        """
         for Job_N, role in RetrieveIdleFishData.query_all_data():
             today = date.today()
             print(Job_N, role, today)
@@ -95,7 +98,7 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_create('NULL')
             update_idle_fish_ins.update_login(1)
             update_idle_fish_ins.update_last_create_date(today)
-        cls.login(1, LDConsole.get_last_device_num())
+        cls.login(start_index, LDConsole.get_last_device_num())
 
     @classmethod
     def login(cls, start_index, end_index):
