@@ -131,11 +131,18 @@ class IdleFish(LDProj):
                 update_idle_fish_ins.update_if_mn(if_mn)
             else:
                 print('手机号已是最新，无需更新')
-            lduia_ins.click(ResourceID.login_password_btn)
-            lduia_ins.click(ResourceID.confirm)
+            lduia_ins.click(ResourceID.login_password_btn, xml=lduia_ins.xml)
+            try:
+                lduia_ins.click(ResourceID.confirm)
+            except FileNotFoundError as err:
+                print(err)
+                continue
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             lduia_ins.click(ResourceID.aliuser_login_password_et)
             LDADB(start_index).input_text(retrieve_idle_fish_ins.login_pw)
+            if len(if_mn) != 11:
+                lduia_ins.click(ResourceID.aliuser_login_account_et)
+                LDADB(start_index).input_text(retrieve_idle_fish_ins.user_name)
             if len(if_mn) == 11:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn)
             lduia_ins.get_screen()
@@ -143,7 +150,6 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_last_login_date(today)
             update_idle_fish_ins.update_last_login_ipv4_addr(get_global_ipv4_addr())
             update_idle_fish_ins.update_login('NULL')
-            input()
             start_index += 1
 
     @classmethod
