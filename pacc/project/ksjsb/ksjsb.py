@@ -11,8 +11,7 @@ from ...mysql import RetrieveKsjsb, UpdateKsjsb
 from ...tools import EMail, find_all_ints_with_re
 
 
-# pylint: disable=too-many-public-methods
-class Ksjsb(Project):
+class Ksjsb(Project):  # pylint: disable=too-many-public-methods
     """快手极速版中央控制系统类"""
 
     def __init__(self, serial_num):

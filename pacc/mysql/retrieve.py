@@ -239,7 +239,7 @@ class RetrieveIdleFishBase(Retrieve):
         return super().query(table, field, 'Job_N', f"'{self.job_number}'", Account)
 
 
-class RetrieveIdleFish(RetrieveIdleFishBase):
+class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public-methods
     """该类用于从account数据库中的idle_fish表中查询数据"""
 
     @property
