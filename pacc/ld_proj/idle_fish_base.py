@@ -20,6 +20,8 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     login_password_btn = 'com.taobao.idlefish:id/login_password_btn'
     confirm = 'com.taobao.idlefish:id/confirm'
     aliuser_login_show_password_btn = 'com.taobao.idlefish:id/aliuser_login_show_password_btn'
+    aliuser_login_password_et = 'com.taobao.idlefish:id/aliuser_login_password_et'
+    aliuser_login_login_btn = 'com.taobao.idlefish:id/aliuser_login_login_btn'
 
 class IdleFishBase(LDProj):
     """闲鱼基类"""

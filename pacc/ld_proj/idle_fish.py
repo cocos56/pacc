@@ -120,7 +120,11 @@ class IdleFish(LDProj):
                 continue
             cls(start_index).run_app(19)
             lduia_ins = LDUIA(start_index)
-            if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
+            try:
+                if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
+            except FileNotFoundError as err:
+                print(err)
+                continue
             print([if_mn], len(if_mn))
             update_idle_fish_ins = UpdateIdleFish(job_number)
             if len(if_mn) == 11 and if_mn != retrieve_idle_fish_ins.if_mn:
@@ -130,6 +134,10 @@ class IdleFish(LDProj):
             lduia_ins.click(ResourceID.login_password_btn)
             lduia_ins.click(ResourceID.confirm)
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
+            lduia_ins.click(ResourceID.aliuser_login_password_et)
+            LDADB(start_index).input_text(retrieve_idle_fish_ins.login_pw)
+            if len(if_mn) == 11:
+                lduia_ins.click(ResourceID.aliuser_login_login_btn)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             update_idle_fish_ins.update_last_login_date(today)
