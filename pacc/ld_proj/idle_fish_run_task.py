@@ -1,4 +1,4 @@
-"""闲鱼全自动刷闲鱼币中央监控系统模块2"""
+"""闲鱼全自动刷闲鱼币之全自动做任务中央监控系统模块"""
 # pylint: disable=duplicate-code
 from datetime import date, datetime, timedelta
 from xml.parsers.expat import ExpatError

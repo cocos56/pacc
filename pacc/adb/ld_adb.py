@@ -40,6 +40,13 @@ class LDADB(LDBase):
         """
         self.press_key('KEYCODE_BACK', sleep_time)
 
+    def input_text(self, text):
+        """输入文本
+
+        :param text: 文本内容
+        """
+        self.popen_run(f'shell input text "{text}"')
+
     def get_current_focus(self):
         """获取当前界面的Activity
 
