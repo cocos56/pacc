@@ -40,6 +40,7 @@ class IdleFishRunTask(IdleFishBase):
             return self.run_task_on_target_device(today)
         return True
 
+    # pylint: disable=too-many-branches, too-many-statements
     @classmethod
     def run_task(cls, start_index, p_num=3):
         """执行任务
