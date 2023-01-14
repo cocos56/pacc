@@ -167,9 +167,12 @@ class IdleFish(LDProj):
             print(login_pw, login_pw==retrieve_idle_fish_ins.login_pw)
             if len(if_mn) == 11:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
+                sleep(3)
             elif user_name==retrieve_idle_fish_ins.user_name and \
                     login_pw==retrieve_idle_fish_ins.login_pw:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
+                sleep(3)
+            LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             update_idle_fish_ins.update_last_login_date(today)
