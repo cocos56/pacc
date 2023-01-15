@@ -100,8 +100,9 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
 
+    # pylint: disable=too-many-statements, too-many-branches
     @classmethod
-    def login(cls, start_index, end_index):  # pylint: disable=too-many-statements
+    def login(cls, start_index, end_index):
         """登录
 
         :param start_index: 起始索引值
