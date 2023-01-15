@@ -258,7 +258,7 @@ class UpdateIdleFishBase:
         return res
 
 
-class UpdateIdleFish(UpdateIdleFishBase):
+class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-methods
     """该类用于修改account数据库中的idle_fish表中的数据"""
 
     def query(self, field, value, table='idle_fish'):

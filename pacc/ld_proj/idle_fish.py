@@ -254,8 +254,8 @@ class IdleFish(LDProj):
 
 
     @classmethod
-    def receiving_confirmation(cls, start_index, end_index):
-        """购买（下单）
+    def confirm(cls, start_index, end_index):
+        """确认收货
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
