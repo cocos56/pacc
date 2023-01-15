@@ -247,6 +247,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('login_pw')
 
     @property
+    def pay_pw(self):
+        """从数据库中读取闲鱼账号的支付密码"""
+        return self.query('pay_pw')
+
+    @property
     def if_mn(self):
         """从数据库中读取闲鱼绑定的手机号（Idle Fish Mobile Number）"""
         return self.query('if_mn')
@@ -320,6 +325,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
     def buy(self):
         """从数据库中读取是否需要购买的标志"""
         return self.query('buy')
+
+    @property
+    def confirm(self):
+        """从数据库中读取是否需要确认收货的标志"""
+        return self.query('confirm')
 
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):

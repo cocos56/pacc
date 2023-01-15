@@ -420,3 +420,17 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_buy_coins: 上次购买时所消耗的闲鱼币
         """
         print(self.query('last_buy_coins', last_buy_coins))
+
+    def update_confirm(self, confirm='NULL') -> None:
+        """更新设备是否需要确认收货的标志
+
+        :param confirm: 是否需要确认收货的标志，confirm只能为NULL或者1，其中NULL代表无需确认收货，1代表需要
+        """
+        print(self.query2('confirm', confirm))
+
+    def update_last_confirm_date(self, last_confirm_date: date.today()) -> None:
+        """更新设备在数据库中上次确认收货的日期
+
+        :param last_confirm_date: 上次确认收货的日期
+        """
+        print(self.query('last_confirm_date', last_confirm_date))

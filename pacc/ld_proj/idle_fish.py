@@ -260,6 +260,53 @@ class IdleFish(LDProj):
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已确认收货完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需确认收货')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'confirm={retrieve_idle_fish_ins.confirm}, '
+                  f'pay_pw={retrieve_idle_fish_ins.pay_pw}, '
+                  f'today={today}')
+            if not retrieve_idle_fish_ins.confirm:
+                print(f'设备{start_index}上的是否需要确认收货的标志为'
+                      f'{retrieve_idle_fish_ins.confirm}，无需确认收货')
+                start_index += 1
+                continue
+            cls(start_index).run_app(18)
+            lduia_ins = LDUIA(start_index)
+            try:
+                lduia_ins.click(ResourceID.tab_title, '我的')
+            except FileNotFoundError as err:
+                print(err)
+                continue
+            lduia_ins.click(content_desc='我买到的')
+            sleep(1)
+            lduia_ins.click(content_desc='确认收货')
+            lduia_ins.click(content_desc='我已收到货，确认收货')
+            sleep(2)
+            lduia_ins.xml = ''
+            for au_num in retrieve_idle_fish_ins.pay_pw:
+                print(au_num)
+                lduia_ins.click(f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml)
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            update_idle_fish_ins.update_confirm('NULL')
+            update_idle_fish_ins.update_last_confirm_date(today)
+            sleep(1)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            start_index += 1
 
     @classmethod
     def top_up_mobile(cls, start_index, end_index):

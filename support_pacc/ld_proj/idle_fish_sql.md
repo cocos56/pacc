@@ -24,3 +24,7 @@ SELECT * FROM `idle_fish` WHERE user_name LIKE 'xy%'
 SELECT Job_N, role, `hosts`, version, coins FROM idle_fish WHERE login=1
 ## 5.2. 查询所有未掉线的账号
 SELECT Job_N, role FROM idle_fish WHERE login IS NULL
+
+# 已确认收货的
+
+SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE()
