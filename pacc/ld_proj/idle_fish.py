@@ -135,11 +135,11 @@ class IdleFish(LDProj):
                       f'{retrieve_idle_fish_ins.login}，无需登录')
                 start_index += 1
                 continue
-            cls(start_index).run_app(19)
+            cls(start_index).run_app(21)
             lduia_ins = LDUIA(start_index)
             try:
                 if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
-            except FileNotFoundError as err:
+            except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
             print([if_mn], len(if_mn))
