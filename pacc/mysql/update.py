@@ -365,10 +365,10 @@ class UpdateIdleFish(UpdateIdleFishBase):
         """
         print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
 
-    def update_login(self, login):
+    def update_login(self, login='NULL') -> None:
         """更新设备是否需要登录的标志
 
-        :param login: 是否需要登录的标志
+        :param login: 是否需要登录的标志，login只能为NULL或者1，其中NULL代表在线，1代表离线
         """
         print(self.query2('login', login))
 

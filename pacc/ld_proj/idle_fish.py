@@ -28,7 +28,7 @@ class IdleFish(LDProj):
         self.ld_index = ld_index
 
     @classmethod
-    def backups(cls, start_index, end_index, dir_path='E:/ldbks', reserved_gbs=6*1024):
+    def backups(cls, start_index, end_index, dir_path='E:/ldbks', reserved_gbs=6 * 1024):
         """批量备份雷电模拟器的设备
 
         :param start_index: 起始索引值
@@ -93,7 +93,7 @@ class IdleFish(LDProj):
         for job_number, role in RetrieveIdleFishData.query_all_data():
             today = date.today()
             print(job_number, role, today)
-            LDConsole.copy(job_number+role)
+            LDConsole.copy(job_number + role)
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_create('NULL')
             update_idle_fish_ins.update_login(1)
@@ -140,7 +140,7 @@ class IdleFish(LDProj):
             try:
                 if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             print([if_mn], len(if_mn))
             update_idle_fish_ins = UpdateIdleFish(job_number)
@@ -157,19 +157,22 @@ class IdleFish(LDProj):
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             lduia_ins.click(ResourceID.aliuser_login_password_et, xml=lduia_ins.xml)
             LDADB(start_index).input_text(retrieve_idle_fish_ins.login_pw)
+            user_name = retrieve_idle_fish_ins.user_name
             if len(if_mn) != 11:
                 lduia_ins.click(ResourceID.aliuser_login_account_et, xml=lduia_ins.xml)
                 LDADB(start_index).input_text(retrieve_idle_fish_ins.user_name)
-            user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+                user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+            else:
+                lduia_ins.xml = ''
             login_pw = lduia_ins.get_dict(
                 ResourceID.aliuser_login_password_et, xml=lduia_ins.xml).get('@text')
-            print(user_name, user_name==retrieve_idle_fish_ins.user_name)
-            print(login_pw, login_pw==retrieve_idle_fish_ins.login_pw)
+            print(user_name, user_name == retrieve_idle_fish_ins.user_name)
+            print(login_pw, login_pw == retrieve_idle_fish_ins.login_pw)
             if len(if_mn) == 11:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
                 sleep(3)
-            elif user_name==retrieve_idle_fish_ins.user_name and \
-                    login_pw==retrieve_idle_fish_ins.login_pw:
+            elif user_name == retrieve_idle_fish_ins.user_name and \
+                    login_pw == retrieve_idle_fish_ins.login_pw:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
                 sleep(3)
             LDADB(start_index).get_current_focus()
@@ -465,11 +468,15 @@ class IdleFish(LDProj):
         if cls(index).should_restart(current_focus):
             return cls.check_target_device(index, reopen_flag=True)
         lduia_ins = LDUIA(index)
+        job_number = LDConsole(index).get_job_number()
+        update_idle_fish_ins = UpdateIdleFish(job_number)
         if Activity.UserLoginActivity in current_focus:
             lduia_ins.get_screen()
             LDConsole.quit(index)
-            print(f'第{index}项已检查完毕\n')
+            update_idle_fish_ins.update_login(1)
+            print(f'第{index}项由于已掉线，无法进行检查，检查工作异常终止\n')
             return False
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         lduia_ins.tap((50, 85), 9)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
@@ -519,9 +526,6 @@ class IdleFish(LDProj):
         except (KeyError, TypeError, ValueError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True)
-        job_number = LDConsole(index).get_job_number()
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        update_idle_fish_ins = UpdateIdleFish(job_number)
         if coins != retrieve_idle_fish_ins.coins:
             update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
