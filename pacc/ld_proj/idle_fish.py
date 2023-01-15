@@ -175,6 +175,7 @@ class IdleFish(LDProj):
                     login_pw == retrieve_idle_fish_ins.login_pw:
                 lduia_ins.click(ResourceID.aliuser_login_login_btn, xml=lduia_ins.xml)
                 sleep(3)
+            lduia_ins.click(ResourceID.tab_title, '我的')
             LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
