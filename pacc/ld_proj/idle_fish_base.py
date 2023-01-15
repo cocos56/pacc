@@ -12,6 +12,7 @@ class Activity:  # pylint: disable=too-few-public-methods
     Launcher = 'com.android.launcher3/com.android.launcher3.Launcher'
     ApplicationNotResponding = 'Application Not Responding: com.taobao.idlefish'
     ApplicationError = 'Application Error: com.taobao.idlefish'
+    WebViewActivity = 'com.taobao.idlefish/com.ali.user.mobile.ability.webview.WebViewActivity'
 
 
 class ResourceID:  # pylint: disable=too-few-public-methods
