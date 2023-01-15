@@ -188,6 +188,80 @@ class IdleFish(LDProj):
             start_index += 1
 
     @classmethod
+    def buy(cls, start_index, end_index):
+        """购买（下单）
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已购买完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需购买')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            coins = retrieve_idle_fish_ins.coins
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
+                  f'today={today}')
+            if not retrieve_idle_fish_ins.buy:
+                print(f'设备{start_index}上的是否需要购买的标志为'
+                      f'{retrieve_idle_fish_ins.buy}，无需购买')
+                start_index += 1
+                continue
+            cls(start_index).run_app(19)
+            lduia_ins = LDUIA(start_index)
+            lduia_ins.click(ResourceID.tab_title, '消息')
+            lduia_ins.click(text='我知道了')
+            lduia_ins.click(content_desc='徐哥签名')
+            while not lduia_ins.click(naf='true', index='3'):
+                sleep(1)
+            lduia_ins.click(content_desc='再次购买')
+            last_buy_coins = 0
+            if coins >= 50000:
+                lduia_ins.click(ResourceID.tv_value, '500')
+                last_buy_coins = 50000
+            elif coins >= 40000:
+                lduia_ins.click(ResourceID.tv_value, '400')
+                last_buy_coins = 40000
+            elif coins >= 30000:
+                lduia_ins.click(ResourceID.tv_value, '300')
+                last_buy_coins = 30000
+            lduia_ins.click(text='立即购买')
+            lduia_ins.click(content_desc='确认购买')
+            sleep(2)
+            lduia_ins.click(text='找朋友帮忙付')
+            lduia_ins.click(text='立即付款')
+            lduia_ins.click(text='面对面扫码')
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            update_idle_fish_ins.update_buy('NULL')
+            update_idle_fish_ins.update_last_buy_date(today)
+            update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
+            update_idle_fish_ins.update_coins(coins - last_buy_coins)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            input()
+            start_index += 1
+
+
+    @classmethod
+    def receiving_confirmation(cls, start_index, end_index):
+        """购买（下单）
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+
+    @classmethod
     def top_up_mobile(cls, start_index, end_index):
         """薅羊毛赚话费（使用最优方案充话费，use_best_deal_to_top_up_mobile）
 

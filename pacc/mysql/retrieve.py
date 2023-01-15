@@ -316,6 +316,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         """从数据库中获取上次登录的的公网IPv4地址"""
         return self.query('last_login_ipv4_addr')
 
+    @property
+    def buy(self):
+        """从数据库中读取是否需要购买的标志"""
+        return self.query('buy')
+
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
         """查询函数：查询数据

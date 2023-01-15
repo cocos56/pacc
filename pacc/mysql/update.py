@@ -288,7 +288,7 @@ class UpdateIdleFish(UpdateIdleFishBase):
         """
         print(self.query('version', version))
 
-    def update_coins(self, coins: int):
+    def update_coins(self, coins: int) ->None:
         """更新设备的闲鱼币币值
 
         :param coins: 新的闲鱼币币值
@@ -399,3 +399,24 @@ class UpdateIdleFish(UpdateIdleFishBase):
         :param last_create_date: 上次创建的日期
         """
         print(self.query('last_create_date', last_create_date))
+
+    def update_buy(self, buy='NULL') -> None:
+        """更新设备是否需要购买的标志
+
+        :param buy: 是否需要购买的标志，buy只能为NULL或者1，其中NULL代表无需购买，1代表需要购买
+        """
+        print(self.query2('buy', buy))
+
+    def update_last_buy_date(self, last_buy_date: date.today()) -> None:
+        """更新设备在数据库中上次购买的日期
+
+        :param last_buy_date: 上次购买的日期
+        """
+        print(self.query('last_buy_date', last_buy_date))
+
+    def update_last_buy_coins(self, last_buy_coins: int) ->None:
+        """更新设备上次购买时所消耗的闲鱼币
+
+        :param last_buy_coins: 上次购买时所消耗的闲鱼币
+        """
+        print(self.query('last_buy_coins', last_buy_coins))
