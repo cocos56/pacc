@@ -251,7 +251,6 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_confirm(1)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
-            input()
             start_index += 1
 
     @classmethod
