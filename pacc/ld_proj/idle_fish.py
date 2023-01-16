@@ -249,7 +249,8 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_buy('NULL')
             update_idle_fish_ins.update_last_buy_date(today)
             update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
-            update_idle_fish_ins.update_confirm(1)
+            if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
+                update_idle_fish_ins.update_confirm(1)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             start_index += 1
