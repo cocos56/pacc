@@ -21,11 +21,11 @@ class LDBase:  # pylint: disable=too-few-public-methods
         self.ld_index = ld_index
         self.end_flag = False
 
-    def timeout_monitoring(self, start_datetime, timeout=9):
+    def timeout_monitoring(self, start_datetime, timeout=306):
         """超时监控
 
         :param start_datetime: 开始时间
-        :param timeout: 超时退出时间，默认9秒
+        :param timeout: 超时退出时间，默认306秒
         """
         used_datetime = datetime.now()-start_datetime
         print(f'{self.ld_index} timeout_monitoring starting : used_datetime.seconds='
@@ -59,12 +59,12 @@ class LDBase:  # pylint: disable=too-few-public-methods
         """
         return self.exe_cmd(command, ext)
 
-    def exe_cmd(self, command='', ext='', timeout=6, return_flag=True):
+    def exe_cmd(self, command='', ext='', timeout=300, return_flag=True):
         """执行命令函数
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :param timeout: 超时中断时间，默认6秒
+        :param timeout: 超时中断时间，默认300秒
         :param return_flag: 是否需要返回值，默认不需要
         :return: 成功执行（未超时中断）返回从管道中读取的结果或True，否则返回False
         """
