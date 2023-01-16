@@ -178,10 +178,12 @@ class IdleFish(LDProj):
                 sleep(3)
             if Activity.WebViewActivity in LDADB(start_index).get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
+                update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 lduia_ins.click(ResourceID.tab_title, '我的')
                 lduia_ins.get_screen()
                 lduia_ins.get_current_ui_hierarchy()
+                update_idle_fish_ins.update_last_nvc_date(today)
             update_idle_fish_ins.update_last_login_date(today)
             update_idle_fish_ins.update_last_login_ipv4_addr(get_global_ipv4_addr())
             update_idle_fish_ins.update_login('NULL')

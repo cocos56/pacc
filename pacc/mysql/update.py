@@ -434,3 +434,17 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_confirm_date: 上次确认收货的日期
         """
         print(self.query('last_confirm_date', last_confirm_date))
+
+    def update_last_hvc_date(self, last_hvc_date: date.today()) -> None:
+        """更新设备在数据库中上次有码的日期
+
+        :param last_hvc_date: 上次有码的日期
+        """
+        print(self.query('last_hvc_date', last_hvc_date))
+
+    def update_last_nvc_date(self, last_nvc_date: date.today()) -> None:
+        """更新设备在数据库中上次无码的日期
+
+        :param last_nvc_date: 上次无码的日期
+        """
+        print(self.query('last_nvc_date', last_nvc_date))
