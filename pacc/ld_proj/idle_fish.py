@@ -225,6 +225,7 @@ class IdleFish(LDProj):
             lduia_ins.click(ResourceID.tab_title, '消息')
             lduia_ins.click(text='我知道了')
             lduia_ins.click(content_desc='徐哥签名')
+            sleep(1)
             while not lduia_ins.click(naf='true', index='3'):
                 sleep(1)
             lduia_ins.click(content_desc='再次购买')
