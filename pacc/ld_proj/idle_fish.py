@@ -719,7 +719,11 @@ class IdleFish(LDProj):
             today = date.today()
             print(f'last_run_date={retrieve_idle_fish_ins.last_run_date}, '
                   f'last_check_date={retrieve_idle_fish_ins.last_check_date}, '
-                  f'today={today}, all_done={all_done}')
+                  f'today={today}, all_done={all_done}, login={retrieve_idle_fish_ins.login}')
+            if retrieve_idle_fish_ins.login:
+                print(f'目标设备{start_index}已掉线，无需检查\n')
+                start_index += 1
+                continue
             if retrieve_idle_fish_ins.last_check_date != today:
                 all_done = False
             if not retrieve_idle_fish_ins.last_check_date:
