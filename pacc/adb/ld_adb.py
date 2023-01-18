@@ -1,4 +1,6 @@
 """雷电模拟器安卓调试桥模块"""
+from random import randint
+
 from .ld_base import LDBase
 from ..base import sleep, print_err
 from ..tools import find_all_with_re
@@ -55,3 +57,16 @@ class LDADB(LDBase):
         res = self.popen_run('shell dumpsys window windows', ' | findstr mCurrentFocus')[2:-2]
         print(res)
         return res
+
+    def swipe(self, start_coordinate, end_coordinate, duration=-1):
+        """滑动
+        :param start_coordinate: 起点的坐标（x1, y1）
+        :param end_coordinate: 终点的坐标（x2, y2）
+        :param duration: the default duration value -1 means a random integer from 2500 to 2501
+        """
+        x1_coordinate, y1_coordinate = start_coordinate
+        x2_coordinate, y2_coordinate = end_coordinate
+        if duration == -1:
+            duration = randint(2500, 2501)
+        self.popen_run(f'shell input swipe {x1_coordinate} {y1_coordinate} {x2_coordinate} '
+                       f'{y2_coordinate} {duration}')

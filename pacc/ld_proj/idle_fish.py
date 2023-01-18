@@ -157,11 +157,12 @@ class IdleFish(LDProj):
                 continue
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             lduia_ins.click(ResourceID.aliuser_login_password_et, xml=lduia_ins.xml)
-            LDADB(start_index).input_text(retrieve_idle_fish_ins.login_pw)
+            ldadb_ins = LDADB(start_index)
+            ldadb_ins.input_text(retrieve_idle_fish_ins.login_pw)
             user_name = retrieve_idle_fish_ins.user_name
             if len(if_mn) != 11:
                 lduia_ins.click(ResourceID.aliuser_login_account_et, xml=lduia_ins.xml)
-                LDADB(start_index).input_text(retrieve_idle_fish_ins.user_name)
+                ldadb_ins.input_text(retrieve_idle_fish_ins.user_name)
                 user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
             else:
                 lduia_ins.xml = ''
@@ -179,7 +180,7 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_last_login_date(today)
             update_idle_fish_ins.update_last_login_ipv4_addr(get_global_ipv4_addr())
             update_idle_fish_ins.update_login('NULL')
-            if Activity.WebViewActivity in LDADB(start_index).get_current_focus():
+            if Activity.WebViewActivity in ldadb_ins.get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
@@ -242,7 +243,12 @@ class IdleFish(LDProj):
             lduia_ins.click(text='立即购买')
             lduia_ins.click(content_desc='确认购买')
             sleep(2)
-            lduia_ins.click(text='找朋友帮忙付')
+            lduia_ins.click(text='储蓄卡')
+            ldadb_ins = LDADB(start_index)
+            while not lduia_ins.click(text='找朋友帮忙付'):
+                print('未找到找朋友帮忙付')
+                ldadb_ins.swipe([260, 900], [260, 600])
+                input()
             lduia_ins.click(text='立即付款')
             lduia_ins.click(text='面对面扫码')
             update_idle_fish_ins = UpdateIdleFish(job_number)
