@@ -223,9 +223,19 @@ class IdleFish(LDProj):
                 continue
             cls(start_index).run_app(19)
             lduia_ins = LDUIA(start_index)
-            lduia_ins.click(ResourceID.tab_title, '消息')
-            lduia_ins.click(text='我知道了')
-            lduia_ins.click(content_desc='徐哥签名')
+            ldadb_ins = LDADB(start_index)
+            try:
+                lduia_ins.click(ResourceID.tab_title, '消息')
+            except FileNotFoundError as err:
+                print(err)
+                continue
+            try:
+                lduia_ins.click(text='我知道了')
+            except FileNotFoundError as err:
+                print(err)
+                continue
+            while not lduia_ins.click(content_desc='徐哥签名'):
+                ldadb_ins.swipe([290, 690], [290, 330], 500)
             sleep(1)
             while not lduia_ins.click(naf='true', index='3'):
                 sleep(1)
@@ -243,12 +253,11 @@ class IdleFish(LDProj):
             lduia_ins.click(text='立即购买')
             lduia_ins.click(content_desc='确认购买')
             sleep(2)
-            lduia_ins.click(text='储蓄卡')
-            ldadb_ins = LDADB(start_index)
+            if not lduia_ins.click(text='储蓄卡'):
+                lduia_ins.click(text='账户余额')
             while not lduia_ins.click(text='找朋友帮忙付'):
                 print('未找到找朋友帮忙付')
                 ldadb_ins.swipe([260, 900], [260, 600])
-                input()
             lduia_ins.click(text='立即付款')
             lduia_ins.click(text='面对面扫码')
             update_idle_fish_ins = UpdateIdleFish(job_number)
