@@ -48,7 +48,7 @@ class IdleFishBase(LDProj):
             print(f'模拟器{self.ld_index}不存在，无法启动')
 
     def run_app(self, sleep_time=60):
-        """启动雷电模拟器并运行咸鱼APP
+        """启动雷电模拟器并运行闲鱼APP
 
         :param sleep_time: 等待时间
         """
