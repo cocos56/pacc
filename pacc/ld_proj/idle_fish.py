@@ -325,6 +325,7 @@ class IdleFish(LDProj):
             update_idle_fish_ins.update_confirm('NULL')
             update_idle_fish_ins.update_last_confirm_date(today)
             sleep(1)
+            LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             start_index += 1
@@ -375,7 +376,7 @@ class IdleFish(LDProj):
             lduia_ins = LDUIA(start_index)
             lduia_ins.tap((50, 85), 6)
             lduia_ins.tap((479, 596), 3)
-            print(LDADB(start_index).get_current_focus())
+            LDADB(start_index).get_current_focus()
             if lduia_ins.get_dict(content_desc=r'HI，店长 '):
                 print('当前界面需要先点击一下升级小店然后再点击赚经验')
                 lduia_ins.tap((266, 599), 3)
