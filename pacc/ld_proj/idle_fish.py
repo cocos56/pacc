@@ -234,8 +234,12 @@ class IdleFish(LDProj):
             except FileNotFoundError as err:
                 print(err)
                 continue
-            while not lduia_ins.click(content_desc='徐哥签名'):
-                ldadb_ins.swipe([290, 690], [290, 330], 500)
+            try:
+                while not lduia_ins.click(content_desc='徐哥签名'):
+                    ldadb_ins.swipe([290, 690], [290, 330], 500)
+            except FileNotFoundError as err:
+                print(err)
+                continue
             sleep(1)
             while not lduia_ins.click(naf='true', index='3'):
                 sleep(1)
@@ -253,7 +257,7 @@ class IdleFish(LDProj):
             lduia_ins.click(text='立即购买')
             lduia_ins.click(content_desc='确认购买')
             sleep(2)
-            if not lduia_ins.click(text='储蓄卡'):
+            if not lduia_ins.click(text='卡'):
                 lduia_ins.click(text='账户余额')
             while not lduia_ins.click(text='找朋友帮忙付'):
                 print('未找到找朋友帮忙付')
