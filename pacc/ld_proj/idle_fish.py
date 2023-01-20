@@ -156,9 +156,9 @@ class IdleFish(IdleFishBase):
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 lduia_ins.click(ResourceID.tab_title, '我的')
-                lduia_ins.get_screen()
-                lduia_ins.get_current_ui_hierarchy()
                 update_idle_fish_ins.update_last_nvc_date(today)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
             start_index += 1
 
     @classmethod
