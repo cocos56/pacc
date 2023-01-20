@@ -307,6 +307,7 @@ class IdleFish(IdleFishBase):
             LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
+            LDConsole.quit(start_index)
             start_index += 1
 
     @classmethod
