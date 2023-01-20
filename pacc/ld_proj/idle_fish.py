@@ -228,8 +228,13 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(text='立即购买')
             lduia_ins.click(content_desc='确认购买')
             sleep(2)
-            if not lduia_ins.click(text='卡'):
-                lduia_ins.click(text='账户余额')
+            try:
+                if not lduia_ins.click(text='卡'):
+                    lduia_ins.click(text='账户余额')
+            except FileNotFoundError as err:
+                print(err)
+                if not lduia_ins.click(text='卡'):
+                    lduia_ins.click(text='账户余额')
             while not lduia_ins.click(text='找朋友帮忙付'):
                 print('未找到找朋友帮忙付')
                 ldadb_ins.swipe([260, 900], [260, 600])
