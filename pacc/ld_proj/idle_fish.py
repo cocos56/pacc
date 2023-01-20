@@ -158,7 +158,10 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(ResourceID.tab_title, '我的')
                 update_idle_fish_ins.update_last_nvc_date(today)
             lduia_ins.get_screen()
-            lduia_ins.get_current_ui_hierarchy()
+            try:
+                lduia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print(err)
             start_index += 1
 
     @classmethod
