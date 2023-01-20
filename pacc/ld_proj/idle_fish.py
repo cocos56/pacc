@@ -297,9 +297,14 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(content_desc='我已收到货，确认收货')
             sleep(2)
             lduia_ins.xml = ''
+            all_is_ok = True
             for au_num in retrieve_idle_fish_ins.pay_pw:
                 print(au_num)
-                lduia_ins.click(f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml)
+                if not lduia_ins.click(
+                        f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml):
+                    all_is_ok = False
+            if not all_is_ok:
+                continue
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_confirm('NULL')
             update_idle_fish_ins.update_last_confirm_date(today)
