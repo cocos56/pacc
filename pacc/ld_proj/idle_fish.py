@@ -262,6 +262,14 @@ class IdleFish(IdleFishBase):
             start_index += 1
 
     @classmethod
+    def pay(cls, start_index, end_index):
+        """付款
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        """
+
+    @classmethod
     def confirm(cls, start_index, end_index):
         """确认收货
 
