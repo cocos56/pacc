@@ -280,6 +280,12 @@ class IdleFish(IdleFishBase):
                 print(f'设备{start_index}不存在，无需获取好友代付二维码')
                 start_index += 1
                 continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            today = date.today()
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'pay={retrieve_idle_fish_ins.pay}, '
+                  f'today={today}')
 
     @classmethod
     def confirm(cls, start_index, end_index):

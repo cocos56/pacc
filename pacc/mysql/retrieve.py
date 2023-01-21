@@ -327,6 +327,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('buy')
 
     @property
+    def pay(self):
+        """从数据库中读取是否需要获取好友代付二维码的标志"""
+        return self.query('pay')
+
+    @property
     def confirm(self):
         """从数据库中读取是否需要确认收货的标志"""
         return self.query('confirm')
