@@ -24,6 +24,7 @@ class MySQL:
         :param password: 用户密码，默认从Windows系统变量中获取
         :param charset: 编码
         """
+        self.database = database
         try:
             self.__class__.conn = connect(host=host, port=port, database=database, user=user,
                                           password=password, charset=charset)
@@ -35,7 +36,6 @@ class MySQL:
             self.__init__(host=host, port=port, database=database, user=user, password=password,
                           charset=charset)
             return
-        self.database = database
         self.__class__.cs = self.__class__.conn.cursor()
         print(f'已成功与{database}数据库建立连接')
         self.__class__.instance = self
