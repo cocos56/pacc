@@ -42,6 +42,7 @@ class LDConsole:
         # print(last_item[0], type(last_item[0]), last_item[1], type(last_item[1]))
         if last_item[0] == 99999 and last_item[1] == '电脑桌面':
             res = res[:-1]
+            # print(True)
         dic = dict(res)
         # print(dic)
         return dic
