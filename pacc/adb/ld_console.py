@@ -36,8 +36,12 @@ class LDConsole:
         except UnicodeDecodeError as err:
             print_err(err)
             return cls.list()
-        res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()[:-1]]]
+        res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()]]
         # print(res, len(res))
+        last_item = res[-1]
+        # print(last_item[0], type(last_item[0]), last_item[1], type(last_item[1]))
+        if last_item[0] == 99999 and last_item[1] == '电脑桌面':
+            res = res[:-1]
         dic = dict(res)
         # print(dic)
         return dic
