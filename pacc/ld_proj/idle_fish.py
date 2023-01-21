@@ -218,8 +218,12 @@ class IdleFish(IdleFishBase):
                 print(err)
                 continue
             sleep(1)
-            while not lduia_ins.click(naf='true', index='3'):
-                sleep(1)
+            try:
+                while not lduia_ins.click(naf='true', index='3'):
+                    sleep(1)
+            except FileNotFoundError as err:
+                print(err)
+                continue
             lduia_ins.click(content_desc='再次购买')
             last_buy_coins = 0
             if coins >= 50000:
