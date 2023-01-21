@@ -1,4 +1,5 @@
 """闲鱼程序入口C5_1模块"""
+# pylint: disable=duplicate-code
 from pacc.adb import LDConsole
 from pacc.config import Config
 from pacc.ld_proj import IdleFish
