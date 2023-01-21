@@ -15,6 +15,7 @@ SELECT * FROM idle_fish WHERE version != '7.8.10'
 # 3. 查询需要回收的账号信息
 ## 3.1. 某一代理的
 SELECT role, user_name , coins FROM idle_fish WHERE role LIKE '宗毛毛%' and coins >= 30000 ORDER BY coins desc
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, buy FROM idle_fish WHERE role LIKE '吴尧河%' and coins >= 30000 and `hosts` LIKE 'C4:%'
 
 # 4. 查询所有以xy开头的账号
 SELECT * FROM `idle_fish` WHERE user_name LIKE 'xy%'
