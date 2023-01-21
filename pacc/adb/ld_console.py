@@ -36,7 +36,11 @@ class LDConsole:
         except UnicodeDecodeError as err:
             print_err(err)
             return cls.list()
-        res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()]]
+        try:
+            res = [(int(i[0]), i[1]) for i in [i.split(',')[:2] for i in res.split()]]
+        except IndexError as err:
+            print_err(err)
+            return cls.list()
         # print(res, len(res))
         last_item = res[-1]
         # print(last_item[0], type(last_item[0]), last_item[1], type(last_item[1]))
