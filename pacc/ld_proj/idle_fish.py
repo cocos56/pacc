@@ -155,8 +155,11 @@ class IdleFish(IdleFishBase):
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
-                lduia_ins.click(ResourceID.tab_title, '我的')
                 update_idle_fish_ins.update_last_nvc_date(today)
+                try:
+                    lduia_ins.click(ResourceID.tab_title, '我的')
+                except FileNotFoundError as err:
+                    print(err)
             lduia_ins.get_screen()
             try:
                 lduia_ins.get_current_ui_hierarchy()
