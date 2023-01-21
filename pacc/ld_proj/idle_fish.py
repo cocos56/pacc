@@ -325,7 +325,11 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print(err)
                 continue
-            lduia_ins.click(content_desc='我买到的')
+            try:
+                lduia_ins.click(content_desc='我买到的')
+            except FileNotFoundError as err:
+                print(err)
+                continue
             sleep(1)
             lduia_ins.click(content_desc='确认收货')
             lduia_ins.click(content_desc='我已收到货，确认收货')
