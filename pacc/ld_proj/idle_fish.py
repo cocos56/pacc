@@ -236,7 +236,7 @@ class IdleFish(IdleFishBase):
             sleep(2)
             try:
                 if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='账户余额')
+                    lduia_ins.click(text='余额')
             except FileNotFoundError as err:
                 print(err)
                 if not lduia_ins.click(text='卡'):
