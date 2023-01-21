@@ -263,11 +263,23 @@ class IdleFish(IdleFishBase):
 
     @classmethod
     def pay(cls, start_index, end_index):
-        """付款
+        """付款：获取好友代付二维码
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已获取好友代付二维码完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            now = datetime.now()
+            print(now)
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需获取好友代付二维码')
+                start_index += 1
+                continue
 
     @classmethod
     def confirm(cls, start_index, end_index):
