@@ -1,6 +1,6 @@
 """闲鱼全自动刷闲鱼币中央监控系统基类模块"""
 # pylint: disable=duplicate-code
-from datetime import datetime
+from datetime import datetime, date
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB
@@ -66,7 +66,7 @@ class IdleFishBase(LDProj):
         """判断是否需要重启
 
         :param current_focus: 当前界面的Activity
-        :return: 需要重启True，否则返回False
+        :return: 需要重启返回True，否则返回False
         """
         if not current_focus:
             current_focus = LDADB(self.ld_index).get_current_focus()
@@ -86,17 +86,20 @@ class IdleFishBase(LDProj):
             print('检测到已掉线，请登录')
         return False
 
-    def should_run_task(self):
+    def should_run_task(self, today: date.today()):
         """判断是否需要执行任务
 
-        :return: 需要重启True，否则返回False
+        :return: 需要执行任务返回True，否则返回False
         """
         if LDConsole(self.ld_index).is_exist():
             job_number = LDConsole(self.ld_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            # if not retrieve_idle_fish_ins.last_run_date:
-            #     should_run = True
+            if not retrieve_idle_fish_ins.last_run_date:
+                return True
+            elif retrieve_idle_fish_ins.last_run_date < today:
+                return True
+            print(f'设备{self.ld_index}存在，name={LDConsole(self.ld_index).get_name()}，last_run_date='
+                  f'{retrieve_idle_fish_ins.last_run_date}，today={today}，{datetime.now()}')
         else:
             print(f'设备{self.ld_index}不存在，{datetime.now()}')
-            return False
-        return True
+        return False
