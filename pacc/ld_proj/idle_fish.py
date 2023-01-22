@@ -214,6 +214,7 @@ class IdleFish(IdleFishBase):
             try:
                 while not lduia_ins.click(content_desc='徐哥签名'):
                     ldadb_ins.swipe([290, 690], [290, 330], 500)
+                    LDADB(start_index).get_current_focus()
             except FileNotFoundError as err:
                 print_err(err)
                 continue
