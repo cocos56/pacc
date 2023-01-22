@@ -132,13 +132,22 @@ class ADB:  # pylint: disable=too-many-public-methods
         print(cmd)
         system(cmd)
 
-    def input_text(self, text):
+    def input_text_with_adbime(self, text):
         """输入文本
 
         :param text: 文本内容
         """
         system(f'{self.cmd}shell ime set com.android.adbkeyboard/.AdbIME')
         cmd = f"{self.cmd}shell am broadcast -a ADB_INPUT_TEXT --es msg '{text}'"
+        print(cmd)
+        system(cmd)
+
+    def input_text(self, text):
+        """输入文本
+
+        :param text: 文本内容
+        """
+        cmd = f'{self.cmd}shell input text "{text}"'
         print(cmd)
         system(cmd)
 

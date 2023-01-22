@@ -374,6 +374,9 @@ class UIAutomator:
                             return True
                         return False
                     return True
+                if self.node.content_desc:
+                    if self.node.content_desc in unescape(dic['@content-desc']):
+                        return True
             return False
         if self.node.resource_id:
             if dic['@resource-id'] == self.node.resource_id:
