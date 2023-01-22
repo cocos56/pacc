@@ -335,7 +335,11 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             sleep(1)
-            lduia_ins.click(content_desc='确认收货')
+            try:
+                lduia_ins.click(content_desc='确认收货')
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             lduia_ins.click(content_desc='我已收到货，确认收货')
             sleep(2)
             lduia_ins.xml = ''
