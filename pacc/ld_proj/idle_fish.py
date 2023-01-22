@@ -235,6 +235,9 @@ class IdleFish(IdleFishBase):
             elif coins >= 30000:
                 lduia_ins.click(ResourceID.tv_value, '300')
                 last_buy_coins = 30000
+            elif coins >= 20000:
+                lduia_ins.click(ResourceID.tv_value, '200')
+                last_buy_coins = 20000
             lduia_ins.click(text='立即购买')
             LDADB(start_index).get_current_focus()
             lduia_ins.click(content_desc='确认购买')
