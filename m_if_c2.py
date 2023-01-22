@@ -4,4 +4,4 @@ from pacc.project import IdleFish
 
 
 Config.set_debug(True)
-IdleFish('005001001').mainloop()
+IdleFish('002005001').mainloop()
