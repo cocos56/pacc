@@ -9,3 +9,4 @@ class IdleFish(Project):
     @run_forever
     def mainloop(self):
         """主循环函数"""
+        self.adb_ins.get_current_focus()
