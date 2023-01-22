@@ -124,7 +124,7 @@ class IdleFish(IdleFishBase):
             try:
                 lduia_ins.click(ResourceID.confirm)
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             lduia_ins.click(ResourceID.aliuser_login_password_et, xml=lduia_ins.xml)
@@ -159,12 +159,12 @@ class IdleFish(IdleFishBase):
                 try:
                     lduia_ins.click(ResourceID.tab_title, '我的')
                 except FileNotFoundError as err:
-                    print(err)
+                    print_err(err)
             lduia_ins.get_screen()
             try:
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
             start_index += 1
 
     @classmethod
@@ -204,25 +204,25 @@ class IdleFish(IdleFishBase):
             try:
                 lduia_ins.click(ResourceID.tab_title, '消息')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             try:
                 lduia_ins.click(text='我知道了')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             try:
                 while not lduia_ins.click(content_desc='徐哥签名'):
                     ldadb_ins.swipe([290, 690], [290, 330], 500)
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             sleep(1)
             try:
                 while not lduia_ins.click(naf='true', index='3'):
                     sleep(1)
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             lduia_ins.click(content_desc='再次购买')
             last_buy_coins = 0
@@ -246,7 +246,7 @@ class IdleFish(IdleFishBase):
                 if not lduia_ins.click(text='卡'):
                     lduia_ins.click(text='余额')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 if not lduia_ins.click(text='卡'):
                     lduia_ins.click(text='账户余额')
             while not lduia_ins.click(text='找朋友帮忙付'):
@@ -326,12 +326,12 @@ class IdleFish(IdleFishBase):
             try:
                 lduia_ins.click(ResourceID.tab_title, '我的')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             try:
                 lduia_ins.click(content_desc='我买到的')
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 continue
             sleep(1)
             lduia_ins.click(content_desc='确认收货')
@@ -410,7 +410,7 @@ class IdleFish(IdleFishBase):
                     lduia_ins.tap((479, 596), 3)
                     lduia_ins.xml = ''
             except FileNotFoundError as err:
-                print(err)
+                print_err(err)
                 lduia_ins.xml = ''
                 continue
             if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
