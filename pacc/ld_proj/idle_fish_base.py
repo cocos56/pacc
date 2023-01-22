@@ -96,7 +96,7 @@ class IdleFishBase(LDProj):
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             if not retrieve_idle_fish_ins.last_run_date:
                 return True
-            elif retrieve_idle_fish_ins.last_run_date < today:
+            if retrieve_idle_fish_ins.last_run_date < today:
                 return True
             print(f'设备{self.ld_index}存在，name={LDConsole(self.ld_index).get_name()}，last_run_date='
                   f'{retrieve_idle_fish_ins.last_run_date}，today={today}，{datetime.now()}')
