@@ -1,8 +1,11 @@
 """闲鱼全自动刷闲鱼币中央监控系统基类模块"""
 # pylint: disable=duplicate-code
+from datetime import datetime
+
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB
 from ..base import sleep
+from ..mysql import RetrieveIdleFish
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -82,3 +85,18 @@ class IdleFishBase(LDProj):
         if Activity.UserLoginActivity in current_focus:
             print('检测到已掉线，请登录')
         return False
+
+    def should_run_task(self):
+        """判断是否需要执行任务
+
+        :return: 需要重启True，否则返回False
+        """
+        if LDConsole(self.ld_index).is_exist():
+            job_number = LDConsole(self.ld_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            # if not retrieve_idle_fish_ins.last_run_date:
+            #     should_run = True
+        else:
+            print(f'设备{self.ld_index}不存在，{datetime.now()}')
+            return False
+        return True
