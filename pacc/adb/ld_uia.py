@@ -201,6 +201,11 @@ class LDUIA(LDBase):
                 print(f'检测到【naf={naf}】')
             else:
                 print(f'未找到【naf={naf}】')
+        elif content_desc:
+            if dic:
+                print(f'检测到【content_desc={content_desc}】')
+            else:
+                print(f'未找到【content_desc={content_desc}】')
         return dic
 
     def depth_first_search(self, dic, start_index=0):  # pylint: disable=duplicate-code
