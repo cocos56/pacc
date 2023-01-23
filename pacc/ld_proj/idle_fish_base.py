@@ -86,7 +86,7 @@ class IdleFishBase(LDProj):
             print('检测到已掉线，请登录')
         return False
 
-    def should_run_task(self, today: date.today()):
+    def should_run_task(self, today: date.today()) -> bool:
         """判断是否需要执行任务
 
         :param today: 今日的日期
