@@ -38,7 +38,7 @@ SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WH
 
 SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '颜瑞捷%'
 
-SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '陈嘉乐%'
+SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '陈嘉乐%';
 
 # 7. 查询所有账号的基础信息
 ## 7.1. 某一代理的
@@ -48,7 +48,8 @@ SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝�
 ## 8.1. 某一代理今天回收的和今日已确认收货的明细
 
 SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '颜瑞捷%';
-
 SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '颜瑞捷%' and last_confirm_date = CURDATE();
 
-SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '陈嘉乐%' and last_confirm_date = CURDATE();
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, buy, last_buy_coins, confirm FROM idle_fish WHERE role LIKE '陈嘉乐%' and coins >= 20000 and `hosts` LIKE 'C4:%';
+SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '陈嘉乐%';
+SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '陈嘉乐%' and last_confirm_date = CURDATE()
