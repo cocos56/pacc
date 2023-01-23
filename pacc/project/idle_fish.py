@@ -28,6 +28,7 @@ class IdleFish(Project):
         """改价函数"""
         success_cnt = 0
         while True:
+            print(f'success_cnt={success_cnt}')
             self.open_app()
             self.adb_ins.get_current_focus()
             self.uia_ins.click(content_desc='我的，未选中状态')
@@ -50,5 +51,19 @@ class IdleFish(Project):
             self.uia_ins.click(content_desc='确定', index='1')
             self.uia_ins.get_current_ui_hierarchy()
             success_cnt += 1
-            print(f'success_cnt={success_cnt}')
             sleep(30)
+
+    def dispatch(self):
+        """发货"""
+        success_cnt = 0
+        self.open_app()
+        while True:
+            print(f'success_cnt={success_cnt}')
+            self.uia_ins.click(content_desc='我的，未选中状态')
+            self.uia_ins.click(content_desc='我卖出的')
+            if self.uia_ins.click(content_desc='待发货'):
+                success_cnt += 1
+            self.uia_ins.click('com.taobao.idlefish:id/right_text')
+            self.uia_ins.click(text='继续')
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key()

@@ -4,4 +4,5 @@ from pacc.project import IdleFish
 
 
 Config.set_debug(True)
-IdleFish('002005001').change_price()
+# IdleFish('002005001').change_price()
+IdleFish('002005001').dispatch()
