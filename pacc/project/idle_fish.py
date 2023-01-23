@@ -71,9 +71,10 @@ class IdleFish(Project):
                 break
             self.uia_ins.click(content_desc='我的，未选中状态')
             self.uia_ins.click(content_desc='我卖出的')
-            if self.uia_ins.click(content_desc='待发货'):
-                success_cnt += 1
+            self.uia_ins.click(content_desc='待发货')
+            self.uia_ins.click(content_desc='去发货')
             self.uia_ins.click('com.taobao.idlefish:id/right_text')
-            self.uia_ins.click(text='继续')
+            if self.uia_ins.click(text='继续'):
+                success_cnt += 1
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
