@@ -24,11 +24,16 @@ class IdleFish(Project):
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(5)
 
-    def change_price(self):
-        """改价"""
+    def change_price(self, end_num=8):
+        """改价
+
+        :param end_num: 结束的数量
+        """
         success_cnt = 0
         while True:
             print(f'success_cnt={success_cnt}')
+            if success_cnt >= end_num:
+                break
             self.open_app()
             self.adb_ins.get_current_focus()
             self.uia_ins.click(content_desc='我的，未选中状态')
@@ -53,12 +58,17 @@ class IdleFish(Project):
             success_cnt += 1
             sleep(30)
 
-    def dispatch(self):
-        """发货"""
+    def dispatch(self, end_num=8):
+        """发货
+
+        :param end_num: 结束的数量
+        """
         success_cnt = 0
         self.open_app()
         while True:
             print(f'success_cnt={success_cnt}')
+            if success_cnt >= end_num:
+                break
             self.uia_ins.click(content_desc='我的，未选中状态')
             self.uia_ins.click(content_desc='我卖出的')
             if self.uia_ins.click(content_desc='待发货'):
