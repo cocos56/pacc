@@ -52,4 +52,5 @@ SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '颜瑞捷%' and last_
 
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, buy, last_buy_coins, confirm FROM idle_fish WHERE role LIKE '陈嘉乐%' and coins >= 20000 and `hosts` LIKE 'C4:%';
 SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '陈嘉乐%';
-SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '陈嘉乐%' and last_confirm_date = CURDATE()
+SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.0003,2) as money FROM idle_fish WHERE role LIKE '陈嘉乐%' and last_confirm_date = CURDATE();
+
