@@ -834,7 +834,8 @@ class IdleFish(IdleFishBase):
                 cls(index).run_app(26)
         for index in run_list:
             cls(index).run_task_on_target_device(today)
-        sleep(69)
+        if run_list:
+            sleep(69)
         for index in run_list:
             LDConsole.quit(index)
             job_number = LDConsole(index).get_job_number()
