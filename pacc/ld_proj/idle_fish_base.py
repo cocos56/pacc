@@ -89,6 +89,7 @@ class IdleFishBase(LDProj):
     def should_run_task(self, today: date.today()):
         """判断是否需要执行任务
 
+        :param today: 今日的日期
         :return: 需要执行任务返回True，否则返回False
         """
         if LDConsole(self.ld_index).is_exist():

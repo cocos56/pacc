@@ -831,73 +831,31 @@ class IdleFish(IdleFishBase):
         return True
 
     @classmethod
-    def run_task(cls, start_index, p_num=3):
+    def run_task(cls, run_list: list, today: date.today()) -> None:
         """执行任务
 
-        :param start_index: 起始索引值
-        :param p_num: 并发数量
-        :return: 正常执行完毕返回True，无需执行返回False
+        :param run_list: 待执行任务设备的索引值列表
+        :param today: 今日的日期
         """
-        should_run = False
-        today = date.today()
-        for i in range(p_num):
-            index = start_index + i
-            if LDConsole(index).is_exist():
-                job_number = LDConsole(index).get_job_number()
-                retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-                if not retrieve_idle_fish_ins.last_run_date:
-                    should_run = True
-                elif retrieve_idle_fish_ins.last_run_date < today:
-                    should_run = True
-                print(f'设备{index}存在，name={LDConsole(index).get_name()}，last_run_date='
-                      f'{retrieve_idle_fish_ins.last_run_date}，today={today}，{datetime.now()}')
-            else:
-                print(f'设备{index}不存在，{datetime.now()}')
-        if not should_run:
-            print('本轮设备全部不存在或者已执行，无需进行执行任务的操作\n')
-            return False
-        for i in range(p_num):
-            index = start_index + i
-            if not LDConsole(index).is_exist():
-                print(f'设备{index}不存在，正在执行下一项')
-                if i == p_num - 1:
-                    sleep(60)
-                continue
-            job_number = LDConsole(index).get_job_number()
-            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            if retrieve_idle_fish_ins.last_run_date == today:
-                print(f'设备{index}今日已执行，正在执行下一项')
-                if i == p_num - 1:
-                    sleep(60)
-                continue
-            if i == p_num - 1:
+        for i, index in enumerate(run_list):
+            if i == len(run_list) - 1:
                 cls(index).run_app()
             elif i == 0:
                 cls(index).run_app(1)
             else:
                 cls(index).run_app(26)
-        for i in range(p_num):
-            cls(start_index + i).run_task_on_target_device(today)
+        for index in run_list:
+            cls(index).run_task_on_target_device(today)
         sleep(69)
-        for i in range(p_num):
-            index = start_index + i
-            if not LDConsole(index).is_exist():
-                print(f'目标设备{index}不存在，无需进行执行任务后的收尾工作')
-                continue
-            job_number = LDConsole(index).get_job_number()
-            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            if retrieve_idle_fish_ins.last_run_date == today:
-                print(f'目标设备{index}今日已执行，无需进行执行任务后的收尾工作')
-                continue
+        for index in run_list:
             LDConsole.quit(index)
             job_number = LDConsole(index).get_job_number()
             if today != RetrieveIdleFish(job_number).last_run_date:
                 UpdateIdleFish(job_number).update_last_run_date(today)
             print(f'第{index}项已执行完毕')
-        return True
 
     @classmethod
-    def mainloop(cls, start_index, end_index, p_num=3):
+    def mainloop(cls, start_index: int, end_index: int, p_num=3) -> None:
         """主循环
 
         :param start_index: 起始索引值
@@ -921,8 +879,14 @@ class IdleFish(IdleFishBase):
                     sleep(seconds)
                 today = date.today()
             print(f'mainloop start_day={start_day}, today={today}, {datetime.now()}')
-            cls.run_task(start_index, p_num)
-            start_index += p_num
+            run_list = []
+            while len(run_list) < p_num:
+                if IdleFish(start_index).should_run_task(today):
+                    run_list.append(start_index)
+                start_index += 1
+                if start_index > end_index:
+                    break
+            cls.run_task(run_list, today)
             if start_index > end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已执行完毕，'
                       f'当前时间为：{datetime.now()}')
