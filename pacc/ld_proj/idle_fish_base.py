@@ -98,8 +98,11 @@ class IdleFishBase(LDProj):
                 return True
             if retrieve_idle_fish_ins.last_run_date < today:
                 return True
-            print(f'设备{self.ld_index}存在，name={LDConsole(self.ld_index).get_name()}，last_run_date='
-                  f'{retrieve_idle_fish_ins.last_run_date}，today={today}，{datetime.now()}')
+            if retrieve_idle_fish_ins.login:
+                print(f'目标设备{self.ld_index}已掉线，无需执行任务，{datetime.now()}')
+            print(f'设备{self.ld_index}存在，name={LDConsole(self.ld_index).get_name()}，'
+                  f'last_run_date={retrieve_idle_fish_ins.last_run_date}，today={today}，'
+                  f'{datetime.now()}')
         else:
-            print(f'设备{self.ld_index}不存在，{datetime.now()}')
+            print(f'设备{self.ld_index}不存在，无需执行任务，{datetime.now()}')
         return False
