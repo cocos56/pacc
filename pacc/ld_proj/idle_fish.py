@@ -263,6 +263,8 @@ class IdleFish(IdleFishBase):
                     ldadb_ins.press_back_key()
                     lduia_ins.get_current_ui_hierarchy()
                     input()
+                elif lduia_ins.get_dict(content_desc='确认购买'):
+                    continue
             lduia_ins.click(text='立即付款')
             lduia_ins.click(text='面对面扫码')
             update_idle_fish_ins = UpdateIdleFish(job_number)
