@@ -802,19 +802,8 @@ class IdleFish(IdleFishBase):
             cls.check_target_device(start_index)
             start_index += 1
 
-    def run_task_on_target_device(self, today: date.today()):
-        """在指定设备上执行任务
-
-        :return: 目标设备不存在返回False，正常执行完毕返回True
-        """
-        if not LDConsole(self.ld_index).is_exist():
-            print(f'目标设备{self.ld_index}不存在，无需执行任务')
-            return False
-        job_number = LDConsole(self.ld_index).get_job_number()
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        if retrieve_idle_fish_ins.last_run_date == today:
-            print(f'设备{self.ld_index}今日已执行，无需执行任务')
-            return False
+    def run_task_on_target_device(self, today: date.today()) -> None:
+        """在指定设备上执行任务"""
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
@@ -828,7 +817,6 @@ class IdleFish(IdleFishBase):
             return self.run_task_on_target_device(today)
         if self.should_restart():
             return self.run_task_on_target_device(today)
-        return True
 
     @classmethod
     def run_task(cls, run_list: list, today: date.today()) -> None:
