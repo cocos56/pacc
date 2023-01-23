@@ -24,8 +24,9 @@ class IdleFish(Project):
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(5)
 
-    def mainloop(self):
-        """主循环函数"""
+    def change_price(self):
+        """改价函数"""
+        success_cnt = 0
         while True:
             self.open_app()
             self.adb_ins.get_current_focus()
@@ -42,10 +43,12 @@ class IdleFish(Project):
             if str(src_price)[-1] == '1':
                 continue
             price = src_price / 10 + 0.01
-            print(price)
+            print(f'price={price}')
             self.uia_ins.click(class_='android.widget.EditText')
             self.adb_ins.input_text(price)
             self.uia_ins.click(content_desc='确定修改')
             self.uia_ins.click(content_desc='确定', index='1')
             self.uia_ins.get_current_ui_hierarchy()
+            success_cnt += 1
+            print(f'success_cnt={success_cnt}')
             sleep(30)
