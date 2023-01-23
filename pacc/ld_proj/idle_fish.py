@@ -250,9 +250,14 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 if not lduia_ins.click(text='卡'):
                     lduia_ins.click(text='账户余额')
+            sleep(1)
             while not lduia_ins.click(text='找朋友帮忙付'):
                 print('未找到找朋友帮忙付')
                 ldadb_ins.swipe([260, 900], [260, 600])
+                if lduia_ins.get_dict(text='查看更多'):
+                    ldadb_ins.press_back_key()
+                    lduia_ins.get_current_ui_hierarchy()
+                    input()
             lduia_ins.click(text='立即付款')
             lduia_ins.click(text='面对面扫码')
             update_idle_fish_ins = UpdateIdleFish(job_number)
