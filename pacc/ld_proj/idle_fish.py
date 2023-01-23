@@ -357,7 +357,10 @@ class IdleFish(IdleFishBase):
             sleep(1)
             LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
-            lduia_ins.get_current_ui_hierarchy()
+            try:
+                lduia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print_err(err)
             LDConsole.quit(start_index)
             start_index += 1
 
