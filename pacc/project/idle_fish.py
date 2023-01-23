@@ -25,7 +25,7 @@ class IdleFish(Project):
         sleep(5)
 
     def change_price(self):
-        """改价函数"""
+        """改价"""
         success_cnt = 0
         while True:
             print(f'success_cnt={success_cnt}')
