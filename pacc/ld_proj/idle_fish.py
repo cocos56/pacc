@@ -764,7 +764,8 @@ class IdleFish(IdleFishBase):
         start_day = date.today()
         all_done = True
         while True:
-            print(datetime.now())
+            now = datetime.now()
+            print(now)
             while start_day != date.today():
                 seconds = (datetime.fromisoformat(
                     f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
@@ -779,6 +780,10 @@ class IdleFish(IdleFishBase):
                     start_day = date.today() + timedelta(days=1)
                 src_start_index = start_index = 1
                 all_done = True
+                continue
+            if now.hour >= 23 and now.minute >= 50:
+                print(f'目标设备{start_index}当前的执行时间为{now}，不在正常的检查时段，无需检查\n')
+                start_index += 1
                 continue
             if not LDConsole(start_index).is_exist():
                 print(f'目标设备{start_index}不存在，无需检查\n')
