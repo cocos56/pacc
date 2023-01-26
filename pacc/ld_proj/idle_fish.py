@@ -269,7 +269,10 @@ class IdleFish(IdleFishBase):
                 ldadb_ins.swipe([260, 900], [260, 600])
                 if lduia_ins.get_dict(text='查看更多'):
                     ldadb_ins.press_back_key()
-                    lduia_ins.get_current_ui_hierarchy()
+                    try:
+                        lduia_ins.get_current_ui_hierarchy()
+                    except FileNotFoundError as err:
+                        print_err(err)
                     lduia_ins.get_dict(text='放弃')
                 elif lduia_ins.get_dict(content_desc='确认购买'):
                     continue
