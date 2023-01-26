@@ -137,8 +137,12 @@ class IdleFish(IdleFishBase):
                 user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
             else:
                 lduia_ins.xml = ''
-            login_pw = lduia_ins.get_dict(
-                ResourceID.aliuser_login_password_et, xml=lduia_ins.xml).get('@text')
+            try:
+                login_pw = lduia_ins.get_dict(
+                    ResourceID.aliuser_login_password_et, xml=lduia_ins.xml).get('@text')
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             print(user_name, user_name == retrieve_idle_fish_ins.user_name)
             print(login_pw, login_pw == retrieve_idle_fish_ins.login_pw)
             if len(if_mn) == 11:
