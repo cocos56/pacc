@@ -273,7 +273,7 @@ class IdleFish(IdleFishBase):
                         lduia_ins.get_current_ui_hierarchy()
                     except FileNotFoundError as err:
                         print_err(err)
-                    lduia_ins.get_dict(text='放弃')
+                    lduia_ins.click(text='放弃')
                 elif lduia_ins.get_dict(content_desc='确认购买'):
                     continue
             lduia_ins.click(text='立即付款')
