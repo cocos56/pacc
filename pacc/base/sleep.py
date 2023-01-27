@@ -9,7 +9,7 @@ def sleep(seconds, show_process=True, show_result=True):
     :param show_process: 是否显示睡眠时等待的过程
     :param show_result: 是否显示睡眠的结果
     """
-    if not show_process:
+    if not show_process or seconds < 1:
         time.sleep(seconds)
     else:
         rest_seconds = seconds
