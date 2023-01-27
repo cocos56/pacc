@@ -140,7 +140,7 @@ class IdleFish(IdleFishBase):
             try:
                 login_pw = lduia_ins.get_dict(
                     ResourceID.aliuser_login_password_et, xml=lduia_ins.xml).get('@text')
-            except FileNotFoundError as err:
+            except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
             print(user_name, user_name == retrieve_idle_fish_ins.user_name)
