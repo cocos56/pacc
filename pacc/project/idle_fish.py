@@ -102,8 +102,7 @@ class IdleFish(Project):
                 self.adb_ins.press_back_key()
                 self.adb_ins.press_back_key()
                 continue
-            else:
-                err_cnt = 0
+            err_cnt = 0
             self.uia_ins.click(content_desc='未选中，赏好评')
             self.uia_ins.click(ResourceID.btn_transfer, '收货快')
             self.uia_ins.click(ResourceID.btn_transfer, '下单爽快')
