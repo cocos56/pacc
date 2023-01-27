@@ -123,20 +123,21 @@ class IdleFish(Project):
         """
         err_cnt = 0
         self.open_app()
+        self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+        self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+        self.uia_ins.click(content_desc='待评价', interval=0.01)
         while True:
             print(f'err_cnt={err_cnt}')
             if err_cnt >= err_num:
                 break
-            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
-            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
-            self.uia_ins.click(content_desc='待评价', interval=0.01)
             if not self.uia_ins.click(content_desc='更多', interval=0.01):
                 err_cnt += 1
                 self.adb_ins.press_back_key()
                 self.adb_ins.press_back_key()
+                self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+                self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+                self.uia_ins.click(content_desc='待评价', interval=0.01)
                 continue
             err_cnt = 0
             self.uia_ins.click(content_desc='删除订单', interval=0.01)
             self.uia_ins.click(ResourceID.right_btn, interval=0.01)
-            self.adb_ins.press_back_key(0.01)
-            self.adb_ins.press_back_key(0.01)
