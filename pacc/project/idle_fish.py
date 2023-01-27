@@ -138,7 +138,5 @@ class IdleFish(Project):
             err_cnt = 0
             self.uia_ins.click(content_desc='删除订单', interval=0.01)
             self.uia_ins.click(ResourceID.right_btn, interval=0.01)
-            # self.uia_ins.get_current_ui_hierarchy()
-            # input()
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
