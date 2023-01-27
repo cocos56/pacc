@@ -93,6 +93,8 @@ class IdleFish(Project):
         while True:
             print(f'err_cnt={err_cnt}')
             if err_cnt >= err_num:
+                self.free_memory()
+                self.adb_ins.press_power_key()
                 break
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
@@ -129,6 +131,8 @@ class IdleFish(Project):
         while True:
             print(f'err_cnt={err_cnt}')
             if err_cnt >= err_num:
+                self.free_memory()
+                self.adb_ins.press_power_key()
                 break
             if not self.uia_ins.click(content_desc='更多', interval=0.01):
                 err_cnt += 1
