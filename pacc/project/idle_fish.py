@@ -115,3 +115,30 @@ class IdleFish(Project):
             # self.uia_ins.get_current_ui_hierarchy()
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
+
+    def delete_error_rate_order(self, err_num=3):
+        """删除无法评价的订单（超过30天）
+
+        :param err_num: 结束时的连续错误阈值
+        """
+        err_cnt = 0
+        self.open_app()
+        while True:
+            print(f'err_cnt={err_cnt}')
+            if err_cnt >= err_num:
+                break
+            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+            self.uia_ins.click(content_desc='待评价', interval=0.01)
+            if not self.uia_ins.click(content_desc='更多', interval=0.01):
+                err_cnt += 1
+                self.adb_ins.press_back_key()
+                self.adb_ins.press_back_key()
+                continue
+            err_cnt = 0
+            self.uia_ins.click(content_desc='删除订单', interval=0.01)
+            self.uia_ins.click(ResourceID.right_btn, interval=0.01)
+            # self.uia_ins.get_current_ui_hierarchy()
+            # input()
+            self.adb_ins.press_back_key(0.01)
+            self.adb_ins.press_back_key(0.01)

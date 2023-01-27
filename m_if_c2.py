@@ -7,4 +7,5 @@ Config.set_debug(True)
 END_NUM = 34
 # IdleFish('002005001').change_price(END_NUM)
 # IdleFish('002005001').dispatch(END_NUM)
-IdleFish('002005001').rate()
+# IdleFish('002005001').rate()
+IdleFish('002005001').delete_error_rate_order()
