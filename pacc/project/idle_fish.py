@@ -108,7 +108,7 @@ class IdleFish(Project):
             self.uia_ins.click(ResourceID.btn_transfer, '下单爽快', xml=self.uia_ins.xml)
             self.uia_ins.click(ResourceID.btn_transfer, '回复快', xml=self.uia_ins.xml)
             self.uia_ins.click(ResourceID.publish_rate, xml=self.uia_ins.xml)
-            self.uia_ins.click(ResourceID.right_btn, xml=self.uia_ins.xml)
+            self.uia_ins.click(ResourceID.right_btn)
             # self.uia_ins.get_current_ui_hierarchy()
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
