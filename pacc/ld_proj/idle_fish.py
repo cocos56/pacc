@@ -629,7 +629,7 @@ class IdleFish(IdleFishBase):
                     elif retrieve_idle_fish_ins.last_update_version_date >= today:
                         continue
                     if not retrieve_idle_fish_ins.version or \
-                            retrieve_idle_fish_ins.version != '7.8.10':
+                            retrieve_idle_fish_ins.version[:4] != '7.8.':
                         should_run = True
                 else:
                     print(f'设备{index}不存在，{datetime.now()}')
