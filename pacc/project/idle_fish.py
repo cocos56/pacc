@@ -13,6 +13,9 @@ class Activity:  # pylint: disable=too-few-public-methods
 class ResourceID:  # pylint: disable=too-few-public-methods
     """闲鱼中控模块的安卓资源ID类"""
     tab_title = 'com.taobao.idlefish:id/tab_title'
+    btn_transfer = 'com.taobao.idlefish:id/btn_transfer'
+    publish_rate = 'com.taobao.idlefish:id/publish_rate'
+    right_btn = 'com.taobao.idlefish:id/right_btn'
 
 
 class IdleFish(Project):
@@ -76,5 +79,37 @@ class IdleFish(Project):
             self.uia_ins.click('com.taobao.idlefish:id/right_text')
             if self.uia_ins.click(text='继续'):
                 success_cnt += 1
+            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key()
+        self.adb_ins.press_power_key()
+
+    def rate(self, err_num=3):
+        """评价
+
+        :param err_num: 结束时的连续错误阈值
+        """
+        err_cnt = 0
+        self.open_app()
+        while True:
+            print(f'err_cnt={err_cnt}')
+            if err_cnt >= err_num:
+                break
+            self.uia_ins.click(content_desc='我的，未选中状态')
+            self.uia_ins.click(content_desc='我卖出的')
+            self.uia_ins.click(content_desc='待评价')
+            if not self.uia_ins.click(content_desc='去评价'):
+                err_cnt += 1
+                self.adb_ins.press_back_key()
+                self.adb_ins.press_back_key()
+                continue
+            else:
+                err_cnt = 0
+            self.uia_ins.click(content_desc='未选中，赏好评')
+            self.uia_ins.click(ResourceID.btn_transfer, '收货快')
+            self.uia_ins.click(ResourceID.btn_transfer, '下单爽快')
+            self.uia_ins.click(ResourceID.btn_transfer, '回复快')
+            self.uia_ins.click(ResourceID.publish_rate)
+            self.uia_ins.click(ResourceID.right_btn)
+            self.uia_ins.get_current_ui_hierarchy()
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
