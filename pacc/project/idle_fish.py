@@ -94,24 +94,24 @@ class IdleFish(Project):
             print(f'err_cnt={err_cnt}')
             if err_cnt >= err_num:
                 break
-            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.5)
-            self.uia_ins.click(content_desc='我卖出的', interval=0.5)
-            self.uia_ins.click(content_desc='待评价', interval=0.5)
-            if not self.uia_ins.click(content_desc='去评价', interval=0.5):
+            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+            self.uia_ins.click(content_desc='待评价', interval=0.01)
+            if not self.uia_ins.click(content_desc='去评价', interval=0.01):
                 err_cnt += 1
                 self.adb_ins.press_back_key()
                 self.adb_ins.press_back_key()
                 continue
             err_cnt = 0
-            self.uia_ins.click(content_desc='未选中，赏好评', interval=0.5)
-            self.uia_ins.click(ResourceID.btn_transfer, '收货快', interval=0.1)
+            self.uia_ins.click(content_desc='未选中，赏好评', interval=0.01)
+            self.uia_ins.click(ResourceID.btn_transfer, '收货快', interval=0.01)
             self.uia_ins.click(
-                ResourceID.btn_transfer, '下单爽快', xml=self.uia_ins.xml, interval=0.1)
+                ResourceID.btn_transfer, '下单爽快', xml=self.uia_ins.xml, interval=0.01)
             self.uia_ins.click(
-                ResourceID.btn_transfer, '回复快', xml=self.uia_ins.xml, interval=0.1)
+                ResourceID.btn_transfer, '回复快', xml=self.uia_ins.xml, interval=0.01)
             self.uia_ins.click(
-                ResourceID.publish_rate, xml=self.uia_ins.xml, interval=0.5)
-            self.uia_ins.click(ResourceID.right_btn, interval=0.5)
+                ResourceID.publish_rate, xml=self.uia_ins.xml, interval=0.01)
+            self.uia_ins.click(ResourceID.right_btn, interval=0.01)
             # self.uia_ins.get_current_ui_hierarchy()
-            self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key()
+            self.adb_ins.press_back_key(0.01)
+            self.adb_ins.press_back_key(0.01)

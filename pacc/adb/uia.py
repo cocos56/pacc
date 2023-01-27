@@ -161,7 +161,7 @@ class UIAutomator:
                 return True
         return False
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments, too-many-locals
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               index='', naf='', start_index=0, offset_x=0, offset_y=0, interval=1):
         """点击目标点
