@@ -27,16 +27,20 @@ SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, buy, last_buy_co
 
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'AAB%' and coins >= 20000 and `hosts` LIKE 'C5:%'
 
-# 4. 查询所有以xy开头的账号
+# 4. 查询已购买的账号信息
+
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'AAB%' and last_buy_date='2023-01-26' and `hosts` LIKE 'C5:%'
+
+# 5. 查询所有以xy开头的账号
 SELECT * FROM `idle_fish` WHERE user_name LIKE 'xy%'
 
-# 5. 在线状态
-## 5.1. 查询所有已掉线的账号
+# 6. 在线状态
+## 6.1. 查询所有已掉线的账号
 SELECT Job_N, role, `hosts`, version, coins FROM idle_fish WHERE login=1
-## 5.2. 查询所有未掉线的账号
+## 6.2. 查询所有未掉线的账号
 SELECT Job_N, role FROM idle_fish WHERE login IS NULL
 
-# 6. 今日已确认收货的
+# 7. 今日已确认收货的
 
 SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE()
 
@@ -44,12 +48,12 @@ SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WH
 
 SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '陈嘉乐%';
 
-# 7. 查询所有账号的基础信息
-## 7.1. 某一代理的
+# 8. 查询所有账号的基础信息
+## 8.1. 某一代理的
 SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝号` FROM `idle_fish` WHERE Job_N LIKE 'ZLJ%'
 
-# 8. 混合查询
-## 8.1. 某一代理今天回收的和今日已确认收货的明细
+# 9. 混合查询
+## 9.1. 某一代理今天回收的和今日已确认收货的明细
 
 SELECT Job_N, role, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND role LIKE '颜瑞捷%';
 SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '颜瑞捷%' and last_confirm_date = CURDATE();
