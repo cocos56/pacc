@@ -213,18 +213,22 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             try:
-                lduia_ins.click(text='我知道了')
+                if lduia_ins.click(text='我知道了'):
+                    lduia_ins.xml = ''
             except FileNotFoundError as err:
                 print_err(err)
                 continue
             try:
-                while not lduia_ins.click(content_desc='徐哥签名'):
+                while not lduia_ins.click(index='1', content_desc='徐哥签名', xml=lduia_ins.xml):
+                    if lduia_ins.click(index='0', content_desc='徐哥签名', xml=lduia_ins.xml) or \
+                            Activity.Launcher in LDADB(start_index).get_current_focus():
+                        break
                     ldadb_ins.swipe([290, 690], [290, 330], 500)
-                    if 'com.android.launcher3/com.android.launcher3.Launcher' in LDADB(
-                            start_index).get_current_focus():
-                        continue
+                    lduia_ins.xml = ''
             except FileNotFoundError as err:
                 print_err(err)
+                continue
+            if Activity.Launcher in LDADB(start_index).get_current_focus():
                 continue
             sleep(1)
             try:
@@ -280,14 +284,18 @@ class IdleFish(IdleFishBase):
                     lduia_ins.click(text='放弃')
                 elif lduia_ins.get_dict(content_desc='确认购买'):
                     continue
-            lduia_ins.click(text='立即付款')
-            lduia_ins.click(text='面对面扫码')
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_buy('NULL')
             update_idle_fish_ins.update_last_buy_date(today)
             update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
             if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
                 update_idle_fish_ins.update_confirm(1)
+            lduia_ins.click(text='立即付款')
+            sleep(1)
+            try:
+                lduia_ins.click(text='面对面扫码')
+            except FileNotFoundError as err:
+                print_err(err)
             lduia_ins.get_screen()
             lduia_ins.get_current_ui_hierarchy()
             start_index += 1

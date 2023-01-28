@@ -201,6 +201,11 @@ class LDUIA(LDBase):
                 print(f'检测到【naf={naf}】')
             else:
                 print(f'未找到【naf={naf}】')
+        elif index and content_desc:
+            if dic:
+                print(f'检测到【index={index} and content_desc={content_desc}】')
+            else:
+                print(f'未找到【index={index} and content_desc={content_desc}】')
         elif content_desc:
             if dic:
                 print(f'检测到【content_desc={content_desc}】')
@@ -247,6 +252,10 @@ class LDUIA(LDBase):
             if self.node.index == dic['@index']:
                 if self.node.resource_id and dic['@resource-id'] == self.node.resource_id:
                     return True
+                if self.node.content_desc:
+                    if self.node.content_desc in unescape(dic['@content-desc']):
+                        return True
+                    return False
                 if self.node.naf and '@NAF' in dic and self.node.naf == dic['@NAF']:
                     if self.node.start_count == start_index:
                         return True
