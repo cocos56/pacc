@@ -72,16 +72,17 @@ class IdleFish(Project):
             print(f'success_cnt={success_cnt}, err_cnt={err_cnt}')
             if err_cnt >= err_num:
                 break
-            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
-            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+            if self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01):
+                self.uia_ins.xml = ''
+            self.uia_ins.click(content_desc='我卖出的', interval=0.01, xml=self.uia_ins.xml)
             self.uia_ins.click(content_desc='待发货', interval=0.01)
             if self.uia_ins.click(content_desc='去发货', interval=0.01):
                 success_cnt += 1
+                err_cnt = 0
                 self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
                 self.uia_ins.click(text='继续', interval=0.01)
             else:
                 err_cnt += 1
-            # self.adb_ins.press_back_key(interval=0.01)
             self.adb_ins.press_back_key(0.01, False)
         self.adb_ins.press_power_key()
 
