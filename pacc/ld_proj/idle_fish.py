@@ -633,12 +633,12 @@ class IdleFish(IdleFishBase):
                       f'，today={today}，{datetime.now()}')
                 if not retrieve_idle_fish_ins.version:
                     pass
-                elif not retrieve_idle_fish_ins.last_update_version_date:
-                    pass
-                elif retrieve_idle_fish_ins.last_update_version_date >= today:
+                elif retrieve_idle_fish_ins.version[:4] == '7.8.':
                     start_index += 1
                     continue
-                if retrieve_idle_fish_ins.version[:4] == '7.8.':
+                if not retrieve_idle_fish_ins.last_update_version_date:
+                    pass
+                elif retrieve_idle_fish_ins.last_update_version_date >= today:
                     start_index += 1
                     continue
             else:
