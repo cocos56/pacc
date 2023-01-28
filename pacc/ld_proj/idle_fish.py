@@ -239,21 +239,18 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(content_desc='再次购买')
             last_buy_coins = 0
             if coins >= 50000:
-                lduia_ins.click(ResourceID.tv_value, '500')
                 last_buy_coins = 50000
             elif coins >= 40000:
-                lduia_ins.click(ResourceID.tv_value, '400')
                 last_buy_coins = 40000
             elif coins >= 30000:
-                lduia_ins.click(ResourceID.tv_value, '300')
                 last_buy_coins = 30000
             elif coins >= 20000:
-                try:
-                    lduia_ins.click(ResourceID.tv_value, '200')
-                except FileNotFoundError as err:
-                    print_err(err)
-                    continue
                 last_buy_coins = 20000
+            try:
+                lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             lduia_ins.click(text='立即购买')
             LDADB(start_index).get_current_focus()
             sleep(1)
