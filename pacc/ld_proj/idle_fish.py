@@ -588,16 +588,12 @@ class IdleFish(IdleFishBase):
             start_index += 1
 
     @classmethod
-    def check_version_on_target_device(cls, index: int, today: date.today()) -> bool:
+    def check_version_on_target_device(cls, index: int, today: date.today()) -> None:
         """检查目标设备上的版本是否存在问题
 
         :param index: 目标设备的索引值
         :param today: 今日的日期
-        :return: 目标设备不存在返回False，正常检查完毕返回True
         """
-        if not LDConsole(index).is_exist():
-            print('目标设备不存在，无需检查')
-            return False
         print(f'正在准备检查设备{index}上的的闲鱼版本号')
         version_info = LDADB(index).get_app_version_info('com.taobao.idlefish')
         job_number = LDConsole(index).get_job_number()
@@ -609,15 +605,13 @@ class IdleFish(IdleFishBase):
         print(f'模拟器{index}上的闲鱼版本为：{version_info}')
         LDConsole.quit(index)
         print(f'第{index}项已检查完毕\n')
-        return True
 
     @classmethod
-    def check_version(cls, start_index: int, end_index: int, p_num=5):
+    def check_version(cls, start_index: int, end_index: int):
         """检查版本是否存在问题
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
-        :param p_num: 并发数量
         """
         src_start_index = start_index
         while True:
@@ -629,37 +623,32 @@ class IdleFish(IdleFishBase):
             if now.hour >= 23 and now.minute >= 50:
                 break
             print(now)
-            should_run = False
             today = date.today()
-            for i in range(p_num):
-                index = start_index + i
-                if LDConsole(index).is_exist():
-                    job_number = LDConsole(index).get_job_number()
-                    retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-                    print(f'设备{index}存在，version={retrieve_idle_fish_ins.version}，'
-                          f'last_update_version_date='
-                          f'{retrieve_idle_fish_ins.last_update_version_date}'
-                          f'，today={today}，{datetime.now()}')
-                    if not retrieve_idle_fish_ins.last_update_version_date:
-                        should_run = True
-                    elif retrieve_idle_fish_ins.last_update_version_date >= today:
-                        continue
-                    if not retrieve_idle_fish_ins.version or \
-                            retrieve_idle_fish_ins.version[:4] != '7.8.':
-                        should_run = True
-                else:
-                    print(f'设备{index}不存在，{datetime.now()}')
-            if not should_run:
-                print(
-                    '本轮中的设备全部属于不存在或已是最新版本或今日已更新过版本号的设备，无需进行检查版本信息的操作\n')
-                start_index += p_num
+            if LDConsole(start_index).is_exist():
+                job_number = LDConsole(start_index).get_job_number()
+                retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+                print(f'设备{start_index}存在，version={retrieve_idle_fish_ins.version}，'
+                      f'last_update_version_date='
+                      f'{retrieve_idle_fish_ins.last_update_version_date}'
+                      f'，today={today}，{datetime.now()}')
+                if not retrieve_idle_fish_ins.version:
+                    pass
+                elif not retrieve_idle_fish_ins.last_update_version_date:
+                    pass
+                elif retrieve_idle_fish_ins.last_update_version_date >= today:
+                    start_index += 1
+                    continue
+                if retrieve_idle_fish_ins.version[:4] == '7.8.':
+                    start_index += 1
+                    continue
+            else:
+                print(f'设备{start_index}不存在，{datetime.now()}')
+                start_index += 1
                 continue
-            for i in range(p_num):
-                cls(start_index + i).launch()
+            cls(start_index).launch()
             sleep(5)
-            for i in range(p_num):
-                cls.check_version_on_target_device(start_index + i, today)
-            start_index += p_num
+            cls.check_version_on_target_device(start_index, today)
+            start_index += 1
 
     @classmethod
     def restart_before_check_target_device(cls, index):
