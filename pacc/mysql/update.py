@@ -309,35 +309,35 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_check_date', last_check_date))
 
-    def update_last_run_date(self, last_run_date: date.today()):
+    def update_last_run_date(self, last_run_date: date.today()) -> None:
         """更新设备的上次运行日期
 
         :param last_run_date: 新的上次运行日期
         """
         print(self.query('last_run_date', last_run_date))
 
-    def update_last_bak_date(self, last_bak_date):
+    def update_last_bak_date(self, last_bak_date: date.today()) -> None:
         """更新设备的上次备份日期
 
         :param last_bak_date: 新的上次备份日期
         """
         print(self.query('last_bak_date', last_bak_date))
 
-    def update_today_global_ipv4_addr(self, today_global_ipv4_addr):
+    def update_today_global_ipv4_addr(self, today_global_ipv4_addr: str) -> None:
         """更新设备的本机今日公网IPv4地址
 
         :param today_global_ipv4_addr: 本机今日的公网IPv4地址
         """
         print(self.query('today_global_ipv4_addr', today_global_ipv4_addr))
 
-    def update_last_update_ip_date(self, last_update_ip_date):
+    def update_last_update_ip_date(self, last_update_ip_date: str) -> None:
         """更新设备上次更新本机公网IPv4地址的日期
 
         :param last_update_ip_date: 上次更新本机公网IPv4地址的日期
         """
         print(self.query('last_update_ip_date', last_update_ip_date))
 
-    def update_hosts(self, hosts):
+    def update_hosts(self, hosts: str) -> None:
         """更新设备在数据库中的主机列表值
 
         :param hosts: 最新的设备所在主机列表值
