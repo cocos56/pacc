@@ -61,24 +61,26 @@ class IdleFish(Project):
             success_cnt += 1
             sleep(30)
 
-    def dispatch(self, end_num=8):
+    def dispatch(self, err_num=3):
         """发货
 
-        :param end_num: 结束的数量
+        :param err_num: 结束时的连续错误阈值
         """
-        success_cnt = 0
+        err_cnt = success_cnt = 0
         self.open_app()
         while True:
-            print(f'success_cnt={success_cnt}')
-            if success_cnt >= end_num:
+            print(f'success_cnt={success_cnt}, err_cnt={err_cnt}')
+            if err_cnt >= err_num:
                 break
             self.uia_ins.click(content_desc='我的，未选中状态')
             self.uia_ins.click(content_desc='我卖出的')
             self.uia_ins.click(content_desc='待发货')
-            self.uia_ins.click(content_desc='去发货')
-            self.uia_ins.click('com.taobao.idlefish:id/right_text')
-            if self.uia_ins.click(text='继续'):
+            if self.uia_ins.click(content_desc='去发货'):
                 success_cnt += 1
+                self.uia_ins.click('com.taobao.idlefish:id/right_text')
+                self.uia_ins.click(text='继续')
+            else:
+                err_cnt += 1
             self.adb_ins.press_back_key()
             self.adb_ins.press_back_key()
         self.adb_ins.press_power_key()
