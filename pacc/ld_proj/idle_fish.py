@@ -383,9 +383,13 @@ class IdleFish(IdleFishBase):
             all_is_ok = True
             for au_num in retrieve_idle_fish_ins.pay_pw:
                 print(au_num)
-                if not lduia_ins.click(
-                        f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml):
-                    all_is_ok = False
+                try:
+                    if not lduia_ins.click(
+                            f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml):
+                        all_is_ok = False
+                except FileNotFoundError as err:
+                    print_err(err)
+                    continue
             if not all_is_ok:
                 continue
             update_idle_fish_ins = UpdateIdleFish(job_number)
