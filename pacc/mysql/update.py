@@ -288,7 +288,7 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('version', version))
 
-    def update_coins(self, coins: int) ->None:
+    def update_coins(self, coins: int) -> None:
         """更新设备的闲鱼币币值
 
         :param coins: 新的闲鱼币币值
@@ -414,7 +414,7 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_date', last_buy_date))
 
-    def update_last_buy_coins(self, last_buy_coins: int) ->None:
+    def update_last_buy_coins(self, last_buy_coins: int) -> None:
         """更新设备上次购买时所消耗的闲鱼币
 
         :param last_buy_coins: 上次购买时所消耗的闲鱼币
