@@ -281,12 +281,15 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         return super().query2(field, value, table)
 
-    def update_version(self, version):
+    def update_version(self, version='NULL') -> None:
         """更新设备的版本号
 
-        :param version: 新的版本号
+        :param version: 新的版本号，version只能为字符串，且当version的值为NULL时会将数据库里的值置为空
         """
-        print(self.query('version', version))
+        if version != 'NULL':
+            print(self.query('version', version))
+        else:
+            print(self.query2('version', version))
 
     def update_coins(self, coins: int) -> None:
         """更新设备的闲鱼币币值
