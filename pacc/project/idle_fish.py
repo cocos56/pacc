@@ -72,17 +72,17 @@ class IdleFish(Project):
             print(f'success_cnt={success_cnt}, err_cnt={err_cnt}')
             if err_cnt >= err_num:
                 break
-            self.uia_ins.click(content_desc='我的，未选中状态')
-            self.uia_ins.click(content_desc='我卖出的')
-            self.uia_ins.click(content_desc='待发货')
-            if self.uia_ins.click(content_desc='去发货'):
+            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+            self.uia_ins.click(content_desc='待发货', interval=0.01)
+            if self.uia_ins.click(content_desc='去发货', interval=0.01):
                 success_cnt += 1
-                self.uia_ins.click('com.taobao.idlefish:id/right_text')
-                self.uia_ins.click(text='继续')
+                self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
+                self.uia_ins.click(text='继续', interval=0.01)
             else:
                 err_cnt += 1
-            self.adb_ins.press_back_key()
-            self.adb_ins.press_back_key()
+            # self.adb_ins.press_back_key(interval=0.01)
+            self.adb_ins.press_back_key(0.01, False)
         self.adb_ins.press_power_key()
 
     def rate(self, err_num=3):
