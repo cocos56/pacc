@@ -360,6 +360,8 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
+            ldadb_ins = LDADB(start_index)
+            ldadb_ins.swipe([260, 800], [260, 660])
             try:
                 lduia_ins.click(content_desc='我买到的')
             except FileNotFoundError as err:
