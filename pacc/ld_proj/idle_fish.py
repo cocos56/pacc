@@ -632,7 +632,7 @@ class IdleFish(IdleFishBase):
                 elif retrieve_idle_fish_ins.version[:4] == '7.8.':
                     start_index += 1
                     continue
-                if not retrieve_idle_fish_ins.last_update_version_date:
+                elif not retrieve_idle_fish_ins.last_update_version_date:
                     pass
                 elif retrieve_idle_fish_ins.last_update_version_date >= today:
                     start_index += 1
