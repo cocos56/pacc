@@ -126,7 +126,11 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
+            try:
+                lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             lduia_ins.click(ResourceID.aliuser_login_password_et, xml=lduia_ins.xml)
             ldadb_ins = LDADB(start_index)
             ldadb_ins.input_text(retrieve_idle_fish_ins.login_pw)
