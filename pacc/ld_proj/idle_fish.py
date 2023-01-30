@@ -463,7 +463,10 @@ class IdleFish(IdleFishBase):
             if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
                 lduia_ins.tap((460, 350), 20)
             lduia_ins.get_screen()
-            lduia_ins.get_current_ui_hierarchy()
+            try:
+                lduia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print_err(err)
             cls(start_index).run_app(19)
             LDConsole.quit(start_index)
             UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
