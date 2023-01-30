@@ -776,8 +776,8 @@ class IdleFish(IdleFishBase):
     def check_after_run(cls, start_index, end_index, break_flag=False):
         """从数据库中读取到运行过的状态之后再进行检查
 
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
+        :param start_index: 起始索引值（包含）
+        :param end_index: 终止索引值（包含）
         :param break_flag: 执行完之后是否终止执行
         """
         src_start_index = start_index
@@ -889,8 +889,8 @@ class IdleFish(IdleFishBase):
     def mainloop(cls, start_index: int, end_index: int, p_num=3, check_after_run=-1) -> None:
         """主循环
 
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
+        :param start_index: 起始索引值（包含）
+        :param end_index: 终止索引值（包含）
         :param p_num: 并发数量
         :param check_after_run: 检查的起始索引值，默认为-1代表不检查
         """
@@ -925,4 +925,4 @@ class IdleFish(IdleFishBase):
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
                 if check_after_run != -1:
-                    cls.check_after_run(check_after_run, end_index, True)
+                    cls.check_after_run(check_after_run+1, end_index, True)
