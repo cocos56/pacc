@@ -72,7 +72,7 @@ SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)
 
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'JCJ%' and coins >= 20000 and `hosts` LIKE 'C3:%';
 SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND Job_N LIKE 'JCJ%';
-SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.0003,2) as money FROM idle_fish WHERE Job_N LIKE 'JCJ%' and last_confirm_date = CURDATE();
+SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE Job_N LIKE 'JCJ%' and last_confirm_date = CURDATE();
 
 ### 9.1.2. C4
 
