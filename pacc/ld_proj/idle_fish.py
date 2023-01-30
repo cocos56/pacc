@@ -263,26 +263,20 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             sleep(2)
-            try:
-                if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='余额')
-            except FileNotFoundError as err:
-                print_err(err)
-                if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='账户余额')
-            sleep(1)
-            while not lduia_ins.click(text='找朋友帮忙付'):
-                print('未找到找朋友帮忙付')
-                ldadb_ins.swipe([260, 900], [260, 600])
-                if lduia_ins.get_dict(text='查看更多'):
-                    ldadb_ins.press_back_key()
-                    try:
-                        lduia_ins.get_current_ui_hierarchy()
-                    except FileNotFoundError as err:
-                        print_err(err)
-                    lduia_ins.click(text='放弃')
-                elif lduia_ins.get_dict(content_desc='确认购买'):
-                    continue
+            if lduia_ins.get_dict(content_desc='确认购买'):
+                continue
+            if not lduia_ins.click(text='找朋友帮忙付'):
+                try:
+                    if not lduia_ins.click(text='卡'):
+                        lduia_ins.click(text='余额')
+                except FileNotFoundError as err:
+                    print_err(err)
+                    if not lduia_ins.click(text='卡'):
+                        lduia_ins.click(text='账户余额')
+                sleep(1)
+                while not lduia_ins.click(text='找朋友帮忙付'):
+                    print('未找到找朋友帮忙付')
+                    ldadb_ins.swipe([260, 900], [260, 600])
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_buy('NULL')
             update_idle_fish_ins.update_last_buy_date(today)
