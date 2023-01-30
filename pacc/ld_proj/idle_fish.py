@@ -773,11 +773,12 @@ class IdleFish(IdleFishBase):
         return True
 
     @classmethod
-    def check_after_run(cls, start_index, end_index):
+    def check_after_run(cls, start_index, end_index, break_flag=False):
         """从数据库中读取到运行过的状态之后再进行检查
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
+        :param break_flag: 执行完之后是否终止执行
         """
         src_start_index = start_index
         start_day = date.today()
@@ -799,6 +800,8 @@ class IdleFish(IdleFishBase):
                     start_day = date.today() + timedelta(days=1)
                 src_start_index = start_index = 1
                 all_done = True
+                if break_flag:
+                    break
                 continue
             if now.hour >= 23 and now.minute >= 50:
                 print(f'目标设备{start_index}当前的执行时间为{now}，不在正常的检查时段，无需检查\n')
@@ -883,12 +886,13 @@ class IdleFish(IdleFishBase):
             print(f'第{index}项已执行完毕')
 
     @classmethod
-    def mainloop(cls, start_index: int, end_index: int, p_num=3) -> None:
+    def mainloop(cls, start_index: int, end_index: int, p_num=3, check_after_run=-1) -> None:
         """主循环
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
         :param p_num: 并发数量
+        :param check_after_run: 检查的起始索引值，默认为-1代表不检查
         """
         src_start_index = start_index
         if start_index <= 1 and datetime.now().hour > 22:
@@ -920,3 +924,5 @@ class IdleFish(IdleFishBase):
                       f'当前时间为：{datetime.now()}')
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
+                if check_after_run != -1:
+                    cls.check_after_run(check_after_run, end_index)
