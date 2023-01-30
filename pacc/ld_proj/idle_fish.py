@@ -372,7 +372,7 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             lduia_ins.click(content_desc='我已收到货，确认收货')
-            sleep(2)
+            sleep(3)
             lduia_ins.xml = ''
             all_is_ok = True
             for au_num in retrieve_idle_fish_ins.pay_pw:
