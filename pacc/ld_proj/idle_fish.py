@@ -263,8 +263,11 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             sleep(2)
-            if lduia_ins.get_dict(content_desc='确认购买'):
-                continue
+            try:
+                if lduia_ins.get_dict(content_desc='确认购买'):
+                    continue
+            except FileNotFoundError as err:
+                print_err(err)
             if not lduia_ins.click(text='找朋友帮忙付'):
                 try:
                     if not lduia_ins.click(text='卡'):
