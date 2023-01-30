@@ -56,9 +56,9 @@ class IdleFish(Project):
             self.uia_ins.click(class_='android.widget.EditText')
             self.adb_ins.input_text(price)
             self.uia_ins.click(content_desc='确定修改')
-            self.uia_ins.click(content_desc='确定', index='1')
-            self.uia_ins.get_current_ui_hierarchy()
-            success_cnt += 1
+            if self.uia_ins.click(content_desc='确定', index='1'):
+                success_cnt += 1
+            # self.uia_ins.get_current_ui_hierarchy()
             sleep(30)
 
     def dispatch(self, err_num=3):
