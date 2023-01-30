@@ -29,6 +29,7 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     aliuser_login_account_et = 'com.taobao.idlefish:id/aliuser_login_account_et'
     tab_title = 'com.taobao.idlefish:id/tab_title'
     tv_value = 'com.taobao.idlefish:id/tv_value'
+    ali_user_guide_tb_login_btn = 'com.taobao.idlefish:id/ali_user_guide_tb_login_btn'
 
 
 class IdleFishBase(LDProj):

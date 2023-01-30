@@ -110,7 +110,10 @@ class IdleFish(IdleFishBase):
             cls(start_index).run_app(21)
             lduia_ins = LDUIA(start_index)
             try:
-                if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
+                if lduia_ins.get_dict(ResourceID.ali_user_guide_tb_login_btn):
+                    if_mn = '-1'
+                else:
+                    if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
             except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
@@ -123,10 +126,6 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(ResourceID.login_password_btn, xml=lduia_ins.xml)
             try:
                 lduia_ins.click(ResourceID.confirm)
-            except FileNotFoundError as err:
-                print_err(err)
-                continue
-            try:
                 lduia_ins.click(ResourceID.aliuser_login_show_password_btn)
             except FileNotFoundError as err:
                 print_err(err)
@@ -135,7 +134,7 @@ class IdleFish(IdleFishBase):
             ldadb_ins = LDADB(start_index)
             ldadb_ins.input_text(retrieve_idle_fish_ins.login_pw)
             user_name = retrieve_idle_fish_ins.user_name
-            if len(if_mn) != 11:
+            if len(if_mn) != 11 and if_mn != '-1':
                 lduia_ins.click(ResourceID.aliuser_login_account_et, xml=lduia_ins.xml)
                 ldadb_ins.input_text(retrieve_idle_fish_ins.user_name)
                 user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
