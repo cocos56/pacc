@@ -925,4 +925,4 @@ class IdleFish(IdleFishBase):
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
                 if check_after_run != -1:
-                    cls.check_after_run(check_after_run, end_index)
+                    cls.check_after_run(check_after_run, end_index, True)
