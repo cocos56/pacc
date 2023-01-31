@@ -27,6 +27,8 @@ jobs:
         pip install pyperclip
         pip install selenium
         pip install psutil
+        pip install pyautogui
+        pip install pymouse
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2
