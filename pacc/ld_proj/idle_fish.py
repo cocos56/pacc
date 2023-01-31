@@ -180,7 +180,7 @@ class IdleFish(IdleFishBase):
             start_index += 1
 
     @classmethod
-    def buy(cls, start_index, end_index):
+    def buy(cls, start_index, end_index):  # pylint: disable=too-many-branches, too-many-statements
         """购买（下单）
 
         :param start_index: 起始索引值
@@ -330,7 +330,7 @@ class IdleFish(IdleFishBase):
                   f'today={today}')
 
     @classmethod
-    def confirm(cls, start_index, end_index):
+    def confirm(cls, start_index, end_index):  # pylint: disable=too-many-branches, too-many-statements
         """确认收货
 
         :param start_index: 起始索引值
@@ -411,7 +411,7 @@ class IdleFish(IdleFishBase):
             start_index += 1
 
     @classmethod
-    def top_up_mobile(cls, start_index, end_index):
+    def top_up_mobile(cls, start_index, end_index):  # pylint: disable=too-many-statements
         """薅羊毛赚话费（使用最优方案充话费，use_best_deal_to_top_up_mobile）
 
         :param start_index: 起始索引值
