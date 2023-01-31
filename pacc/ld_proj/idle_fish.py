@@ -5,6 +5,9 @@ from datetime import date, datetime, timedelta
 from os import listdir, path
 from xml.parsers.expat import ExpatError
 
+import pyautogui
+import pyperclip
+from pymouse import PyMouse
 from psutil import cpu_percent
 
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
@@ -134,6 +137,15 @@ class IdleFish(IdleFishBase):
             if lduia_ins.click(ResourceID.aliuser_login_account_et):
                 ldadb_ins.input_text(retrieve_idle_fish_ins.user_name)
                 user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+                print(user_name, user_name == retrieve_idle_fish_ins.user_name)
+                if user_name != retrieve_idle_fish_ins.user_name:
+                    pyperclip.copy(retrieve_idle_fish_ins.user_name)
+                    m = PyMouse()
+                    a = m.position()  # 获取当前坐标的位置
+                    print(a)
+                    pyautogui.hotkey('ctrl', 'v')
+                    print()
+                input()
             try:
                 login_pw = lduia_ins.get_dict(ResourceID.aliuser_login_password_et).get('@text')
             except (FileNotFoundError, AttributeError) as err:
@@ -545,6 +557,10 @@ class IdleFish(IdleFishBase):
                 print(f'设备{start_index}的闲鱼币信息今日未更新，请先更新闲鱼币信息')
                 start_index += 1
                 continue
+            elif not retrieve_idle_fish_ins.version:
+                print(f'设备{start_index}的版本信息异常，请先更新版本信息')
+                start_index += 1
+                continue
             CreateRecordIdleFish(
                 today, job_number, retrieve_idle_fish_ins.role, retrieve_idle_fish_ins.hosts,
                 retrieve_idle_fish_ins.version, retrieve_idle_fish_ins.coins,
@@ -628,7 +644,10 @@ class IdleFish(IdleFishBase):
                       f'last_update_version_date='
                       f'{retrieve_idle_fish_ins.last_update_version_date}'
                       f'，today={today}，{datetime.now()}')
-                if not retrieve_idle_fish_ins.version:
+                if retrieve_idle_fish_ins.last_check_date != today:
+                    start_index += 1
+                    continue
+                elif not retrieve_idle_fish_ins.version:
                     pass
                 elif not retrieve_idle_fish_ins.last_update_version_date:
                     pass

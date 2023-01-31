@@ -15,3 +15,7 @@ websocket-server
 selenium
 pyperclip
 requests
+pyautogui
+pymouse
+pyuserinput
+pypiwin32

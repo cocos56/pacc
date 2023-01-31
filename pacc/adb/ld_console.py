@@ -61,7 +61,7 @@ class LDConsole:
         return sorted(list(cls.list().keys()))[-1]
 
     def backup(self, dir_path):
-        """备份雷电模拟器
+        """备份设备
 
         :param dir_path: 备份文件夹的目录
         :return: 目标设备不存在或正在运行或今日已备份返回False，正常备份完毕返回True
@@ -75,6 +75,9 @@ class LDConsole:
         filepath = f'{dir_path}/{self.get_name()}.ldbk'
         today = date.today()
         job_number = self.get_job_number()
+        if RetrieveIdleFish(job_number).last_check_date != today:
+            print(f'目标设备{self.ld_index}今天还未检查，无需进行备份工作')
+            return False
         if RetrieveIdleFish(job_number).last_bak_date == today:
             print(f'目标设备{self.ld_index}今天已备份，无需重复备份工作')
             return False
