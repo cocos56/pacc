@@ -74,9 +74,8 @@ class IdleFish(IdleFishBase):
             update_idle_fish_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
 
-    # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
-    def login(cls, start_index, end_index):
+    def login(cls, start_index, end_index):  # pylint: disable=too-many-statements, too-many-branches, too-many-locals
         """登录
 
         :param start_index: 起始索引值
@@ -140,9 +139,9 @@ class IdleFish(IdleFishBase):
                 print(user_name, user_name == retrieve_idle_fish_ins.user_name)
                 if user_name != retrieve_idle_fish_ins.user_name:
                     pyperclip.copy(retrieve_idle_fish_ins.user_name)
-                    m = PyMouse()
-                    a = m.position()  # 获取当前坐标的位置
-                    print(a)
+                    mouse = PyMouse()
+                    position = mouse.position()  # 获取当前坐标的位置
+                    print(position)
                     pyautogui.hotkey('ctrl', 'v')
                     print()
                 input()
@@ -557,7 +556,7 @@ class IdleFish(IdleFishBase):
                 print(f'设备{start_index}的闲鱼币信息今日未更新，请先更新闲鱼币信息')
                 start_index += 1
                 continue
-            elif not retrieve_idle_fish_ins.version:
+            if not retrieve_idle_fish_ins.version:
                 print(f'设备{start_index}的版本信息异常，请先更新版本信息')
                 start_index += 1
                 continue
@@ -647,7 +646,7 @@ class IdleFish(IdleFishBase):
                 if retrieve_idle_fish_ins.last_check_date != today:
                     start_index += 1
                     continue
-                elif not retrieve_idle_fish_ins.version:
+                if not retrieve_idle_fish_ins.version:
                     pass
                 elif not retrieve_idle_fish_ins.last_update_version_date:
                     pass
