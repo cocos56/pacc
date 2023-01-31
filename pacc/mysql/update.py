@@ -333,7 +333,7 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('today_global_ipv4_addr', today_global_ipv4_addr))
 
-    def update_last_update_ip_date(self, last_update_ip_date: str) -> None:
+    def update_last_update_ip_date(self, last_update_ip_date: date.today()) -> None:
         """更新设备上次更新本机公网IPv4地址的日期
 
         :param last_update_ip_date: 上次更新本机公网IPv4地址的日期

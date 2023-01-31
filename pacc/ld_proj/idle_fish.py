@@ -672,7 +672,7 @@ class IdleFish(IdleFishBase):
 
         :param index: 目标设备的索引值
         :param reopen_flag: 是否需要重启模拟器并打开闲鱼app
-        :return: 目标设备不存在返回False，正常检查完毕返回True
+        :return: 目标设备不存在或已掉线返回False，正常检查完毕返回True
         """
         if reopen_flag:
             cls(index).run_app(30)
@@ -680,15 +680,11 @@ class IdleFish(IdleFishBase):
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
             return cls.check_target_device(index, reopen_flag=True)
+        if cls(index).is_logout('检查工作', current_focus):
+            return False
         lduia_ins = LDUIA(index)
         job_number = LDConsole(index).get_job_number()
         update_idle_fish_ins = UpdateIdleFish(job_number)
-        if Activity.UserLoginActivity in current_focus:
-            lduia_ins.get_screen()
-            LDConsole.quit(index)
-            update_idle_fish_ins.update_login(1)
-            print(f'第{index}项由于已掉线，无法进行检查，检查工作异常终止\n')
-            return False
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         lduia_ins.tap((50, 85), 9)
         try:

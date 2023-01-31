@@ -3,9 +3,9 @@
 from datetime import datetime, date
 
 from .ld_proj import LDProj
-from ..adb import LDConsole, LDADB
+from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep
-from ..mysql import RetrieveIdleFish
+from ..mysql import RetrieveIdleFish, UpdateIdleFish
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -83,8 +83,28 @@ class IdleFishBase(LDProj):
         if 'mCurrentFocus=null' in current_focus:
             print('检测到咸鱼未正常打开，正在重启模拟器')
             return True
+        return False
+
+    def is_logout(self, work_name: str, current_focus='') -> bool:
+        """判断设备是否已掉线（需要重新登录）
+
+        :param work_name: 工作名
+        :param current_focus: 当前界面的Activity
+        :return: 已掉线更新数据库里的在线状态并返回True，否则返回False
+        """
+        if not current_focus:
+            current_focus = LDADB(self.ld_index).get_current_focus()
         if Activity.UserLoginActivity in current_focus:
-            print('检测到已掉线，请登录')
+            print(f'检测设备{self.ld_index}到已掉线，需要重新登录')
+            lduia_ins = LDUIA(self.ld_index)
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            LDConsole.quit(self.ld_index)
+            job_number = LDConsole(self.ld_index).get_job_number()
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            update_idle_fish_ins.update_login(1)
+            print(f'设备{self.ld_index}由于已掉线，无法继续进行，{work_name}异常终止\n')
+            return True
         return False
 
     def should_run_task(self, today: date.today()) -> bool:
