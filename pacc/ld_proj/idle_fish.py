@@ -175,6 +175,7 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
                 print_err(err)
+                lduia_ins.tap((478, 919))
             start_index += 1
 
     @classmethod
