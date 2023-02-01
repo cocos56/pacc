@@ -7,29 +7,29 @@ LOG_LINE_NUM = 0
 
 
 class MyGUI:
-    def __init__(self, init_window_name):
-        self.init_window_name = init_window_name
+    def __init__(self, window):
+        self.window = window
 
     # 设置窗口
     def set_init_window(self):
-        self.init_window_name.title("闲鱼登录工具_v0.0")  # 窗口名
-        self.init_window_name.geometry('1068x681+260+80')  # 1068 681为窗口大小，+10 +10 定义窗口弹出时的默认展示位
+        self.window.title("闲鱼登录工具_v0.0")  # 窗口名
+        self.window.geometry('1068x681+260+80')  # 1068 681为窗口大小，+10 +10 定义窗口弹出时的默认展示位
         # 标签
-        self.init_data_label = Label(self.init_window_name, text="待处理数据")
+        self.init_data_label = Label(self.window, text="待处理数据")
         self.init_data_label.grid(row=0, column=0)
-        self.result_data_label = Label(self.init_window_name, text="输出结果")
+        self.result_data_label = Label(self.window, text="输出结果")
         self.result_data_label.grid(row=0, column=12)
-        self.log_label = Label(self.init_window_name, text="日志")
+        self.log_label = Label(self.window, text="日志")
         self.log_label.grid(row=12, column=0)
         # 文本框
-        self.init_data_Text = Text(self.init_window_name, width=67, height=35)  # 原始数据录入框
+        self.init_data_Text = Text(self.window, width=67, height=35)  # 原始数据录入框
         self.init_data_Text.grid(row=1, column=0, rowspan=10, columnspan=10)
-        self.result_data_Text = Text(self.init_window_name, width=70, height=49)  # 处理结果展示
+        self.result_data_Text = Text(self.window, width=70, height=49)  # 处理结果展示
         self.result_data_Text.grid(row=1, column=12, rowspan=15, columnspan=10)
-        self.log_data_Text = Text(self.init_window_name, width=66, height=9)  # 日志框
+        self.log_data_Text = Text(self.window, width=66, height=9)  # 日志框
         self.log_data_Text.grid(row=13, column=0, columnspan=10)
         # 按钮
-        self.str_trans_to_md5_button = Button(self.init_window_name, text="字符串转MD5", bg="lightblue", width=10,
+        self.str_trans_to_md5_button = Button(self.window, text="字符串转MD5", bg="lightblue", width=10,
                                               command=self.str_trans_to_md5)  # 调用内部方法  加()为直接调用
         self.str_trans_to_md5_button.grid(row=1, column=11)
 
