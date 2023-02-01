@@ -1,42 +1,48 @@
 """闲鱼UI程序入口模块"""
-from tkinter import *
+from tkinter import Tk, Label, Text, END, Button
 import hashlib
 import time
 
 LOG_LINE_NUM = 0
 
 
-class MyGUI:
+class IdleFishGUI:
+    """闲鱼图形化界面类"""
     def __init__(self, window):
         self.window = window
-
-    # 设置窗口
-    def set_init_window(self):
         self.window.title("闲鱼登录工具_v0.0")  # 窗口名
         self.window.geometry('1068x681+260+80')  # 1068 681为窗口大小，+10 +10 定义窗口弹出时的默认展示位
         # 标签
-        self.init_data_label = Label(self.window, text="待处理数据")
+        self.init_data_label = Label(self.window, text="待登录的账号")
         self.init_data_label.grid(row=0, column=0)
-        self.result_data_label = Label(self.window, text="输出结果")
+        self.result_data_label = Label(self.window, text="登录结果")
         self.result_data_label.grid(row=0, column=12)
-        self.log_label = Label(self.window, text="日志")
+        self.log_label = Label(self.window, text="登录日志")
         self.log_label.grid(row=12, column=0)
+
+    # 设置窗口
+    def set_init_window(self):
         # 文本框
         self.init_data_Text = Text(self.window, width=67, height=35)  # 原始数据录入框
         self.init_data_Text.grid(row=1, column=0, rowspan=10, columnspan=10)
+        src_data = '1. Job_N=AAA011, role=徐可可1, RT=10000, user_name=tb100200, login_pw=aa123bb456, pay_pw=123668, ' \
+                   'login=1\n' \
+                   '2. Job_N=AAA012, role=徐可可2, RT=10000, user_name=xy100200, login_pw=aa123bb456, pay_pw=123668, ' \
+                   'login=1'
+        self.init_data_Text.insert(1.0, src_data)
         self.result_data_Text = Text(self.window, width=70, height=49)  # 处理结果展示
         self.result_data_Text.grid(row=1, column=12, rowspan=15, columnspan=10)
         self.log_data_Text = Text(self.window, width=66, height=9)  # 日志框
         self.log_data_Text.grid(row=13, column=0, columnspan=10)
         # 按钮
-        self.str_trans_to_md5_button = Button(self.window, text="字符串转MD5", bg="lightblue", width=10,
+        self.str_trans_to_md5_button = Button(self.window, text="开始登录", bg="lightblue", width=10,
                                               command=self.str_trans_to_md5)  # 调用内部方法  加()为直接调用
         self.str_trans_to_md5_button.grid(row=1, column=11)
 
     # 功能函数
     def str_trans_to_md5(self):
         src = self.init_data_Text.get(1.0, END).strip().replace("\n", "").encode()
-        # print("src =",src)
+        print("src =", str(src, 'utf-8'), type(src))
         if src:
             try:
                 myMd5 = hashlib.md5()
@@ -73,7 +79,7 @@ class MyGUI:
 
 def gui_start():
     init_window = Tk()  # 实例化出一个父窗口
-    portal = MyGUI(init_window)
+    portal = IdleFishGUI(init_window)
     # 设置根窗口默认属性
     portal.set_init_window()
 
