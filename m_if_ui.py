@@ -1,6 +1,6 @@
 """闲鱼UI程序入口模块"""
+from datetime import datetime
 from tkinter import Tk, Label, Text, END, Button
-import time
 
 LOG_LINE_NUM = 0
 
@@ -45,24 +45,22 @@ class IdleFishGUI:
         print(f"src={src}")
         self.result_data_text.delete(1.0, END)
         self.result_data_text.insert(1.0, src)
-        self.write_log_to_Text("INFO:str_trans_to_md5 success")
-
-    # 获取当前时间
-    def get_current_time(self):
-        current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-        return current_time
+        self.write_log_to_text("INFO:src_trans_to_sql success")
 
     # 日志动态打印
-    def write_log_to_Text(self, logmsg):
+    def write_log_to_text(self, log_msg):
+        """写日志到日志文本框中
+
+        :param log_msg: 日志信息
+        """
         global LOG_LINE_NUM
-        current_time = self.get_current_time()
-        logmsg_in = str(current_time) + " " + str(logmsg) + "\n"  # 换行
+        log_msg = f"{str(datetime.now())} {str(log_msg)}\n"  # 换行
         if LOG_LINE_NUM <= 7:
-            self.log_data_text.insert(END, logmsg_in)
+            self.log_data_text.insert(END, log_msg)
             LOG_LINE_NUM = LOG_LINE_NUM + 1
         else:
             self.log_data_text.delete(1.0, 2.0)
-            self.log_data_text.insert(END, logmsg_in)
+            self.log_data_text.insert(END, log_msg)
 
 
 IdleFishGUI()
