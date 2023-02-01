@@ -19,21 +19,21 @@ class IdleFishGUI:
         self.result_data_label.grid(row=0, column=12)
         self.log_label = Label(self.window, text="登录日志")
         self.log_label.grid(row=12, column=0)
-
-    # 设置窗口
-    def set_init_window(self):
-        # 文本框
-        self.init_data_Text = Text(self.window, width=67, height=35)  # 原始数据录入框
-        self.init_data_Text.grid(row=1, column=0, rowspan=10, columnspan=10)
+        self.init_data_text = Text(self.window, width=67, height=35)  # 原始数据录入框
+        self.init_data_text.grid(row=1, column=0, rowspan=10, columnspan=10)
         src_data = '1. Job_N=AAA011, role=徐可可1, RT=10000, user_name=tb100200, ' \
                    'login_pw=aa123bb456, pay_pw=123668, login=1\n' \
                    '2. Job_N=AAA012, role=徐可可2, RT=10000, user_name=xy100200, ' \
                    'login_pw=aa123bb456, pay_pw=123668, login=1'
-        self.init_data_Text.insert(1.0, src_data)
-        self.result_data_Text = Text(self.window, width=70, height=49)  # 处理结果展示
-        self.result_data_Text.grid(row=1, column=12, rowspan=15, columnspan=10)
-        self.log_data_Text = Text(self.window, width=66, height=9)  # 日志框
-        self.log_data_Text.grid(row=13, column=0, columnspan=10)
+        self.init_data_text.insert(1.0, src_data)
+        self.result_data_text = Text(self.window, width=70, height=49)  # 处理结果展示
+        self.result_data_text.grid(row=1, column=12, rowspan=15, columnspan=10)
+        # 文本框
+        self.log_data_text = Text(self.window, width=66, height=9)  # 日志框
+        self.log_data_text.grid(row=13, column=0, columnspan=10)
+
+    # 设置窗口
+    def set_init_window(self):
         # 按钮
         self.str_trans_to_md5_button = Button(self.window, text="开始登录", bg="lightblue", width=10,
                                               command=self.str_trans_to_md5)  # 调用内部方法  加()为直接调用
@@ -41,7 +41,7 @@ class IdleFishGUI:
 
     # 功能函数
     def str_trans_to_md5(self):
-        src = self.init_data_Text.get(1.0, END).strip().replace("\n", "").encode()
+        src = self.init_data_text.get(1.0, END).strip().replace("\n", "").encode()
         print("src =", str(src, 'utf-8'), type(src))
         if src:
             try:
@@ -50,12 +50,12 @@ class IdleFishGUI:
                 myMd5_Digest = myMd5.hexdigest()
                 # print(myMd5_Digest)
                 # 输出到界面
-                self.result_data_Text.delete(1.0, END)
-                self.result_data_Text.insert(1.0, myMd5_Digest)
+                self.result_data_text.delete(1.0, END)
+                self.result_data_text.insert(1.0, myMd5_Digest)
                 self.write_log_to_Text("INFO:str_trans_to_md5 success")
             except:
-                self.result_data_Text.delete(1.0, END)
-                self.result_data_Text.insert(1.0, "字符串转MD5失败")
+                self.result_data_text.delete(1.0, END)
+                self.result_data_text.insert(1.0, "字符串转MD5失败")
         else:
             self.write_log_to_Text("ERROR:str_trans_to_md5 failed")
 
@@ -70,11 +70,11 @@ class IdleFishGUI:
         current_time = self.get_current_time()
         logmsg_in = str(current_time) + " " + str(logmsg) + "\n"  # 换行
         if LOG_LINE_NUM <= 7:
-            self.log_data_Text.insert(END, logmsg_in)
+            self.log_data_text.insert(END, logmsg_in)
             LOG_LINE_NUM = LOG_LINE_NUM + 1
         else:
-            self.log_data_Text.delete(1.0, 2.0)
-            self.log_data_Text.insert(END, logmsg_in)
+            self.log_data_text.delete(1.0, 2.0)
+            self.log_data_text.insert(END, logmsg_in)
 
 
 def gui_start():
