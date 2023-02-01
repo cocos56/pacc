@@ -5,9 +5,7 @@ from datetime import date, datetime, timedelta
 from os import listdir, path
 from xml.parsers.expat import ExpatError
 
-import pyautogui
 import pyperclip
-from pymouse import PyMouse
 from psutil import cpu_percent
 
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
@@ -139,12 +137,12 @@ class IdleFish(IdleFishBase):
                 print(user_name, user_name == retrieve_idle_fish_ins.user_name)
                 if user_name != retrieve_idle_fish_ins.user_name:
                     pyperclip.copy(retrieve_idle_fish_ins.user_name)
-                    mouse = PyMouse()
-                    position = mouse.position()  # 获取当前坐标的位置
-                    print(position)
-                    pyautogui.hotkey('ctrl', 'v')
-                    print()
-                input()
+                    ldadb_ins.swipe((238, 423), (238, 423), 3000)
+                    lduia_ins.tap((69, 353))
+                    user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+                    print(user_name, user_name == retrieve_idle_fish_ins.user_name)
+                    if user_name != retrieve_idle_fish_ins.user_name:
+                        continue
             try:
                 login_pw = lduia_ins.get_dict(ResourceID.aliuser_login_password_et).get('@text')
             except (FileNotFoundError, AttributeError) as err:

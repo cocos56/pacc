@@ -42,6 +42,13 @@ class LDADB(LDBase):
         """
         self.press_key('KEYCODE_BACK', sleep_time)
 
+    def press_home_key(self, sleep_time=1):
+        """按返回键
+
+        :param sleep_time: 休息时间
+        """
+        self.press_key('KEYCODE_HOME', sleep_time)
+
     def input_text(self, text):
         """输入文本
 
