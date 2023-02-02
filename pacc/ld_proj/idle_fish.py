@@ -72,8 +72,9 @@ class IdleFish(IdleFishBase):
             update_idle_fish_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
 
+    # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
-    def login(cls, start_index, end_index):  # pylint: disable=too-many-statements, too-many-branches, too-many-locals
+    def login(cls, start_index, end_index):
         """登录
 
         :param start_index: 起始索引值
@@ -131,18 +132,22 @@ class IdleFish(IdleFishBase):
             ldadb_ins = LDADB(start_index)
             ldadb_ins.input_text(retrieve_idle_fish_ins.login_pw)
             user_name = retrieve_idle_fish_ins.user_name
-            if lduia_ins.click(ResourceID.aliuser_login_account_et):
-                ldadb_ins.input_text(retrieve_idle_fish_ins.user_name)
-                user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
-                print(user_name, user_name == retrieve_idle_fish_ins.user_name)
-                if user_name != retrieve_idle_fish_ins.user_name:
-                    pyperclip.copy(retrieve_idle_fish_ins.user_name)
-                    ldadb_ins.swipe((238, 423), (238, 423), 3000)
-                    lduia_ins.tap((69, 353))
+            try:
+                if lduia_ins.click(ResourceID.aliuser_login_account_et):
+                    ldadb_ins.input_text(retrieve_idle_fish_ins.user_name)
                     user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
                     print(user_name, user_name == retrieve_idle_fish_ins.user_name)
                     if user_name != retrieve_idle_fish_ins.user_name:
-                        continue
+                        pyperclip.copy(retrieve_idle_fish_ins.user_name)
+                        ldadb_ins.swipe((238, 423), (238, 423), 3000)
+                        lduia_ins.tap((69, 353))
+                        user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+                        print(user_name, user_name == retrieve_idle_fish_ins.user_name)
+                        if user_name != retrieve_idle_fish_ins.user_name:
+                            continue
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             try:
                 login_pw = lduia_ins.get_dict(ResourceID.aliuser_login_password_et).get('@text')
             except (FileNotFoundError, AttributeError) as err:
