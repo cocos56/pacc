@@ -2,13 +2,12 @@
 from datetime import datetime
 from tkinter import Tk, Label, Text, END, Button
 
-LOG_LINE_NUM = 0
-
 
 class IdleFishGUI:
     """闲鱼图形化界面类"""
     def __init__(self):
         """构造方法"""
+        self.log_line_num = 0
         window = Tk()  # 实例化出一个父窗口
         # 设置根窗口默认属性
         window.title("闲鱼登录工具_v0.0")  # 窗口名
@@ -53,11 +52,10 @@ class IdleFishGUI:
 
         :param log_msg: 日志信息
         """
-        global LOG_LINE_NUM
         log_msg = f"{str(datetime.now())} {str(log_msg)}\n"  # 换行
-        if LOG_LINE_NUM <= 7:
+        if self.log_line_num <= 7:
             self.log_data_text.insert(END, log_msg)
-            LOG_LINE_NUM = LOG_LINE_NUM + 1
+            self.log_line_num += 1
         else:
             self.log_data_text.delete(1.0, 2.0)
             self.log_data_text.insert(END, log_msg)
