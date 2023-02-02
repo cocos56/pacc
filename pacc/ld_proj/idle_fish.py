@@ -209,7 +209,14 @@ class IdleFish(IdleFishBase):
                       f'{retrieve_idle_fish_ins.buy}，无需购买')
                 start_index += 1
                 continue
+            if retrieve_idle_fish_ins.login:
+                print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+                start_index += 1
+                continue
             cls(start_index).run_app(19)
+            if cls(start_index).is_logout('购买'):
+                start_index += 1
+                continue
             lduia_ins = LDUIA(start_index)
             ldadb_ins = LDADB(start_index)
             try:
