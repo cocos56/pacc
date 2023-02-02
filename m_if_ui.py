@@ -22,9 +22,9 @@ class IdleFishGUI:
         self.init_data_text = Text(window, width=67, height=35)  # 原始数据录入框
         self.init_data_text.grid(row=1, column=0, rowspan=10, columnspan=10)
         src_data = '1. Job_N=AAA011, role=徐可可1, RT=10000, user_name=tb100200, ' \
-                   'login_pw=aa123bb456, pay_pw=123668, login=1\n' \
+                   'login_pw=aa123bb456, pay_pw=123668, create=1\n' \
                    '2. Job_N=AAA012, role=徐可可2, RT=10000, user_name=xy100200, ' \
-                   'login_pw=aa123bb456, pay_pw=123668, login=1'
+                   'login_pw=aa123bb456, pay_pw=123668, create=1'
         self.init_data_text.insert(1.0, src_data)
         self.result_data_text = Text(window, width=70, height=49)  # 处理结果展示
         self.result_data_text.grid(row=1, column=12, rowspan=15, columnspan=10)
