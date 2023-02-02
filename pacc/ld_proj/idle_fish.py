@@ -141,7 +141,8 @@ class IdleFish(IdleFishBase):
                         pyperclip.copy(retrieve_idle_fish_ins.user_name)
                         ldadb_ins.swipe((238, 423), (238, 423), 3000)
                         lduia_ins.tap((69, 353))
-                        user_name = lduia_ins.get_dict(ResourceID.aliuser_login_account_et).get('@text')
+                        user_name = lduia_ins.get_dict(
+                            ResourceID.aliuser_login_account_et).get('@text')
                         print(user_name, user_name == retrieve_idle_fish_ins.user_name)
                         if user_name != retrieve_idle_fish_ins.user_name:
                             continue
