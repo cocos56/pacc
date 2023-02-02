@@ -239,13 +239,15 @@ class IdleFish(IdleFishBase):
                     if Activity.WebHybridActivity in current_focus:
                         ldadb_ins.press_back_key()
                         if cls(start_index).is_logout('购买'):
-                            start_index += 1
-                            continue
+                            break
                     ldadb_ins.swipe([290, 690], [290, 330], 500)
                     lduia_ins.xml = ''
-
             except FileNotFoundError as err:
                 print_err(err)
+                continue
+            if retrieve_idle_fish_ins.login:
+                print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+                start_index += 1
                 continue
             if Activity.Launcher in LDADB(start_index).get_current_focus():
                 continue
