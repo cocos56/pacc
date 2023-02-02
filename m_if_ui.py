@@ -3,7 +3,7 @@ from datetime import datetime
 from tkinter import Tk, Label, Text, END, Button
 
 
-class IdleFishGUI:
+class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
     """闲鱼图形化界面类"""
     def __init__(self):
         """构造方法"""
