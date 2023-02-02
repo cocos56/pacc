@@ -232,11 +232,18 @@ class IdleFish(IdleFishBase):
                 continue
             try:
                 while not lduia_ins.click(index='1', content_desc='徐哥签名', xml=lduia_ins.xml):
+                    current_focus = LDADB(start_index).get_current_focus()
                     if lduia_ins.click(index='0', content_desc='徐哥签名', xml=lduia_ins.xml) or \
-                            Activity.Launcher in LDADB(start_index).get_current_focus():
+                            Activity.Launcher in current_focus:
                         break
+                    if Activity.WebHybridActivity in current_focus:
+                        ldadb_ins.press_back_key()
+                        if cls(start_index).is_logout('购买'):
+                            start_index += 1
+                            continue
                     ldadb_ins.swipe([290, 690], [290, 330], 500)
                     lduia_ins.xml = ''
+
             except FileNotFoundError as err:
                 print_err(err)
                 continue

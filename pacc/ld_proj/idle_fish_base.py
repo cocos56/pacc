@@ -16,6 +16,7 @@ class Activity:  # pylint: disable=too-few-public-methods
     ApplicationNotResponding = 'Application Not Responding: com.taobao.idlefish'
     ApplicationError = 'Application Error: com.taobao.idlefish'
     WebViewActivity = 'com.taobao.idlefish/com.ali.user.mobile.ability.webview.WebViewActivity'
+    WebHybridActivity = 'com.taobao.idlefish/com.taobao.idlefish.webview.WebHybridActivity'
 
 
 class ResourceID:  # pylint: disable=too-few-public-methods
