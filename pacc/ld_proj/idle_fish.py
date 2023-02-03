@@ -261,6 +261,8 @@ class IdleFish(IdleFishBase):
             try:
                 while not lduia_ins.click(naf='true', index='3'):
                     sleep(1)
+                    if lduia_ins.click(content_desc='立即购买'):
+                        break
             except FileNotFoundError as err:
                 print_err(err)
                 continue
