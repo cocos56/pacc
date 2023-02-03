@@ -59,6 +59,7 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             dic_li.append(dic)
         print(dic_li)
         for dic in dic_li:
+            # pylint: disable=too-many-boolean-expressions
             if dic.get('Job_N') and dic.get('role') and dic.get('RT') and dic.get('user_name') and \
                     dic.get('login_pw') and dic.get('pay_pw'):
                 print(dic.get('Job_N'))
