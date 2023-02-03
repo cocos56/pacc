@@ -350,8 +350,9 @@ class IdleFish(IdleFishBase):
                   f'pay={retrieve_idle_fish_ins.pay}, '
                   f'today={today}')
 
+    # pylint: disable=too-many-branches, too-many-statements
     @classmethod
-    def confirm(cls, start_index, end_index):  # pylint: disable=too-many-branches, too-many-statements
+    def confirm(cls, start_index, end_index):
         """确认收货
 
         :param start_index: 起始索引值
@@ -493,7 +494,13 @@ class IdleFish(IdleFishBase):
                 continue
             if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
                 lduia_ins.tap((460, 350), 20)
-            lduia_ins.get_screen()
+            png_path = lduia_ins.get_screen()
+            dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}_top_up_mobile'
+            create_dir(dir_name)
+            new_png = f'{dir_name}/{LDConsole(start_index).get_name()}.png'
+            if path.exists(new_png):
+                os.remove(new_png)
+            os.rename(png_path, new_png)
             try:
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
@@ -777,7 +784,7 @@ class IdleFish(IdleFishBase):
         if coins != retrieve_idle_fish_ins.coins:
             update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
-        dir_name = 'CurrentUIHierarchy/' + str(date.today()).replace('-', '_')
+        dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}'
         reminder_threshold = retrieve_idle_fish_ins.reminder_threshold
         if reminder_threshold:
             if coins >= reminder_threshold:

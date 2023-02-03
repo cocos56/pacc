@@ -21,9 +21,9 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
         self.log_label.grid(row=12, column=0)
         self.init_data_text = Text(window, width=67, height=35)  # 原始数据录入框
         self.init_data_text.grid(row=1, column=0, rowspan=10, columnspan=10)
-        src_data = '1. Job_N=AAA011, role=徐可可1, RT=10000, user_name=tb100200, ' \
+        src_data = 'Serial_N=1, Job_N=AAA011, role=徐可可1, RT=10000, user_name=tb100200, ' \
                    'login_pw=aa123bb456, pay_pw=123668, create=1\n' \
-                   '2. Job_N=AAA012, role=徐可可2, RT=10000, user_name=xy100200, ' \
+                   'Serial_N=2, Job_N=AAA012, role=徐可可2, RT=10000, user_name=xy100200, ' \
                    'login_pw=aa123bb456, pay_pw=123668, create=1'
         self.init_data_text.insert(1.0, src_data)
         self.result_data_text = Text(window, width=70, height=49)  # 处理结果展示
@@ -39,11 +39,29 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
 
     # 功能函数
     def src_trans_to_sql(self):
-        """源数据转为数据库的插入语句"""
+        """将源数据转为数据库的插入语句"""
         src = self.init_data_text.get(1.0, END)
-        print(f"src={src}")
-        self.result_data_text.delete(1.0, END)
-        self.result_data_text.insert(1.0, src)
+        dic_li = []
+        for single_src in src.split('\n'):
+            if not single_src:
+                continue
+            split_single_src = single_src.split(', ')
+            self.result_data_text.insert(1.0, f'f{split_single_src}\n')
+            dic = {}
+            for element in split_single_src:
+                for key_v in [element.split('=')]:
+                    if not key_v:
+                        continue
+                    dic.update({key_v[0]: key_v[1]})
+            print(dic)
+            dic_li.append(dic)
+        print(dic_li)
+        for dic in dic_li:
+            if dic.get('Job_N'):
+                print(dic.get('Job_N'))
+            else:
+                continue
+        # self.result_data_text.delete(1.0, END)
         self.write_log_to_text("INFO:src_trans_to_sql success")
 
     # 日志动态打印
