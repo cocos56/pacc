@@ -1,5 +1,5 @@
 """MySQL数据库包的增模块"""
-from .mysql import Mobile, Record
+from .mysql import Mobile, Record, Account
 
 
 # pylint: disable=too-few-public-methods
@@ -24,8 +24,47 @@ class Create:
 
 
 # pylint: disable=too-many-instance-attributes
+class CreateIdleFish(Create):
+    """idle_fish表的增类：往数据库中的idle_fish表中新增数据"""
+
+    # pylint: disable=too-many-arguments
+    def __init__(self, job_number, role, reminder_threshold, user_name):
+        """构造函数：初始化增类的对象
+
+        :param job_number: 工号
+        :param role: 角色
+        :param reminder_threshold: 提醒阈值
+        :param user_name: 闲鱼账号的会员名
+        """
+        self.job_number = job_number
+        if self.exist:
+            print(f'记录job_number={self.job_number}已存在，无需重复创建')
+            return
+        self.query('idle_fish', ('Job_N', 'role', 'RT', 'user_name'),
+                   (self.job_number, role, reminder_threshold, user_name))
+
+    @classmethod
+    def query(cls, table, fields, values, database=Account):
+        """查询函数：新增数据
+
+        :param table: 表名
+        :param fields: 字段名
+        :param values: 值
+        :param database: 数据库名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(table, fields, values, database)
+
+    @property
+    def exist(self):
+        """创建只读属性exist，该属性用于判断是否在idle_fish表中是否存在指定工号的所对应的数据行"""
+        return Account.query(
+            f'select 1 from `idle_fish` where `Job_N`="{self.job_number}" limit 1') == (1,)
+
+
+# pylint: disable=too-many-instance-attributes
 class CreateRecordIdleFish(Create):
-    """增类：往数据库中新增数据"""
+    """record_idle_fish表的增类：往数据库中的record_idle_fish表中新增数据"""
 
     # pylint: disable=too-many-arguments
     def __init__(self, today, job_number, role, hosts, version, coins, user_name,
