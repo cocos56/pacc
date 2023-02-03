@@ -368,6 +368,13 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
 
+    def update_top_up_mobile_cnt(self, top_up_mobile_cnt: int):
+        """更新设备在数据库中执行薅羊毛赚话费任务成功的次数
+
+        :param top_up_mobile_cnt: 执行薅羊毛赚话费任务成功的次数
+        """
+        print(self.query2('top_up_mobile_cnt', top_up_mobile_cnt))
+
     def update_login(self, login='NULL') -> None:
         """更新设备是否需要登录的标志
 

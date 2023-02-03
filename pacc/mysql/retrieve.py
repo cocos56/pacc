@@ -302,6 +302,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('top_up_mobile')
 
     @property
+    def top_up_mobile_cnt(self):
+        """执行薅羊毛赚话费任务成功的次数"""
+        return self.query('top_up_mobile_cnt')
+
+    @property
     def last_top_up_mobile_date(self):
         """从数据库中获取上次薅羊毛赚话费的日期"""
         return self.query('last_top_up_mobile_date')

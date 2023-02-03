@@ -142,6 +142,7 @@ class IdleFishBase(LDProj):
         today = date.today()
         print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
               f'top_up_mobile={retrieve_idle_fish_ins.top_up_mobile}, '
+              f'top_up_mobile_cnt={retrieve_idle_fish_ins.top_up_mobile_cnt}, '
               f'last_top_up_mobile_date={retrieve_idle_fish_ins.last_top_up_mobile_date}, '
               f'today={today}')
         if retrieve_idle_fish_ins.user_name[:2] != 'xy':
@@ -188,5 +189,10 @@ class IdleFishBase(LDProj):
             print_err(err)
         self.run_app(19)
         LDConsole.quit(self.ld_index)
+        if not retrieve_idle_fish_ins.top_up_mobile_cnt:
+            top_up_mobile_cnt = 1
+        else:
+            top_up_mobile_cnt = retrieve_idle_fish_ins.top_up_mobile_cnt + 1
+        UpdateIdleFish(job_number).update_top_up_mobile_cnt(top_up_mobile_cnt)
         UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
         return True
