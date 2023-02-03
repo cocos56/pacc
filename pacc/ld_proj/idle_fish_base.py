@@ -1,11 +1,13 @@
 """闲鱼全自动刷闲鱼币中央监控系统基类模块"""
 # pylint: disable=duplicate-code
 from datetime import datetime, date
+from os import path, rename, remove
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
-from ..base import sleep
+from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
+from ..tools import create_dir
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -129,3 +131,62 @@ class IdleFishBase(LDProj):
         else:
             print(f'设备{self.ld_index}不存在，无需执行任务，{datetime.now()}')
         return False
+
+    def top_up_mobile_on_target_device(self) -> bool:
+        """在特定设备上进行薅羊毛赚话费
+
+        :return: 成功薅羊毛赚话费返回True，否则返回False
+        """
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        today = date.today()
+        print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
+              f'top_up_mobile={retrieve_idle_fish_ins.top_up_mobile}, '
+              f'last_top_up_mobile_date={retrieve_idle_fish_ins.last_top_up_mobile_date}, '
+              f'today={today}')
+        if retrieve_idle_fish_ins.user_name[:2] != 'xy':
+            print(f'设备{self.ld_index}上的账号{retrieve_idle_fish_ins.user_name}不是以xy开头，'
+                  f'无需薅羊毛赚话费')
+            return False
+        if not retrieve_idle_fish_ins.top_up_mobile:
+            print(f'设备{self.ld_index}上的执行薅羊毛赚话费的标志为'
+                  f'{retrieve_idle_fish_ins.top_up_mobile}，无需薅羊毛赚话费')
+            return False
+        if retrieve_idle_fish_ins.last_top_up_mobile_date and retrieve_idle_fish_ins.\
+                last_top_up_mobile_date >= today:
+            print(f'今天已在设备{self.ld_index}上执行过薅羊毛赚话费的任务，无需重复执行')
+            return False
+        self.run_app(19)
+        lduia_ins = LDUIA(self.ld_index)
+        lduia_ins.tap((50, 85), 6)
+        lduia_ins.tap((479, 596), 3)
+        LDADB(self.ld_index).get_current_focus()
+        try:
+            if lduia_ins.get_dict(content_desc=r'HI，店长 '):
+                print('当前界面需要先点击一下升级小店然后再点击赚经验')
+                lduia_ins.tap((266, 599), 3)
+                lduia_ins.tap((479, 596), 3)
+                lduia_ins.xml = ''
+        except FileNotFoundError as err:
+            print_err(err)
+            self.top_up_mobile_on_target_device()
+        if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
+            print('当前界面不是赚经验的界面，正在重新执行')
+            self.top_up_mobile_on_target_device()
+        if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
+            lduia_ins.tap((460, 350), 20)
+        png_path = lduia_ins.get_screen()
+        dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}_top_up_mobile'
+        create_dir(dir_name)
+        new_png = f'{dir_name}/{LDConsole(self.ld_index).get_name()}.png'
+        if path.exists(new_png):
+            remove(new_png)
+        rename(png_path, new_png)
+        try:
+            lduia_ins.get_current_ui_hierarchy()
+        except FileNotFoundError as err:
+            print_err(err)
+        self.run_app(19)
+        LDConsole.quit(self.ld_index)
+        UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
+        return True
