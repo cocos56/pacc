@@ -1,6 +1,7 @@
 """闲鱼UI程序入口模块"""
 from datetime import datetime
 from tkinter import Tk, Label, Text, END, Button
+
 from pacc.mysql import CreateIdleFish
 
 

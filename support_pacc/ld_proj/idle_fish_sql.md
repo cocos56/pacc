@@ -57,6 +57,8 @@ SELECT Job_N, role, user_name, last_buy_coins, if_mn, last_confirm_date FROM `id
 ## 8.1. 某一代理的
 SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝号` FROM `idle_fish` WHERE Job_N LIKE 'ZLJ%'
 
+SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝号` FROM `idle_fish` WHERE Job_N LIKE 'ZDR%'
+
 # 9. 混合查询
 ## 9.1. 某一代理今天回收的和今日已确认收货的明细
 
