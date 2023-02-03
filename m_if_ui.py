@@ -23,9 +23,9 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
         self.init_data_text = Text(window, width=67, height=35)  # 原始数据录入框
         self.init_data_text.grid(row=1, column=0, rowspan=10, columnspan=10)
         src_data = 'Serial_N=1, Job_N=AAA018, role=徐可可8, RT=10000, user_name=tb100200, ' \
-                   'login_pw=aa123bb456, pay_pw=123668, create=1\n' \
+                   'login_pw=aa123bb456, pay_pw=123668\n' \
                    'Serial_N=2, Job_N=AAA019, role=徐可可9, RT=10000, user_name=xy100200, ' \
-                   'login_pw=aa123bb456, pay_pw=123668, create=1'
+                   'login_pw=aa123bb456, pay_pw=123668'
         self.init_data_text.insert(1.0, src_data)
         self.result_data_text = Text(window, width=70, height=49)  # 处理结果展示
         self.result_data_text.grid(row=1, column=12, rowspan=15, columnspan=10)
@@ -34,13 +34,13 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
         self.log_data_text.grid(row=13, column=0, columnspan=10)
         # 按钮
         self.str_trans_to_md5_button = Button(
-            window, text="开始登录", bg="lightblue", width=10, command=self.src_trans_to_sql)
+            window, text="开始登录", bg="lightblue", width=10, command=self.src_into_db)
         self.str_trans_to_md5_button.grid(row=1, column=11)
         window.mainloop()  # 父窗口进入事件循环，可以理解为保持窗口运行，否则界面不展示
 
     # 功能函数
-    def src_trans_to_sql(self):
-        """将源数据转为数据库的插入语句"""
+    def src_into_db(self):
+        """将源数据插入到数据库的中"""
         src = self.init_data_text.get(1.0, END)
         dic_li = []
         for single_src in src.split('\n'):
@@ -58,10 +58,12 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             dic_li.append(dic)
         print(dic_li)
         for dic in dic_li:
-            if dic.get('Job_N') and dic.get('role') and dic.get('RT') and dic.get('user_name'):
+            if dic.get('Job_N') and dic.get('role') and dic.get('RT') and dic.get('user_name') and \
+                    dic.get('login_pw') and dic.get('pay_pw'):
                 print(dic.get('Job_N'))
                 CreateIdleFish(
-                    dic.get('Job_N'), dic.get('role'), dic.get('RT'), dic.get('user_name'))
+                    dic.get('Job_N'), dic.get('role'), dic.get('RT'), dic.get('user_name'),
+                    dic.get('login_pw'), dic.get('pay_pw'))
             else:
                 continue
         # self.result_data_text.delete(1.0, END)
