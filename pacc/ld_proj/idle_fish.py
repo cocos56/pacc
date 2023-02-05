@@ -355,9 +355,9 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(ResourceID.tab_title, '消息')
                 if lduia_ins.click(text='我知道了'):
                     lduia_ins.xml = ''
-                while not lduia_ins.click(index='1', content_desc='徐哥签名', xml=lduia_ins.xml):
+                while not lduia_ins.click(index='1', content_desc='xgqm', xml=lduia_ins.xml):
                     current_focus = LDADB(start_index).get_current_focus()
-                    if lduia_ins.click(index='0', content_desc='徐哥签名', xml=lduia_ins.xml) or \
+                    if lduia_ins.click(index='0', content_desc='xgqm', xml=lduia_ins.xml) or \
                             Activity.Launcher in current_focus:
                         break
                     if Activity.WebHybridActivity in current_focus:
