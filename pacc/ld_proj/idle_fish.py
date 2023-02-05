@@ -238,8 +238,12 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(content_desc='搜索')
             lduia_ins.click(content_desc='用户')
             lduia_ins.click(content_desc='会员名')
-            while lduia_ins.click(content_desc='徐哥亲笔签名拍照版'):
-                pass
+            try:
+                while lduia_ins.click(content_desc='徐哥亲笔签名拍照版'):
+                    pass
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             lduia_ins.click(content_desc='我想要')
             if not lduia_ins.click(content_desc='立即购买'):
                 try:
