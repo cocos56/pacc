@@ -279,7 +279,10 @@ class IdleFish(IdleFishBase):
                     continue
             except FileNotFoundError as err:
                 print_err(err)
-            if not lduia_ins.click(text='找朋友帮忙付'):
+            if lduia_ins.get_dict(content_desc='支付宝支付'):
+                sleep(2)
+                lduia_ins.xml = ''
+            if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
                 try:
                     if not lduia_ins.click(text='卡'):
                         lduia_ins.click(text='余额')
