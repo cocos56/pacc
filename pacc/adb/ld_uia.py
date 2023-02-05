@@ -50,7 +50,7 @@ class LDUIA(LDBase):
 
     # pylint: disable=too-many-arguments, duplicate-code
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
-              index='', naf='', start_index=0, offset_x=0, offset_y=0):
+              index='', naf='', start_index=0, offset_x=0, offset_y=0, interval=1):
         """点击目标点
 
         :param resource_id: 资源的ID
@@ -68,6 +68,7 @@ class LDUIA(LDBase):
         :param start_index: 多个匹配项符合条件时目标项的索引值
         :param offset_x: x轴坐标的偏移量
         :param offset_y: y轴坐标的偏移量
+        :param interval: 停顿时间
         :return: 找到后立即点击并返回True，未找到返回False
         """
         point = self.get_point(
@@ -76,7 +77,7 @@ class LDUIA(LDBase):
             return False
         x_coordinate, y_coordinate = point
         point = x_coordinate + offset_x, y_coordinate + offset_y
-        self.tap(point)
+        self.tap(point, interval)
         return True
 
     # pylint: disable=too-many-arguments, duplicate-code

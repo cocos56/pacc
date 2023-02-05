@@ -553,7 +553,7 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
                 print_err(err)
-            if not lduia_ins.get_dict(content_desc='确认收货'):
+            if lduia_ins.get_dict(content_desc='去评价'):
                 LDConsole.quit(start_index)
             start_index += 1
 
