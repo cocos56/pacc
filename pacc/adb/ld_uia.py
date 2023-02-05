@@ -48,7 +48,7 @@ class LDUIA(LDBase):
         sleep(1)
         return png_path
 
-    # pylint: disable=too-many-arguments, duplicate-code
+    # pylint: disable=too-many-arguments, duplicate-code, too-many-locals
     def click(self, resource_id='', text='', content_desc='', xml='', bounds='', class_='',
               index='', naf='', start_index=0, offset_x=0, offset_y=0, interval=1):
         """点击目标点
