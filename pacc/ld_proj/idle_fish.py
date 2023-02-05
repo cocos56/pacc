@@ -227,7 +227,11 @@ class IdleFish(IdleFishBase):
                 continue
             lduia_ins = LDUIA(start_index)
             ldadb_ins = LDADB(start_index)
-            lduia_ins.click(ResourceID.search_bg_img_front)
+            try:
+                lduia_ins.click(ResourceID.search_bg_img_front)
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             ldadb_ins.input_text('xgqm')
             if 'xgqm' not in lduia_ins.get_dict(class_='android.widget.EditText').get('@text'):
                 continue
@@ -237,7 +241,14 @@ class IdleFish(IdleFishBase):
             while lduia_ins.click(content_desc='徐哥亲笔签名拍照版'):
                 pass
             lduia_ins.click(content_desc='我想要')
-            lduia_ins.click(content_desc='立即购买')
+            if not lduia_ins.click(content_desc='立即购买'):
+                try:
+                    while not lduia_ins.click(naf='true', index='3'):
+                        sleep(1)
+                    lduia_ins.click(content_desc='再次购买')
+                except FileNotFoundError as err:
+                    print_err(err)
+                    continue
             if retrieve_idle_fish_ins.login:
                 print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
                 start_index += 1
