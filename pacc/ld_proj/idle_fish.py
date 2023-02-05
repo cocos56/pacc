@@ -540,7 +540,8 @@ class IdleFish(IdleFishBase):
                 print(au_num)
                 try:
                     if not lduia_ins.click(
-                            f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml):
+                            f'com.taobao.idlefish:id/au_num_{au_num}', xml=lduia_ins.xml,
+                            interval=0.01):
                         all_is_ok = False
                 except FileNotFoundError as err:
                     print_err(err)
