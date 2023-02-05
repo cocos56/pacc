@@ -102,7 +102,10 @@ class IdleFishBase(LDProj):
             print(f'检测设备{self.ld_index}到已掉线，需要重新登录')
             lduia_ins = LDUIA(self.ld_index)
             lduia_ins.get_screen()
-            lduia_ins.get_current_ui_hierarchy()
+            try:
+                lduia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print_err(err)
             LDConsole.quit(self.ld_index)
             job_number = LDConsole(self.ld_index).get_job_number()
             update_idle_fish_ins = UpdateIdleFish(job_number)
