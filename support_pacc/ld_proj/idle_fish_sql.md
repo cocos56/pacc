@@ -106,6 +106,12 @@ SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, 
 SELECT Job_N, role, user_name, last_buy_coins, FORMAT(last_buy_coins*0.00033,2) as money, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND Job_N LIKE 'AAB%';
 SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE Job_N LIKE 'AAB%' and last_confirm_date = CURDATE();
 
+#### 10.1.3.1. ABA
+
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'ABA%' and coins >= 30000 and `hosts` LIKE 'C5:%';
+SELECT Job_N, role, user_name, last_buy_coins, FORMAT(last_buy_coins*0.00033,2) as money, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND Job_N LIKE 'ABA%';
+SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE Job_N LIKE 'ABA%' and last_confirm_date = CURDATE();
+
 #### 10.1.3.2. ZDR
 
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'ZDR%' and coins >= 30000 and `hosts` LIKE 'C5:%';
