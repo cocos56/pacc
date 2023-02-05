@@ -282,6 +282,7 @@ class IdleFish(IdleFishBase):
             if lduia_ins.get_dict(content_desc='支付宝支付'):
                 sleep(2)
                 lduia_ins.xml = ''
+                input()
             if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
                 try:
                     if not lduia_ins.click(text='卡'):
@@ -552,7 +553,8 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
                 print_err(err)
-            LDConsole.quit(start_index)
+            if not lduia_ins.get_dict(content_desc='确认收货'):
+                LDConsole.quit(start_index)
             start_index += 1
 
     @classmethod
