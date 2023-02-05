@@ -608,7 +608,7 @@ class IdleFish(IdleFishBase):
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
             device_name = LDConsole(start_index).get_name()
-            new_host_name = f'{host_name}:{start_index}'
+            new_host_name = f'{host_name}:{start_index};'
             print(f'start_index={start_index}, device_name={device_name},'
                   f'new_host_name={new_host_name}, hosts={retrieve_idle_fish_ins.hosts}, '
                   f'update_last_update_hosts_date='
