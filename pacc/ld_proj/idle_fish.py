@@ -752,6 +752,8 @@ class IdleFish(IdleFishBase):
                     continue
                 if not retrieve_idle_fish_ins.version:
                     pass
+                elif retrieve_idle_fish_ins.version == '0.0.0':
+                    pass
                 elif not retrieve_idle_fish_ins.last_update_version_date:
                     pass
                 elif retrieve_idle_fish_ins.last_update_version_date >= today:
