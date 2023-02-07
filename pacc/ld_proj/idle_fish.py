@@ -274,7 +274,11 @@ class IdleFish(IdleFishBase):
                 continue
             if Activity.Launcher in LDADB(start_index).get_current_focus():
                 continue
-            if coins >= 10000:
+            if coins >= 30000:
+                last_buy_coins = 30000
+            elif coins >= 20000:
+                last_buy_coins = 20000
+            elif coins >= 10000:
                 last_buy_coins = 10000
             else:
                 start_index += 1
