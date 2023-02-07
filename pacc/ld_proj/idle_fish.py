@@ -238,7 +238,11 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             ldadb_ins.input_text('xgqm')
-            if 'xgqm' not in lduia_ins.get_dict(class_='android.widget.EditText').get('@text'):
+            try:
+                if 'xgqm' not in lduia_ins.get_dict(class_='android.widget.EditText').get('@text'):
+                    continue
+            except FileNotFoundError as err:
+                print_err(err)
                 continue
             lduia_ins.click(content_desc='搜索')
             lduia_ins.click(content_desc='用户')
@@ -288,7 +292,7 @@ class IdleFish(IdleFishBase):
                     continue
             except FileNotFoundError as err:
                 print_err(err)
-            if lduia_ins.get_dict(content_desc='支付宝支付'):
+            if lduia_ins.click(content_desc='支付宝支付'):
                 sleep(2)
                 lduia_ins.xml = ''
                 input()
