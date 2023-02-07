@@ -241,7 +241,7 @@ class IdleFish(IdleFishBase):
             try:
                 if 'xgqm' not in lduia_ins.get_dict(class_='android.widget.EditText').get('@text'):
                     continue
-            except FileNotFoundError as err:
+            except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
             lduia_ins.click(content_desc='搜索')
@@ -296,7 +296,7 @@ class IdleFish(IdleFishBase):
                 print(f'设备{start_index}账户支付功能已关闭')
                 start_index += 1
                 continue
-            elif lduia_ins.get_dict(text='添加收货地址', xml=lduia_ins.xml):
+            if lduia_ins.get_dict(text='添加收货地址', xml=lduia_ins.xml):
                 print(f'设备{start_index}上的账号需要添加收货地址')
                 start_index += 1
                 continue
