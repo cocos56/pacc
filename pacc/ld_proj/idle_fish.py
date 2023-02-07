@@ -307,7 +307,7 @@ class IdleFish(IdleFishBase):
                 sleep(2)
                 lduia_ins.click(content_desc='立即支付')
                 lduia_ins.xml = ''
-                input()
+                sleep(2)
             if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
                 try:
                     if not lduia_ins.click(text='卡'):
