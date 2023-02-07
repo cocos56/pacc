@@ -296,6 +296,10 @@ class IdleFish(IdleFishBase):
                 print(f'设备{start_index}账户支付功能已关闭')
                 start_index += 1
                 continue
+            elif lduia_ins.get_dict(text='添加收货地址', xml=lduia_ins.xml):
+                print(f'设备{start_index}上的账号需要添加收货地址')
+                start_index += 1
+                continue
             if lduia_ins.click(content_desc='支付宝支付'):
                 sleep(2)
                 lduia_ins.click(content_desc='立即支付')
