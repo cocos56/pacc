@@ -424,23 +424,15 @@ class IdleFish(IdleFishBase):
             try:
                 if lduia_ins.get_dict(content_desc='确认购买'):
                     continue
-            except FileNotFoundError as err:
-                print_err(err)
-            if not lduia_ins.click(text='找朋友帮忙付'):
-                try:
+                if not lduia_ins.click(text='找朋友帮忙付'):
                     if not lduia_ins.click(text='卡'):
                         lduia_ins.click(text='余额')
-                except FileNotFoundError as err:
-                    print_err(err)
-                    if not lduia_ins.click(text='卡'):
-                        lduia_ins.click(text='账户余额')
-                sleep(1)
-                try:
+                    sleep(1)
                     while not lduia_ins.click(text='找朋友帮忙付'):
                         print('未找到找朋友帮忙付')
                         ldadb_ins.swipe([260, 900], [260, 600])
-                except FileNotFoundError as err:
-                    print_err(err)
+            except FileNotFoundError as err:
+                print_err(err)
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_buy('NULL')
             update_idle_fish_ins.update_last_buy_date(today)
