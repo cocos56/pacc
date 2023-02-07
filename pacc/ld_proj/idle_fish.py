@@ -244,10 +244,10 @@ class IdleFish(IdleFishBase):
             except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
-            lduia_ins.click(content_desc='搜索')
-            lduia_ins.click(content_desc='用户')
-            lduia_ins.click(content_desc='会员名')
             try:
+                lduia_ins.click(content_desc='搜索')
+                lduia_ins.click(content_desc='用户')
+                lduia_ins.click(content_desc='会员名')
                 while lduia_ins.click(content_desc='徐哥亲笔签名拍照版'):
                     pass
             except FileNotFoundError as err:
