@@ -137,9 +137,10 @@ class IdleFishBase(LDProj):
         return False
 
     # pylint: disable=too-many-branches, too-many-statements
-    def top_up_mobile_on_target_device(self) -> bool:
+    def top_up_mobile_on_target_device(self, reopen_flag=True) -> bool:
         """在特定设备上进行薅羊毛赚话费
 
+        :param reopen_flag: 重启闲鱼的标志
         :return: 成功薅羊毛赚话费返回True，否则返回False
         """
         job_number = LDConsole(self.ld_index).get_job_number()
@@ -158,7 +159,7 @@ class IdleFishBase(LDProj):
             print(f'设备{self.ld_index}上的执行薅羊毛赚话费的标志为'
                   f'{retrieve_idle_fish_ins.top_up_mobile}，无需薅羊毛赚话费')
             return False
-        if retrieve_idle_fish_ins.last_top_up_mobile_date and retrieve_idle_fish_ins.\
+        if retrieve_idle_fish_ins.last_top_up_mobile_date and retrieve_idle_fish_ins. \
                 last_top_up_mobile_date >= today:
             print(f'今天已在设备{self.ld_index}上执行过薅羊毛赚话费的任务，无需重复执行')
             return False
@@ -197,8 +198,9 @@ class IdleFishBase(LDProj):
             lduia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
             print_err(err)
-        self.run_app(19)
-        LDConsole.quit(self.ld_index)
+        if reopen_flag:
+            self.run_app(19)
+            LDConsole.quit(self.ld_index)
         if not retrieve_idle_fish_ins.top_up_mobile_cnt:
             top_up_mobile_cnt = 1
         else:
