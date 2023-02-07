@@ -256,9 +256,15 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(content_desc='我想要')
             if not lduia_ins.click(content_desc='立即购买'):
                 try:
+                    naf_err_cnt = 0
                     while not lduia_ins.click(naf='true', index='3'):
                         sleep(1)
+                        naf_err_cnt += 1
+                        if naf_err_cnt >= 5:
+                            break
                     lduia_ins.click(content_desc='再次购买')
+                    if naf_err_cnt >= 5:
+                        continue
                 except FileNotFoundError as err:
                     print_err(err)
                     continue
