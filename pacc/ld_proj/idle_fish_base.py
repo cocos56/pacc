@@ -161,7 +161,12 @@ class IdleFishBase(LDProj):
                 last_top_up_mobile_date >= today:
             print(f'今天已在设备{self.ld_index}上执行过薅羊毛赚话费的任务，无需重复执行')
             return False
+        if retrieve_idle_fish_ins.login:
+            print(f'目标设备{self.ld_index}已掉线，无法执行薅羊毛赚话费的任务\n')
+            return False
         self.run_app(19)
+        if self.is_logout('执行薅羊毛赚话费的任务'):
+            return False
         lduia_ins = LDUIA(self.ld_index)
         lduia_ins.tap((50, 85), 6)
         lduia_ins.tap((479, 596), 3)
