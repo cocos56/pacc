@@ -294,6 +294,7 @@ class IdleFish(IdleFishBase):
                 print_err(err)
             if lduia_ins.click(content_desc='支付宝支付'):
                 sleep(2)
+                lduia_ins.click(content_desc='立即支付')
                 lduia_ins.xml = ''
                 input()
             if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
@@ -309,6 +310,9 @@ class IdleFish(IdleFishBase):
                     while not lduia_ins.click(text='找朋友帮忙付'):
                         print('未找到找朋友帮忙付')
                         ldadb_ins.swipe([260, 900], [260, 600])
+                        if lduia_ins.get_dict(text='账户支付功能已关闭', xml=lduia_ins.xml):
+                            start_index += 1
+                            continue
                 except FileNotFoundError as err:
                     print_err(err)
             update_idle_fish_ins = UpdateIdleFish(job_number)
