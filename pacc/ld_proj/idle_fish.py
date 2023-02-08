@@ -254,8 +254,8 @@ class IdleFish(IdleFishBase):
                 print_err(err)
                 continue
             lduia_ins.click(content_desc='我想要')
-            if not lduia_ins.click(content_desc='立即购买'):
-                try:
+            try:
+                if not lduia_ins.click(content_desc='立即购买'):
                     naf_err_cnt = 0
                     while not lduia_ins.click(naf='true', index='3'):
                         sleep(1)
@@ -265,9 +265,9 @@ class IdleFish(IdleFishBase):
                     lduia_ins.click(content_desc='再次购买')
                     if naf_err_cnt >= 5:
                         continue
-                except FileNotFoundError as err:
-                    print_err(err)
-                    continue
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             if retrieve_idle_fish_ins.login:
                 print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
                 start_index += 1
@@ -345,7 +345,6 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(text='面对面扫码')
             except FileNotFoundError as err:
                 print_err(err)
-            lduia_ins.get_screen()
             try:
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
@@ -477,7 +476,11 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(text='面对面扫码')
             except FileNotFoundError as err:
                 print_err(err)
-            lduia_ins.get_screen()
+            png_path = lduia_ins.get_screen()
+            new_png = path.join(r'\\10.1.1.2\aps\\', f'{LDConsole(start_index).get_name()}.png')
+            print(new_png)
+            input()
+            shutil.copy(png_path, new_png)
             lduia_ins.get_current_ui_hierarchy()
             start_index += 1
 
