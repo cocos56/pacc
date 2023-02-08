@@ -36,7 +36,7 @@ class IdleFish(Project):
             if not listdir(r'D:\aps'):
                 sleep(10)
                 continue
-            alipay_code = join(r'D:\aps', listdir(r'D:\aps')[0])
+            alipay_code = join(r'D:\aps', listdir(r'D:\aps')[-1])
             print(alipay_code)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
@@ -46,7 +46,7 @@ class IdleFish(Project):
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             self.uia_ins.click(text='确认付款', index='8')
-            self.uia_ins.click(text='继续支付', interval=2)
+            self.uia_ins.click(text='继续支付', interval=3)
             try:
                 self.uia_ins.click(text='确认交易')
             except FileNotFoundError as err:
