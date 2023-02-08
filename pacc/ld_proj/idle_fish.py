@@ -574,9 +574,6 @@ class IdleFish(IdleFishBase):
                     continue
             if not all_is_ok:
                 continue
-            update_idle_fish_ins = UpdateIdleFish(job_number)
-            update_idle_fish_ins.update_confirm('NULL')
-            update_idle_fish_ins.update_last_confirm_date(today)
             sleep(1)
             LDADB(start_index).get_current_focus()
             lduia_ins.get_screen()
@@ -584,6 +581,12 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
                 print_err(err)
+            sleep(1)
+            if lduia_ins.get_dict(text='请输入支付密码'):
+                continue
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            update_idle_fish_ins.update_confirm('NULL')
+            update_idle_fish_ins.update_last_confirm_date(today)
             if lduia_ins.get_dict(content_desc='去评价'):
                 LDConsole.quit(start_index)
             start_index += 1

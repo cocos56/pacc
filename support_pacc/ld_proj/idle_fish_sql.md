@@ -82,6 +82,7 @@ SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)
 
 ### 11.1.2. C4
 #### 11.1.2.1. XKK
+
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'XKK%' and coins >= 20000 and `hosts` LIKE 'C4:%';
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'XKK%' and coins >= 20000 and `hosts` LIKE 'C4:%' ORDER BY `hosts`;
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE 'XKK%' and confirm=1 and `hosts` LIKE 'C4:%' ORDER BY `hosts`;
