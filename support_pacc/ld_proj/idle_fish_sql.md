@@ -82,8 +82,6 @@ SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)
 
 ### 11.1.2. C4
 
-#### 11.1.2.1. ZDR
-
 SET @coins=20000, @HostsName='C4:%', @Job_N='ZDR%';
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName;
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName ORDER BY `hosts`;
