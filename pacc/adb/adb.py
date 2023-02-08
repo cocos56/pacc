@@ -211,6 +211,15 @@ class ADB:  # pylint: disable=too-many-public-methods
             self.reboot()
         return res
 
+    def push_pic(self, pic_path):
+        """把电脑上的图片推送到手机上
+
+        :param pic_path: 图片路径
+        """
+        cmd = f'{self.cmd}push {pic_path} /sdcard/Pictures/a.png'
+        print(cmd)
+        system(cmd)
+
     def press_key(self, keycode, sleep_time=1):
         """按键
 

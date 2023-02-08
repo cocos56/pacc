@@ -1,4 +1,7 @@
 """闲鱼中控模块"""
+from os import listdir, remove
+from os.path import join
+
 from .project import Project
 from ..base import sleep, print_err
 
@@ -27,6 +30,38 @@ class IdleFish(Project):
         self.adb_ins.open_app(Activity.MainActivity)
         sleep(5)
 
+    def pay(self):
+        """付款"""
+        while listdir(r'D:\aps'):
+            alipay_code = join(r'D:\aps', listdir(r'D:\aps')[0])
+            print(alipay_code)
+            self.adb_ins.push_pic(alipay_code)
+            self.free_memory()
+            self.uia_ins.click(text='支付宝')
+            sleep(3)
+            self.uia_ins.click(text='扫一扫')
+            self.uia_ins.tap((945, 1529))
+            self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
+            self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish')
+            sleep(12)
+            self.uia_ins.click(text='确认付款', index='8')
+            self.uia_ins.click(text='继续支付')
+            try:
+                self.uia_ins.click(text='确认交易')
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
+            self.uia_ins.click('com.alipay.mobile.antui:id/au_num_1', interval=0.01)
+            for i in '39499':
+                self.uia_ins.click(
+                    f'com.alipay.mobile.antui:id/au_num_{i}', xml=self.uia_ins.xml, interval=0.01)
+            self.uia_ins.get_screen()
+            try:
+                self.uia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print_err(err)
+            remove(alipay_code)
+
     def change_price(self, end_num=8):
         """改价
 
@@ -39,10 +74,10 @@ class IdleFish(Project):
                 break
             self.open_app()
             self.adb_ins.get_current_focus()
-            self.uia_ins.click(content_desc='我的，未选中状态')
-            self.uia_ins.click(content_desc='我卖出的')
-            self.uia_ins.click(content_desc='待付款')
-            self.uia_ins.click(content_desc='修改价格')
+            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+            self.uia_ins.click(content_desc='待付款', interval=0.01)
+            self.uia_ins.click(content_desc='修改价格', interval=0.01)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
             try:
                 src_price = float(dic['@text'])
@@ -53,13 +88,11 @@ class IdleFish(Project):
                 continue
             price = src_price / 10 + 0.01
             print(f'price={price}')
-            self.uia_ins.click(class_='android.widget.EditText')
+            self.uia_ins.click(class_='android.widget.EditText', interval=0.01)
             self.adb_ins.input_text(price)
-            self.uia_ins.click(content_desc='确定修改')
-            if self.uia_ins.click(content_desc='确定', index='1'):
+            self.uia_ins.click(content_desc='确定修改', interval=0.01)
+            if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
                 success_cnt += 1
-            # self.uia_ins.get_current_ui_hierarchy()
-            sleep(30)
 
     def dispatch(self, err_num=3):
         """发货
