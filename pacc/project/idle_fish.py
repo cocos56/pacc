@@ -32,20 +32,21 @@ class IdleFish(Project):
 
     def pay(self):
         """付款"""
-        while listdir(r'D:\aps'):
+        while True:
+            if not listdir(r'D:\aps'):
+                sleep(10)
+                continue
             alipay_code = join(r'D:\aps', listdir(r'D:\aps')[0])
             print(alipay_code)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
-            self.uia_ins.click(text='支付宝')
-            sleep(3)
+            self.uia_ins.click(text='支付宝', interval=3)
             self.uia_ins.click(text='扫一扫')
             self.uia_ins.tap((945, 1529))
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
-            self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish')
-            sleep(12)
+            self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             self.uia_ins.click(text='确认付款', index='8')
-            self.uia_ins.click(text='继续支付')
+            self.uia_ins.click(text='继续支付', interval=2)
             try:
                 self.uia_ins.click(text='确认交易')
             except FileNotFoundError as err:
