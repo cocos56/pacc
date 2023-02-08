@@ -346,7 +346,10 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
             lduia_ins.get_screen()
-            lduia_ins.get_current_ui_hierarchy()
+            try:
+                lduia_ins.get_current_ui_hierarchy()
+            except FileNotFoundError as err:
+                print_err(err)
             start_index += 1
 
     @classmethod
