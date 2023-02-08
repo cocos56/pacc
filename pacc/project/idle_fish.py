@@ -21,6 +21,15 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     right_btn = 'com.taobao.idlefish:id/right_btn'
 
 
+def get_last_ap():
+    """获取最新的支付宝代付码"""
+    for i in listdir(r'D:\aps')[::-1]:
+        spli = i.split('.')
+        if spli and spli[-1] == 'png':
+            return i
+    return None
+
+
 class IdleFish(Project):
     """闲鱼中控类"""
 
@@ -33,15 +42,20 @@ class IdleFish(Project):
     def pay(self):
         """付款"""
         while True:
-            if not listdir(r'D:\aps'):
+            last_ap = get_last_ap()
+            if not last_ap:
                 sleep(10)
                 continue
-            alipay_code = join(r'D:\aps', listdir(r'D:\aps')[-1])
+            alipay_code = join(r'D:\aps', last_ap)
             print(alipay_code)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
             self.uia_ins.click(text='支付宝', interval=3)
-            self.uia_ins.click(text='扫一扫')
+            try:
+                self.uia_ins.click(text='扫一扫')
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             self.uia_ins.tap((945, 1529))
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
@@ -52,10 +66,16 @@ class IdleFish(Project):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            self.uia_ins.click('com.alipay.mobile.antui:id/au_num_1', interval=0.01)
+            all_is_ok = True
+            if not self.uia_ins.click('com.alipay.mobile.antui:id/au_num_1', interval=0.01):
+                all_is_ok = False
             for i in '39499':
-                self.uia_ins.click(
-                    f'com.alipay.mobile.antui:id/au_num_{i}', xml=self.uia_ins.xml, interval=0.01)
+                if not self.uia_ins.click(
+                        f'com.alipay.mobile.antui:id/au_num_{i}',
+                        xml=self.uia_ins.xml, interval=0.01):
+                    all_is_ok = False
+            if not all_is_ok:
+                continue
             self.uia_ins.get_screen()
             try:
                 self.uia_ins.get_current_ui_hierarchy()
