@@ -59,7 +59,10 @@ class IdleFish(Project):
             self.uia_ins.tap((945, 1529))
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
-            self.uia_ins.click(text='确认付款', index='8')
+            if not self.uia_ins.click(text='确认付款', index='8'):
+                if self.uia_ins.get_dict(text='订单已支付'):
+                    remove(alipay_code)
+                    continue
             self.uia_ins.click(text='继续支付', interval=3)
             try:
                 self.uia_ins.click(text='确认交易')
