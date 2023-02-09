@@ -288,7 +288,11 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            lduia_ins.click(text='立即购买')
+            try:
+               lduia_ins.click(text='立即购买')
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             LDADB(start_index).get_current_focus()
             sleep(1)
             try:
@@ -345,6 +349,7 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(text='面对面扫码')
             except FileNotFoundError as err:
                 print_err(err)
+            lduia_ins.get_screen()
             try:
                 lduia_ins.get_current_ui_hierarchy()
             except FileNotFoundError as err:
