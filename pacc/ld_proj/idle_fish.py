@@ -358,6 +358,8 @@ class IdleFish(IdleFishBase):
             lduia_ins.get_screen()
             try:
                 lduia_ins.get_current_ui_hierarchy()
+                if lduia_ins.get_dict(text='帮我付款'):
+                    LDConsole.quit(start_index)
             except FileNotFoundError as err:
                 print_err(err)
             start_index += 1
