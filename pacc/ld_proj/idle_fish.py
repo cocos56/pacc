@@ -341,7 +341,7 @@ class IdleFish(IdleFishBase):
                             break
                 except FileNotFoundError as err:
                     print_err(err)
-                if not i_want_err:
+                if i_want_err:
                     continue
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_buy('NULL')
