@@ -5,9 +5,8 @@ from os import popen, system
 from random import randint
 
 from ..base import print_err, sleep
-from ..config import Config
 from ..mysql import RetrieveMobileInfo, UpdateMobileInfo
-from ..tools import find_all_with_re, EMail, find_all_ints_with_re
+from ..tools import find_all_with_re, find_all_ints_with_re
 
 
 def get_online_devices():
@@ -22,11 +21,10 @@ def get_online_devices():
 class ADB:  # pylint: disable=too-many-public-methods
     """安卓调试桥类"""
 
-    def __init__(self, serial_num, offline_cnt=1):
+    def __init__(self, serial_num):
         """构造函数：初始化安卓调试桥类的对象
 
         :param serial_num: 设备序列号
-        :param offline_cnt: 离线次数计数器
         """
         self.dbr = RetrieveMobileInfo.get_ins(serial_num)
         self.dbu = UpdateMobileInfo(serial_num)
@@ -61,7 +59,7 @@ class ADB:  # pylint: disable=too-many-public-methods
         if 'com.android.settings/com.android.settings.Settings$UsbDetailsActivity' in \
                 self.get_current_focus():
             if self.dbr.model in ['M2007J22C', 'Redmi K20 Pro Premium Edition']:
-                self.press_back_key(6, init_flag=False)
+                self.press_back_key(6)
 
     def get_battery_temperature(self):
         """获取电池温度
@@ -246,13 +244,12 @@ class ADB:  # pylint: disable=too-many-public-methods
         """按应用切换键"""
         self.press_key('KEYCODE_APP_SWITCH')
 
-    def press_back_key(self, sleep_time=1, init_flag=True):
+    def press_back_key(self, sleep_time=1):
         """按返回键
 
         :param sleep_time: 休息时间
-        :param init_flag: 是否需要重新初始化的标志
         """
-        self.keep_online(init_flag=init_flag)
+        self.keep_online()
         self.press_key('KEYCODE_BACK', sleep_time)
 
     def press_power_key(self):
