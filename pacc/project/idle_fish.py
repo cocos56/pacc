@@ -56,12 +56,8 @@ class IdleFish(Project):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            self.uia_ins.tap((945, 1529))
-            try:
-                self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
-            except FileNotFoundError as err:
-                print_err(err)
-                continue
+            self.uia_ins.tap((939, 1399))
+            self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             if not self.uia_ins.click(text='确认付款', index='8'):
                 if self.uia_ins.get_dict(text='订单已支付'):
