@@ -1,4 +1,5 @@
 """闲鱼中控模块"""
+from random import randint
 from os import listdir, remove
 from os.path import join
 
@@ -21,12 +22,15 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     right_btn = 'com.taobao.idlefish:id/right_btn'
 
 
-def get_last_ap():
-    """获取最新的支付宝代付码"""
+def get_random_ap():
+    """随机获取一个支付宝的代付码"""
+    li = []
     for i in listdir(r'D:\aps')[::-1]:
         spli = i.split('.')
         if spli and spli[-1] == 'png':
-            return i
+            li.append(i)
+    if li:
+        return li[randint(0, len(li)-1)]
     return None
 
 
@@ -42,11 +46,11 @@ class IdleFish(Project):
     def pay(self):
         """付款"""
         while True:
-            last_ap = get_last_ap()
-            if not last_ap:
+            random_ap = get_random_ap()
+            if not random_ap:
                 sleep(10)
                 continue
-            alipay_code = join(r'D:\aps', last_ap)
+            alipay_code = join(r'D:\aps', random_ap)
             print(alipay_code)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
