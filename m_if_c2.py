@@ -4,7 +4,7 @@ from pacc.project import IdleFish
 
 
 Config.set_debug(True)
-END_NUM = 46
-# IdleFish('002005001').change_price(END_NUM)
+END_NUM = 68
+IdleFish('002005001').change_price(END_NUM)
 # IdleFish('002005001').dispatch()
-IdleFish('002005001').rate()
+# IdleFish('002005001').rate()
