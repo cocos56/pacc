@@ -31,26 +31,28 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.dbr = RetrieveMobileInfo.get_ins(serial_num)
         self.dbu = UpdateMobileInfo(serial_num)
         if self.dbr.id_num not in get_online_devices():
-            if self.dbr.ipv4_addr in get_online_devices():
-                self.reboot()
-            else:
-                if not offline_cnt % 20:
-                    EMail(self.dbr.serial_num).send_offline_error()
-                print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
-                sleep(30)
-                system('adb reconnect offline')
-                self.__init__(serial_num, offline_cnt+1)  # pylint: disable=non-parent-init-called
+            print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
+            input()
+            # if self.dbr.ipv4_addr in get_online_devices():
+            #     self.reboot()
+            # else:
+            #     if not offline_cnt % 20:
+            #         EMail(self.dbr.serial_num).send_offline_error()
+            #     print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
+            #     sleep(30)
+            #     system('adb reconnect offline')
+            #     self.__init__(serial_num, offline_cnt+1)  # pylint: disable=non-parent-init-called
         self.cmd = f'adb -s {self.dbr.id_num} '
-        if not self.get_ipv4_address():
-            print(self.get_ipv4_address())
-            sleep(60)
-            # pylint: disable=non-parent-init-called
-            self.__init__(serial_num)
-        if not self.get_ipv4_address() == self.dbr.ipv4_addr:
-            self.dbu.update_ipv4_addr(self.get_ipv4_address())
-        if not Config.debug:
-            self.reconnect()
-        self.cmd = f'adb -s {self.dbr.ipv4_addr} '
+        # if not self.get_ipv4_address():
+        #     print(self.get_ipv4_address())
+        #     sleep(60)
+        #     # pylint: disable=non-parent-init-called
+        #     self.__init__(serial_num)
+        # if not self.get_ipv4_address() == self.dbr.ipv4_addr:
+        #     self.dbu.update_ipv4_addr(self.get_ipv4_address())
+        # if not Config.debug:
+        #     self.reconnect()
+        # self.cmd = f'adb -s {self.dbr.ipv4_addr} '
         model = self.get_model()
         while not model:
             model = self.get_model()
@@ -296,43 +298,49 @@ class ADB:  # pylint: disable=too-many-public-methods
         self.disconnect()
         self.connect()
 
-    def keep_online(self, retry_cnt=0, init_flag=True):
-        """保持在线
+    def keep_online(self):
+        """保持在线"""
+        if self.dbr.id_num not in get_online_devices():
+            print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
+            input()
 
-        :param retry_cnt: 是否需要重新初始化的标志
-        :param init_flag: 是否需要重新初始化的标志
-        """
-        if init_flag:
-            self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
-        online_devices = get_online_devices()
-        if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
-            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
-                  f'{self.dbr.ipv4_addr}均在线，无需额外操作')
-        elif self.dbr.ipv4_addr not in online_devices and self.dbr.id_num not in online_devices:
-            system('adb reconnect offline')
-            sleep(6)
-            if self.dbr.id_num in online_devices:
-                return self.keep_online()
-            if retry_cnt < 6:
-                print(f'keep_online retry_cnt={retry_cnt}')
-                sleep(30)
-                return self.keep_online(retry_cnt+1)
-            EMail(self.dbr.serial_num).send_offline_error()
-            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
-                  f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
-            input('请手动处理后按回车键以继续')
-            print('正在继续向下处理')
-            return self.keep_online()
-        elif self.dbr.ipv4_addr not in get_online_devices():
-            print(f'{self.dbr.serial_num}所对应的的IP:{self.dbr.ipv4_addr}离线，但ID:'
-                  f'{self.dbr.id_num}在线，正在尝试自动修复该问题')
-            # pylint: disable=unnecessary-dunder-call
-            self.__init__(self.dbr.serial_num)
-        elif self.dbr.id_num not in get_online_devices():
-            print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
-                  f'{self.dbr.ipv4_addr}在线，正在尝试自动修复该问题')
-            self.reboot()
-        return True
+    # def keep_online(self, retry_cnt=0, init_flag=True):
+    #     """保持在线
+    #
+    #     :param retry_cnt: 是否需要重新初始化的标志
+    #     :param init_flag: 是否需要重新初始化的标志
+    #     """
+    #     if init_flag:
+    #         self.__init__(self.dbr.serial_num)  # pylint: disable=unnecessary-dunder-call
+    #     online_devices = get_online_devices()
+    #     if self.dbr.ipv4_addr in online_devices and self.dbr.id_num in online_devices:
+    #         print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
+    #               f'{self.dbr.ipv4_addr}均在线，无需额外操作')
+    #     elif self.dbr.ipv4_addr not in online_devices and self.dbr.id_num not in online_devices:
+    #         system('adb reconnect offline')
+    #         sleep(6)
+    #         if self.dbr.id_num in online_devices:
+    #             return self.keep_online()
+    #         if retry_cnt < 6:
+    #             print(f'keep_online retry_cnt={retry_cnt}')
+    #             sleep(30)
+    #             return self.keep_online(retry_cnt+1)
+    #         EMail(self.dbr.serial_num).send_offline_error()
+    #         print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}与IP:'
+    #               f'{self.dbr.ipv4_addr}均离线，系统无法自动处理修复该问题')
+    #         input('请手动处理后按回车键以继续')
+    #         print('正在继续向下处理')
+    #         return self.keep_online()
+    #     elif self.dbr.ipv4_addr not in get_online_devices():
+    #         print(f'{self.dbr.serial_num}所对应的的IP:{self.dbr.ipv4_addr}离线，但ID:'
+    #               f'{self.dbr.id_num}在线，正在尝试自动修复该问题')
+    #         # pylint: disable=unnecessary-dunder-call
+    #         self.__init__(self.dbr.serial_num)
+    #     elif self.dbr.id_num not in get_online_devices():
+    #         print(f'{self.dbr.serial_num}所对应的的ID:{self.dbr.id_num}离线，但IP:'
+    #               f'{self.dbr.ipv4_addr}在线，正在尝试自动修复该问题')
+    #         self.reboot()
+    #     return True
 
     def open_app(self, activity):
         """打开APP

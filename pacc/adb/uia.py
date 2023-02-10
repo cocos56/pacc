@@ -53,7 +53,7 @@ class UIAutomator:
         :param serial_num: 设备编号
         """
         self.dbr = RetrieveMobileInfo.get_ins(serial_num)
-        self.cmd = f'adb -s {self.dbr.ipv4_addr} '
+        self.cmd = f'adb -s {self.dbr.id_num} '
         self.node = Node()
         self.xml = ''
         self.txt = ''
