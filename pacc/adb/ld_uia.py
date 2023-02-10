@@ -41,10 +41,11 @@ class LDUIA(LDBase):
         """
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        png_path = f'{dir_name}/{self.ld_index}.png'
-        self.sys_run(f'shell rm /sdcard/{self.ld_index}.png')
-        self.sys_run(f'shell screencap -p /sdcard/{self.ld_index}.png')
-        self.sys_run(f'pull /sdcard/{self.ld_index}.png CurrentUIHierarchy')
+        png_name = f'{str(self.ld_index).zfill(3)}.png'
+        png_path = f'{dir_name}/{png_name}'
+        self.sys_run(f'shell rm /sdcard/{png_name}')
+        self.sys_run(f'shell screencap -p /sdcard/{png_name}')
+        self.sys_run(f'pull /sdcard/{png_name} CurrentUIHierarchy')
         sleep(1)
         return png_path
 
