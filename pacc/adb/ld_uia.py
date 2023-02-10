@@ -331,7 +331,7 @@ class LDUIA(LDBase):
         self.sys_run('shell uiautomator dump /sdcard/window_dump.xml')
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        file_path = f"{dir_name}/{str(self.ld_index).zfill(3)}.xml'"
+        file_path = f"{dir_name}/{str(self.ld_index).zfill(3)}.xml"
         print(file_path)
         if exists(file_path):
             remove(file_path)
