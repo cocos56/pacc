@@ -60,7 +60,7 @@ class IdleFish(Project):
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             if not self.uia_ins.click(text='确认付款', index='8'):
-                if self.uia_ins.get_dict(text='订单已支付'):
+                if self.uia_ins.get_dict(text='订单已支付', xml=self.uia_ins.xml):
                     remove(alipay_code)
                     continue
             self.uia_ins.click(text='继续支付', interval=3)
@@ -69,22 +69,13 @@ class IdleFish(Project):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            all_is_ok = True
-            if not self.uia_ins.click('com.alipay.mobile.antui:id/au_num_1', interval=0.01):
-                all_is_ok = False
+            self.uia_ins.click('com.alipay.mobile.antui:id/au_num_1', interval=0.01)
             for i in '39499':
-                if not self.uia_ins.click(
-                        f'com.alipay.mobile.antui:id/au_num_{i}',
-                        xml=self.uia_ins.xml, interval=0.01):
-                    all_is_ok = False
-            if not all_is_ok:
-                continue
-            self.uia_ins.get_screen()
-            try:
-                self.uia_ins.get_current_ui_hierarchy()
-            except FileNotFoundError as err:
-                print_err(err)
-            remove(alipay_code)
+                self.uia_ins.click(f'com.alipay.mobile.antui:id/au_num_{i}',
+                                   xml=self.uia_ins.xml, interval=0.01)
+            sleep(5)
+            if self.uia_ins.get_dict(text='代付成功'):
+                remove(alipay_code)
 
     def change_price(self, end_num=8):
         """改价
