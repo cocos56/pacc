@@ -140,7 +140,7 @@ class IdleFish(Project):
                 self.uia_ins.click(text='继续', interval=0.01)
             else:
                 err_cnt += 1
-            self.adb_ins.press_back_key(0.01, False)
+            self.adb_ins.press_back_key(0.01)
         self.adb_ins.press_power_key()
 
     def rate(self, err_num=3):
