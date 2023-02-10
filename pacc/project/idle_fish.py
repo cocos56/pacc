@@ -24,13 +24,13 @@ class ResourceID:  # pylint: disable=too-few-public-methods
 
 def get_random_ap():
     """随机获取一个支付宝的代付码"""
-    li = []
+    ap_li = []
     for i in listdir(r'D:\aps')[::-1]:
         spli = i.split('.')
         if spli and spli[-1] == 'png':
-            li.append(i)
-    if li:
-        return li[randint(0, len(li)-1)]
+            ap_li.append(i)
+    if ap_li:
+        return ap_li[randint(0, len(ap_li)-1)]
     return None
 
 
@@ -64,12 +64,13 @@ class IdleFish(Project):
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             if not self.uia_ins.click(text='确认付款', index='8'):
-                if self.uia_ins.get_dict(text='订单已支付', xml=self.uia_ins.xml):
+                if self.uia_ins.get_dict(text='已支付', xml=self.uia_ins.xml):
                     remove(alipay_code)
                     continue
             self.uia_ins.click(text='继续支付', interval=3)
             try:
-                self.uia_ins.click(text='确认交易')
+                if not self.uia_ins.click(text='确认交易'):
+                    continue
             except FileNotFoundError as err:
                 print_err(err)
                 continue
