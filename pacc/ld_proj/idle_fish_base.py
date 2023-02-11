@@ -189,8 +189,12 @@ class IdleFishBase(LDProj):
         except FileNotFoundError as err:
             print_err(err)
             self.top_up_mobile_on_target_device()
-        if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
-            lduia_ins.tap((460, 350), 20)
+        try:
+            if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
+                lduia_ins.tap((460, 350), 20)
+        except FileNotFoundError as err:
+            print_err(err)
+            self.top_up_mobile_on_target_device()
         png_path = lduia_ins.get_screen()
         dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}_top_up_mobile'
         create_dir(dir_name)
