@@ -46,14 +46,12 @@ class IdleFish(Project):
                 ap_li.append(i)
         if ap_li:
             random_ap = ap_li[randint(0, len(ap_li) - 1)]
-            print(len(ap_li), len(self.walked_li), len(ap_li) <= len(self.walked_li))
             if len(ap_li) <= len(self.walked_li):
                 self.walked_li = []
             if random_err > 10 or random_ap not in self.walked_li:
                 self.walked_li.append(random_ap)
                 return random_ap
-            else:
-                return self.get_random_ap(random_err+1)
+            return self.get_random_ap(random_err+1)
         return None
 
     def open_app(self):
