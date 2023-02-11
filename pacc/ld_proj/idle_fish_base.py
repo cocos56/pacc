@@ -182,8 +182,12 @@ class IdleFishBase(LDProj):
         except FileNotFoundError as err:
             print_err(err)
             self.top_up_mobile_on_target_device()
-        if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
-            print('当前界面不是赚经验的界面，正在重新执行')
+        try:
+            if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
+                print('当前界面不是赚经验的界面，正在重新执行')
+                self.top_up_mobile_on_target_device()
+        except FileNotFoundError as err:
+            print_err(err)
             self.top_up_mobile_on_target_device()
         if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
             lduia_ins.tap((460, 350), 20)
