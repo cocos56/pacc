@@ -1,7 +1,8 @@
 """闲鱼中控模块"""
-from random import randint
 from os import listdir, remove
 from os.path import join
+from random import randint
+from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import sleep, print_err
@@ -54,10 +55,10 @@ class IdleFish(Project):
             print(alipay_code)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
-            self.uia_ins.click(text='支付宝', interval=3)
+            self.uia_ins.click(text='支付宝', interval=15)
             try:
                 self.uia_ins.click(text='扫一扫')
-            except FileNotFoundError as err:
+            except (FileNotFoundError, ExpatError) as err:
                 print_err(err)
                 continue
             self.uia_ins.tap((939, 1399))
@@ -171,6 +172,7 @@ class IdleFish(Project):
                 ResourceID.publish_rate, xml=self.uia_ins.xml, interval=0.01)
             self.uia_ins.click(ResourceID.right_btn, interval=0.01)
             # self.uia_ins.get_current_ui_hierarchy()
+            self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
 
