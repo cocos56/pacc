@@ -605,8 +605,11 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
             sleep(1)
-            if lduia_ins.get_dict(text='请输入支付密码'):
-                continue
+            try:
+                if lduia_ins.get_dict(text='请输入支付密码'):
+                    continue
+            except FileNotFoundError as err:
+                print_err(err)
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_confirm('NULL')
             update_idle_fish_ins.update_last_confirm_date(today)
