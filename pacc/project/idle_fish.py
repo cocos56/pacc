@@ -26,7 +26,13 @@ class ResourceID:  # pylint: disable=too-few-public-methods
 class IdleFish(Project):
     """闲鱼中控类"""
 
-    walked_li = []
+    def __init__(self, serial_num):
+        """构造函数
+
+        :param serial_num: 设备编号
+        """
+        super().__init__(serial_num)
+        self.walked_li = []
 
     def get_random_ap(self, random_err=0):
         """随机获取一个支付宝的代付码
@@ -40,11 +46,11 @@ class IdleFish(Project):
                 ap_li.append(i)
         if ap_li:
             random_ap = ap_li[randint(0, len(ap_li) - 1)]
+            print(len(ap_li), len(self.walked_li), len(ap_li) <= len(self.walked_li))
             if len(ap_li) <= len(self.walked_li):
                 self.walked_li = []
-            else:
-                self.walked_li.append(random_ap)
             if random_err > 10 or random_ap not in self.walked_li:
+                self.walked_li.append(random_ap)
                 return random_ap
             else:
                 return self.get_random_ap(random_err+1)
@@ -65,6 +71,7 @@ class IdleFish(Project):
                 continue
             alipay_code = join(r'D:\aps', random_ap)
             print(alipay_code)
+            print(self.walked_li)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
             self.uia_ins.click(text='支付宝', interval=15)
@@ -76,10 +83,15 @@ class IdleFish(Project):
             self.uia_ins.tap((939, 1399))
             self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
-            if not self.uia_ins.click(text='确认付款', index='8'):
-                if self.uia_ins.get_dict(text='已支付', xml=self.uia_ins.xml):
-                    remove(alipay_code)
-                    continue
+            try:
+                if not self.uia_ins.click(text='确认付款', index='8') and not self.uia_ins.click(
+                        text='确认付款', index='9', xml=self.uia_ins.xml):
+                    if self.uia_ins.get_dict(text='已支付', xml=self.uia_ins.xml):
+                        remove(alipay_code)
+                        continue
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             self.uia_ins.click(text='继续支付', interval=3)
             try:
                 if not self.uia_ins.click(text='确认交易'):
