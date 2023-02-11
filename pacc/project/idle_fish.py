@@ -38,6 +38,7 @@ class IdleFish(Project):
         """随机获取一个支付宝的代付码
 
         :param random_err: 错误的数量
+        :return: 当代付码存在时会尽可能地随机返回一个未曾遍历过的代付码，当代付码不存在时直接返回False
         """
         ap_li = []
         for i in listdir(r'D:\aps')[::-1]:
