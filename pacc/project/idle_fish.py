@@ -28,8 +28,11 @@ class IdleFish(Project):
 
     walked_li = []
 
-    def get_random_ap(self):
-        """随机获取一个支付宝的代付码"""
+    def get_random_ap(self, random_err=0):
+        """随机获取一个支付宝的代付码
+
+        :param random_err: 错误的数量
+        """
         ap_li = []
         for i in listdir(r'D:\aps')[::-1]:
             spli = i.split('.')
@@ -41,10 +44,10 @@ class IdleFish(Project):
                 self.walked_li = []
             else:
                 self.walked_li.append(random_ap)
-            if random_ap not in self.walked_li:
+            if random_err > 10 or random_ap not in self.walked_li:
                 return random_ap
             else:
-                return self.get_random_ap()
+                return self.get_random_ap(random_err+1)
         return None
 
     def open_app(self):
