@@ -23,20 +23,29 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     right_btn = 'com.taobao.idlefish:id/right_btn'
 
 
-def get_random_ap():
-    """随机获取一个支付宝的代付码"""
-    ap_li = []
-    for i in listdir(r'D:\aps')[::-1]:
-        spli = i.split('.')
-        if spli and spli[-1] == 'png':
-            ap_li.append(i)
-    if ap_li:
-        return ap_li[randint(0, len(ap_li)-1)]
-    return None
-
-
 class IdleFish(Project):
     """闲鱼中控类"""
+
+    walked_li = []
+
+    def get_random_ap(self):
+        """随机获取一个支付宝的代付码"""
+        ap_li = []
+        for i in listdir(r'D:\aps')[::-1]:
+            spli = i.split('.')
+            if spli and spli[-1] == 'png':
+                ap_li.append(i)
+        if ap_li:
+            random_ap = ap_li[randint(0, len(ap_li) - 1)]
+            if len(ap_li) <= len(self.walked_li):
+                self.walked_li = []
+            else:
+                self.walked_li.append(random_ap)
+            if random_ap not in self.walked_li:
+                return random_ap
+            else:
+                return self.get_random_ap()
+        return None
 
     def open_app(self):
         """打开闲鱼APP"""
@@ -47,7 +56,7 @@ class IdleFish(Project):
     def pay(self):
         """付款"""
         while True:
-            random_ap = get_random_ap()
+            random_ap = self.get_random_ap()
             if not random_ap:
                 sleep(10)
                 continue
