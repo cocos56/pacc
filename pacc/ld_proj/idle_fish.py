@@ -613,8 +613,11 @@ class IdleFish(IdleFishBase):
             update_idle_fish_ins = UpdateIdleFish(job_number)
             update_idle_fish_ins.update_confirm('NULL')
             update_idle_fish_ins.update_last_confirm_date(today)
-            if lduia_ins.get_dict(content_desc='去评价'):
-                LDConsole.quit(start_index)
+            try:
+                if lduia_ins.get_dict(content_desc='去评价'):
+                    LDConsole.quit(start_index)
+            except FileNotFoundError as err:
+                print_err(err)
             start_index += 1
 
     @classmethod
