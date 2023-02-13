@@ -10,8 +10,8 @@ SELECT SUM(last_buy_coins) FROM idle_fish WHERE role LIKE '颜瑞捷%' and last_
 
 # 2. 查询薅羊毛赚话费的任务情况
 
-SET @Host_Name='C%';
-SELECT Job_N, role, `hosts`, top_up_mobile, user_name, top_up_mobile_cnt, last_top_up_mobile_date FROM idle_fish WHERE top_up_mobile=1 and `hosts` LIKE @Host_Name
+SET @Host_Name='%';
+SELECT Job_N, role, `hosts`, top_up_mobile, user_name, top_up_mobile_cnt, last_top_up_mobile_date FROM idle_fish WHERE top_up_mobile=1 and `hosts` LIKE @Host_Name ORDER BY last_top_up_mobile_date
 
 # 3. 查询低版本账号
 ## 3.1. 部署在C4机器上的
