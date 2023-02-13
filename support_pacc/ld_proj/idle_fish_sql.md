@@ -72,11 +72,12 @@ SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝�
 
 ## 11.1. C5
 
-SET @coins=10000, @HostsName='%', @Job_N='AAB31%';
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE 'C5:%' and Job_N LIKE @Job_N;
+SET @coins=10000, @HostsName='%', @Job_N='%';
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE 'C5:%';
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE 'C5:%' ORDER BY `hosts`;
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and confirm=1 and `hosts` LIKE @HostsName ORDER BY `hosts`;
-SELECT Job_N, role, user_name, last_buy_coins, FORMAT(last_buy_coins*0.00033,2) as money, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND `hosts` LIKE 'C5:%' and Job_N LIKE @Job_N;
-SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE `hosts` LIKE 'C5:%' and last_confirm_date = CURDATE() and Job_N LIKE @Job_N;
+SELECT Job_N, role, user_name, last_buy_coins, FORMAT(last_buy_coins*0.00033,2) as money, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND `hosts` LIKE 'C5:%';
+SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE `hosts` LIKE 'C5:%' and last_confirm_date = CURDATE();
 
 # 12. 混合查询
 
