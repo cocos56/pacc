@@ -136,7 +136,7 @@ class IdleFishBase(LDProj):
             print(f'设备{self.ld_index}不存在，无需执行任务，{datetime.now()}')
         return False
 
-    # pylint: disable=too-many-branches, too-many-statements
+    # pylint: disable=too-many-branches, too-many-statements, too-many-return-statements
     def top_up_mobile_on_target_device(self, reopen_flag=True) -> bool:
         """在特定设备上进行薅羊毛赚话费
 
