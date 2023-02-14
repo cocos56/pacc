@@ -253,7 +253,7 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            lduia_ins.click(content_desc='我想要')
+            lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml)
             try:
                 if not lduia_ins.click(content_desc='立即购买'):
                     naf_err_cnt = 0
