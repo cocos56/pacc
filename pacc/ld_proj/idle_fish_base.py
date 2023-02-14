@@ -181,27 +181,31 @@ class IdleFishBase(LDProj):
                 lduia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
-            self.top_up_mobile_on_target_device()
+            self.top_up_mobile_on_target_device(reopen_flag)
         try:
             if not lduia_ins.get_dict(content_desc='提醒签到', xml=lduia_ins.xml):
                 print('当前界面不是赚经验的界面，正在重新执行')
-                self.top_up_mobile_on_target_device()
+                self.top_up_mobile_on_target_device(reopen_flag)
         except FileNotFoundError as err:
             print_err(err)
-            self.top_up_mobile_on_target_device()
+            self.top_up_mobile_on_target_device(reopen_flag)
         try:
             if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
                 lduia_ins.tap((460, 350), 20)
         except FileNotFoundError as err:
             print_err(err)
-            self.top_up_mobile_on_target_device()
+            self.top_up_mobile_on_target_device(reopen_flag)
         png_path = lduia_ins.get_screen()
         dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}_top_up_mobile'
         create_dir(dir_name)
         new_png = f'{dir_name}/{LDConsole(self.ld_index).get_name()}.png'
         if path.exists(new_png):
             remove(new_png)
-        rename(png_path, new_png)
+        try:
+            rename(png_path, new_png)
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.top_up_mobile_on_target_device(reopen_flag)
         try:
             lduia_ins.get_current_ui_hierarchy()
         except FileNotFoundError as err:
