@@ -190,7 +190,7 @@ class IdleFishBase(LDProj):
             print_err(err)
             self.top_up_mobile_on_target_device(reopen_flag)
         try:
-            if lduia_ins.get_dict(content_desc='薅羊毛赚话费'):
+            if lduia_ins.get_dict(content_desc='薅羊毛赚话费', xml=lduia_ins.xml):
                 lduia_ins.tap((460, 350), 20)
         except FileNotFoundError as err:
             print_err(err)
