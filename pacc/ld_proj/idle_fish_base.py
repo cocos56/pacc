@@ -171,13 +171,19 @@ class IdleFishBase(LDProj):
             return False
         lduia_ins = LDUIA(self.ld_index)
         lduia_ins.tap((50, 85), 6)
-        lduia_ins.tap((479, 596), 3)
+        lduia_ins.tap((479, 596), 3)  # 点击赚经验
         LDADB(self.ld_index).get_current_focus()
         try:
             if lduia_ins.get_dict(content_desc=r'HI，店长 '):
                 print('当前界面需要先点击一下升级小店然后再点击赚经验')
                 lduia_ins.tap((266, 599), 3)
-                lduia_ins.tap((479, 596), 3)
+                lduia_ins.tap((479, 596), 3)  # 点击赚经验
+                lduia_ins.xml = ''
+            elif lduia_ins.get_dict(content_desc='数码店', xml=lduia_ins.xml):
+                print('当前界面需要先点击一下选好了然后再点击赚经验')
+                lduia_ins.tap((270, 652), 3)  # 点击数码店
+                lduia_ins.tap((268, 809), 6)  # 点击选好了
+                lduia_ins.tap((479, 596), 3)  # 点击赚经验
                 lduia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
