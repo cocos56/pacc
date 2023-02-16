@@ -4,7 +4,6 @@ from xml.parsers.expat import ExpatError
 
 from .project import Project
 from ..base import show_datetime, sleep, print_err
-from ..tools import EMail
 
 ROOT = 'com.dd.rclient/com.dd.rclient.ui.activity.'
 PDD_ROOT = 'com.xunmeng.pinduoduo'
