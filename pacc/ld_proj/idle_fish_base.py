@@ -1,5 +1,6 @@
 """闲鱼全自动刷闲鱼币中央监控系统基类模块"""
 # pylint: disable=duplicate-code
+import shutil
 from datetime import datetime, date
 from os import path, rename, remove
 
@@ -225,4 +226,127 @@ class IdleFishBase(LDProj):
             top_up_mobile_cnt = retrieve_idle_fish_ins.top_up_mobile_cnt + 1
         UpdateIdleFish(job_number).update_top_up_mobile_cnt(top_up_mobile_cnt)
         UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
+        return True
+
+    def second_buy_on_target_device(self):
+        """在特定设备上进行二次购买（下单）
+
+        :return: 正常走完二次购买的流程返回True，否则返回False
+        """
+        now = datetime.now()
+        print(now)
+        if not LDConsole(self.ld_index).is_exist():
+            print(f'设备{self.ld_index}不存在，无需购买')
+            return False
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        today = date.today()
+        coins = retrieve_idle_fish_ins.coins
+        print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
+              f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
+              f'today={today}')
+        if not retrieve_idle_fish_ins.buy:
+            print(f'设备{self.ld_index}上的是否需要购买的标志为'
+                  f'{retrieve_idle_fish_ins.buy}，无需购买')
+            return False
+        if retrieve_idle_fish_ins.login:
+            print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+            return False
+        self.run_app(19)
+        if self.is_logout('购买'):
+            return False
+        lduia_ins = LDUIA(self.ld_index)
+        ldadb_ins = LDADB(self.ld_index)
+        try:
+            lduia_ins.click(ResourceID.tab_title, '消息')
+            if lduia_ins.click(text='我知道了'):
+                lduia_ins.xml = ''
+            while not lduia_ins.click(index='1', content_desc='xgqm', xml=lduia_ins.xml):
+                current_focus = LDADB(self.ld_index).get_current_focus()
+                if lduia_ins.click(index='0', content_desc='xgqm', xml=lduia_ins.xml) or \
+                        Activity.Launcher in current_focus:
+                    break
+                if Activity.WebHybridActivity in current_focus:
+                    ldadb_ins.press_back_key()
+                    if self.is_logout('购买'):
+                        break
+                ldadb_ins.swipe([290, 690], [290, 330], 500)
+                lduia_ins.xml = ''
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.second_buy_on_target_device()
+        if retrieve_idle_fish_ins.login:
+            print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+            return False
+        if Activity.Launcher in LDADB(self.ld_index).get_current_focus():
+            return self.second_buy_on_target_device()
+        sleep(1)
+        try:
+            while not lduia_ins.click(naf='true', index='3'):
+                sleep(1)
+                if lduia_ins.click(content_desc='立即购买'):
+                    break
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.second_buy_on_target_device()
+        lduia_ins.click(content_desc='再次购买')
+        last_buy_coins = 0
+        if coins >= 50000:
+            last_buy_coins = 50000
+        elif coins >= 40000:
+            last_buy_coins = 40000
+        elif coins >= 30000:
+            last_buy_coins = 30000
+        elif coins >= 20000:
+            last_buy_coins = 20000
+        try:
+            lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.second_buy_on_target_device()
+        lduia_ins.click(text='立即购买')
+        LDADB(self.ld_index).get_current_focus()
+        sleep(1)
+        try:
+            lduia_ins.click(content_desc='确认购买')
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.second_buy_on_target_device()
+        sleep(2)
+        try:
+            if lduia_ins.get_dict(content_desc='确认购买'):
+                return self.second_buy_on_target_device()
+        except FileNotFoundError as err:
+            print_err(err)
+        try:
+            if not lduia_ins.click(text='找朋友帮忙付'):
+                if not lduia_ins.click(text='卡'):
+                    lduia_ins.click(text='余额')
+                sleep(1)
+                while not lduia_ins.click(text='找朋友帮忙付'):
+                    print('未找到找朋友帮忙付')
+                    ldadb_ins.swipe([260, 900], [260, 600])
+        except FileNotFoundError as err:
+            print_err(err)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_idle_fish_ins.update_buy('NULL')
+        update_idle_fish_ins.update_last_buy_date(today)
+        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
+        if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
+            update_idle_fish_ins.update_confirm(1)
+        lduia_ins.click(text='立即付款')
+        sleep(1)
+        try:
+            lduia_ins.click(text='面对面扫码')
+        except FileNotFoundError as err:
+            print_err(err)
+        src_png = lduia_ins.get_screen()
+        dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
+        try:
+            lduia_ins.get_current_ui_hierarchy()
+            if lduia_ins.get_dict(text='帮我付款'):
+                LDConsole.quit(self.ld_index)
+                shutil.move(src_png, dst_png)
+        except FileNotFoundError as err:
+            print_err(err)
         return True
