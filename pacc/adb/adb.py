@@ -396,14 +396,14 @@ class ADB:  # pylint: disable=too-many-public-methods
         # pylint: disable=unnecessary-dunder-call
         self.__init__(self.dbr.serial_num)
 
-    def reboot(self):
+    def reboot_by_ip(self):
         """通过IP重启指定的设备"""
         if self.dbr.ipv4_addr not in get_online_devices():
             # pylint: disable=unnecessary-dunder-call
             self.__init__(self.dbr.serial_num)
         self.reboot_by_cmd(f'adb -s {self.dbr.ipv4_addr} reboot')
 
-    def reboot_by_id(self):
+    def reboot(self):
         """通过ID重启指定的设备"""
         self.reboot_by_cmd(f'adb -s {self.dbr.id_num} reboot')
 

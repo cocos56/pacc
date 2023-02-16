@@ -108,10 +108,10 @@ class SD(Project):
             return self.check()
         if Activity.LoginActivity in current_focus:
             self.adb_ins.reboot()
+            sleep(600)
             self.open_app()
-            if Activity.LoginActivity in self.adb_ins.get_current_focus():
-                EMail(self.serial_num).send_offline_error()
-                sleep(600)
+            # if Activity.LoginActivity in self.adb_ins.get_current_focus():
+            #     EMail(self.serial_num).send_offline_error()
         print('检查结束，未发现不可处理异常\n')
         return True
 
