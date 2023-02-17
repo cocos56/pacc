@@ -209,7 +209,7 @@ class IdleFish(IdleFishBase):
             last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             if last_buy_coins:
                 cls(start_index).get_pay_code(today, last_buy_coins)
-            # cls(start_index).get_pay_code(today, 20000)
+            # cls(start_index).get_pay_code(today, 30000)
             # input()
             start_index += 1
 
