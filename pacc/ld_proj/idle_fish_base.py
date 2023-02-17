@@ -1,6 +1,5 @@
 """闲鱼全自动刷闲鱼币中央监控系统基类模块"""
 # pylint: disable=duplicate-code
-import shutil
 from datetime import datetime, date
 from os import path, rename, remove
 
