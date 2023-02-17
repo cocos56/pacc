@@ -230,11 +230,12 @@ class IdleFish(IdleFishBase):
             start_index += 1
 
     # pylint: disable=too-many-return-statements
-    def get_pay_code(self, today: date.today(), last_buy_coins: int):
+    def get_pay_code(self, today: date.today(), last_buy_coins: int, retry_cnt=0):
         """获取好友代付二维码
 
         :param today: 今日的日期
         :param last_buy_coins: 本次回收的闲鱼币币值
+        :param retry_cnt: 重试次数
         :return: 正常走完首次购买的流程返回True，否则返回False
         """
         self.run_app(19)
@@ -270,14 +271,13 @@ class IdleFish(IdleFishBase):
             if lduia_ins.get_dict(text='帮我付款'):
                 qr_codes = decode(Image.open(src_png))
                 print(qr_codes)
-                if qr_codes:
-                    LDConsole.quit(self.ld_index)
-                    shutil.move(src_png, dst_png)
-                else:
-                    return self.get_pay_code(today, last_buy_coins)
+                shutil.move(src_png, dst_png)
+                LDConsole.quit(self.ld_index)
+                if not qr_codes and not retry_cnt:
+                    return self.get_pay_code(today, last_buy_coins, retry_cnt+1)
         except FileNotFoundError as err:
             print_err(err)
-            return self.get_pay_code(today, last_buy_coins)
+            return self.get_pay_code(today, last_buy_coins, retry_cnt)
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         update_idle_fish_ins = UpdateIdleFish(job_number)
