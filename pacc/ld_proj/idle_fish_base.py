@@ -437,13 +437,12 @@ class IdleFishBase(LDProj):
         except FileNotFoundError as err:
             print_err(err)
         try:
-            if not lduia_ins.click(text='找朋友帮忙付'):
-                if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='余额')
-                sleep(1)
-                while not lduia_ins.click(text='找朋友帮忙付'):
-                    print('未找到找朋友帮忙付')
-                    ldadb_ins.swipe([260, 900], [260, 600])
+            if lduia_ins.get_dict(text='账户支付功能已关闭'):
+                print(f'设备{self.ld_index}账户支付功能已关闭')
+                return False
         except FileNotFoundError as err:
             print_err(err)
+        if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml):
+            print(f'设备{self.ld_index}上的账号需要添加收货地址')
+            return False
         return last_buy_coins
