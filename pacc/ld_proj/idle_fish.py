@@ -206,11 +206,10 @@ class IdleFish(IdleFishBase):
                       f'，当前时间为：{datetime.now()}')
                 break
             today = date.today()
-            # last_buy_coins = cls(start_index).first_buy_on_target_device(today)
-            # if last_buy_coins:
-            #     cls(start_index).get_pay_code(today, last_buy_coins)
-            cls(start_index).get_pay_code(today, 20000)
-            input()
+            last_buy_coins = cls(start_index).first_buy_on_target_device(today)
+            if last_buy_coins:
+                cls(start_index).get_pay_code(today, last_buy_coins)
+            # cls(start_index).get_pay_code(today, 20000)
             start_index += 1
 
     @classmethod
@@ -229,6 +228,7 @@ class IdleFish(IdleFishBase):
             cls(start_index).second_buy_on_target_device()
             start_index += 1
 
+    # pylint: disable=too-many-return-statements
     def get_pay_code(self, today: date.today(), last_buy_coins: int):
         """获取好友代付二维码
 
@@ -268,15 +268,6 @@ class IdleFish(IdleFishBase):
             except FileNotFoundError as err:
                 print_err(err)
                 return self.get_pay_code(today, last_buy_coins)
-        job_number = LDConsole(self.ld_index).get_job_number()
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        update_idle_fish_ins = UpdateIdleFish(job_number)
-        update_idle_fish_ins.update_buy('NULL')
-        update_idle_fish_ins.update_last_buy_date(today)
-        update_idle_fish_ins = UpdateIdleFish(job_number)
-        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
-        if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
-            update_idle_fish_ins.update_confirm(1)
         try:
             lduia_ins.click(text='立即付款')
         except FileNotFoundError as err:
@@ -303,6 +294,15 @@ class IdleFish(IdleFishBase):
         except FileNotFoundError as err:
             print_err(err)
             return self.get_pay_code(today, last_buy_coins)
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_idle_fish_ins.update_buy('NULL')
+        update_idle_fish_ins.update_last_buy_date(today)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
+        if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
+            update_idle_fish_ins.update_confirm(1)
         return True
 
     # pylint: disable=too-many-branches, too-many-statements
