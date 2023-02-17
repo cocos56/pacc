@@ -234,6 +234,7 @@ class IdleFish(IdleFishBase):
 
         :param today: 今日的日期
         :param last_buy_coins: 本次回收的闲鱼币币值
+        :return: 正常走完首次购买的流程返回True，否则返回False
         """
         self.run_app(19)
         lduia_ins = LDUIA(self.ld_index)
@@ -241,9 +242,8 @@ class IdleFish(IdleFishBase):
         lduia_ins.click(content_desc='我的，未选中状态')
         ldadb_ins.swipe([260, 800], [260, 660])
         lduia_ins.click(content_desc='我买到的')
-        lduia_ins.get_screen()
-        lduia_ins.get_current_ui_hierarchy()
-        input()
+        if not lduia_ins.click(content_desc='去付款'):
+            return False
         if lduia_ins.click(content_desc='支付宝支付'):
             sleep(2)
             lduia_ins.click(content_desc='立即支付')
@@ -258,13 +258,9 @@ class IdleFish(IdleFishBase):
                 if not lduia_ins.click(text='卡'):
                     lduia_ins.click(text='账户余额')
             sleep(1)
-            i_want_err = False
             try:
                 while not lduia_ins.click(text='找朋友帮忙付'):
                     print('未找到找朋友帮忙付')
-                    if lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml):
-                        i_want_err = True
-                        break
                     if lduia_ins.click(text='组合付款', xml=lduia_ins.xml):
                         pass
                     elif lduia_ins.click(text='余额', xml=lduia_ins.xml):
@@ -272,8 +268,6 @@ class IdleFish(IdleFishBase):
                     ldadb_ins.swipe([260, 900], [260, 600])
             except FileNotFoundError as err:
                 print_err(err)
-            if i_want_err:
-                return self.first_buy_on_target_device(today)
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         update_idle_fish_ins = UpdateIdleFish(job_number)
@@ -305,7 +299,7 @@ class IdleFish(IdleFishBase):
                     shutil.move(src_png, dst_png)
         except FileNotFoundError as err:
             print_err(err)
-
+        return True
 
     # pylint: disable=too-many-branches, too-many-statements
     @classmethod
