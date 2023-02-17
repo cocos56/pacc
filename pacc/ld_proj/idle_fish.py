@@ -241,7 +241,10 @@ class IdleFish(IdleFishBase):
             try:
                 if 'xgqm' not in lduia_ins.get_dict(class_='android.widget.EditText').get('@text'):
                     continue
-            except (FileNotFoundError, AttributeError) as err:
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
+            except AttributeError as err:
                 print_err(err)
                 start_index += 1
                 continue
