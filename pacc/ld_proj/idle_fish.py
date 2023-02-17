@@ -347,7 +347,9 @@ class IdleFish(IdleFishBase):
                         if lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml):
                             i_want_err = True
                             break
-                        if lduia_ins.click(text='余额', xml=lduia_ins.xml):
+                        if lduia_ins.click(text='组合付款', xml=lduia_ins.xml):
+                            pass
+                        elif lduia_ins.click(text='余额', xml=lduia_ins.xml):
                             continue
                         ldadb_ins.swipe([260, 900], [260, 600])
                 except FileNotFoundError as err:
