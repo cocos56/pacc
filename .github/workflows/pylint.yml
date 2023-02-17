@@ -29,6 +29,7 @@ jobs:
         pip install psutil
         pip install pyautogui
         pip install pymouse
+        pip install pyzbar
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py') --extension-pkg-whitelist=cv2

@@ -378,10 +378,10 @@ class IdleFish(IdleFishBase):
             try:
                 lduia_ins.get_current_ui_hierarchy()
                 if lduia_ins.get_dict(text='帮我付款'):
-                    LDConsole.quit(start_index)
                     qr_codes = decode(src_png)
                     print(qr_codes)
                     if qr_codes:
+                        LDConsole.quit(start_index)
                         shutil.move(src_png, dst_png)
             except FileNotFoundError as err:
                 print_err(err)
