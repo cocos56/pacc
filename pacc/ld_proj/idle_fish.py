@@ -255,8 +255,7 @@ class IdleFish(IdleFishBase):
                     lduia_ins.click(text='余额')
             except FileNotFoundError as err:
                 print_err(err)
-                if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='账户余额')
+                return self.get_pay_code(today, last_buy_coins)
             sleep(1)
             try:
                 while not lduia_ins.click(text='找朋友帮忙付'):
@@ -268,6 +267,7 @@ class IdleFish(IdleFishBase):
                     ldadb_ins.swipe([260, 900], [260, 600])
             except FileNotFoundError as err:
                 print_err(err)
+                return self.get_pay_code(today, last_buy_coins)
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         update_idle_fish_ins = UpdateIdleFish(job_number)
@@ -281,12 +281,13 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(text='立即付款')
         except FileNotFoundError as err:
             print_err(err)
-            return False
+            return self.get_pay_code(today, last_buy_coins)
         sleep(1)
         try:
             lduia_ins.click(text='面对面扫码')
         except FileNotFoundError as err:
             print_err(err)
+            return self.get_pay_code(today, last_buy_coins)
         src_png = lduia_ins.get_screen()
         dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
         try:
@@ -297,8 +298,11 @@ class IdleFish(IdleFishBase):
                 if qr_codes:
                     LDConsole.quit(self.ld_index)
                     shutil.move(src_png, dst_png)
+                else:
+                    return self.get_pay_code(today, last_buy_coins)
         except FileNotFoundError as err:
             print_err(err)
+            return self.get_pay_code(today, last_buy_coins)
         return True
 
     # pylint: disable=too-many-branches, too-many-statements
