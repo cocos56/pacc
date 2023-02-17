@@ -243,6 +243,7 @@ class IdleFish(IdleFishBase):
                     continue
             except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
+                start_index += 1
                 continue
             try:
                 lduia_ins.click(content_desc='搜索')
@@ -337,10 +338,12 @@ class IdleFish(IdleFishBase):
                 try:
                     while not lduia_ins.click(text='找朋友帮忙付'):
                         print('未找到找朋友帮忙付')
-                        ldadb_ins.swipe([260, 900], [260, 600])
                         if lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml):
                             i_want_err = True
                             break
+                        if lduia_ins.click(text='余额', xml=lduia_ins.xml):
+                            continue
+                        ldadb_ins.swipe([260, 900], [260, 600])
                 except FileNotFoundError as err:
                     print_err(err)
                 if i_want_err:
