@@ -347,10 +347,11 @@ class IdleFishBase(LDProj):
             return False
         return last_buy_coins
 
-    def second_buy_on_target_device(self):
+    def second_buy_on_target_device(self, today: date.today()):
         """在特定设备上进行二次购买（下单）
 
-        :return: 正常走完二次购买的流程返回True，否则返回False
+        :param today: 今日的日期
+        :return: 正常走完二次购买的流程返回本次回收的闲鱼币币值，否则返回False
         """
         now = datetime.now()
         print(now)
@@ -359,7 +360,6 @@ class IdleFishBase(LDProj):
             return False
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        today = date.today()
         coins = retrieve_idle_fish_ins.coins
         print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
               f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
@@ -393,12 +393,12 @@ class IdleFishBase(LDProj):
                 lduia_ins.xml = ''
         except FileNotFoundError as err:
             print_err(err)
-            return self.second_buy_on_target_device()
+            return self.second_buy_on_target_device(today)
         if retrieve_idle_fish_ins.login:
             print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
             return False
         if Activity.Launcher in LDADB(self.ld_index).get_current_focus():
-            return self.second_buy_on_target_device()
+            return self.second_buy_on_target_device(today)
         sleep(1)
         try:
             while not lduia_ins.click(naf='true', index='3'):
@@ -407,7 +407,7 @@ class IdleFishBase(LDProj):
                     break
         except FileNotFoundError as err:
             print_err(err)
-            return self.second_buy_on_target_device()
+            return self.second_buy_on_target_device(today)
         lduia_ins.click(content_desc='再次购买')
         last_buy_coins = 0
         if coins >= 50000:
@@ -422,7 +422,7 @@ class IdleFishBase(LDProj):
             lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
         except FileNotFoundError as err:
             print_err(err)
-            return self.second_buy_on_target_device()
+            return self.second_buy_on_target_device(today)
         lduia_ins.click(text='立即购买')
         LDADB(self.ld_index).get_current_focus()
         sleep(1)
@@ -430,11 +430,11 @@ class IdleFishBase(LDProj):
             lduia_ins.click(content_desc='确认购买')
         except FileNotFoundError as err:
             print_err(err)
-            return self.second_buy_on_target_device()
+            return self.second_buy_on_target_device(today)
         sleep(2)
         try:
             if lduia_ins.get_dict(content_desc='确认购买'):
-                return self.second_buy_on_target_device()
+                return self.second_buy_on_target_device(today)
         except FileNotFoundError as err:
             print_err(err)
         try:
@@ -447,25 +447,4 @@ class IdleFishBase(LDProj):
                     ldadb_ins.swipe([260, 900], [260, 600])
         except FileNotFoundError as err:
             print_err(err)
-        update_idle_fish_ins = UpdateIdleFish(job_number)
-        update_idle_fish_ins.update_buy('NULL')
-        update_idle_fish_ins.update_last_buy_date(today)
-        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
-        if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
-            update_idle_fish_ins.update_confirm(1)
-        lduia_ins.click(text='立即付款')
-        sleep(1)
-        try:
-            lduia_ins.click(text='面对面扫码')
-        except FileNotFoundError as err:
-            print_err(err)
-        src_png = lduia_ins.get_screen()
-        dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
-        try:
-            lduia_ins.get_current_ui_hierarchy()
-            if lduia_ins.get_dict(text='帮我付款'):
-                LDConsole.quit(self.ld_index)
-                shutil.move(src_png, dst_png)
-        except FileNotFoundError as err:
-            print_err(err)
-        return True
+        return last_buy_coins

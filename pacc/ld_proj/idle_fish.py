@@ -226,7 +226,10 @@ class IdleFish(IdleFishBase):
                 print(f'所有共{end_index - src_start_index + 1}项已购买完毕'
                       f'，当前时间为：{datetime.now()}')
                 break
-            cls(start_index).second_buy_on_target_device()
+            today = date.today()
+            last_buy_coins = cls(start_index).second_buy_on_target_device(today)
+            if last_buy_coins:
+                cls(start_index).get_pay_code(today, last_buy_coins)
             start_index += 1
 
     # pylint: disable=too-many-return-statements
