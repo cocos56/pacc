@@ -15,3 +15,4 @@ websocket-server
 selenium
 pyperclip
 requests
+pyzbar

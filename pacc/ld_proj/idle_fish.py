@@ -8,6 +8,7 @@ from xml.parsers.expat import ExpatError
 
 import pyperclip
 from psutil import cpu_percent
+from pyzbar.pyzbar import decode
 
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
 from ..adb import LDConsole, LDADB, LDUIA
@@ -376,7 +377,10 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
                 if lduia_ins.get_dict(text='帮我付款'):
                     LDConsole.quit(start_index)
-                    shutil.move(src_png, dst_png)
+                    qr_codes = decode(src_png)
+                    print(qr_codes)
+                    if qr_codes:
+                        shutil.move(src_png, dst_png)
             except FileNotFoundError as err:
                 print_err(err)
             start_index += 1
