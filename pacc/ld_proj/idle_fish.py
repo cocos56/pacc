@@ -245,7 +245,7 @@ class IdleFish(IdleFishBase):
             lduia_ins.click(content_desc='我的，未选中状态')
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
-            if not lduia_ins.click(content_desc='去付款', interval=2):
+            if not lduia_ins.click(content_desc='去付款', interval=3):
                 return False
             if lduia_ins.click(content_desc='支付宝支付'):
                 sleep(2)
@@ -258,10 +258,6 @@ class IdleFish(IdleFishBase):
                 sleep(1)
                 while not lduia_ins.click(text='找朋友帮忙付'):
                     print('未找到找朋友帮忙付')
-                    if lduia_ins.click(text='组合付款', xml=lduia_ins.xml):
-                        pass
-                    elif lduia_ins.click(text='余额', xml=lduia_ins.xml):
-                        continue
                     ldadb_ins.swipe([260, 900], [260, 600])
             lduia_ins.click(text='立即付款')
             lduia_ins.click(text='面对面扫码')
