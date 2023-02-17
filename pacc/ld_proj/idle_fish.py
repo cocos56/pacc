@@ -190,7 +190,6 @@ class IdleFish(IdleFishBase):
                 lduia_ins.tap((478, 919))
             start_index += 1
 
-    # pylint: disable=too-many-branches, too-many-statements
     @classmethod
     def first_buy(cls, start_index, end_index):
         """首次购买（下单）
@@ -207,7 +206,6 @@ class IdleFish(IdleFishBase):
             cls(start_index).first_buy_on_target_device()
             start_index += 1
 
-    # pylint: disable=too-many-branches, too-many-statements
     @classmethod
     def second_buy(cls, start_index, end_index):
         """二次购买（下单）
@@ -224,31 +222,9 @@ class IdleFish(IdleFishBase):
             cls(start_index).second_buy_on_target_device()
             start_index += 1
 
-    @classmethod
-    def pay(cls, start_index, end_index):
-        """付款：获取好友代付二维码
+    def get_pay_code(self):
+        """获取好友代付二维码"""
 
-        :param start_index: 起始索引值
-        :param end_index: 终止索引值
-        """
-        src_start_index = start_index
-        while True:
-            if start_index - 1 >= end_index:
-                print(f'所有共{end_index - src_start_index + 1}项已获取好友代付二维码完毕'
-                      f'，当前时间为：{datetime.now()}')
-                break
-            now = datetime.now()
-            print(now)
-            if not LDConsole(start_index).is_exist():
-                print(f'设备{start_index}不存在，无需获取好友代付二维码')
-                start_index += 1
-                continue
-            job_number = LDConsole(start_index).get_job_number()
-            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            today = date.today()
-            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
-                  f'pay={retrieve_idle_fish_ins.pay}, '
-                  f'today={today}')
 
     # pylint: disable=too-many-branches, too-many-statements
     @classmethod

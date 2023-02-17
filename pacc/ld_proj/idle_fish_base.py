@@ -231,7 +231,7 @@ class IdleFishBase(LDProj):
         UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
         return True
 
-    def first_buy_on_target_device(self):
+    def first_buy_on_target_device(self): # pylint: disable=too-many-locals
         """在特定设备上进行首次购买（下单）
 
         :return: 正常走完首次购买的流程返回True，否则返回False
