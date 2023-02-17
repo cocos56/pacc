@@ -7,6 +7,7 @@ from os import listdir, path
 from xml.parsers.expat import ExpatError
 
 import pyperclip
+from PIL import Image
 from psutil import cpu_percent
 from pyzbar.pyzbar import decode
 
@@ -378,7 +379,7 @@ class IdleFish(IdleFishBase):
             try:
                 lduia_ins.get_current_ui_hierarchy()
                 if lduia_ins.get_dict(text='帮我付款'):
-                    qr_codes = decode(src_png)
+                    qr_codes = decode(Image.open(src_png))
                     print(qr_codes)
                     if qr_codes:
                         LDConsole.quit(start_index)
