@@ -206,11 +206,11 @@ class IdleFish(IdleFishBase):
                       f'，当前时间为：{datetime.now()}')
                 break
             today = date.today()
-            # last_buy_coins = cls(start_index).first_buy_on_target_device(today)
-            # if last_buy_coins:
-            #     cls(start_index).get_pay_code(today, last_buy_coins)
-            cls(start_index).get_pay_code(today, 20000)
-            input()
+            last_buy_coins = cls(start_index).first_buy_on_target_device(today)
+            if last_buy_coins:
+                cls(start_index).get_pay_code(today, last_buy_coins)
+            # cls(start_index).get_pay_code(today, 20000)
+            # input()
             start_index += 1
 
     @classmethod
