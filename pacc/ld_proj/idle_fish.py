@@ -206,11 +206,11 @@ class IdleFish(IdleFishBase):
                       f'，当前时间为：{datetime.now()}')
                 break
             today = date.today()
-            last_buy_coins = cls(start_index).first_buy_on_target_device(today)
-            if last_buy_coins:
-                cls(start_index).get_pay_code(today, last_buy_coins)
-            # cls(start_index).get_pay_code(today, 30000)
-            # input()
+            # last_buy_coins = cls(start_index).first_buy_on_target_device(today)
+            # if last_buy_coins:
+            #     cls(start_index).get_pay_code(today, last_buy_coins)
+            cls(start_index).get_pay_code(today, 20000, 1)
+            input()
             start_index += 1
 
     @classmethod
@@ -249,31 +249,35 @@ class IdleFish(IdleFishBase):
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             if not lduia_ins.click(content_desc='去付款', interval=3):
-                return False
-            if lduia_ins.click(content_desc='支付宝支付'):
-                sleep(2)
-                lduia_ins.click(content_desc='立即支付')
-                lduia_ins.xml = ''
-                sleep(2)
-            if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
-                if not lduia_ins.click(text='卡'):
-                    lduia_ins.click(text='余额')
-                sleep(1)
-                while not lduia_ins.click(text='找朋友帮忙付'):
-                    print('未找到找朋友帮忙付')
-                    ldadb_ins.swipe([260, 900], [260, 600])
-            lduia_ins.click(text='立即付款')
-            lduia_ins.click(text='面对面扫码')
-            src_png = lduia_ins.get_screen()
-            dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
-            lduia_ins.get_current_ui_hierarchy()
-            if lduia_ins.get_dict(text='帮我付款'):
-                qr_codes = decode(Image.open(src_png))
-                print(qr_codes)
-                shutil.move(src_png, dst_png)
-                LDConsole.quit(self.ld_index)
-                if not qr_codes and not retry_cnt:
-                    return self.get_pay_code(today, last_buy_coins, retry_cnt+1)
+                if not retry_cnt:
+                    return False
+            else:
+                if lduia_ins.click(content_desc='支付宝支付'):
+                    sleep(2)
+                    lduia_ins.click(content_desc='立即支付')
+                    lduia_ins.xml = ''
+                    sleep(2)
+                if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
+                    if not lduia_ins.click(text='卡'):
+                        lduia_ins.click(text='余额')
+                    sleep(1)
+                    while not lduia_ins.click(text='找朋友帮忙付'):
+                        print('未找到找朋友帮忙付')
+                        ldadb_ins.swipe([260, 900], [260, 600])
+                        if lduia_ins.get_dict(content_desc='我买到的', xml=lduia_ins.xml):
+                            return self.get_pay_code(today, last_buy_coins, retry_cnt + 1)
+                lduia_ins.click(text='立即付款')
+                lduia_ins.click(text='面对面扫码')
+                src_png = lduia_ins.get_screen()
+                dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
+                lduia_ins.get_current_ui_hierarchy()
+                if lduia_ins.get_dict(text='帮我付款'):
+                    qr_codes = decode(Image.open(src_png))
+                    print(qr_codes)
+                    shutil.move(src_png, dst_png)
+                    LDConsole.quit(self.ld_index)
+                    if not qr_codes and retry_cnt < 3:
+                        return self.get_pay_code(today, last_buy_coins, retry_cnt+1)
         except FileNotFoundError as err:
             print_err(err)
             return self.get_pay_code(today, last_buy_coins, retry_cnt)
