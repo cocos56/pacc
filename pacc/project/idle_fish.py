@@ -88,11 +88,7 @@ class IdleFish(Project):
                     if self.uia_ins.get_dict(text='已支付', xml=self.uia_ins.xml):
                         remove(alipay_code)
                         continue
-            except FileNotFoundError as err:
-                print_err(err)
-                continue
-            self.uia_ins.click(text='继续支付', interval=3)
-            try:
+                self.uia_ins.click(text='继续支付', interval=3)
                 if not self.uia_ins.click(text='确认交易'):
                     continue
             except FileNotFoundError as err:
