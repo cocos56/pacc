@@ -209,7 +209,7 @@ class IdleFish(IdleFishBase):
             # last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             # if last_buy_coins:
             #     cls(start_index).get_pay_code(today, last_buy_coins)
-            cls(start_index).get_pay_code(today, 20000, 1)
+            cls(start_index).get_pay_code(today, 20000)
             input()
             start_index += 1
 
@@ -249,7 +249,7 @@ class IdleFish(IdleFishBase):
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             if not lduia_ins.click(content_desc='去付款', interval=3):
-                if not retry_cnt:
+                if not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
                     return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
