@@ -324,7 +324,15 @@ class IdleFish(IdleFishBase):
                       f'{retrieve_idle_fish_ins.confirm}，无需确认收货')
                 start_index += 1
                 continue
+            if retrieve_idle_fish_ins.login:
+                print(
+                    f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法确认收货')
+                start_index += 1
+                continue
             cls(start_index).run_app(18)
+            if cls(start_index).is_logout('确认收货'):
+                start_index += 1
+                continue
             lduia_ins = LDUIA(start_index)
             try:
                 lduia_ins.click(ResourceID.tab_title, '我的')
