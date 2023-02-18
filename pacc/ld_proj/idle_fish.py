@@ -275,8 +275,7 @@ class IdleFish(IdleFishBase):
                     qr_codes = decode(Image.open(src_png))
                     print(qr_codes)
                     shutil.move(src_png, dst_png)
-                    LDConsole.quit(self.ld_index)
-                    if not qr_codes and retry_cnt < 3:
+                    if not qr_codes and retry_cnt < 6:
                         return self.get_pay_code(today, last_buy_coins, retry_cnt+1)
         except FileNotFoundError as err:
             print_err(err)
@@ -290,6 +289,7 @@ class IdleFish(IdleFishBase):
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
             update_idle_fish_ins.update_confirm(1)
+        LDConsole.quit(self.ld_index)
         return True
 
     # pylint: disable=too-many-branches, too-many-statements
