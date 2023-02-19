@@ -208,7 +208,7 @@ class IdleFish(IdleFishBase):
             today = date.today()
             last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             if last_buy_coins:
-                cls(start_index).get_pay_code(today, last_buy_coins)
+                cls(start_index).get_pay_code(today)
             # cls(start_index).get_pay_code(today, 20000)
             # input()
             start_index += 1
@@ -229,15 +229,14 @@ class IdleFish(IdleFishBase):
             today = date.today()
             last_buy_coins = cls(start_index).second_buy_on_target_device(today)
             if last_buy_coins:
-                cls(start_index).get_pay_code(today, last_buy_coins)
+                cls(start_index).get_pay_code(today)
             start_index += 1
 
     # pylint: disable=too-many-return-statements
-    def get_pay_code(self, today: date.today(), last_buy_coins: int, retry_cnt=0):
+    def get_pay_code(self, today: date.today(), retry_cnt=0):
         """获取好友代付二维码
 
         :param today: 今日的日期
-        :param last_buy_coins: 本次回收的闲鱼币币值
         :param retry_cnt: 重试次数
         :return: 正常走完首次购买的流程返回True，否则返回False
         """
@@ -265,7 +264,7 @@ class IdleFish(IdleFishBase):
                         print('未找到找朋友帮忙付')
                         ldadb_ins.swipe([260, 900], [260, 600])
                         if lduia_ins.get_dict(content_desc='我买到的', xml=lduia_ins.xml):
-                            return self.get_pay_code(today, last_buy_coins, retry_cnt + 1)
+                            return self.get_pay_code(today, retry_cnt + 1)
                 lduia_ins.click(text='立即付款')
                 lduia_ins.click(text='面对面扫码')
                 src_png = lduia_ins.get_screen()
@@ -278,17 +277,15 @@ class IdleFish(IdleFishBase):
                     print(qr_codes)
                     shutil.move(src_png, dst_png)
                     if not qr_codes and retry_cnt < 6:
-                        return self.get_pay_code(today, last_buy_coins, retry_cnt+1)
+                        return self.get_pay_code(today, retry_cnt+1)
         except FileNotFoundError as err:
             print_err(err)
-            return self.get_pay_code(today, last_buy_coins, retry_cnt)
+            return self.get_pay_code(today, retry_cnt)
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_buy('NULL')
-        update_idle_fish_ins.update_last_buy_date(today)
         update_idle_fish_ins = UpdateIdleFish(job_number)
-        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
             update_idle_fish_ins.update_confirm(1)
         LDConsole.quit(self.ld_index)
