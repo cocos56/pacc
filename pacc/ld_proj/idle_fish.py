@@ -269,7 +269,9 @@ class IdleFish(IdleFishBase):
                 lduia_ins.click(text='立即付款')
                 lduia_ins.click(text='面对面扫码')
                 src_png = lduia_ins.get_screen()
-                dst_png = path.join(r'\\10.1.1.2\aps\\', f'{str(self.ld_index).zfill(3)}.png')
+                dst_png = path.join(r'\\10.1.1.2\aps\\',
+                                    f'{str(self.ld_index).zfill(3)}_'
+                                    f'{LDConsole(self.ld_index).get_job_number()}.png')
                 lduia_ins.get_current_ui_hierarchy()
                 if lduia_ins.get_dict(text='帮我付款'):
                     qr_codes = decode(Image.open(src_png))
