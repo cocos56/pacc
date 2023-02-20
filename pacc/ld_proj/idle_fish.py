@@ -252,8 +252,9 @@ class IdleFish(IdleFishBase):
             if not lduia_ins.click(content_desc='去付款', interval=3):
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
+                elif Activity.Launcher in ldadb_ins.get_current_focus():
+                    return self.get_pay_code(today, retry_cnt)
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
-                    ldadb_ins.get_current_focus()
                     lduia_ins.get_current_ui_hierarchy()
                     lduia_ins.get_screen()
                     input()
