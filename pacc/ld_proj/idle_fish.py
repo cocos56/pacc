@@ -248,7 +248,9 @@ class IdleFish(IdleFishBase):
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             if not lduia_ins.click(content_desc='去付款', interval=3):
-                if not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
+                if not lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
+                    pass
+                elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
                     return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):

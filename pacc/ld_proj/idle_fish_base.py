@@ -344,6 +344,9 @@ class IdleFishBase(LDProj):
         if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml):
             print(f'设备{self.ld_index}上的账号需要添加收货地址')
             return False
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
+        update_idle_fish_ins.update_last_buy_date(today)
         return last_buy_coins
 
     def second_buy_on_target_device(self, today: date.today()):
