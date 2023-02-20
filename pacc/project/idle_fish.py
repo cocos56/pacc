@@ -116,10 +116,6 @@ class IdleFish(Project):
             self.adb_ins.get_current_focus()
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
-            if self.uia_ins.click(content_desc='去发货', interval=0.01):
-                self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
-                self.uia_ins.click(text='继续', interval=0.01)
-                continue
             self.uia_ins.click(content_desc='待付款', interval=0.01)
             self.uia_ins.click(content_desc='修改价格', interval=0.01)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
@@ -127,8 +123,17 @@ class IdleFish(Project):
                 src_price = float(dic['@text'])
             except TypeError as err:
                 print_err(err)
+                if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
+                        content_desc='去发货', interval=0.01):
+                    self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
+                    self.uia_ins.click(text='继续', interval=0.01)
                 continue
             if str(src_price)[-1] == '1':
+                self.adb_ins.press_back_key(0.01)
+                if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
+                        content_desc='去发货', interval=0.01):
+                    self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
+                    self.uia_ins.click(text='继续', interval=0.01)
                 continue
             price = src_price / 10 + 0.01
             print(f'price={price}')
