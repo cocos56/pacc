@@ -209,16 +209,13 @@ class IdleFish(Project):
                 self.adb_ins.press_back_key()
                 continue
             err_cnt = 0
-            self.uia_ins.click(content_desc='未选中，赏好评', interval=0.01)
-            self.uia_ins.click(ResourceID.btn_transfer, '收货快', interval=0.01)
-            self.uia_ins.click(
-                ResourceID.btn_transfer, '下单爽快', xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(
-                ResourceID.btn_transfer, '回复快', xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(
-                ResourceID.publish_rate, xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(ResourceID.right_btn, interval=0.01)
-            # self.uia_ins.get_current_ui_hierarchy()
+            self.uia_ins.click(content_desc='赏好评', interval=0.01)
+            self.uia_ins.click(content_desc='沟通顺畅', interval=0.01)
+            self.uia_ins.click(content_desc='收货快', xml=self.uia_ins.xml, interval=0.01)
+            self.uia_ins.click(content_desc='交易愉快', xml=self.uia_ins.xml, interval=0.01)
+            self.uia_ins.click(content_desc='发布', xml=self.uia_ins.xml, interval=0.01)
+            self.uia_ins.click(content_desc='确定', interval=0.01)
+            self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
