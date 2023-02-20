@@ -209,7 +209,7 @@ class IdleFish(IdleFishBase):
             last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             if last_buy_coins:
                 cls(start_index).get_pay_code(today)
-            # cls(start_index).get_pay_code(today, 20000)
+            # cls(start_index).get_pay_code(today)
             # input()
             start_index += 1
 
@@ -230,6 +230,8 @@ class IdleFish(IdleFishBase):
             last_buy_coins = cls(start_index).second_buy_on_target_device(today)
             if last_buy_coins:
                 cls(start_index).get_pay_code(today)
+            # cls(start_index).get_pay_code(today)
+            # input()
             start_index += 1
 
     # pylint: disable=too-many-return-statements
@@ -248,7 +250,7 @@ class IdleFish(IdleFishBase):
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             if not lduia_ins.click(content_desc='去付款', interval=3):
-                if not lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
+                if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
                     return False
@@ -267,6 +269,8 @@ class IdleFish(IdleFishBase):
                         ldadb_ins.swipe([260, 900], [260, 600])
                         if lduia_ins.get_dict(content_desc='我买到的', xml=lduia_ins.xml):
                             return self.get_pay_code(today, retry_cnt + 1)
+                        if lduia_ins.get_dict(text='交易已付款，请勿重复支付。', xml=lduia_ins.xml):
+                            return self.get_pay_code(today, retry_cnt)
                 lduia_ins.click(text='立即付款')
                 lduia_ins.click(text='面对面扫码')
                 src_png = lduia_ins.get_screen()
@@ -278,7 +282,7 @@ class IdleFish(IdleFishBase):
                     qr_codes = decode(Image.open(src_png))
                     print(qr_codes)
                     shutil.move(src_png, dst_png)
-                    if not qr_codes and retry_cnt < 6:
+                    if not qr_codes and retry_cnt < 16:
                         return self.get_pay_code(today, retry_cnt+1)
         except FileNotFoundError as err:
             print_err(err)
