@@ -1,4 +1,5 @@
 """闲鱼中控模块"""
+import time
 from os import listdir, remove
 from os.path import join
 from random import randint
@@ -23,6 +24,19 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     right_btn = 'com.taobao.idlefish:id/right_btn'
 
 
+def get_random_aps():
+    """获取所有支付宝的代付码
+
+    :return: 所有支付宝的代付码
+    """
+    ap_li = []
+    for i in listdir(r'D:\aps')[::-1]:
+        spli = i.split('.')
+        if spli and spli[-1] == 'png':
+            ap_li.append(i)
+    return ap_li
+
+
 class IdleFish(Project):
     """闲鱼中控类"""
 
@@ -40,11 +54,7 @@ class IdleFish(Project):
         :param random_err: 错误的数量
         :return: 当代付码存在时会尽可能地随机返回一个未曾遍历过的代付码，当代付码不存在时直接返回False
         """
-        ap_li = []
-        for i in listdir(r'D:\aps')[::-1]:
-            spli = i.split('.')
-            if spli and spli[-1] == 'png':
-                ap_li.append(i)
+        ap_li = get_random_aps()
         if ap_li:
             random_ap = ap_li[randint(0, len(ap_li) - 1)]
             if len(ap_li) <= len(self.walked_li):
@@ -102,16 +112,22 @@ class IdleFish(Project):
             if self.uia_ins.get_dict(text='代付成功'):
                 remove(alipay_code)
 
-    def change_price(self, end_num=8):
-        """改价
-
-        :param end_num: 结束的数量
-        """
+    def change_price(self):
+        """改价"""
         success_cnt = 0
+        time_cnt = 0
         while True:
-            print(f'success_cnt={success_cnt}')
-            if success_cnt >= end_num:
-                break
+            print(f'success_cnt={success_cnt}, time_cnt={time_cnt}')
+            random_aps = get_random_aps()
+            print(f'random_aps={random_aps}')
+            if not random_aps:
+                if time_cnt >= 600:
+                    break
+                time_cnt += 1
+                sleep(1)
+                continue
+            else:
+                time_cnt = 0
             self.open_app()
             self.adb_ins.get_current_focus()
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
