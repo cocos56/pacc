@@ -1,5 +1,4 @@
 """闲鱼中控模块"""
-import time
 from os import listdir, remove
 from os.path import join
 from random import randint
@@ -126,8 +125,7 @@ class IdleFish(Project):
                 time_cnt += 1
                 sleep(1)
                 continue
-            else:
-                time_cnt = 0
+            time_cnt = 0
             self.open_app()
             self.adb_ins.get_current_focus()
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
