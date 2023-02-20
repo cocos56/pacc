@@ -253,6 +253,10 @@ class IdleFish(IdleFishBase):
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
+                    ldadb_ins.get_current_focus()
+                    lduia_ins.get_current_ui_hierarchy()
+                    lduia_ins.get_screen()
+                    input()
                     return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
@@ -280,7 +284,7 @@ class IdleFish(IdleFishBase):
                 lduia_ins.get_current_ui_hierarchy()
                 if lduia_ins.get_dict(text='帮我付款'):
                     qr_codes = decode(Image.open(src_png))
-                    print(qr_codes)
+                    print(qr_codes, retry_cnt)
                     shutil.move(src_png, dst_png)
                     if not qr_codes and retry_cnt < 16:
                         return self.get_pay_code(today, retry_cnt+1)
