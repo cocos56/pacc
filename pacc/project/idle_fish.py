@@ -72,10 +72,13 @@ class IdleFish(Project):
 
     def pay(self):
         """付款"""
+        time_cnt = 0
         while True:
             random_ap = self.get_random_ap()
             if not random_ap:
+                print(f'time_cnt={time_cnt}')
                 sleep(10)
+                time_cnt += 10
                 continue
             alipay_code = join(r'D:\aps', random_ap)
             print(alipay_code)
@@ -120,8 +123,6 @@ class IdleFish(Project):
             random_aps = get_random_aps()
             print(f'random_aps={random_aps}')
             if not random_aps:
-                if time_cnt >= 600:
-                    break
                 time_cnt += 1
                 sleep(1)
                 continue
