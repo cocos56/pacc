@@ -111,7 +111,7 @@ class IdleFish(Project):
             if self.uia_ins.get_dict(text='代付成功'):
                 remove(alipay_code)
 
-    def change_price(self):
+    def change_price(self, dispatch=True):
         """改价"""
         success_cnt = 0
         time_cnt = 0
@@ -137,12 +137,16 @@ class IdleFish(Project):
                 src_price = float(dic['@text'])
             except TypeError as err:
                 print_err(err)
+                if not dispatch:
+                    continue
                 if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
                         content_desc='去发货', interval=0.01):
                     self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
                     self.uia_ins.click(text='继续', interval=0.01)
                 continue
             if str(src_price)[-1] == '1':
+                if not dispatch:
+                    continue
                 self.adb_ins.press_back_key(0.01)
                 if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
                         content_desc='去发货', interval=0.01):
