@@ -19,7 +19,7 @@ from ..mysql import RetrieveIdleFish, RetrieveIdleFishData, \
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
 
 
-class IdleFish(IdleFishBase):
+class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
     """闲鱼类"""
 
     @classmethod
@@ -100,9 +100,9 @@ class IdleFish(IdleFishBase):
                 cls.create(end_index)
                 cls.login(start_index, end_index)
                 time_cnt = 0
-                for ac in acs:
-                    print(ac)
-                    remove(join(r'\\10.1.1.2\acs', ac))
+                for ac_txt in acs:
+                    print(ac_txt)
+                    remove(join(r'\\10.1.1.2\acs', ac_txt))
                 continue
             print(f'time_cnt={time_cnt}')
             sleep(1)
