@@ -1,5 +1,7 @@
 """闲鱼UI程序入口模块"""
 from datetime import datetime
+from os.path import join
+from shutil import move
 from tkinter import Tk, Label, Text, END, Button
 
 from pacc.mysql import CreateIdleFish
@@ -62,7 +64,12 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             # pylint: disable=too-many-boolean-expressions
             if dic.get('Job_N') and dic.get('role') and dic.get('RT') and dic.get('user_name') and \
                     dic.get('login_pw') and dic.get('pay_pw'):
-                print(dic.get('Job_N'))
+                txt_name = f'{dic.get("Job_N")}{dic.get("role")}.txt'
+                print(txt_name)
+                with open(txt_name, 'w+') as f:
+                    f.write(txt_name)
+                    f.close()
+                move(txt_name, join(r'\\10.1.1.2\acs', txt_name))
                 CreateIdleFish(
                     dic.get('Job_N'), dic.get('role'), dic.get('RT'), dic.get('user_name'),
                     dic.get('login_pw'), dic.get('pay_pw'))
