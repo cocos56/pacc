@@ -43,7 +43,7 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
 
     # 功能函数
     def src_into_db(self):
-        """将源数据插入到数据库的中"""
+        """将源数据插入到数据库中"""
         src = self.init_data_text.get(1.0, END)
         dic_li = []
         for single_src in src.split('\n'):
