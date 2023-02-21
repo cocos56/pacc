@@ -8,10 +8,9 @@ from pacc.mysql.retrieve import RetrieveSD
 from pacc.base import sleep, print_err
 
 DOMAIN = 'http://sd.coco56.top/'
-START_INDEX = 17
+START_INDEX = 23
 DEPARTING_STAFF = [
     '张鑫',
-    '吴智勇'
 ]
 
 
