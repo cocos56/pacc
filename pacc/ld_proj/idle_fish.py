@@ -255,10 +255,7 @@ class IdleFish(IdleFishBase):
                 elif Activity.Launcher in ldadb_ins.get_current_focus():
                     return self.get_pay_code(today, retry_cnt)
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
-                    lduia_ins.get_current_ui_hierarchy()
-                    lduia_ins.get_screen()
-                    input()
-                    return False
+                    return self.get_pay_code(today, retry_cnt)
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
                     sleep(2)
