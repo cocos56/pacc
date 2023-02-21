@@ -66,9 +66,8 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
                     dic.get('login_pw') and dic.get('pay_pw'):
                 txt_name = f'{dic.get("Job_N")}{dic.get("role")}.txt'
                 print(txt_name)
-                with open(txt_name, 'w+') as f:
-                    f.write(txt_name)
-                    f.close()
+                with open(txt_name, 'w+') as file:
+                    file.write(txt_name)
                 move(txt_name, join(r'\\10.1.1.2\acs', txt_name))
                 CreateIdleFish(
                     dic.get('Job_N'), dic.get('role'), dic.get('RT'), dic.get('user_name'),
