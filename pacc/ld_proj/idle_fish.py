@@ -1,9 +1,9 @@
 """闲鱼全自动刷闲鱼币中央监控系统模块"""
 # pylint: disable=too-many-lines
-import os
 import shutil
 from datetime import date, datetime, timedelta
-from os import listdir, path
+from os import listdir, path, remove, rename
+from os.path import join
 from xml.parsers.expat import ExpatError
 
 import pyperclip
@@ -74,6 +74,39 @@ class IdleFish(IdleFishBase):
             update_idle_fish_ins.update_login(1)
             update_idle_fish_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
+
+    @classmethod
+    def get_acs(cls):
+        """获取所有支付宝的代付码
+
+        :return: 所有支付宝的代付码
+        """
+        ac_li = []
+        for item in listdir(r'\\10.1.1.2\acs')[::-1]:
+            spli = item.split('.')
+            if spli and spli[-1] == 'txt':
+                ac_li.append(item)
+        return ac_li
+
+    @classmethod
+    def auto_create(cls):
+        """自动登录"""
+        time_cnt = 0
+        while True:
+            acs = cls.get_acs()
+            print(acs)
+            if acs:
+                start_index, end_index = 1, LDConsole.get_last_device_num()
+                cls.create(end_index)
+                cls.login(start_index, end_index)
+                time_cnt = 0
+                for ac in acs:
+                    print(ac)
+                    remove(join(r'\\10.1.1.2\acs', ac))
+                continue
+            print(f'time_cnt={time_cnt}')
+            sleep(1)
+            time_cnt += 1
 
     # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
@@ -713,8 +746,8 @@ class IdleFish(IdleFishBase):
         create_dir(dir_name)
         new_png = f'{dir_name}/{LDConsole(index).get_name()}.png'
         if path.exists(new_png):
-            os.remove(new_png)
-        os.rename(png_path, new_png)
+            remove(new_png)
+        rename(png_path, new_png)
         LDConsole.quit(index)
         today = date.today()
         if today != retrieve_idle_fish_ins.last_check_date:
