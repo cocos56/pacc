@@ -268,7 +268,7 @@ class IdleFish(IdleFishBase):
                         print('未找到找朋友帮忙付')
                         ldadb_ins.swipe([260, 900], [260, 600])
                         if lduia_ins.get_dict(content_desc='我买到的', xml=lduia_ins.xml):
-                            return self.get_pay_code(today, retry_cnt + 1)
+                            return self.get_pay_code(today, retry_cnt)
                         if lduia_ins.get_dict(text='交易已付款，请勿重复支付。', xml=lduia_ins.xml):
                             return self.get_pay_code(today, retry_cnt)
                 lduia_ins.click(text='立即付款')
