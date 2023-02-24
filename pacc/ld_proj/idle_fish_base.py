@@ -312,6 +312,7 @@ class IdleFishBase(LDProj):
             last_buy_coins = 10000
         else:
             return False
+        last_buy_coins = min(last_buy_coins, retrieve_idle_fish_ins.reminder_threshold)
         try:
             lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
         except FileNotFoundError as err:

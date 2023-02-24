@@ -325,6 +325,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_buy('NULL')
         update_idle_fish_ins = UpdateIdleFish(job_number)
+        if 20000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
+            print(f'new reminder_threshold is {retrieve_idle_fish_ins.reminder_threshold + 10000}')
         if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
             update_idle_fish_ins.update_confirm(1)
         LDConsole.quit(self.ld_index)
