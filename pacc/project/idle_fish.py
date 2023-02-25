@@ -97,12 +97,9 @@ class IdleFish(Project):
             try:
                 if not self.uia_ins.click(text='确认付款', index='8', interval=2) and not self.\
                         uia_ins.click(text='确认付款', index='9', xml=self.uia_ins.xml, interval=2):
-                    if self.uia_ins.get_dict(text='已支付', xml=self.uia_ins.xml):
-                        remove(alipay_code)
-                        continue
-                if not self.uia_ins.click(text='继续支付', interval=3):
                     remove(alipay_code)
                     continue
+                self.uia_ins.click(text='继续支付', interval=3)
                 if not self.uia_ins.click(text='确认交易'):
                     continue
             except FileNotFoundError as err:
