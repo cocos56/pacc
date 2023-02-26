@@ -90,11 +90,12 @@ class IdleFishBase(LDProj):
             return True
         return False
 
-    def is_logout(self, work_name: str, current_focus='') -> bool:
+    def is_logout(self, work_name: str, current_focus='', depth=0) -> bool:
         """判断设备是否已掉线（需要重新登录）
 
         :param work_name: 工作名
         :param current_focus: 当前界面的Activity
+        :param depth: 递归深度
         :return: 已掉线更新数据库里的在线状态并返回True，否则返回False
         """
         if not current_focus:
@@ -118,7 +119,8 @@ class IdleFishBase(LDProj):
                 return True
         except FileNotFoundError as err:
             print_err(err)
-            return self.is_logout(work_name)
+            if depth < 3:
+                return self.is_logout(work_name, depth=depth+1)
         return False
 
     def should_run_task(self, today: date.today()) -> bool:
