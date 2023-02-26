@@ -35,6 +35,7 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     ali_user_guide_tb_login_btn = 'com.taobao.idlefish:id/ali_user_guide_tb_login_btn'
     search_bg_img_front = 'com.taobao.idlefish:id/search_bg_img_front'
     login_guide_bar = 'com.taobao.idlefish:id/login_guide_bar'
+    login_onekey_btn = 'com.taobao.idlefish:id/login_onekey_btn'
 
 
 class IdleFishBase(LDProj):

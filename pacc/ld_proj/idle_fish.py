@@ -149,14 +149,14 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             try:
                 if lduia_ins.click(ResourceID.login_guide_bar):
                     lduia_ins.xml = ''
-                if_mn = lduia_ins.get_dict(
-                    ResourceID.aliuser_login_mobile_et, xml=lduia_ins.xml).get('@text')
+                dic = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et, xml=lduia_ins.xml)
+                if not dic:
+                    lduia_ins.click(ResourceID.login_onekey_btn, xml=lduia_ins.xml)
+                    dic = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et)
+                if_mn = dic.get('@text')
             except FileNotFoundError as err:
                 print_err(err)
                 continue
-            except AttributeError as err:
-                if_mn = ''
-                print_err(err)
             print([if_mn], len(if_mn))
             update_idle_fish_ins = UpdateIdleFish(job_number)
             if len(if_mn) == 11 and if_mn != retrieve_idle_fish_ins.if_mn:
