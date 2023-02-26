@@ -34,6 +34,7 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     tv_value = 'com.taobao.idlefish:id/tv_value'
     ali_user_guide_tb_login_btn = 'com.taobao.idlefish:id/ali_user_guide_tb_login_btn'
     search_bg_img_front = 'com.taobao.idlefish:id/search_bg_img_front'
+    login_guide_bar = 'com.taobao.idlefish:id/login_guide_bar'
 
 
 class IdleFishBase(LDProj):
@@ -98,7 +99,9 @@ class IdleFishBase(LDProj):
         """
         if not current_focus:
             current_focus = LDADB(self.ld_index).get_current_focus()
-        if Activity.UserLoginActivity in current_focus:
+        lduia_ins = LDUIA(self.ld_index)
+        if Activity.UserLoginActivity in current_focus or lduia_ins.get_dict(
+                ResourceID.login_guide_bar):
             print(f'检测设备{self.ld_index}到已掉线，需要重新登录')
             lduia_ins = LDUIA(self.ld_index)
             lduia_ins.get_screen()
