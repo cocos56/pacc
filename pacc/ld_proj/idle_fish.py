@@ -307,6 +307,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                             return self.get_pay_code(today, retry_cnt)
                         if lduia_ins.get_dict(text='交易已付款，请勿重复支付。', xml=lduia_ins.xml):
                             return self.get_pay_code(today, retry_cnt)
+                        if lduia_ins.get_dict(text='确认付款', xml=lduia_ins.xml):
+                            return self.get_pay_code(today, retry_cnt)
                 lduia_ins.click(text='立即付款')
                 lduia_ins.click(text='面对面扫码')
                 src_png = lduia_ins.get_screen()

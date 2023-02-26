@@ -100,21 +100,25 @@ class IdleFishBase(LDProj):
         if not current_focus:
             current_focus = LDADB(self.ld_index).get_current_focus()
         lduia_ins = LDUIA(self.ld_index)
-        if Activity.UserLoginActivity in current_focus or lduia_ins.get_dict(
-                ResourceID.login_guide_bar):
-            print(f'检测设备{self.ld_index}到已掉线，需要重新登录')
-            lduia_ins = LDUIA(self.ld_index)
-            lduia_ins.get_screen()
-            try:
-                lduia_ins.get_current_ui_hierarchy()
-            except FileNotFoundError as err:
-                print_err(err)
-            LDConsole.quit(self.ld_index)
-            job_number = LDConsole(self.ld_index).get_job_number()
-            update_idle_fish_ins = UpdateIdleFish(job_number)
-            update_idle_fish_ins.update_login(1)
-            print(f'设备{self.ld_index}由于已掉线，无法继续进行，{work_name}异常终止\n')
-            return True
+        try:
+            if Activity.UserLoginActivity in current_focus or lduia_ins.get_dict(
+                    ResourceID.login_guide_bar):
+                print(f'检测设备{self.ld_index}到已掉线，需要重新登录')
+                lduia_ins = LDUIA(self.ld_index)
+                lduia_ins.get_screen()
+                try:
+                    lduia_ins.get_current_ui_hierarchy()
+                except FileNotFoundError as err:
+                    print_err(err)
+                LDConsole.quit(self.ld_index)
+                job_number = LDConsole(self.ld_index).get_job_number()
+                update_idle_fish_ins = UpdateIdleFish(job_number)
+                update_idle_fish_ins.update_login(1)
+                print(f'设备{self.ld_index}由于已掉线，无法继续进行，{work_name}异常终止\n')
+                return True
+        except FileNotFoundError as err:
+            print_err(err)
+            return self.is_logout(work_name)
         return False
 
     def should_run_task(self, today: date.today()) -> bool:
