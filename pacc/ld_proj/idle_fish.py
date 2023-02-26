@@ -146,8 +146,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 continue
             cls(start_index).run_app(21)
             lduia_ins = LDUIA(start_index)
+            if lduia_ins.click(ResourceID.login_guide_bar):
+                lduia_ins.xml = ''
             try:
-                if_mn = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et).get('@text')
+                if_mn = lduia_ins.get_dict(
+                    ResourceID.aliuser_login_mobile_et, xml=lduia_ins.xml).get('@text')
             except FileNotFoundError as err:
                 print_err(err)
                 continue
