@@ -70,16 +70,7 @@ SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝�
 
 # 11. 查询需要进行首次回收的账号
 
-## 11.1. C5
-
-SET @coins=10000, @HostsName='C5%', @Job_N='%';
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE @HostsName AND Job_N LIKE @Job_N;
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE @HostsName ORDER BY `hosts`;
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and confirm=1 and `hosts` LIKE @HostsName ORDER BY `hosts`;
-SELECT Job_N, role, user_name, last_buy_coins, FORMAT(last_buy_coins*0.00033,2) as money, if_mn, last_confirm_date FROM `idle_fish` WHERE last_confirm_date = CURDATE() AND `hosts` LIKE @HostsName AND Job_N LIKE @Job_N;
-SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)*0.00033,2) as money FROM idle_fish WHERE `hosts` LIKE @HostsName and last_confirm_date = CURDATE() AND Job_N LIKE @Job_N;
-
-## 11.2. C7
+## 11.1. C7
 
 SET @coins=10000, @HostsName='C7%', @Job_N='%';
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE RT= 10000 and coins >= 10000 and `hosts` LIKE @HostsName AND Job_N LIKE @Job_N;
@@ -94,9 +85,7 @@ SELECT FORMAT(SUM(last_buy_coins)*0.0001,2) as coins, FORMAT(SUM(last_buy_coins)
 2. 查询大于目标币值的账号信息（主机列表排序）
 3. 查询大于目标币值的账号信息（RT值排序）
 
-## 12.1. 某一代理今天回收的和今日已确认收货的明细
-
-### 12.1.1. C5
+### 12.0.1. C5
 
 SET @coins=20000, @HostsName='C5:%', @Job_N='%';
 -- 结果1：查询大于目标币值的账号信息（工号排序）
