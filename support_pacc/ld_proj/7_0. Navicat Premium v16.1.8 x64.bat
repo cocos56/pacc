@@ -1,0 +1,1 @@
+start https://download.navicat.com.cn/download/navicat161_premium_cs_x64.exe
