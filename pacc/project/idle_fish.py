@@ -131,7 +131,27 @@ class IdleFish(Project):
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
             self.uia_ins.click(content_desc='待付款', interval=0.01)
-            self.uia_ins.click(content_desc='修改价格', interval=0.01)
+            dic = self.uia_ins.get_dict(index='0', content_desc='实收款')
+            if not dic:
+                print('没有需要改价的订单')
+                continue
+            point = (920, 789)
+            if '实收款 ¥ 0.01' in dic['@content-desc']:
+                print('1 已改')
+                dic = self.uia_ins.get_dict(index='1', content_desc='实收款', xml=self.uia_ins.xml)
+                if not dic:
+                    continue
+                point = (918, 1325)
+            if '实收款 ¥ 0.01' in dic['@content-desc']:
+                print('2 已改')
+                dic = self.uia_ins.get_dict(index='2', content_desc='实收款', xml=self.uia_ins.xml)
+                if not dic:
+                    continue
+                point = (921, 1876)
+            if '实收款 ¥ 0.01' in dic['@content-desc']:
+                print('3 已改')
+                continue
+            self.uia_ins.tap(point)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
             try:
                 src_price = float(dic['@text'])
