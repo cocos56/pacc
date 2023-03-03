@@ -113,7 +113,7 @@ class IdleFish(Project):
             if self.uia_ins.get_dict(text='代付成功'):
                 remove(alipay_code)
 
-    def change_price(self, dispatch=True):
+    def change_price(self, dispatch=True):  # pylint: disable=too-many-branches, too-many-statements
         """改价"""
         success_cnt = 0
         time_cnt = 0
