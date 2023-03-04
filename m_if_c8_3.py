@@ -1,4 +1,4 @@
-"""闲鱼程序入口C7_3模块"""
+"""闲鱼程序入口C8_3模块"""
 # from pacc import MySQLDump
 from pacc.adb import LDConsole
 from pacc.config import Config
@@ -12,5 +12,5 @@ print(f'start_index={start_index}, end_index={end_index}')
 IdleFish.backups(start_index, end_index, reserved_gbs=6*1024)
 IdleFish.check_version(start_index, end_index)
 IdleFish.update_ip(start_index, end_index)
-IdleFish.update_hosts(start_index, end_index, 'C7')
+IdleFish.update_hosts(start_index, end_index, 'C8')
 IdleFish.record(start_index, end_index)
