@@ -154,7 +154,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     lduia_ins.click(ResourceID.login_onekey_btn, xml=lduia_ins.xml)
                     dic = lduia_ins.get_dict(ResourceID.aliuser_login_mobile_et)
                 if_mn = dic.get('@text')
-            except FileNotFoundError as err:
+            except (FileNotFoundError, AttributeError) as err:
                 print_err(err)
                 continue
             print([if_mn], len(if_mn))
