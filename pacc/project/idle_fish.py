@@ -128,7 +128,11 @@ class IdleFish(Project):
             time_cnt = 0
             self.open_app()
             self.adb_ins.get_current_focus()
-            self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            try:
+                self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+            except FileNotFoundError as err:
+                print_err(err)
+                continue
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
             self.uia_ins.click(content_desc='待付款', interval=0.01)
             dic = self.uia_ins.get_dict(index='0', content_desc='实收款')
