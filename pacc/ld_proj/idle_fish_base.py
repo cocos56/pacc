@@ -285,8 +285,9 @@ class IdleFishBase(LDProj):
             lduia_ins.click(content_desc='搜索')
             lduia_ins.click(content_desc='用户')
             lduia_ins.click(content_desc='会员名')
-            while lduia_ins.click(content_desc='徐哥亲笔签名拍照版'):
-                pass
+            lduia_ins.tap((128, 841))
+            if not lduia_ins.get_dict(content_desc='我想要'):
+                lduia_ins.tap((128, 841))
         except FileNotFoundError as err:
             print_err(err)
             return self.first_buy_on_target_device(today)
