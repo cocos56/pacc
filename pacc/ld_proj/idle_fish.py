@@ -263,11 +263,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                       f'，当前时间为：{datetime.now()}')
                 break
             today = date.today()
-            last_buy_coins = cls(start_index).second_buy_on_target_device(today)
-            if last_buy_coins:
-                cls(start_index).get_pay_code(today)
-            # cls(start_index).get_pay_code(today)
-            # input()
+            # last_buy_coins = cls(start_index).second_buy_on_target_device(today)
+            # if last_buy_coins:
+            #     cls(start_index).get_pay_code(today)
+            cls(start_index).get_pay_code(today)
+            input()
             start_index += 1
 
     # pylint: disable=too-many-return-statements
@@ -286,6 +286,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             if not lduia_ins.click(content_desc='去付款', interval=3):
+                if lduia_ins.get_dict(content_desc='删除订单', xml=lduia_ins.xml):
+                    return False
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
