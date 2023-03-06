@@ -7,7 +7,11 @@ SELECT * FROM `record_idle_fish` WHERE Job_N='ZLJ042' ORDER BY record_date DESC
 SELECT * FROM `record_idle_fish` WHERE Job_N='AAA011' ORDER BY record_date DESC
 SELECT * FROM `record_idle_fish` WHERE Job_N='XKK593' ORDER BY record_date DESC
 
-## 1.2. 通过主机名
+## 1.2. 通过用户名
+
+SELECT * FROM `record_idle_fish` WHERE user_name='tb418507166' ORDER BY record_date DESC
+
+## 1.3. 通过主机名
 
 SELECT * FROM `record_idle_fish` WHERE `hosts` = 'C3:174' ORDER BY record_date DESC
 
