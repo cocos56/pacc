@@ -26,6 +26,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
 
         :param start_datetime: 开始时间
         :param timeout: 超时退出时间，默认306秒
+        :return: 执行结束时未超时返回True，否则返回False
         """
         used_datetime = datetime.now()-start_datetime
         print(f'{self.ld_index} timeout_monitoring starting : used_datetime.seconds='
@@ -40,6 +41,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
         print(f'{self.ld_index} timeout_monitoring: 检测到设备{self.ld_index}于{datetime.now()}'
               f'超时未响应，需要该设备关闭')
         LDConsole.quit(self.ld_index)
+        return False
 
     def sys_run(self, command, ext=''):
         """使用system运行命令函数
