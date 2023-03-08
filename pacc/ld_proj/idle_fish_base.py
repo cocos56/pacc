@@ -279,7 +279,11 @@ class IdleFishBase(LDProj):
             print_err(err)
             return self.first_buy_on_target_device(today)
         except AttributeError as err:
+            lduia_ins.get_screen()
+            lduia_ins.get_current_ui_hierarchy()
+            ldadb_ins.get_current_focus()
             print_err(err)
+            input()
             return False
         try:
             lduia_ins.click(content_desc='搜索')
