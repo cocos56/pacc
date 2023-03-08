@@ -841,8 +841,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             cls.check_target_device(start_index)
             start_index += 1
 
-    def run_task_on_target_device(self, today: date.today()) -> None:
-        """在指定设备上执行任务"""
+    def run_task_on_target_device(self, today: date.today()) -> bool:
+        """在指定设备上执行任务
+
+        :return: 执行结束时返回True
+        """
         while self.should_restart():
             self.run_app()
         lduia_ins = LDUIA(self.ld_index)
@@ -856,6 +859,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             return self.run_task_on_target_device(today)
         if self.should_restart():
             return self.run_task_on_target_device(today)
+        return True
 
     @classmethod
     def run_task(cls, run_list: list, today: date.today()) -> None:
