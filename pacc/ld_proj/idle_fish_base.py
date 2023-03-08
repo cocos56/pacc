@@ -282,8 +282,7 @@ class IdleFishBase(LDProj):
             print_err(err)
             if Activity.Launcher in ldadb_ins.get_current_focus():
                 return self.first_buy_on_target_device(today)
-            else:
-                return False
+            return False
         try:
             lduia_ins.click(content_desc='搜索')
             lduia_ins.click(content_desc='用户')
