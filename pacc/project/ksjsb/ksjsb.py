@@ -68,7 +68,10 @@ class Ksjsb(Project):  # pylint: disable=too-many-public-methods
         return self.is_loading(retry_cnt=retry_cnt + 1)
 
     def open_app(self):
-        """打开快手极速版APP"""
+        """打开快手极速版APP
+
+        :return: 打开后返回True
+        """
         print('正在打开快手极速版APP')
         self.adb_ins.open_app(Activity.HomeActivity)
         sleep(6)
@@ -79,6 +82,7 @@ class Ksjsb(Project):  # pylint: disable=too-many-public-methods
             print(f'is_loading_cnt={is_loading_cnt}')
             if is_loading_cnt >= 10:
                 return self.reopen_app()
+        return True
 
     def exit_award_video_play_activity(self, retry_cnt=0):
         """退出奖励视频播放活动页面
