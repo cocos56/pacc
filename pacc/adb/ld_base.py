@@ -1,4 +1,4 @@
-"""雷电模拟器基类"""
+"""雷电模拟器基模块"""
 # pylint: disable=redefined-builtin
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from os import popen, system
@@ -21,11 +21,11 @@ class LDBase:  # pylint: disable=too-few-public-methods
         self.ld_index = ld_index
         self.end_flag = False
 
-    def timeout_monitoring(self, start_datetime, timeout=306):
+    def timeout_monitoring(self, start_datetime, timeout=266):
         """超时监控
 
         :param start_datetime: 开始时间
-        :param timeout: 超时退出时间，默认306秒
+        :param timeout: 超时退出的阈值时间，默认266秒
         :return: 执行结束时未超时返回True，否则返回False
         """
         used_datetime = datetime.now()-start_datetime
@@ -48,7 +48,7 @@ class LDBase:  # pylint: disable=too-few-public-methods
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :return: 成功执行（未超时中断）返回True，否则返回False
+        :return: 正常执行结束（未发生超时中断）时返回True，否则返回False
         """
         return self.exe_cmd(command, ext, return_flag=False)
 
@@ -57,18 +57,18 @@ class LDBase:  # pylint: disable=too-few-public-methods
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :return: 成功执行（未超时中断）返回从管道中读取的结果，否则返回False
+        :return: 正常执行结束（未超时中断）时返回从管道中读取的结果，否则返回False
         """
         return self.exe_cmd(command, ext)
 
-    def exe_cmd(self, command='', ext='', timeout=300, return_flag=True):
+    def exe_cmd(self, command='', ext='', timeout=260, return_flag=True):
         """执行命令函数
 
         :param command: adb命令
         :param ext: 命令的扩展参数
-        :param timeout: 超时中断时间，默认300秒
+        :param timeout: 超时中断的阈值时间，默认为260秒
         :param return_flag: 是否需要返回值，默认不需要
-        :return: 成功执行（未超时中断）返回从管道中读取的结果或True，否则返回False
+        :return: 正常执行结束（未超时中断）时返回从管道中读取的结果或True，否则返回False
         """
         pool = ThreadPoolExecutor(max_workers=2)
         cmd = f'{LDC}adb --index {self.ld_index} --command "{command}"{ext}'
