@@ -88,11 +88,11 @@ class IdleFish(Project):
             self.uia_ins.click(text='支付宝', interval=15)
             try:
                 self.uia_ins.click(text='扫一扫')
+                self.uia_ins.tap((939, 1399))
+                self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             except (FileNotFoundError, ExpatError) as err:
                 print_err(err)
                 continue
-            self.uia_ins.tap((939, 1399))
-            self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
             try:
                 if not self.uia_ins.click(text='确认付款', index='8', interval=2) and not self.\
