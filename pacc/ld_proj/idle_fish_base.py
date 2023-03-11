@@ -121,7 +121,7 @@ class IdleFishBase(LDProj):
         except FileNotFoundError as err:
             print_err(err)
             if depth < 3:
-                return self.is_logout(work_name, depth=depth+1)
+                return self.is_logout(work_name, depth=depth + 1)
         return False
 
     def should_run_task(self, today: date.today()) -> bool:
@@ -237,7 +237,7 @@ class IdleFishBase(LDProj):
         UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
         return True
 
-    def first_buy_on_target_device(self, today: date.today()): # pylint: disable=too-many-locals
+    def first_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
         """在特定设备上进行首次购买（下单）
 
         :param today: 今日的日期
@@ -287,7 +287,7 @@ class IdleFishBase(LDProj):
             lduia_ins.click(content_desc='搜索')
             lduia_ins.click(content_desc='用户')
             lduia_ins.click(content_desc='会员名')
-            lduia_ins.tap((128, 841))
+            lduia_ins.tap((128, 841), 3)
             if not lduia_ins.get_dict(content_desc='我想要'):
                 lduia_ins.tap((128, 841))
         except FileNotFoundError as err:
