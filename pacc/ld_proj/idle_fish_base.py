@@ -289,12 +289,12 @@ class IdleFishBase(LDProj):
             lduia_ins.click(content_desc='会员名')
             lduia_ins.tap((128, 841), 3)
             if not lduia_ins.get_dict(content_desc='我想要'):
-                lduia_ins.tap((128, 841))
+                lduia_ins.tap((128, 841), 3)
                 lduia_ins.xml = ''
+            lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml)
         except FileNotFoundError as err:
             print_err(err)
             return self.first_buy_on_target_device(today)
-        lduia_ins.click(content_desc='我想要', xml=lduia_ins.xml)
         try:
             if not lduia_ins.click(content_desc='立即购买'):
                 naf_err_cnt = 0
