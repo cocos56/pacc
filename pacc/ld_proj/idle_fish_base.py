@@ -3,6 +3,8 @@
 from datetime import datetime, date
 from os import path, rename, remove
 
+from psutil import cpu_percent
+
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
@@ -176,6 +178,12 @@ class IdleFishBase(LDProj):
         if retrieve_idle_fish_ins.login:
             print(f'目标设备{self.ld_index}已掉线，无法执行薅羊毛赚话费的任务\n')
             return False
+        cpu_use = cpu_percent()
+        print(cpu_use)
+        while cpu_use > 60:
+            sleep(5)
+            cpu_use = cpu_percent(1)
+            print(cpu_use)
         self.run_app(19)
         if self.is_logout('执行薅羊毛赚话费的任务'):
             return False
