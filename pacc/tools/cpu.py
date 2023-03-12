@@ -26,6 +26,6 @@ class CPU:
         :param wait_time: 两次判断间的等待时间
         :return: CPU处于空闲状态时返回True，否则将一直等待至CPU处于空闲状态
         """
-        while cls.is_idle(threshold_value):
+        while not cls.is_idle(threshold_value):
             sleep(wait_time)
         return True
