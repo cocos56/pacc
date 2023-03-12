@@ -8,7 +8,6 @@ from xml.parsers.expat import ExpatError
 
 import pyperclip
 from PIL import Image
-from psutil import cpu_percent
 from pyzbar.pyzbar import decode
 
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
@@ -16,7 +15,7 @@ from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, RetrieveIdleFishData, \
     UpdateIdleFish, CreateRecordIdleFish
-from ..tools import create_dir, get_global_ipv4_addr, DiskUsage
+from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU
 
 
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
@@ -827,12 +826,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 start_index += 1
                 print()
                 continue
-            cpu_use = cpu_percent()
-            print(cpu_use)
-            while cpu_use > 60:
-                sleep(5)
-                cpu_use = cpu_percent(1)
-                print(cpu_use)
+            CPU.wait_until_idle()
             if retrieve_idle_fish_ins.top_up_mobile and retrieve_idle_fish_ins.top_up_mobile_cnt \
                     and retrieve_idle_fish_ins.top_up_mobile_cnt > 3:
                 cls(start_index).top_up_mobile_on_target_device(False)

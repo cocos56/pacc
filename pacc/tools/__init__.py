@@ -1,5 +1,6 @@
 """工具包的初始化模块"""
 from .captcha import SliderCaptcha
+from .cpu import CPU
 from .dir import create_dir
 from .disk import DiskUsage
 from .email import EMail
@@ -11,6 +12,7 @@ from .xml import get_pretty_xml, get_xml
 
 __all__ = [
     'SliderCaptcha',
+    'CPU',
     'create_dir',
     'DiskUsage',
     'EMail',

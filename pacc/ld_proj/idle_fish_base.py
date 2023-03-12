@@ -3,13 +3,11 @@
 from datetime import datetime, date
 from os import path, rename, remove
 
-from psutil import cpu_percent
-
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
-from ..tools import create_dir
+from ..tools import create_dir, CPU
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -178,12 +176,7 @@ class IdleFishBase(LDProj):
         if retrieve_idle_fish_ins.login:
             print(f'目标设备{self.ld_index}已掉线，无法执行薅羊毛赚话费的任务\n')
             return False
-        cpu_use = cpu_percent()
-        print(cpu_use)
-        while cpu_use > 60:
-            sleep(5)
-            cpu_use = cpu_percent(1)
-            print(cpu_use)
+        CPU.wait_until_idle()
         self.run_app(19)
         if self.is_logout('执行薅羊毛赚话费的任务'):
             return False
@@ -215,6 +208,7 @@ class IdleFishBase(LDProj):
             return self.top_up_mobile_on_target_device(reopen_flag)
         try:
             if lduia_ins.get_dict(content_desc='薅羊毛赚话费', xml=lduia_ins.xml):
+                CPU.wait_until_idle()
                 lduia_ins.tap((460, 350), 20)
         except FileNotFoundError as err:
             print_err(err)
