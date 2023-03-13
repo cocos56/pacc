@@ -290,7 +290,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
-                    return self.get_pay_code(today, retry_cnt)
+                    if retry_cnt < 3:
+                        return self.get_pay_code(today, retry_cnt+1)
+                    else:
+                        return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
                     sleep(2)
