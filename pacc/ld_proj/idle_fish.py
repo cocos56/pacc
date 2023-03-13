@@ -270,11 +270,12 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             start_index += 1
 
     # pylint: disable=too-many-return-statements
-    def get_pay_code(self, today: date.today(), retry_cnt=0):
+    def get_pay_code(self, today: date.today(), retry_cnt=0, not_found=False):
         """获取好友代付二维码
 
         :param today: 今日的日期
         :param retry_cnt: 重试次数
+        :param not_found: 未找到提醒发货的标志
         :return: 正常走完首次购买的流程返回True，否则返回False
         """
         self.run_app(19)
@@ -290,10 +291,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
-                    if retry_cnt < 3:
-                        return self.get_pay_code(today, retry_cnt+1)
-                    else:
-                        return False
+                    if not not_found:
+                        return self.get_pay_code(today, retry_cnt=retry_cnt, not_found=True)
+                    return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
                     sleep(2)
@@ -325,7 +325,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 shutil.move(src_png, dst_png)
                 if lduia_ins.get_dict(text='帮我付款'):
                     if not qr_codes and retry_cnt < 16:
-                        return self.get_pay_code(today, retry_cnt+1)
+                        return self.get_pay_code(today, retry_cnt=retry_cnt+1)
                 else:
                     return self.get_pay_code(today, retry_cnt)
         except FileNotFoundError as err:
