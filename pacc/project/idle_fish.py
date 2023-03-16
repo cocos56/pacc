@@ -13,6 +13,8 @@ ROOT = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.'
 class Activity:  # pylint: disable=too-few-public-methods
     """闲鱼中控模块的安卓活动名类"""
     MainActivity = f'{ROOT}MainActivity'  # 主界面
+    BlackBoxMainActivity = 'top.niunaijun.blackboxa64/' \
+                           'top.niunaijun.blackboxa.view.main.MainActivity'
 
 
 class ResourceID:  # pylint: disable=too-few-public-methods
@@ -21,6 +23,7 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     btn_transfer = 'com.taobao.idlefish:id/btn_transfer'
     publish_rate = 'com.taobao.idlefish:id/publish_rate'
     right_btn = 'com.taobao.idlefish:id/right_btn'
+    toolbar_layout = 'top.niunaijun.blackboxa64:id/toolbar_layout'
 
 
 def get_random_aps():
@@ -46,6 +49,20 @@ class IdleFish(Project):
         """
         super().__init__(serial_num)
         self.walked_li = []
+
+    def open_black_box(self) -> None:
+        """打开BlackBox应用"""
+        self.free_memory()
+        self.adb_ins.open_app(Activity.BlackBoxMainActivity)
+        sleep(5)
+
+    def run_task(self):
+        """执行任务"""
+        self.open_black_box()
+        dic = self.uia_ins.get_dict(ResourceID.toolbar_layout)
+        print(dic)
+        self.uia_ins.get_current_ui_hierarchy()
+        self.uia_ins.get_screen()
 
     def get_random_ap(self, random_err=0):
         """随机获取一个支付宝的代付码
