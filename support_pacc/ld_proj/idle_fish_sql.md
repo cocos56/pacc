@@ -70,7 +70,7 @@ SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝�
 
 # 11. 查询收货地址
 
-SELECT Job_N, user_name, pay_pw, `hosts`, `收货地址` FROM idle_fish WHERE Job_N LIKE 'ZLJ%' AND pay_pw = 'AAAAAA' ORDER BY `hosts`
+SELECT Job_N, user_name, if_mn, last_buy_date, pay_pw, `hosts`, `收货地址` FROM idle_fish WHERE Job_N LIKE 'ZLJ%' AND pay_pw = 'AAAAAA' ORDER BY `hosts`
 
 # 12. 查询需要进行首次回收的账号
 
