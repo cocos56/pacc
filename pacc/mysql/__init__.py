@@ -2,7 +2,7 @@
 from .create import CreateKSJSB, CreateRecordIdleFish, CreateIdleFish
 from .mysqldump import MySQLDump
 from .retrieve import RetrieveMobileInfo, RetrieveKsjsb, RetrieveEmail, RetrieveIdleFish, \
-    RetrieveIdleFishData
+    RetrieveIdleFishRecords
 from .update import UpdateMobileInfo, UpdateKsjsb, UpdateIdleFish
 
 __all__ = [
@@ -14,7 +14,7 @@ __all__ = [
     'RetrieveKsjsb',
     'RetrieveEmail',
     'RetrieveIdleFish',
-    'RetrieveIdleFishData',
+    'RetrieveIdleFishRecords',
     'UpdateMobileInfo',
     'UpdateKsjsb',
     'UpdateIdleFish',

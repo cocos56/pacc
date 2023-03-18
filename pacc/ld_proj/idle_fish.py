@@ -13,7 +13,7 @@ from pyzbar.pyzbar import decode
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, RetrieveIdleFishData, \
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishRecords, \
     UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU
 
@@ -64,7 +64,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
 
         :param start_index: 起始索引值
         """
-        for job_number, role in RetrieveIdleFishData.query_all_create_records():
+        for job_number, role in RetrieveIdleFishRecords.query_all_create_records():
             today = date.today()
             print(job_number, role, today)
             LDConsole.copy(job_number + role)
