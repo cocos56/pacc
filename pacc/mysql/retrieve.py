@@ -60,6 +60,7 @@ class RetrieveSD:
 RetrieveSD.get_all_accounts()
 RetrieveSD.get_all_names()
 
+
 class Retrieve:  # pylint: disable=too-few-public-methods
     """该类用于从MySQL数据库中查询数据"""
 
@@ -80,6 +81,7 @@ class Retrieve:  # pylint: disable=too-few-public-methods
         if len(res) == 1:
             return res[0]
         return res
+
 
 class RetrieveMobile(Retrieve):  # pylint: disable=too-few-public-methods
     """该类用于从MySQL数据库中的mobile数据库中查询数据"""
@@ -191,7 +193,6 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
-
 class RetrieveIdleFishBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
 
@@ -214,7 +215,7 @@ class RetrieveIdleFishBase(Retrieve):
 
 
 class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public-methods
-    """该类用于从account数据库中的idle_fish表中查询数据"""
+    """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
 
     @property
     def role(self):
@@ -352,11 +353,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return super().query(field, table)
 
 
-class RetrieveIdleFishData:
-    """该类用于从account数据库中的idle_fish表中查询数据"""
+class RetrieveIdleFishRecords:
+    """查询闲鱼所有（符合条件的）记录类：该类用于从account数据库中的idle_fish表中查询符合条件的所有记录"""
 
     @classmethod
-    def query_all_data(cls, database=Account):
+    def query_all_create_records(cls, database=Account):
         """查询函数：查询指定列的所有行数据
 
         :param database: 数据库名
@@ -365,13 +366,14 @@ class RetrieveIdleFishData:
         cmd = 'select Job_N, role from `idle_fish` where `create`=1'
         print(cmd)
         res = database.query(cmd)
-        if res :
+        if res:
             if isinstance(res[0], str):
                 res = [res]
             else:
                 res = list(res)
         print(res)
         return res
+
 
 class RetrieveAccount(Retrieve):
     """该类用于从MySQL数据库中的account数据库中查询数据"""

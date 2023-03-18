@@ -59,12 +59,12 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             start_index += 1
 
     @classmethod
-    def create(cls, start_index=1):
+    def create(cls, start_index=1) -> None:
         """创建
 
         :param start_index: 起始索引值
         """
-        for job_number, role in RetrieveIdleFishData.query_all_data():
+        for job_number, role in RetrieveIdleFishData.query_all_create_records():
             today = date.today()
             print(job_number, role, today)
             LDConsole.copy(job_number + role)
