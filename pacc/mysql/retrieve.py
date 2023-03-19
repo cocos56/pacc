@@ -358,12 +358,33 @@ class RetrieveIdleFishRecords:
 
     @classmethod
     def query_all_create_records(cls, database=Account):
-        """查询函数：查询指定列的所有行数据
+        """查询所有需要创建的记录函数
 
         :param database: 数据库名
         :return: 查询到的结果
         """
         cmd = 'select Job_N, role from `idle_fish` where `create`=1'
+        print(cmd)
+        res = database.query(cmd)
+        if res:
+            if isinstance(res[0], str):
+                res = [res]
+            else:
+                res = list(res)
+        print(res)
+        return res
+
+    @classmethod
+    def query_group_records(cls, database=Account):
+        """查询所有分组汇总后的记录函数
+
+        :param database: 数据库名
+        :return: 查询到的结果
+        """
+        cmd = 'SELECT GROUP_CONCAT(Job_N, role), sum(last_buy_coins), ' \
+              'FORMAT(sum(last_buy_coins)*@price,2) as money, if_mn, ' \
+              'last_confirm_date, base_payee, middle_payee FROM `idle_fish` ' \
+              'WHERE last_confirm_date = CURDATE() GROUP BY base_payee ORDER BY `Job_N`;'
         print(cmd)
         res = database.query(cmd)
         if res:
