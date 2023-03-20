@@ -893,16 +893,18 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param check_after_run: 检查的起始索引值，默认为-1代表不检查
         """
         src_start_index = start_index
-        if start_index <= 1 and datetime.now().hour > 22:
+        now = datetime.now()
+        if start_index <= 1 and now.hour >= 23 and now.minute >= 50:
             start_day = date.today() + timedelta(days=1)
         else:
             start_day = date.today()
         while True:
             today = date.today()
             while start_day > today:
-                print(f'mainloop while start_day={start_day}, today={today}, {datetime.now()}')
+                now = datetime.now()
+                print(f'mainloop while start_day={start_day}, today={today}, {now}')
                 seconds = (datetime.fromisoformat(
-                    f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
+                    f'{date.today() + timedelta(days=1)} 00:00:00') - now).seconds
                 if seconds > 3600:
                     sleep(3600)
                 else:
