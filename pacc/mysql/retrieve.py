@@ -375,16 +375,16 @@ class RetrieveIdleFishRecords:
         return res
 
     @classmethod
-    def query_group_records(cls, database=Account):
+    def query_base_payee_group_records(cls, database=Account):
         """查询所有分组汇总后的记录函数
 
         :param database: 数据库名
         :return: 查询到的结果
         """
-        cmd = 'SELECT GROUP_CONCAT(Job_N, role), sum(last_buy_coins), ' \
-              'FORMAT(sum(last_buy_coins)*@price,2) as money, if_mn, ' \
-              'last_confirm_date, base_payee, middle_payee FROM `idle_fish` ' \
-              'WHERE last_confirm_date = CURDATE() GROUP BY base_payee ORDER BY `Job_N`;'
+        cmd = 'SELECT GROUP_CONCAT(Job_N, role SEPARATOR "||"), sum(last_buy_coins), ' \
+              'last_confirm_date, FORMAT(last_buy_coins*0.0002,2) as money, ' \
+              'base_payee FROM `idle_fish` ' \
+              'WHERE last_confirm_date = "2023-03-19" GROUP BY base_payee ORDER BY `Job_N`;'
         print(cmd)
         res = database.query(cmd)
         if res:
@@ -392,7 +392,7 @@ class RetrieveIdleFishRecords:
                 res = [res]
             else:
                 res = list(res)
-        print(res)
+        # print(res)
         return res
 
 
