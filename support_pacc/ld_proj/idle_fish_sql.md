@@ -85,7 +85,7 @@ SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, 
 3. 查询大于目标币值的账号信息（RT值排序）
 
 -- 变量设置
-SET @coins=20000, @HostsName='%', @Job_N='%', @price=0.0003, @target_date="2023-03-20";
+SET @coins=20000, @HostsName='%', @Job_N='%', @price=0.0003, @target_date=CURDATE();
 -- 结果1：查询大于目标币值的账号信息（工号排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName;
 -- 结果2：查询大于目标币值的账号信息（主机列表排序）
