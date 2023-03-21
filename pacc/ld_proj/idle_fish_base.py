@@ -235,8 +235,9 @@ class IdleFishBase(LDProj):
             top_up_mobile_cnt = 1
         else:
             top_up_mobile_cnt = retrieve_idle_fish_ins.top_up_mobile_cnt + 1
-        UpdateIdleFish(job_number).update_top_up_mobile_cnt(top_up_mobile_cnt)
-        UpdateIdleFish(job_number).update_last_top_up_mobile_date(today)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_idle_fish_ins.update_top_up_mobile_cnt(top_up_mobile_cnt)
+        update_idle_fish_ins.update_last_top_up_mobile_date(today)
         return True
 
     def first_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals

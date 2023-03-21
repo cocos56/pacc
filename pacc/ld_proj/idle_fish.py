@@ -446,7 +446,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             start_index += 1
 
     @classmethod
-    def top_up_mobile(cls, start_index, end_index):
+    def top_up_mobile(cls, start_index, end_index) -> None:
         """薅羊毛赚话费（使用最优方案充话费，use_best_deal_to_top_up_mobile）
 
         :param start_index: 起始索引值
@@ -459,9 +459,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 job_number = i[:6]
                 print(job_number)
                 top_up_mobile_cnt = RetrieveIdleFish(job_number).top_up_mobile_cnt - 1
-                UpdateIdleFish(job_number).update_top_up_mobile_cnt(top_up_mobile_cnt)
-                UpdateIdleFish(job_number).update_last_top_up_mobile_date(
-                    date.today()-timedelta(days=1))
+                yesterday = date.today() - timedelta(days=1)
+                update_idle_fish_ins = UpdateIdleFish(job_number)
+                update_idle_fish_ins.update_top_up_mobile_cnt(top_up_mobile_cnt)
+                update_idle_fish_ins.update_last_top_up_mobile_date(yesterday)
         while True:
             if start_index - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已薅羊毛赚话费完毕'
