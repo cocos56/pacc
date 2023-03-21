@@ -1,6 +1,4 @@
 """闲鱼全自动刷闲鱼币中央监控系统模块"""
-import os
-# pylint: disable=too-many-lines
 import shutil
 from datetime import date, datetime, timedelta
 from os import listdir, path, remove, rename
