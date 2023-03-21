@@ -1,9 +1,10 @@
 """闲鱼全自动刷闲鱼币中央监控系统模块"""
+import os
 # pylint: disable=too-many-lines
 import shutil
 from datetime import date, datetime, timedelta
 from os import listdir, path, remove, rename
-from os.path import join
+from os.path import join, exists
 from xml.parsers.expat import ExpatError
 
 import pyperclip
@@ -452,6 +453,15 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param end_index: 终止索引值
         """
         src_start_index = start_index
+        dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}_top_up_mobile'
+        if exists(dir_name):
+            for i in listdir(dir_name):
+                job_number = i[:6]
+                print(job_number)
+                top_up_mobile_cnt = RetrieveIdleFish(job_number).top_up_mobile_cnt - 1
+                UpdateIdleFish(job_number).update_top_up_mobile_cnt(top_up_mobile_cnt)
+                UpdateIdleFish(job_number).update_last_top_up_mobile_date(
+                    date.today()-timedelta(days=1))
         while True:
             if start_index - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已薅羊毛赚话费完毕'
