@@ -275,7 +275,6 @@ class IdleFish(Project):
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
-            self.adb_ins.press_back_key(0.01)
 
     def delete_error_rate_order(self, err_num=3):
         """删除无法评价的订单（超过30天）
