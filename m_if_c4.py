@@ -8,7 +8,7 @@ Config.debug = True
 Config.set_ld_work_path()
 start_index, end_index = 1, LDConsole.get_last_device_num()
 print(f'start_index={start_index}, end_index={end_index}')
-IdleFish.mainloop(start_index, end_index, 5, 215)
+IdleFish.mainloop(start_index, end_index, 5, 210)
 # IdleFish.second_buy(start_index, 222)
 # IdleFish.first_buy(263, end_index)
 # IdleFish.confirm(start_index, 171)
