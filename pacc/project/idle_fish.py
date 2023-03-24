@@ -267,9 +267,6 @@ class IdleFish(Project):
             err_cnt = 0
             self.uia_ins.click(content_desc='赏好评', interval=0.01)
             self.uia_ins.click(content_desc='沟通体验', interval=0.01)
-            self.uia_ins.click(content_desc='收货体验', xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(content_desc='售后协商', xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(content_desc='综合体验', xml=self.uia_ins.xml, interval=0.01)
             self.uia_ins.click(content_desc='发布', xml=self.uia_ins.xml, interval=0.01)
             self.uia_ins.click(content_desc='确定', interval=0.01)
             self.adb_ins.press_back_key(0.01)
