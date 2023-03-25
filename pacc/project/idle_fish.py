@@ -243,27 +243,21 @@ class IdleFish(Project):
             self.adb_ins.press_back_key(0.01)
         self.adb_ins.press_power_key()
 
-    def rate(self, err_num=3):
-        """评价
-
-        :param err_num: 结束时的连续错误阈值
-        """
-        err_cnt = 0
+    def rate(self):
+        """评价"""
         self.open_app()
+        success_cnt = 0
         while True:
-            print(f'err_cnt={err_cnt}')
-            if err_cnt >= err_num:
-                self.free_memory()
-                self.adb_ins.press_power_key()
-                break
             self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
             self.uia_ins.click(content_desc='待评价', interval=0.01)
-            if not self.uia_ins.click(content_desc='去评价', interval=0.01):
-                err_cnt += 1
-                self.adb_ins.press_back_key()
+            if self.uia_ins.get_dict(content_desc='没有待评价的宝贝'):
+                break
+            if self.uia_ins.click(content_desc='去评价', interval=0.01):
+                success_cnt += 1
+                print(f'success_cnt={success_cnt}')
+            else:
                 continue
-            err_cnt = 0
             self.uia_ins.click(content_desc='赏好评', interval=0.01)
             self.uia_ins.click(content_desc='沟通体验', interval=0.01)
             self.uia_ins.click(content_desc='发布', xml=self.uia_ins.xml, interval=0.01)
