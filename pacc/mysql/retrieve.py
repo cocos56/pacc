@@ -381,8 +381,8 @@ class RetrieveIdleFishRecords:
         :param database: 数据库名
         :return: 查询到的结果
         """
-        cmd = 'SELECT GROUP_CONCAT(Job_N, role SEPARATOR "||"), sum(last_buy_coins), ' \
-              'last_confirm_date, FORMAT(last_buy_coins*0.0002,2) as money, ' \
+        cmd = 'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), sum(last_buy_coins), ' \
+              'last_confirm_date, FORMAT(sum(last_buy_coins)*0.0002,2) as money, ' \
               'base_payee FROM `idle_fish` ' \
               'WHERE last_confirm_date = "2023-03-19" GROUP BY base_payee ORDER BY `Job_N`;'
         print(cmd)
