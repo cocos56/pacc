@@ -262,7 +262,6 @@ class IdleFish(Project):
             if not self.uia_ins.click(content_desc='去评价', interval=0.01):
                 err_cnt += 1
                 self.adb_ins.press_back_key()
-                self.adb_ins.press_back_key()
                 continue
             err_cnt = 0
             self.uia_ins.click(content_desc='赏好评', interval=0.01)
