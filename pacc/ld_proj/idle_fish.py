@@ -301,7 +301,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     sleep(2)
                 if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
                     if not lduia_ins.click(text='卡'):
-                        lduia_ins.click(text='余额')
+                        if not lduia_ins.click(text='余额'):
+                            lduia_ins.click(text='支付宝小荷包')
                     sleep(1)
                     while not lduia_ins.click(text='找朋友帮忙付'):
                         print('未找到找朋友帮忙付')
