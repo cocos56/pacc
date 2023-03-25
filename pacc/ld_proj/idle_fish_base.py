@@ -421,10 +421,10 @@ class IdleFishBase(LDProj):
             return self.second_buy_on_target_device(today)
         sleep(1)
         try:
-            if not lduia_ins.click(naf='true', index='3'):
+            while not lduia_ins.click(naf='true', index='3'):
                 sleep(1)
-                if not lduia_ins.click(content_desc='立即购买'):
-                    return self.second_buy_on_target_device(today)
+                if lduia_ins.click(content_desc='立即购买'):
+                    break
         except FileNotFoundError as err:
             print_err(err)
             return self.second_buy_on_target_device(today)
