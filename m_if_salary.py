@@ -156,7 +156,7 @@ class IdleFishSalary:
             if base_coins != 0:
                 if base_mid_coins != 0 or middle_coins != 0:
                     sum_info += '\n'
-                sum_info += '【基层鱼币账号信息详情如下】'
+                sum_info += '【基层鱼币账号信息详情如下】\n'
                 index = 0
                 for record in records:
                     if record.get('level') == 'base':
