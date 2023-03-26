@@ -133,12 +133,13 @@ class IdleFishBase(LDProj):
         if LDConsole(self.ld_index).is_exist():
             job_number = LDConsole(self.ld_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            if retrieve_idle_fish_ins.login:
+                print(f'目标设备{self.ld_index}已掉线，无需执行任务，{datetime.now()}')
+                return False
             if not retrieve_idle_fish_ins.last_run_date:
                 return True
             if retrieve_idle_fish_ins.last_run_date < today:
                 return True
-            if retrieve_idle_fish_ins.login:
-                print(f'目标设备{self.ld_index}已掉线，无需执行任务，{datetime.now()}')
             print(f'设备{self.ld_index}存在，name={LDConsole(self.ld_index).get_name()}，'
                   f'last_run_date={retrieve_idle_fish_ins.last_run_date}，today={today}，'
                   f'{datetime.now()}')
