@@ -380,16 +380,17 @@ class RetrieveIdleFishRecords:
         return res
 
     @classmethod
-    def query_base_payee_group_records(cls, database=Account):
-        """查询所有分组汇总后的记录函数
+    def query_payee_group_records(cls, group_by='base_payee', confirm_date='2023-03-19',
+                                  database=Account):
+        """查询所有人员账号分组汇总后的记录函数
 
+        :param group_by: 分组依据的字段名
+        :param confirm_date: 确认收货的日期
         :param database: 数据库名
         :return: 查询到的结果
         """
-        cmd = 'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), sum(last_buy_coins), ' \
-              'last_confirm_date, FORMAT(sum(last_buy_coins)*0.0002,2) as money, ' \
-              'base_payee FROM `idle_fish` ' \
-              'WHERE last_confirm_date = "2023-03-19" GROUP BY base_payee ORDER BY `Job_N`;'
+        cmd = f'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), {group_by} FROM `idle_fish` ' \
+              f'WHERE last_confirm_date = "{confirm_date}" GROUP BY {group_by} ORDER BY `Job_N`;'
         print(cmd)
         res = database.query(cmd)
         if res:
@@ -399,6 +400,22 @@ class RetrieveIdleFishRecords:
                 res = list(res)
         # print(res)
         return res
+
+    @classmethod
+    def query_base_payee_group_records(cls):
+        """查询所有基层人员账号分组汇总后的记录函数
+
+        :return: 查询到的结果
+        """
+        return cls.query_payee_group_records()
+
+    @classmethod
+    def query_middle_payee_group_records(cls):
+        """查询所有中层人员账号分组汇总后的记录函数
+
+        :return: 查询到的结果
+        """
+        return cls.query_payee_group_records('middle_payee')
 
 
 class RetrieveAccount(Retrieve):
