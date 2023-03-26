@@ -338,6 +338,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('last_buy_date')
 
     @property
+    def last_buy_coins(self):
+        """从数据库中读取上次购买时所消耗的闲鱼币"""
+        return self.query('last_buy_coins')
+
+    @property
     def pay(self):
         """从数据库中读取是否需要获取好友代付二维码的标志"""
         return self.query('pay')
@@ -346,6 +351,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
     def confirm(self):
         """从数据库中读取是否需要确认收货的标志"""
         return self.query('confirm')
+
+    @property
+    def last_confirm_date(self):
+        """从数据库中读取上次确认收货的日期"""
+        return self.query('last_confirm_date')
 
     # pylint: disable=arguments-differ
     def query(self, field, table='idle_fish'):
@@ -380,17 +390,15 @@ class RetrieveIdleFishRecords:
         return res
 
     @classmethod
-    def query_payee_group_records(cls, group_by='base_payee', confirm_date='2023-03-19',
-                                  database=Account):
+    def query_payee_group_records(cls, group_by='base_payee', database=Account):
         """查询所有人员账号分组汇总后的记录函数
 
         :param group_by: 分组依据的字段名
-        :param confirm_date: 确认收货的日期
         :param database: 数据库名
         :return: 查询到的结果
         """
         cmd = f'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), {group_by} FROM `idle_fish` ' \
-              f'WHERE last_confirm_date = "{confirm_date}" GROUP BY {group_by} ORDER BY `Job_N`;'
+              f'WHERE last_confirm_date = CURDATE() GROUP BY {group_by} ORDER BY `Job_N`;'
         print(cmd)
         res = database.query(cmd)
         if res:
