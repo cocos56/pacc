@@ -9,26 +9,31 @@ class IdleFishSalary:
     """闲鱼工资类"""
 
     @classmethod
+    def get_payee_group_records(cls, level='base'):
+        """获取所有人员账号分组汇总后的信息"""
+        res = []
+        if level == 'base':
+            res = RetrieveIdleFishRecords.query_base_payee_group_records()
+        elif level == 'middle':
+            RetrieveIdleFishRecords.query_middle_payee_group_records()
+        res_dic = {}
+        for names, payee in res:
+            res_dic.update({payee: str(names).split('||')})
+        return res_dic
+
+    @classmethod
     def get_base_payee_group_records(cls):
         """获取所有基层人员账号分组汇总后的信息"""
-        res = RetrieveIdleFishRecords.query_base_payee_group_records()
-        res_dic = {}
-        for names, base_payee in res:
-            res_dic.update({base_payee: str(names).split('||')})
-        return res_dic
+        return cls.get_payee_group_records()
 
     @classmethod
     def get_middle_payee_group_records(cls):
         """获取所有中层人员账号分组汇总后的信息"""
-        res_dic = {}
-        res = RetrieveIdleFishRecords.query_middle_payee_group_records()
-        for names, middle_payee in res:
-            res_dic.update({middle_payee: str(names).split('||')})
-        return res_dic
+        return cls.get_payee_group_records('middle')
 
     @classmethod
-    def get_payee_group_records(cls):  # pylint: disable=too-many-locals, too-many-branches
-        """获取所有人员账号分组汇总后的信息"""
+    def get_payee_dic(cls):  # pylint: disable=too-many-locals, too-many-branches
+        """获取所有人员账号汇总后的字典信息"""
         base_payee_group_records = cls.get_base_payee_group_records()
         middle_payee_group_records = cls.get_middle_payee_group_records()
         base_mid_dic = {}
@@ -105,7 +110,7 @@ class IdleFishSalary:
     @classmethod
     def get_payee_message(cls):  # pylint: disable=too-many-statements, too-many-branches
         """获取所有人员的通知消息"""
-        payee_group_records = cls.get_payee_group_records()
+        payee_group_records = cls.get_payee_dic()
         for name, records in payee_group_records.items():
             print(name, records)
             base_mid_coins = 0
