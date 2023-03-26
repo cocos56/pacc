@@ -384,6 +384,8 @@ class IdleFishBase(LDProj):
         print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
               f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
               f'today={today}')
+        if retrieve_idle_fish_ins.last_buy_date == today:
+            return True
         if not retrieve_idle_fish_ins.buy:
             print(f'设备{self.ld_index}上的是否需要购买的标志为'
                   f'{retrieve_idle_fish_ins.buy}，无需购买')
