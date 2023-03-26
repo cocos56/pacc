@@ -257,6 +257,7 @@ class IdleFish(Project):
                 success_cnt += 1
                 print(f'success_cnt={success_cnt}')
             else:
+                self.open_app()
                 continue
             self.uia_ins.click(content_desc='赏好评', interval=0.01)
             self.uia_ins.click(content_desc='沟通体验', interval=0.01)
