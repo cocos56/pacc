@@ -62,7 +62,7 @@ class IdleFishSalary:
                 dic_li.append(dic)
             res_dic.update({name: dic_li})
         for name, job_num_li in base_dic.items():
-            li = []
+            dic_li = []
             for job_number in job_num_li:
                 retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
                 dic = {'job_number': retrieve_idle_fish_ins.job_number,
@@ -73,13 +73,13 @@ class IdleFishSalary:
                        'last_confirm_date': retrieve_idle_fish_ins.last_confirm_date,
                        'level': 'base',
                        }
-                li.append(dic)
+                dic_li.append(dic)
             if name not in res_dic:
-                res_dic.update({name: li})
+                res_dic.update({name: dic_li})
             else:
-                res_dic.update({name: li + res_dic.get(name)})
+                res_dic.update({name: dic_li + res_dic.get(name)})
         for name, job_num_li in middle_dic.items():
-            li = []
+            dic_li = []
             for job_number in job_num_li:
                 retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
                 dic = {'job_number': retrieve_idle_fish_ins.job_number,
@@ -90,11 +90,11 @@ class IdleFishSalary:
                        'last_confirm_date': retrieve_idle_fish_ins.last_confirm_date,
                        'level': 'middle',
                        }
-                li.append(dic)
+                dic_li.append(dic)
             if name not in res_dic:
-                res_dic.update({name: li})
+                res_dic.update({name: dic_li})
             else:
-                res_dic.update({name: li + res_dic.get(name)})
+                res_dic.update({name: dic_li + res_dic.get(name)})
         if None in res_dic:
             print('未指定收款人的记录如下：')
             print(res_dic.get(None))
