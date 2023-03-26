@@ -5,7 +5,7 @@ from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish
 from pacc.tools import create_dir
 
 
-class IdleFishSalary:  # pylint: disable=too-few-public-methods
+class IdleFishSalary:
     """闲鱼工资类"""
 
     @classmethod
@@ -27,7 +27,7 @@ class IdleFishSalary:  # pylint: disable=too-few-public-methods
         return res_dic
 
     @classmethod
-    def get_payee_group_records(cls):
+    def get_payee_group_records(cls):  # pylint: disable=too-many-locals, too-many-branches
         """获取所有人员账号分组汇总后的信息"""
         base_payee_group_records = cls.get_base_payee_group_records()
         middle_payee_group_records = cls.get_middle_payee_group_records()
@@ -48,7 +48,7 @@ class IdleFishSalary:  # pylint: disable=too-few-public-methods
                 middle_dic.update({middle_payee: list(middle)})
         res_dic = {}
         for name, job_num_li in base_mid_dic.items():
-            li = []
+            dic_li = []
             for job_number in job_num_li:
                 retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
                 dic = {'job_number': retrieve_idle_fish_ins.job_number,
@@ -59,8 +59,8 @@ class IdleFishSalary:  # pylint: disable=too-few-public-methods
                        'last_confirm_date': retrieve_idle_fish_ins.last_confirm_date,
                        'level': 'base_mid',
                        }
-                li.append(dic)
-            res_dic.update({name: li})
+                dic_li.append(dic)
+            res_dic.update({name: dic_li})
         for name, job_num_li in base_dic.items():
             li = []
             for job_number in job_num_li:
@@ -103,7 +103,7 @@ class IdleFishSalary:  # pylint: disable=too-few-public-methods
         return res_dic
 
     @classmethod
-    def get_payee_message(cls):
+    def get_payee_message(cls):  # pylint: disable=too-many-statements, too-many-branches
         """获取所有人员的通知消息"""
         payee_group_records = cls.get_payee_group_records()
         for name, records in payee_group_records.items():
@@ -168,7 +168,7 @@ class IdleFishSalary:  # pylint: disable=too-few-public-methods
             sum_info += '\n'
             sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{date.today()}'
             print(sum_info)
-            with open(txt, 'w+') as file:
+            with open(txt, 'w+', encoding='utf-8') as file:
                 file.write(sum_info)
 
 
