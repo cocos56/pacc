@@ -264,6 +264,9 @@ class IdleFishBase(LDProj):
         if retrieve_idle_fish_ins.login:
             print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
             return False
+        if retrieve_idle_fish_ins.last_buy_date == today:
+            print('今日已购买，无需重复购买')
+            return True
         self.run_app(19)
         if self.is_logout('购买'):
             return False
@@ -384,8 +387,6 @@ class IdleFishBase(LDProj):
         print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
               f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
               f'today={today}')
-        if retrieve_idle_fish_ins.last_buy_date == today:
-            return True
         if not retrieve_idle_fish_ins.buy:
             print(f'设备{self.ld_index}上的是否需要购买的标志为'
                   f'{retrieve_idle_fish_ins.buy}，无需购买')
@@ -393,6 +394,9 @@ class IdleFishBase(LDProj):
         if retrieve_idle_fish_ins.login:
             print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
             return False
+        if retrieve_idle_fish_ins.last_buy_date == today:
+            print('今日已购买，无需重复购买')
+            return True
         self.run_app(19)
         if self.is_logout('购买'):
             return False
