@@ -838,9 +838,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print()
                 continue
             CPU.wait_until_idle()
-            if retrieve_idle_fish_ins.top_up_mobile and retrieve_idle_fish_ins.top_up_mobile_cnt \
-                    and retrieve_idle_fish_ins.top_up_mobile_cnt > 3:
-                cls(start_index).top_up_mobile_on_target_device(False)
+            # if retrieve_idle_fish_ins.top_up_mobile and retrieve_idle_fish_ins.top_up_mobile_cnt \
+            #         and retrieve_idle_fish_ins.top_up_mobile_cnt > 3:
+            #     cls(start_index).top_up_mobile_on_target_device(False)
             cls(start_index).run_app(19)
             # cls.restart_before_check_target_device(start_index)
             cls.check_target_device(start_index)
