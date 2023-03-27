@@ -15,7 +15,7 @@ class IdleFishSalary:
         if level == 'base':
             res = RetrieveIdleFishRecords.query_base_payee_group_records()
         elif level == 'middle':
-            RetrieveIdleFishRecords.query_middle_payee_group_records()
+            res = RetrieveIdleFishRecords.query_middle_payee_group_records()
         res_dic = {}
         for names, payee in res:
             res_dic.update({payee: str(names).split('||')})
