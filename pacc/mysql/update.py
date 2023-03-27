@@ -294,9 +294,16 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
     def update_coins(self, coins: int) -> None:
         """更新设备的闲鱼币币值
 
-        :param coins: 新的闲鱼币币值
+        :param coins: 最新状态的闲鱼币币值
         """
         print(self.query('coins', coins))
+
+    def update_reminder_threshold(self, reminder_threshold: int) -> None:
+        """更新设备的提醒阈值
+
+        :param reminder_threshold: 最新状态下的提醒阈值
+        """
+        print(self.query('RT', reminder_threshold))
 
     def update_if_mn(self, if_mn):
         """更新设备的闲鱼绑定的手机号（Idle Fish Mobile Number）

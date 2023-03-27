@@ -243,8 +243,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             if last_buy_coins:
                 cls(start_index).get_pay_code(today)
-            # cls(start_index).get_pay_code(today)
-            # input()
             start_index += 1
 
     @classmethod
@@ -335,7 +333,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         update_idle_fish_ins.update_buy('NULL')
         update_idle_fish_ins = UpdateIdleFish(job_number)
         if 20000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
-            print(f'new reminder_threshold is {retrieve_idle_fish_ins.reminder_threshold + 10000}')
+            new_reminder_threshold = retrieve_idle_fish_ins.reminder_threshold + 10000
+            print(f'new reminder_threshold is {new_reminder_threshold}')
+            update_idle_fish_ins.update_reminder_threshold(new_reminder_threshold)
         if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
             update_idle_fish_ins.update_confirm(1)
         LDConsole.quit(self.ld_index)
