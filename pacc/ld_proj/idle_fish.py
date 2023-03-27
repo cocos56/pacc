@@ -332,7 +332,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_buy('NULL')
         update_idle_fish_ins = UpdateIdleFish(job_number)
-        if 20000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
+        if 10000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
             new_reminder_threshold = retrieve_idle_fish_ins.reminder_threshold + 10000
             print(f'new reminder_threshold is {new_reminder_threshold}')
             update_idle_fish_ins.update_reminder_threshold(new_reminder_threshold)
