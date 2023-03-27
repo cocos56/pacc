@@ -800,7 +800,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if start_index > end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已检查完毕，当前时间为：'
                       f'{datetime.now()}\n')
-                if datetime.now().hour >= 6 or all_done:
+                if datetime.now().hour >= 9 or all_done:
                     start_day = date.today() + timedelta(days=1)
                 src_start_index = start_index = 1
                 all_done = True
