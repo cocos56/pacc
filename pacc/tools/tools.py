@@ -1,11 +1,20 @@
 """工具模块"""
 import os
 import warnings
+import time
 
 from urlextract import URLExtract
 
 extractor = URLExtract()
 warnings.filterwarnings("ignore")
+
+
+def get_now_time():
+    """获取当前的时间
+
+    :return: 当前的时间
+    """
+    return time.strftime("%H:%M:%S", time.localtime())
 
 
 def system(cmd, is_print=True):

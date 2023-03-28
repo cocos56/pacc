@@ -7,7 +7,7 @@ from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
-from ..tools import create_dir, CPU
+from ..tools import create_dir, CPU, get_now_time
 
 
 class Activity:  # pylint: disable=too-few-public-methods
@@ -472,4 +472,5 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
+        update_idle_fish_ins.update_last_buy_time(get_now_time())
         return last_buy_coins
