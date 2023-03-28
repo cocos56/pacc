@@ -3,7 +3,6 @@ from datetime import date
 
 from .mysql import Mobile, Account
 from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
-from ..tools import get_now_time
 
 
 # pylint: disable=too-few-public-methods
@@ -432,7 +431,7 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_date', last_buy_date))
 
-    def update_last_buy_time(self, last_buy_time: get_now_time()) -> None:
+    def update_last_buy_time(self, last_buy_time: str) -> None:
         """更新设备在数据库中上次购买的时间
 
         :param last_buy_time: 上次购买的时间

@@ -369,6 +369,7 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
+        update_idle_fish_ins.update_last_buy_time(get_now_time())
         return last_buy_coins
 
     def second_buy_on_target_device(self, today: date.today()):
