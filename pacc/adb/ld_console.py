@@ -81,6 +81,9 @@ class LDConsole:
         if RetrieveIdleFish(job_number).last_bak_date == today:
             print(f'目标设备{self.ld_index}今天已备份，无需重复备份工作')
             return False
+        if RetrieveIdleFish(job_number).buy:
+            print(f'目标设备{self.ld_index}还未完成购买工作，暂时无法进行备份工作')
+            return False
         if path.exists(filepath):
             remove(filepath)
         cmd = f'{LDC}backup --index {self.ld_index} --file {filepath}'
