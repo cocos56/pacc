@@ -241,6 +241,27 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins.update_last_top_up_mobile_date(today)
         return True
 
+    def auto_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
+        """在特定设备上自动选择并执行首次或二次购买的方法
+
+        :param today: 今日的日期
+        :return: 正常走完首次购买的流程返回本次回收的闲鱼币币值，否则返回False
+        """
+        now = datetime.now()
+        print(now)
+        if not LDConsole(self.ld_index).is_exist():
+            print(f'设备{self.ld_index}不存在，无需购买')
+            return False
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        reminder_threshold = retrieve_idle_fish_ins.reminder_threshold
+        print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
+              f'buy={retrieve_idle_fish_ins.buy}, RT={reminder_threshold}, '
+              f'today={today}')
+        if reminder_threshold != 10000:
+            return self.second_buy_on_target_device(today)
+        return self.first_buy_on_target_device(today)
+
     def first_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
         """在特定设备上进行首次购买（下单）
 
