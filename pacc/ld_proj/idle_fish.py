@@ -337,7 +337,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 lduia_ins.get_current_ui_hierarchy()
                 qr_codes = decode(Image.open(src_png))
                 print(qr_codes, retry_cnt)
-                shutil.move(src_png, dst_png)
+                shutil.copy(src_png, dst_png)
                 if lduia_ins.get_dict(text='帮我付款'):
                     if not qr_codes and retry_cnt < 16:
                         return self.get_pay_code(today, retry_cnt=retry_cnt+1)
