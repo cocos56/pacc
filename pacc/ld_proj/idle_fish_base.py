@@ -470,8 +470,11 @@ class IdleFishBase(LDProj):
         try:
             lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
             lduia_ins.click(text='立即购买')
-            LDADB(self.ld_index).get_current_focus()
             sleep(1)
+            # LDADB(self.ld_index).get_current_focus()
+            # lduia_ins.get_current_ui_hierarchy()
+            # lduia_ins.get_screen()
+            # input()
             lduia_ins.click(content_desc='确认购买')
         except FileNotFoundError as err:
             print_err(err)
