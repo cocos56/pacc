@@ -393,7 +393,7 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins.update_last_buy_time(get_now_time())
         return last_buy_coins
 
-    def second_buy_on_target_device(self, today: date.today()):
+    def second_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
         """在特定设备上进行二次购买（下单）
 
         :param today: 今日的日期
