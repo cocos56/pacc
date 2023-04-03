@@ -128,7 +128,10 @@ class IdleFish(Project):
                                    xml=self.uia_ins.xml, interval=0.01)
             sleep(5)
             if self.uia_ins.get_dict(text='代付成功'):
-                remove(alipay_code)
+                try:
+                    remove(alipay_code)
+                except PermissionError as err:
+                    print(err)
 
     def change_price(self, dispatch=True):  # pylint: disable=too-many-branches, too-many-statements
         """改价"""

@@ -1,0 +1,1 @@
+scrcpy -s 2a1743b0 --window-title 001101011sd_分Mi4_蒋厅|
