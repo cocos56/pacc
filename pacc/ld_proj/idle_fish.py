@@ -246,7 +246,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             today = date.today()
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-            if retrieve_idle_fish_ins == 10000:
+            if retrieve_idle_fish_ins.reminder_threshold == 10000:
                 print('已智能选择为使用首次购买方法')
                 last_buy_coins = cls(start_index).first_buy_on_target_device(today)
             else:
