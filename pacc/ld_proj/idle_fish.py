@@ -239,8 +239,19 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print(f'所有共{end_index - src_start_index + 1}项已购买完毕'
                       f'，当前时间为：{datetime.now()}')
                 break
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需购买')
+                start_index += 1
+                continue
             today = date.today()
-            last_buy_coins = cls(start_index).first_buy_on_target_device(today)
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            if retrieve_idle_fish_ins == 10000:
+                print('已智能选择为使用首次购买方法')
+                last_buy_coins = cls(start_index).first_buy_on_target_device(today)
+            else:
+                print('已智能选择为使用二次购买方法')
+                last_buy_coins = cls(start_index).second_buy_on_target_device(today)
             if last_buy_coins:
                 cls(start_index).get_pay_code(today)
             start_index += 1
