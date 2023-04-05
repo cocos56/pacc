@@ -1,5 +1,5 @@
 """闲鱼程序入口C4_2模块"""
-# pylint: disable=too-many-lines
+# pylint: disable=duplicate-code
 from pacc.adb import LDConsole
 from pacc.config import Config
 from pacc.ld_proj.idle_fish import IdleFish
