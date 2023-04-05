@@ -397,12 +397,12 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         LDConsole.quit(self.ld_index)
         files = listdir(dst_path)
         length = len(files)
-        print(length, length)
+        print(files, length)
         while length > 3:
             sleep(10)
             files = listdir(dst_path)
             length = len(files)
-            print(length, length)
+            print(files, length)
         return True
 
     # pylint: disable=too-many-branches, too-many-statements
