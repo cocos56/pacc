@@ -336,22 +336,17 @@ class IdleFishBase(LDProj):
         last_buy_coins = min(last_buy_coins, retrieve_idle_fish_ins.reminder_threshold)
         try:
             lduia_ins.click(ResourceID.tv_value, str(last_buy_coins // 100))
+            lduia_ins.click(text='立即购买', interval=2)
+            addr_src = str(lduia_ins.get_dict(content_desc='收货地址')['@content-desc']).split('\n')
+            print(addr_src)
+            name_mobile, address = addr_src[1:3]
+            name, mobile = name_mobile[:-11], name_mobile[-11:]
+            last_buy_addr = f'N={name}, M={mobile}, A={address}'
+            print(last_buy_addr)
+            lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
             return self.first_buy_on_target_device(today)
-        try:
-            lduia_ins.click(text='立即购买')
-        except FileNotFoundError as err:
-            print_err(err)
-            return self.first_buy_on_target_device(today)
-        LDADB(self.ld_index).get_current_focus()
-        sleep(1)
-        try:
-            lduia_ins.click(content_desc='确认购买')
-        except FileNotFoundError as err:
-            print_err(err)
-            return self.first_buy_on_target_device(today)
-        sleep(2)
         try:
             if lduia_ins.get_dict(content_desc='确认购买'):
                 return self.first_buy_on_target_device(today)
@@ -434,11 +429,10 @@ class IdleFishBase(LDProj):
             name, mobile = name_mobile[:-11], name_mobile[-11:]
             last_buy_addr = f'N={name}, M={mobile}, A={address}'
             print(last_buy_addr)
-            lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml)
+            lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
             return self.second_buy_on_target_device(today)
-        sleep(2)
         try:
             if lduia_ins.get_dict(content_desc='确认购买'):
                 return self.second_buy_on_target_device(today)
