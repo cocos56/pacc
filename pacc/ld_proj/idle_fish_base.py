@@ -268,30 +268,9 @@ class IdleFishBase(LDProj):
         :param today: 今日的日期
         :return: 正常走完首次购买的流程返回本次回收的闲鱼币币值，否则返回False
         """
-        now = datetime.now()
-        print(now)
-        if not LDConsole(self.ld_index).is_exist():
-            print(f'设备{self.ld_index}不存在，无需购买')
-            return False
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         coins = retrieve_idle_fish_ins.coins
-        print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
-              f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
-              f'today={today}')
-        if not retrieve_idle_fish_ins.buy:
-            print(f'设备{self.ld_index}上的是否需要购买的标志为'
-                  f'{retrieve_idle_fish_ins.buy}，无需购买')
-            return False
-        if retrieve_idle_fish_ins.login:
-            print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
-            return False
-        if retrieve_idle_fish_ins.last_buy_date == today:
-            print('今日已购买，无需重复购买')
-            return True
-        self.run_app(19)
-        if self.is_logout('购买'):
-            return False
         lduia_ins = LDUIA(self.ld_index)
         ldadb_ins = LDADB(self.ld_index)
         try:
@@ -399,30 +378,9 @@ class IdleFishBase(LDProj):
         :param today: 今日的日期
         :return: 正常走完二次购买的流程返回本次回收的闲鱼币币值，否则返回False
         """
-        now = datetime.now()
-        print(now)
-        if not LDConsole(self.ld_index).is_exist():
-            print(f'设备{self.ld_index}不存在，无需购买')
-            return False
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         coins = retrieve_idle_fish_ins.coins
-        print(f'start_index={self.ld_index}, device_name={LDConsole(self.ld_index).get_name()}, '
-              f'buy={retrieve_idle_fish_ins.buy}, coins={coins}, '
-              f'today={today}')
-        if not retrieve_idle_fish_ins.buy:
-            print(f'设备{self.ld_index}上的是否需要购买的标志为'
-                  f'{retrieve_idle_fish_ins.buy}，无需购买')
-            return False
-        if retrieve_idle_fish_ins.login:
-            print(f'设备{self.ld_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
-            return False
-        if retrieve_idle_fish_ins.last_buy_date == today:
-            print('今日已购买，无需重复购买')
-            return True
-        self.run_app(19)
-        if self.is_logout('购买'):
-            return False
         lduia_ins = LDUIA(self.ld_index)
         ldadb_ins = LDADB(self.ld_index)
         try:

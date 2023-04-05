@@ -239,6 +239,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print(f'所有共{end_index - src_start_index + 1}项已购买完毕'
                       f'，当前时间为：{datetime.now()}')
                 break
+            now = datetime.now()
+            print(now)
             if not LDConsole(start_index).is_exist():
                 print(f'设备{start_index}不存在，无需购买')
                 start_index += 1
@@ -246,6 +248,27 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             today = date.today()
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+                  f'buy={retrieve_idle_fish_ins.buy}, coins={retrieve_idle_fish_ins.coins}, '
+                  f'today={today}')
+            if not retrieve_idle_fish_ins.buy:
+                print(f'设备{start_index}上的是否需要购买的标志为'
+                      f'{retrieve_idle_fish_ins.buy}，无需购买')
+                start_index += 1
+                continue
+            if retrieve_idle_fish_ins.login:
+                print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+                start_index += 1
+                continue
+            if retrieve_idle_fish_ins.last_buy_date == today:
+                print('今日已购买，无需重复购买')
+                cls(start_index).get_pay_code(today)
+                start_index += 1
+                continue
+            cls(start_index).run_app(19)
+            if cls(start_index).is_logout('购买'):
+                start_index += 1
+                continue
             if retrieve_idle_fish_ins.reminder_threshold == 10000:
                 print('已智能选择为使用首次购买方法')
                 last_buy_coins = cls(start_index).first_buy_on_target_device(today)
