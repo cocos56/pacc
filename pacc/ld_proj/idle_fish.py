@@ -333,6 +333,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             lduia_ins.click(content_desc='我的，未选中状态')
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
+            dst_path = r'\\10.1.1.2\aps\\'
             if not lduia_ins.click(content_desc='去付款', interval=3):
                 if lduia_ins.click(content_desc='删除订单', xml=lduia_ins.xml):
                     return False
@@ -365,7 +366,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 lduia_ins.click(text='立即付款')
                 lduia_ins.click(text='面对面扫码')
                 src_png = lduia_ins.get_screen()
-                dst_png = path.join(r'\\10.1.1.2\aps\\',
+                dst_png = path.join(dst_path,
                                     f'{str(self.ld_index).zfill(3)}_'
                                     f'{LDConsole(self.ld_index).get_job_number()}.png')
                 lduia_ins.get_current_ui_hierarchy()
@@ -393,6 +394,14 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
             update_idle_fish_ins.update_confirm(1)
         LDConsole.quit(self.ld_index)
+        files = listdir(dst_path)
+        length = len(files)
+        print(length, length)
+        while length > 3:
+            sleep(10)
+            files = listdir(dst_path)
+            length = len(files)
+            print(length, length)
         return True
 
     # pylint: disable=too-many-branches, too-many-statements
