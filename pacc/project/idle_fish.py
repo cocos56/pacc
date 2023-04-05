@@ -205,6 +205,21 @@ class IdleFish(Project):
             if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
                 success_cnt += 1
 
+    def get_dispatch_address(self, point):
+        """获取发货时的地址
+
+        :param point: 点的x和y坐标
+        :return: 发货时的地址
+        """
+        self.uia_ins.tap(point, 2)
+        address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
+        name_mobile = str(address_dic[0]['@text']).split()
+        name, mobile = name_mobile[0], name_mobile[1]
+        address = address_dic[1]['@text']
+        dispatch_address = f'N={name}, M={mobile}, A={address}'
+        print(dispatch_address)
+        return dispatch_address
+
     def dispatch(self, err_num=3):
         """发货
 
@@ -220,13 +235,7 @@ class IdleFish(Project):
                 self.uia_ins.xml = ''
             self.uia_ins.click(content_desc='我卖出的', interval=0.01, xml=self.uia_ins.xml)
             self.uia_ins.click(content_desc='待发货', interval=0.01)
-            self.uia_ins.tap((939, 786))
-            address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
-            name_mobile = str(address_dic[0]['@text']).split()
-            name, mobile = name_mobile[0], name_mobile[1]
-            address = address_dic[1]['@text']
-            dispatch_address = f'N={name}, M={mobile}, A={address}'
-            print(dispatch_address)
+            self.get_dispatch_address((939, 786))
             if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                 success_cnt += 1
                 err_cnt = 0
@@ -234,7 +243,7 @@ class IdleFish(Project):
             else:
                 err_cnt += 1
             if not err_cnt:
-                self.uia_ins.tap((939, 1330))
+                self.get_dispatch_address((939, 1330))
                 if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                     success_cnt += 1
                     err_cnt = 0
@@ -242,7 +251,7 @@ class IdleFish(Project):
                 else:
                     err_cnt += 1
             if not err_cnt:
-                self.uia_ins.tap((939, 1877))
+                self.get_dispatch_address((939, 1877))
                 if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                     success_cnt += 1
                     err_cnt = 0
