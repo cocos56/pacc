@@ -221,6 +221,12 @@ class IdleFish(Project):
             self.uia_ins.click(content_desc='我卖出的', interval=0.01, xml=self.uia_ins.xml)
             self.uia_ins.click(content_desc='待发货', interval=0.01)
             self.uia_ins.tap((939, 786))
+            address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
+            name_mobile = str(address_dic[0]['@text']).split()
+            name, mobile = name_mobile[0], name_mobile[1]
+            address = address_dic[1]['@text']
+            dispatch_address = f'N={name}, M={mobile}, A={address}'
+            print(dispatch_address)
             if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                 success_cnt += 1
                 err_cnt = 0
