@@ -34,12 +34,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         usage = DiskUsage(dir_path[:2])
         print(f'total={usage.total}, usage.used={usage.used}, usage.free={usage.free}, '
               f'usage.percent={usage.percent}, reserved_gbs={reserved_gbs}')
-        if usage.free < reserved_gbs:
+        while usage.free < reserved_gbs:
             print(listdir(dir_path))
             delete_dir = path.join(dir_path, listdir(dir_path)[0])
             print(f'正在删除{delete_dir}目录, {datetime.now()}')
             shutil.rmtree(delete_dir)
             print(f'已删除{delete_dir}目录, {datetime.now()}')
+            usage = DiskUsage(dir_path[:2])
         src_start_index = start_index
         dir_path = f'{dir_path}/' + str(date.today()).replace('-', '_')
         create_dir(dir_path)
