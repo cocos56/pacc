@@ -266,10 +266,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 cls(start_index).get_pay_code(today)
                 start_index += 1
                 continue
-            cls(start_index).run_app(19)
-            if cls(start_index).is_logout('购买'):
-                start_index += 1
-                continue
             if retrieve_idle_fish_ins.reminder_threshold == 10000:
                 print('已智能选择为使用首次购买方法')
                 last_buy_coins = cls(start_index).first_buy_on_target_device(today)

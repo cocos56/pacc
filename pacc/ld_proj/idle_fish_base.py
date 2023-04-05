@@ -268,6 +268,10 @@ class IdleFishBase(LDProj):
         :param today: 今日的日期
         :return: 正常走完首次购买的流程返回本次回收的闲鱼币币值，否则返回False
         """
+        self.run_app(19)
+        if self.is_logout('购买'):
+            self.ld_index += 1
+            return False
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         coins = retrieve_idle_fish_ins.coins
@@ -373,6 +377,10 @@ class IdleFishBase(LDProj):
         :param today: 今日的日期
         :return: 正常走完二次购买的流程返回本次回收的闲鱼币币值，否则返回False
         """
+        self.run_app(19)
+        if self.is_logout('购买'):
+            self.ld_index += 1
+            return False
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         coins = retrieve_idle_fish_ins.coins
