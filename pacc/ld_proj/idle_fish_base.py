@@ -344,6 +344,7 @@ class IdleFishBase(LDProj):
             addr_src = str(lduia_ins.get_dict(content_desc='收货地址')['@content-desc']).split('\n')
             print(addr_src)
             name_mobile, address = addr_src[1:3]
+            address = str(address).replace(' ', '')
             name, mobile = name_mobile[:-11], name_mobile[-11:]
             last_buy_addr = f'N={name}, M={mobile}, A={address}'
             print(last_buy_addr)
