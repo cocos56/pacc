@@ -220,11 +220,22 @@ class IdleFish(Project):
         print(dispatch_address)
         return dispatch_address
 
+    def should_pay(self):
+        """判断是否需要付款（待付款是否有订单）"""
+        self.open_app()
+        self.uia_ins.click(content_desc='我的，未选中状态', interval=0.01)
+        self.uia_ins.click(content_desc='我卖出的', interval=0.01)
+        self.uia_ins.click(content_desc='待付款', interval=0.01)
+        if self.uia_ins.get_dict(content_desc='等待买家付款'):
+            print('有订单未付款，请先处理')
+            input()
+
     def dispatch(self, err_num=3):
         """发货
 
         :param err_num: 结束时的连续错误阈值
         """
+        self.should_pay()
         err_cnt = success_cnt = 0
         self.open_app()
         while True:
