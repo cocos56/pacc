@@ -1,10 +1,10 @@
-"""淘宝/拼多多全自动远程刷单程序入口模块"""
+"""淘宝/拼多多全自动远程刷单程序入口C2模块"""
 from pacc.project import SD
 from pacc.config import Config
 
 Config.set_debug(True)
 SD.mainloop([
-    '001001003',
+    # '001001003', # 闫明星，无法充电
     # '001001006', # 易掉线
     '001021001',
     '001021002',
