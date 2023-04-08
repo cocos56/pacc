@@ -65,14 +65,14 @@ class Retrieve:  # pylint: disable=too-few-public-methods
     """该类用于从MySQL数据库中查询数据"""
 
     # pylint: disable=too-many-arguments
-    def query(self, table, field, aimed_field, value, database=MySQL):
+    def query(self, field, table, aimed_field, value, database=MySQL):
         """查询函数：查询数据
 
-        :param database: 数据库名
-        :param table: 表名
-        :param field: 字段名
-        :param aimed_field: 目标字段名
-        :param value: 值
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
         res = database.query(
@@ -93,15 +93,17 @@ class RetrieveMobile(Retrieve):  # pylint: disable=too-few-public-methods
         """
         self.serial_num = serial_num
 
-    # pylint: disable=arguments-differ
-    def query(self, table, field):
+    def query(self, field, table, aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
-        :param table: 表名
-        :param field: 字段名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query(table, field, 'SN', self.serial_num, Mobile)
+        return super().query(field, table, aimed_field, self.serial_num, database)
 
 
 class RetrieveMobileInfoBase(RetrieveMobile):  # pylint: disable=too-few-public-methods
@@ -118,14 +120,17 @@ class RetrieveMobileInfoBase(RetrieveMobile):  # pylint: disable=too-few-public-
         self.model = self.query('model')
         self.last_reboot_date = self.query('last_reboot_date')
 
-    # pylint: disable=arguments-differ
-    def query(self, field):
+    def query(self, field, table='mobile_info', aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
-        :param field: 字段名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query('mobile_info', field)
+        return super().query(field, table)
 
 
 class RetrieveMobileInfo(RetrieveMobileInfoBase):
@@ -169,14 +174,17 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.last_update_wealth_date = self.query('last_update_wealth_date')
         self.last_watch_video_date = self.query('last_watch_video_date')
 
-    # pylint: disable=arguments-differ
-    def query(self, field):
+    def query(self, field, table='ksjsb', aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
-        :param field: 字段名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query('ksjsb', field)
+        return super().query(field, table)
 
 
 class RetrieveKsjsb(RetrieveKsjsbBase):
@@ -193,6 +201,52 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
+class RetrieveIdleFishByAddrBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
+
+    def __init__(self, last_buy_addr):
+        """构造函数
+
+        :param last_buy_addr: 上次购买时所使用的收货地址
+        """
+        self.last_buy_addr = last_buy_addr
+
+    def query(self, field, table, aimed_field='last_buy_addr', value='', database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        if not value:
+            value = self.last_buy_addr
+        return super().query(field, table, aimed_field, f"'{value}'", database)
+
+
+class RetrieveIdleFishByAddr(RetrieveIdleFishByAddrBase):  # pylint: disable=too-many-public-methods
+    """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
+
+    def query(self, field, table='idle_fish', aimed_field='last_buy_addr', value='', database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
+
+    @property
+    def job_number(self):
+        """从数据库中读取工号的信息"""
+        return self.query('Job_N')
+
+
 class RetrieveIdleFishBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
 
@@ -203,19 +257,33 @@ class RetrieveIdleFishBase(Retrieve):
         """
         self.job_number = job_number
 
-    # pylint: disable=arguments-differ
-    def query(self, field, table):
+    def query(self, field, table, aimed_field='Job_N', value='', database=Account):
         """查询函数：查询数据
 
-        :param field: 字段名
-        :param table: 表名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query(table, field, 'Job_N', f"'{self.job_number}'", Account)
+        return super().query(field, table, aimed_field, f"'{self.job_number}'", Account)
 
 
 class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public-methods
     """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
+
+    def query(self, field, table='idle_fish', aimed_field='Job_N', value='', database=Account):
+        """查询函数：查询数据
+
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
 
     @property
     def role(self):
@@ -357,16 +425,6 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         """从数据库中读取上次确认收货的日期"""
         return self.query('last_confirm_date')
 
-    # pylint: disable=arguments-differ
-    def query(self, field, table='idle_fish'):
-        """查询函数：查询数据
-
-        :param field: 字段名
-        :param table: 表名
-        :return: 查询到的结果（单条）
-        """
-        return super().query(field, table)
-
 
 class RetrieveIdleFishRecords:
     """查询闲鱼所有（符合条件的）记录类：该类用于从account数据库中的idle_fish表中查询符合条件的所有记录"""
@@ -436,15 +494,17 @@ class RetrieveAccount(Retrieve):
         """
         self.username = username
 
-    # pylint: disable=arguments-differ
-    def query(self, table, field):
+    def query(self, field, table, aimed_field='username', value='', database=Account):
         """查询函数：查询数据
 
-        :param table: 表名
-        :param field: 字段名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query(table, field, 'username', f"'{self.username}'", Account)
+        return super().query(field, table, 'username', f"'{self.username}'", Account)
 
 
 class RetrieveEmail(RetrieveAccount):
@@ -458,11 +518,14 @@ class RetrieveEmail(RetrieveAccount):
         super().__init__(username)
         self.auth_code = self.query('auth_code')
 
-    # pylint: disable=arguments-differ
-    def query(self, field):
+    def query(self, field, table='email', aimed_field='username', value='', database=Account):
         """查询函数：查询数据
 
-        :param field: 字段名
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query('email', field)
+        return super().query(field, table)
