@@ -93,6 +93,7 @@ class RetrieveMobile(Retrieve):  # pylint: disable=too-few-public-methods
         """
         self.serial_num = serial_num
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table, aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
@@ -120,6 +121,7 @@ class RetrieveMobileInfoBase(RetrieveMobile):  # pylint: disable=too-few-public-
         self.model = self.query('model')
         self.last_reboot_date = self.query('last_reboot_date')
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table='mobile_info', aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
@@ -174,6 +176,7 @@ class RetrieveKsjsbBase(RetrieveMobile):
         self.last_update_wealth_date = self.query('last_update_wealth_date')
         self.last_watch_video_date = self.query('last_watch_video_date')
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table='ksjsb', aimed_field='SN', value='', database=Mobile):
         """查询函数：查询数据
 
@@ -211,6 +214,7 @@ class RetrieveIdleFishByAddrBase(Retrieve):
         """
         self.last_buy_addr = last_buy_addr
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table, aimed_field='last_buy_addr', value='', database=Account):
         """查询函数：查询数据
 
@@ -229,7 +233,10 @@ class RetrieveIdleFishByAddrBase(Retrieve):
 class RetrieveIdleFishByAddr(RetrieveIdleFishByAddrBase):  # pylint: disable=too-many-public-methods
     """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
 
-    def query(self, field, table='idle_fish', aimed_field='last_buy_addr', value='', database=Account):
+    # pylint: disable=too-many-arguments
+    def query(
+            self, field, table='idle_fish', aimed_field='last_buy_addr', value='',
+            database=Account):
         """查询函数：查询数据
 
         :param database: 数据库名
@@ -257,6 +264,7 @@ class RetrieveIdleFishBase(Retrieve):
         """
         self.job_number = job_number
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table, aimed_field='Job_N', value='', database=Account):
         """查询函数：查询数据
 
@@ -273,6 +281,7 @@ class RetrieveIdleFishBase(Retrieve):
 class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public-methods
     """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table='idle_fish', aimed_field='Job_N', value='', database=Account):
         """查询函数：查询数据
 
@@ -494,6 +503,7 @@ class RetrieveAccount(Retrieve):
         """
         self.username = username
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table, aimed_field='username', value='', database=Account):
         """查询函数：查询数据
 
@@ -518,6 +528,7 @@ class RetrieveEmail(RetrieveAccount):
         super().__init__(username)
         self.auth_code = self.query('auth_code')
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table='email', aimed_field='username', value='', database=Account):
         """查询函数：查询数据
 
