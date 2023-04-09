@@ -231,7 +231,7 @@ class IdleFish(Project):
             print('有订单未付款，请先处理')
             input()
 
-    def dispatch(self, err_num=3):
+    def dispatch(self, err_num=3):  # pylint: disable=too-many-branches
         """发货
 
         :param err_num: 结束时的连续错误阈值
