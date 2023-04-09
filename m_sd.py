@@ -4,7 +4,6 @@ from pacc.config import Config
 
 Config.set_debug(True)
 SD.mainloop([
-    '001001003',
     # '001001006', # 易掉线
     '001021001',  # 闫明星，无法充电
     '001021002',
