@@ -343,10 +343,9 @@ class IdleFishBase(LDProj):
             lduia_ins.click(text='立即购买', interval=2)
             addr_src = str(lduia_ins.get_dict(content_desc='收货地址')['@content-desc']).split('\n')
             print(addr_src)
-            name_mobile, address = addr_src[1:3]
-            address = str(address).replace(' ', '')
+            name_mobile = addr_src[1]
             name, mobile = name_mobile[:-11], name_mobile[-11:]
-            last_buy_addr = f'N={name}, M={mobile}, A={address}'
+            last_buy_addr = f'N={name}, M={mobile}'
             print(last_buy_addr)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
@@ -435,10 +434,9 @@ class IdleFishBase(LDProj):
             lduia_ins.click(text='立即购买', interval=2)
             addr_src = str(lduia_ins.get_dict(content_desc='收货地址')['@content-desc']).split('\n')
             print(addr_src)
-            name_mobile, address = addr_src[1:3]
-            address = str(address).replace(' ', '')
+            name_mobile, address = addr_src[1]
             name, mobile = name_mobile[:-11], name_mobile[-11:]
-            last_buy_addr = f'N={name}, M={mobile}, A={address}'
+            last_buy_addr = f'N={name}, M={mobile}'
             print(last_buy_addr)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
