@@ -434,7 +434,7 @@ class IdleFishBase(LDProj):
             lduia_ins.click(text='立即购买', interval=2)
             addr_src = str(lduia_ins.get_dict(content_desc='收货地址')['@content-desc']).split('\n')
             print(addr_src)
-            name_mobile, address = addr_src[1]
+            name_mobile = addr_src[1]
             name, mobile = name_mobile[:-11], name_mobile[-11:]
             last_buy_addr = f'N={name}, M={mobile}'
             print(last_buy_addr)
