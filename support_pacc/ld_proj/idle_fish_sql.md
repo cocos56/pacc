@@ -29,7 +29,11 @@ SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn, `淘宝�
 # 6. 查询收货地址
 SELECT Job_N, user_name, if_mn, last_buy_date, pay_pw, `hosts`, `收货地址` FROM idle_fish WHERE Job_N LIKE 'ZLJ%' AND pay_pw = 'AAAAAA' ORDER BY `hosts`
 
-# 7. 混合查询
+# 7. 查询待删除的账号
+
+SELECT Job_N, role FROM idle_fish WHERE role like '%_待删'
+
+# 8. 混合查询
 
 1. 查询大于目标币值的账号信息（工号排序）
 2. 查询大于目标币值的账号信息（主机列表排序）
