@@ -215,8 +215,7 @@ class IdleFish(Project):
         address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
         name_mobile = str(address_dic[0]['@text']).split()
         name, mobile = name_mobile[0], name_mobile[1]
-        address = address_dic[1]['@text']
-        dispatch_address = f'N={name}, M={mobile}, A={address}'
+        dispatch_address = f'N={name}, M={mobile}'
         print(dispatch_address)
         # input()
         return dispatch_address
