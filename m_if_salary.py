@@ -107,8 +107,9 @@ class IdleFishSalary:
             return False
         return res_dic
 
+    # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
-    def get_payee_message(cls):  # pylint: disable=too-many-statements, too-many-branches
+    def get_payee_message(cls):
         """获取所有人员的通知消息"""
         payee_group_records = cls.get_payee_dic()
         payee_cnt = 0
@@ -176,9 +177,9 @@ class IdleFishSalary:
             payee_cnt += 1
             remark = RetrieveIdleFishStaff(name).remark
             if not remark:
-                print(f'该员工{name}不存在，或备注{remark}未设置，请处理')
+                print(f'该员工{name}不存在，或备注{remark}未设置，请处理！')
                 input()
-            print(payee_cnt, name, remark, sum_money)
+            print(f'序号：{payee_cnt}, 姓名：{name}, 备注：{remark}, 金额：{sum_money}元')
             input()
             # print(sum_info)
             with open(txt, 'w+', encoding='utf-8') as file:

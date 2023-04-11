@@ -479,3 +479,14 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_nvc_date: 上次无码的日期
         """
         print(self.query('last_nvc_date', last_nvc_date))
+
+
+class UpdateIdleFishStaffBase:
+    """该类用于为修改account数据库中的idle_fish_staff表中的数据提供基础支持"""
+
+    def __init__(self, name):
+        """构造函数：初始化改类的对象
+
+        :param name: 员工姓名
+        """
+        self.name = name
