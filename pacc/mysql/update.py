@@ -445,12 +445,12 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_coins', last_buy_coins))
 
-    def update_last_buy_addr(self, last_buy_addr: str) -> None:
-        """更新设备上次购买时所使用的收货地址
+    def update_last_buy_consignee(self, last_buy_consignee: str) -> None:
+        """更新设备上次购买时的收货人
 
-        :param last_buy_addr: 上次购买时所使用的收货地址
+        :param last_buy_consignee: 上次购买时的收货人
         """
-        print(self.query('last_buy_addr', last_buy_addr))
+        print(self.query('last_buy_consignee', last_buy_consignee))
 
     def update_confirm(self, confirm='NULL') -> None:
         """更新设备是否需要确认收货的标志

@@ -204,18 +204,18 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
-class RetrieveIdleFishByAddrBase(Retrieve):
-    """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
+class RetrieveIdleFishByConsigneeBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中通过收货人查询数据提供基础支持"""
 
-    def __init__(self, last_buy_addr):
+    def __init__(self, last_buy_consignee):
         """构造函数
 
-        :param last_buy_addr: 上次购买时所使用的收货地址
+        :param last_buy_consignee: 上次购买时的收货人
         """
-        self.last_buy_addr = last_buy_addr
+        self.last_buy_consignee = last_buy_consignee
 
     # pylint: disable=too-many-arguments
-    def query(self, field, table, aimed_field='last_buy_addr', value='', database=Account):
+    def query(self, field, table, aimed_field='last_buy_consignee', value='', database=Account):
         """查询函数：查询数据
 
         :param database: 数据库名
@@ -226,16 +226,16 @@ class RetrieveIdleFishByAddrBase(Retrieve):
         :return: 查询到的结果（单条）
         """
         if not value:
-            value = self.last_buy_addr
+            value = self.last_buy_consignee
         return super().query(field, table, aimed_field, f"'{value}'", database)
 
 
-class RetrieveIdleFishByAddr(RetrieveIdleFishByAddrBase):  # pylint: disable=too-many-public-methods
-    """该类用于从account数据库中的idle_fish表中查询单项记录的某个字段数据"""
-
+# pylint: disable=too-many-public-methods
+class RetrieveIdleFishByConsignee(RetrieveIdleFishByConsigneeBase):
+    """该类用于从account数据库中的idle_fish表中通过收货人查询单项记录的某个字段数据"""
     # pylint: disable=too-many-arguments
     def query(
-            self, field, table='idle_fish', aimed_field='last_buy_addr', value='',
+            self, field, table='idle_fish', aimed_field='last_buy_consignee', value='',
             database=Account):
         """查询函数：查询数据
 

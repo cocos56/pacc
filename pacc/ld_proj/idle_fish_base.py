@@ -345,8 +345,8 @@ class IdleFishBase(LDProj):
             print(addr_src)
             name_mobile = addr_src[1]
             name, mobile = name_mobile[:-11], name_mobile[-11:]
-            last_buy_addr = f'N={name}, M={mobile}'
-            print(last_buy_addr)
+            last_buy_consignee = f'N={name}, M={mobile}'
+            print(last_buy_consignee)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
@@ -369,7 +369,7 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
         update_idle_fish_ins.update_last_buy_time(get_now_time())
-        update_idle_fish_ins.update_last_buy_addr(last_buy_addr)
+        update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
         return last_buy_coins
 
     def second_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
@@ -436,8 +436,8 @@ class IdleFishBase(LDProj):
             print(addr_src)
             name_mobile = addr_src[1]
             name, mobile = name_mobile[:-11], name_mobile[-11:]
-            last_buy_addr = f'N={name}, M={mobile}'
-            print(last_buy_addr)
+            last_buy_consignee = f'N={name}, M={mobile}'
+            print(last_buy_consignee)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
@@ -460,5 +460,5 @@ class IdleFishBase(LDProj):
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
         update_idle_fish_ins.update_last_buy_time(get_now_time())
-        update_idle_fish_ins.update_last_buy_addr(last_buy_addr)
+        update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
         return last_buy_coins
