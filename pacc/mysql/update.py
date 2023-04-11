@@ -490,3 +490,52 @@ class UpdateIdleFishStaffBase:
         :param name: 员工姓名
         """
         self.name = name
+
+    def query(self, field, value, table):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        cmd = f'update `{table}` set `{field}` = "{value}" where `name` = "{self.name}"'
+        print(cmd)
+        res = Account.query(cmd)
+        Account.commit()
+        return res
+
+
+class UpdateIdleFishStaff(UpdateIdleFishStaffBase):  # pylint: disable=too-many-public-methods
+    """该类用于修改account数据库中的idle_fish_staff表中的数据"""
+
+    def query(self, field, value, table='idle_fish_staff'):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        return super().query(field, value, table)
+
+    def update_last_salary_amount(self, last_salary_amount: float) -> None:
+        """更新设备在数据库中上次发工资时的钱数
+
+        :param last_salary_amount: 上次发工资时的钱数
+        """
+        print(self.query('last_salary_amount', last_salary_amount))
+
+    def update_last_salary_date(self, last_salary_date: date) -> None:
+        """更新设备在数据库中上次发工资时的日期
+
+        :param last_salary_date: 上次发工资时的日期
+        """
+        print(self.query('last_salary_date', last_salary_date))
+
+    def update_last_salary_time(self, last_salary_time: str) -> None:
+        """更新设备在数据库中上次发工资时的时间
+
+        :param last_salary_time: 上次发工资时的时间
+        """
+        print(self.query('last_salary_time', last_salary_time))

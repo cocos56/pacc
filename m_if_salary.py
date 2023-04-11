@@ -1,8 +1,9 @@
 """闲鱼工资程序入口模块"""
 from datetime import date
 
-from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff
-from pacc.tools import create_dir
+from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff, \
+    UpdateIdleFishStaff
+from pacc.tools import create_dir, get_now_time
 
 
 class IdleFishSalary:
@@ -180,6 +181,10 @@ class IdleFishSalary:
                 print(f'该员工{name}不存在，或备注{remark}未设置，请处理！')
                 input()
             print(f'序号：{payee_cnt}, 姓名：{name}, 备注：{remark}, 金额：{sum_money}元')
+            update_idlefish_staff_ins = UpdateIdleFishStaff(name)
+            update_idlefish_staff_ins.update_last_salary_amount(sum_money)
+            update_idlefish_staff_ins.update_last_salary_date(date.today())
+            update_idlefish_staff_ins.update_last_salary_time(get_now_time())
             input()
             # print(sum_info)
             with open(txt, 'w+', encoding='utf-8') as file:
