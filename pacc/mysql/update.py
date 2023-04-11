@@ -16,12 +16,12 @@ class Update:
         """
         self.serial_num = serial_num
 
-    def query(self, table, field, value):
+    def query(self, field, value, table):
         """查询函数：修改数据
 
-        :param table: 表名
         :param field: 字段名
         :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
         :return: 修改的结果
         """
         cmd = f'update `{table}` set `{field}` = "{value}" where `SN` = "{self.serial_num}"'
@@ -42,15 +42,15 @@ class UpdateMobileInfo(Update):
         super().__init__(serial_num)
         self.dbr = RetrieveMobileInfo.get_ins(serial_num)
 
-    # pylint: disable=arguments-differ
-    def query(self, field, value):
+    def query(self, field, value, table='mobile_info'):
         """查询函数：修改数据
 
         :param field: 字段名
         :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
         :return: 修改的结果
         """
-        return super().query('mobile_info', field, value)
+        return super().query(table, field, value)
 
     def update_ipv4_addr(self, ipv4_addr):
         """更新手机的IPv4地址
@@ -88,15 +88,15 @@ class UpdateKsjsb(Update):
         super().__init__(serial_num)
         self.dbr = RetrieveKsjsb.instances.get(self.serial_num)
 
-    # pylint: disable=arguments-differ
-    def query(self, field, value):
+    def query(self, field, value, table='ksjsb'):
         """查询函数：修改数据
 
         :param field: 字段名
         :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
         :return: 修改的结果
         """
-        return super().query('ksjsb', field, value)
+        return super().query(table, field, value)
 
     def update_gold_coins(self, gold_coins):
         """更新金币值

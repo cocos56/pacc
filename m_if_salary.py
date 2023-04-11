@@ -1,7 +1,7 @@
 """闲鱼工资程序入口模块"""
 from datetime import date
 
-from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish
+from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff
 from pacc.tools import create_dir
 
 
@@ -111,8 +111,9 @@ class IdleFishSalary:
     def get_payee_message(cls):  # pylint: disable=too-many-statements, too-many-branches
         """获取所有人员的通知消息"""
         payee_group_records = cls.get_payee_dic()
+        payee_cnt = 0
         for name, records in payee_group_records.items():
-            print(name, records)
+            # print(name, records)
             base_mid_coins = 0
             base_coins = 0
             middle_coins = 0
@@ -123,7 +124,7 @@ class IdleFishSalary:
                     middle_coins += record.get('last_buy_coins')
                 elif record.get('level') == 'base':
                     base_coins += record.get('last_buy_coins')
-            print(base_mid_coins, base_coins, middle_coins)
+            # print(base_mid_coins, base_coins, middle_coins)
             dir_path = f'D:/0/computer/闲鱼挂机/结账信息/{str(date.today()).replace("-", "_")}'
             create_dir(dir_path)
             sum_money = base_mid_coins//10000*3+base_coins//10000*2+middle_coins//10000*1
@@ -172,7 +173,14 @@ class IdleFishSalary:
                                     f'，鱼币：{record.get("last_buy_coins")//10000}万\n'
             sum_info += '\n'
             sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{date.today()}'
-            print(sum_info)
+            payee_cnt += 1
+            remark = RetrieveIdleFishStaff(name).remark
+            if not remark:
+                print(f'该员工{name}不存在，或备注{remark}未设置，请处理')
+                input()
+            print(payee_cnt, name, remark, sum_money)
+            input()
+            # print(sum_info)
             with open(txt, 'w+', encoding='utf-8') as file:
                 file.write(sum_info)
 

@@ -204,6 +204,55 @@ class RetrieveKsjsb(RetrieveKsjsbBase):
         self.__class__.instances.update({self.serial_num: self})
 
 
+class RetrieveIdleFishStaffBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish_staff表中查询数据提供基础支持"""
+    def __init__(self, name):
+        """构造函数
+
+        :param name: 员工姓名
+        """
+        self.name = name
+
+    # pylint: disable=too-many-arguments
+    def query(self, field, table, aimed_field='name', value='', database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        if not value:
+            value = self.name
+        return super().query(field, table, aimed_field, f"'{value}'", database)
+
+
+# pylint: disable=too-many-public-methods
+class RetrieveIdleFishStaff(RetrieveIdleFishStaffBase):
+    """查询闲鱼员工类：该类用于从account数据库中的idle_fish_staff表中查询单项记录的某个字段数据"""
+    # pylint: disable=too-many-arguments
+    def query(
+            self, field, table='idle_fish_staff', aimed_field='name', value='',
+            database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
+
+    @property
+    def remark(self):
+        """从数据库中读取员工备注的信息"""
+        return self.query('remark')
+
+
 class RetrieveIdleFishByConsigneeBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中通过收货人查询数据提供基础支持"""
 
@@ -466,7 +515,7 @@ class RetrieveIdleFishRecords:
         """
         cmd = f'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), {group_by} FROM `idle_fish` ' \
               f'WHERE last_confirm_date = CURDATE() GROUP BY {group_by} ORDER BY `Job_N`;'
-        print(cmd)
+        # print(cmd)
         res = database.query(cmd)
         if res:
             if isinstance(res[0], str):
