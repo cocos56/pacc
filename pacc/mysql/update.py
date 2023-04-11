@@ -50,7 +50,7 @@ class UpdateMobileInfo(Update):
         :param table: 表名
         :return: 修改的结果
         """
-        return super().query(table, field, value)
+        return super().query(field, value, table)
 
     def update_ipv4_addr(self, ipv4_addr):
         """更新手机的IPv4地址
@@ -96,7 +96,7 @@ class UpdateKsjsb(Update):
         :param table: 表名
         :return: 修改的结果
         """
-        return super().query(table, field, value)
+        return super().query(field, value, table)
 
     def update_gold_coins(self, gold_coins):
         """更新金币值
