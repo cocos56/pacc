@@ -248,14 +248,11 @@ class IdleFish(Project):
             self.uia_ins.click(content_desc='待发货', interval=0.01)
             try:
                 self.get_dispatch_address((939, 786))
-            except KeyError as err:
+            except (KeyError, TypeError) as err:
                 print(err)
                 err_cnt += 1
                 self.open_app()
                 continue
-            except TypeError as err:
-                print(err)
-                break
             if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                 success_cnt += 1
                 err_cnt = 0
