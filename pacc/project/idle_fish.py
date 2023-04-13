@@ -230,10 +230,10 @@ class IdleFish(Project):
               f'pay_pw={retrieve_idle_fish_ins.pay_pw}, if_mn={retrieve_idle_fish_ins.if_mn}, '
               f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
               f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
-              f'buy_time={retrieve_idle_fish_ins.last_buy_time}, '
+              f'buy_time={retrieve_idle_fish_ins.last_buy_time}, \n'
               f'dispatch_consignee={dispatch_consignee}, dispatch_date={dispatch_date}, '
               f'dispatch_time={dispatch_time}, confirm_date={confirm_date}, '
-              f'confirm_time={dispatch_time}, base_payee={retrieve_idle_fish_ins.base_payee}, '
+              f'confirm_time={dispatch_time}, \nbase_payee={retrieve_idle_fish_ins.base_payee}, '
               f'middle_payee={retrieve_idle_fish_ins.middle_payee}')
         input()
         return dispatch_consignee
