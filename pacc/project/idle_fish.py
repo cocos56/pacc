@@ -3,9 +3,12 @@ from os import listdir, remove
 from os.path import join
 from random import randint
 from xml.parsers.expat import ExpatError
+from datetime import date, timedelta
 
 from .project import Project
 from ..base import sleep, print_err
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee
+from ..tools import get_now_time
 
 ROOT = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.'
 
@@ -215,10 +218,30 @@ class IdleFish(Project):
         address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
         name_mobile = str(address_dic[0]['@text']).split()
         name, mobile = name_mobile[0], name_mobile[1]
-        dispatch_address = f'N={name}, M={mobile}'
-        print(dispatch_address)
-        # input()
-        return dispatch_address
+        dispatch_consignee = f'N={name}, M={mobile}'
+        print(dispatch_consignee)
+        job_number = RetrieveIdleFishByConsignee(dispatch_consignee).job_number
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        dispatch_date = date.today()
+        confirm_date = dispatch_date + timedelta(days=10)
+        dispatch_time = get_now_time()
+        print(f'job_number={job_number}, role={retrieve_idle_fish_ins.role}, '
+              f'user_name={retrieve_idle_fish_ins.user_name}, '
+              f'pay_pw={retrieve_idle_fish_ins.pay_pw}, '
+              f'if_mn={retrieve_idle_fish_ins.if_mn}, '
+              f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
+              f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
+              f'buy_time={retrieve_idle_fish_ins.last_buy_time}, '
+              f'dispatch_consignee={dispatch_consignee}'
+              f'dispatch_date={dispatch_date}'
+              f'dispatch_time={dispatch_time}'
+              f'confirm_date={confirm_date}'
+              f'confirm_time={dispatch_time}'
+              f'base_payee={retrieve_idle_fish_ins}'
+              f'middle_payee={dispatch_time}'
+              )
+        input()
+        return dispatch_consignee
 
     def should_pay(self):
         """判断是否需要付款（待付款是否有订单）"""

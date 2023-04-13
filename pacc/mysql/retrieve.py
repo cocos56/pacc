@@ -464,6 +464,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('last_buy_date')
 
     @property
+    def last_buy_time(self):
+        """从数据库中读取上次购买的时间"""
+        return self.query('last_buy_time')
+
+    @property
     def last_buy_coins(self):
         """从数据库中读取上次购买时所消耗的闲鱼币"""
         return self.query('last_buy_coins')
