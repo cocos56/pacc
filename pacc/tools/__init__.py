@@ -9,6 +9,7 @@ from .ip import get_global_ipv4_addr
 from .regular import find_all_with_re, find_all_ints_with_re
 from .tools import average, get_urls_from_string, system, get_now_time
 from .xml import get_pretty_xml, get_xml
+from .wechat4windows import send_wechat_msg
 
 __all__ = [
     'SliderCaptcha',
@@ -26,4 +27,5 @@ __all__ = [
     'get_now_time',
     'get_pretty_xml',
     'get_xml',
+    'send_wechat_msg',
 ]

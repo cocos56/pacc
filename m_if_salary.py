@@ -3,7 +3,7 @@ from datetime import date
 
 from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff, \
     UpdateIdleFishStaff
-from pacc.tools import create_dir, get_now_time
+from pacc.tools import create_dir, get_now_time, send_wechat_msg
 
 
 class IdleFishSalary:
@@ -114,6 +114,8 @@ class IdleFishSalary:
         """获取所有人员的通知消息"""
         payee_group_records = cls.get_payee_dic()
         payee_cnt = 0
+        send_cnt = 0
+        today = date.today()
         for name, records in payee_group_records.items():
             # print(name, records)
             base_mid_coins = 0
@@ -174,18 +176,26 @@ class IdleFishSalary:
                                     f'，手机：{record.get("if_mn")}' \
                                     f'，鱼币：{record.get("last_buy_coins")//10000}万\n'
             sum_info += '\n'
-            sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{date.today()}'
+            sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{today}'
             payee_cnt += 1
-            remark = RetrieveIdleFishStaff(name).remark
+            retrieve_idlefish_staff_ins = RetrieveIdleFishStaff(name)
+            remark = retrieve_idlefish_staff_ins.remark
             if not remark:
                 print(f'该员工{name}不存在，或备注{remark}未设置，请处理！')
                 input()
             print(f'序号：{payee_cnt}, 姓名：{name}, 备注：{remark}, 金额：{sum_money}元')
-            update_idlefish_staff_ins = UpdateIdleFishStaff(name)
-            update_idlefish_staff_ins.update_last_salary_amount(sum_money)
-            update_idlefish_staff_ins.update_last_salary_date(date.today())
-            update_idlefish_staff_ins.update_last_salary_time(get_now_time())
-            input()
+            if retrieve_idlefish_staff_ins.last_salary_date != today:
+                send_wechat_msg(remark, sum_info)
+                update_idlefish_staff_ins = UpdateIdleFishStaff(name)
+                update_idlefish_staff_ins.update_last_salary_amount(sum_money)
+                update_idlefish_staff_ins.update_last_salary_date(date.today())
+                update_idlefish_staff_ins.update_last_salary_time(get_now_time())
+                send_cnt += 1
+            else:
+                print('今日已发送信息，无需重复发送')
+            if send_cnt and not send_cnt % 3:
+                print('本轮次人员已完成发送，请按回车键以继续')
+                input()
             # print(sum_info)
             with open(txt, 'w+', encoding='utf-8') as file:
                 file.write(sum_info)

@@ -252,6 +252,11 @@ class RetrieveIdleFishStaff(RetrieveIdleFishStaffBase):
         """从数据库中读取员工备注的信息"""
         return self.query('remark')
 
+    @property
+    def last_salary_date(self):
+        """从数据库中读取上次发工资时的日期"""
+        return self.query('last_salary_date')
+
 
 class RetrieveIdleFishByConsigneeBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中通过收货人查询数据提供基础支持"""
