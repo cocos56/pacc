@@ -488,6 +488,16 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         """从数据库中读取上次确认收货的日期"""
         return self.query('last_confirm_date')
 
+    @property
+    def base_payee(self):
+        """从数据库中读取基层收款人"""
+        return self.query('base_payee')
+
+    @property
+    def middle_payee(self):
+        """从数据库中读取中层收款人"""
+        return self.query('middle_payee')
+
 
 class RetrieveIdleFishRecords:
     """查询闲鱼所有（符合条件的）记录类：该类用于从account数据库中的idle_fish表中查询符合条件的所有记录"""

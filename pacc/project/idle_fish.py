@@ -227,19 +227,14 @@ class IdleFish(Project):
         dispatch_time = get_now_time()
         print(f'job_number={job_number}, role={retrieve_idle_fish_ins.role}, '
               f'user_name={retrieve_idle_fish_ins.user_name}, '
-              f'pay_pw={retrieve_idle_fish_ins.pay_pw}, '
-              f'if_mn={retrieve_idle_fish_ins.if_mn}, '
+              f'pay_pw={retrieve_idle_fish_ins.pay_pw}, if_mn={retrieve_idle_fish_ins.if_mn}, '
               f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
               f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
               f'buy_time={retrieve_idle_fish_ins.last_buy_time}, '
-              f'dispatch_consignee={dispatch_consignee}'
-              f'dispatch_date={dispatch_date}'
-              f'dispatch_time={dispatch_time}'
-              f'confirm_date={confirm_date}'
-              f'confirm_time={dispatch_time}'
-              f'base_payee={retrieve_idle_fish_ins}'
-              f'middle_payee={dispatch_time}'
-              )
+              f'dispatch_consignee={dispatch_consignee}, dispatch_date={dispatch_date}, '
+              f'dispatch_time={dispatch_time}, confirm_date={confirm_date}, '
+              f'confirm_time={dispatch_time}, base_payee={retrieve_idle_fish_ins.base_payee}, '
+              f'middle_payee={retrieve_idle_fish_ins.middle_payee}')
         input()
         return dispatch_consignee
 
