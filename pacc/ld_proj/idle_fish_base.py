@@ -2,7 +2,6 @@
 # pylint: disable=duplicate-code
 from datetime import datetime, date
 from os import path, rename, remove
-from pymysql.err import IntegrityError
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
