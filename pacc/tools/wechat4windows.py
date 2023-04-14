@@ -1,7 +1,8 @@
 """微信视窗版模块"""
+import time
+
 import pyautogui
 import pyperclip
-import time
 
 
 def send_wechat_msg(person, msg):
