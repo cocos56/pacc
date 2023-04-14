@@ -129,7 +129,7 @@ class CreateRecordIdleFish(Create):
 class CreateRecordDispatch(Create):
     """record_dispatch表的增类：往数据库中的record_dispatch表中新增数据"""
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments, too-many-locals
     def __init__(self, dispatch_date, job_number, dispatch_time, role, user_name, pay_pw, if_mn,
                  buy_coins, buy_date, buy_time, dispatch_consignee, confirm_date, confirm_time,
                  base_payee, middle_payee):
