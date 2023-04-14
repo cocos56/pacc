@@ -2,6 +2,7 @@
 # pylint: disable=duplicate-code
 from datetime import datetime, date
 from os import path, rename, remove
+from pymysql.err import IntegrityError
 
 from .ld_proj import LDProj
 from ..adb import LDConsole, LDADB, LDUIA
@@ -348,7 +349,8 @@ class IdleFishBase(LDProj):
             last_buy_consignee = f'N={name}, M={mobile}'
             print(last_buy_consignee)
             update_idle_fish_ins = UpdateIdleFish(job_number)
-            update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
+            if not last_buy_consignee == 'N=, M=请添加收货地址':
+                update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
