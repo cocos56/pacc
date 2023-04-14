@@ -130,8 +130,9 @@ class CreateRecordDispatch(Create):
     """record_dispatch表的增类：往数据库中的record_dispatch表中新增数据"""
 
     # pylint: disable=too-many-arguments
-    def __init__(self, dispatch_date, job_number, dispatch_time, role, pay_pw, version, coins, user_name,
-                 today_global_ipv4_addr):
+    def __init__(self, dispatch_date, job_number, dispatch_time, role, user_name, pay_pw, if_mn,
+                 buy_coins, buy_date, buy_time, dispatch_consignee, confirm_date, confirm_time,
+                 base_payee, middle_payee):
         """构造函数：初始化增类的对象
 
         :param dispatch_date: 发货的日期
@@ -139,32 +140,47 @@ class CreateRecordDispatch(Create):
         :param dispatch_time: 发货的时间
         :param role: 角色
         :param user_name: 闲鱼账号的会员名
-        :param pay_pw: 主机列表
-        :param version: 版本号
-        :param coins: 闲鱼币
-        :param today_global_ipv4_addr: 今日的公网IPv4地址
+        :param pay_pw: 支付密码
+        :param if_mn: 闲鱼绑定的手机号
+        :param buy_coins: 购买时所消耗的闲鱼币
+        :param buy_date: 上次购买的日期
+        :param buy_time: 上次购买的时间
+        :param dispatch_consignee: 发货时的收货人
+        :param confirm_date: 确认收货的日期
+        :param confirm_time: 确认收货的时间
+        :param base_payee: 基层收款人
+        :param middle_payee: 中层收款人
         """
         self.dispatch_date = dispatch_date
         self.job_number = job_number
+        if self.exist:
+            print(f'记录dispatch_date={self.dispatch_date}, '
+                  f'job_number={self.job_number}已存在，无需重复创建')
+            return
         self.dispatch_time = dispatch_time
         self.role = role
         self.user_name = user_name
         self.pay_pw = pay_pw
-        self.version = version
-        self.coins = coins
-        self.user_name = user_name
-        self.today_global_ipv4_addr = today_global_ipv4_addr
-        if self.exist:
-            print(f'记录today={self.today}, job_number={self.job_number}已存在，无需重复创建')
-            return
+        self.if_mn = if_mn
+        self.buy_coins = buy_coins
+        self.buy_date = buy_date
+        self.buy_time = buy_time
+        self.dispatch_consignee = dispatch_consignee
+        self.confirm_date = confirm_date
+        self.confirm_time = confirm_time
+        self.base_payee = base_payee
+        self.middle_payee = middle_payee
         self.query(
             'record_dispatch',
             (
-                'dispatch_date', 'Job_N', 'dispatch_time', 'role', 'user_name', 'hosts', 'version', 'coins',
-                'user_name', 'today_global_ipv4_addr'),
+                'dispatch_date', 'Job_N',
+                'dispatch_time', 'role', 'user_name',
+                'pay_pw', 'if_mn', 'buy_coins'),
             (
-                str(self.today), self.job_number, self.dispatch_time, self.role, self.user_name, self.hosts, self.version, self.coins,
-                self.user_name, self.today_global_ipv4_addr)
+                str(self.dispatch_date), self.job_number,
+                self.dispatch_time, self.role, self.user_name,
+                self.pay_pw, self.if_mn, self.buy_coins,
+            )
         )
 
     @classmethod
@@ -183,8 +199,8 @@ class CreateRecordDispatch(Create):
     def exist(self):
         """创建只读属性exist，该属性用于判断是否在record_dispatch表中存在指定的记录"""
         return Record.query(
-            f'select 1 from `record_dispatch` where `dispatch_date`="{self.today}" and `Job_N`='
-            f'"{self.job_number}" limit 1'
+            f'select 1 from `record_dispatch` where `dispatch_date`="{self.dispatch_date}" and '
+            f'`Job_N`="{self.job_number}" limit 1'
         ) == (1,)
 
 
