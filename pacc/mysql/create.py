@@ -125,6 +125,69 @@ class CreateRecordIdleFish(Create):
         ) == (1,)
 
 
+# pylint: disable=too-many-instance-attributes
+class CreateRecordDispatch(Create):
+    """record_dispatch表的增类：往数据库中的record_dispatch表中新增数据"""
+
+    # pylint: disable=too-many-arguments
+    def __init__(self, dispatch_date, job_number, dispatch_time, role, pay_pw, version, coins, user_name,
+                 today_global_ipv4_addr):
+        """构造函数：初始化增类的对象
+
+        :param dispatch_date: 发货的日期
+        :param job_number: 工号
+        :param dispatch_time: 发货的时间
+        :param role: 角色
+        :param user_name: 闲鱼账号的会员名
+        :param pay_pw: 主机列表
+        :param version: 版本号
+        :param coins: 闲鱼币
+        :param today_global_ipv4_addr: 今日的公网IPv4地址
+        """
+        self.dispatch_date = dispatch_date
+        self.job_number = job_number
+        self.dispatch_time = dispatch_time
+        self.role = role
+        self.user_name = user_name
+        self.pay_pw = pay_pw
+        self.version = version
+        self.coins = coins
+        self.user_name = user_name
+        self.today_global_ipv4_addr = today_global_ipv4_addr
+        if self.exist:
+            print(f'记录today={self.today}, job_number={self.job_number}已存在，无需重复创建')
+            return
+        self.query(
+            'record_dispatch',
+            (
+                'dispatch_date', 'Job_N', 'dispatch_time', 'role', 'user_name', 'hosts', 'version', 'coins',
+                'user_name', 'today_global_ipv4_addr'),
+            (
+                str(self.today), self.job_number, self.dispatch_time, self.role, self.user_name, self.hosts, self.version, self.coins,
+                self.user_name, self.today_global_ipv4_addr)
+        )
+
+    @classmethod
+    def query(cls, table, fields, values, database=Record):
+        """查询函数：新增数据
+
+        :param table: 表名
+        :param fields: 字段名
+        :param values: 值
+        :param database: 数据库名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(table, fields, values, database)
+
+    @property
+    def exist(self):
+        """创建只读属性exist，该属性用于判断是否在record_dispatch表中存在指定的记录"""
+        return Record.query(
+            f'select 1 from `record_dispatch` where `dispatch_date`="{self.today}" and `Job_N`='
+            f'"{self.job_number}" limit 1'
+        ) == (1,)
+
+
 # pylint: disable=too-few-public-methods
 class CreateMobile(Create):
     """增类：往数据库中新增数据"""
