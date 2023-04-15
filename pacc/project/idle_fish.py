@@ -7,7 +7,8 @@ from datetime import date, timedelta
 
 from .project import Project
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, CreateRecordDispatch
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, CreateRecordDispatch, \
+    UpdateIdleFish
 from ..tools import get_now_time
 
 ROOT = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.'
@@ -254,6 +255,7 @@ class IdleFish(Project):
             confirm_time=dispatch_time, base_payee=base_payee,
             middle_payee=middle_payee,
         )
+        UpdateIdleFish(job_number=job_number).
         # input()
         return dispatch_consignee
 

@@ -459,6 +459,20 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_consignee', last_buy_consignee))
 
+    def update_last_dispatch_date(self, last_dispatch_date: date.today()) -> None:
+        """更新设备上次发货的日期
+
+        :param last_dispatch_date: 上次发货的日期
+        """
+        print(self.query('last_buy_consignee', last_dispatch_date))
+
+    def update_last_dispatch_time(self, last_dispatch_time: str) -> None:
+        """更新设备上次发货的时间
+
+        :param last_dispatch_time: 上次发货的时间
+        """
+        print(self.query('last_dispatch_time', last_dispatch_time))
+
     def update_confirm(self, confirm='NULL') -> None:
         """更新设备是否需要确认收货的标志
 
