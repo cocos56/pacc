@@ -171,31 +171,33 @@ class CreateRecordDispatch(Create):
         self.if_mn = if_mn
         self.buy_coins = buy_coins
         self.buy_date = str(buy_date)
-        self.buy_time = buy_time
+        self.buy_time = str(buy_time)
         self.dispatch_consignee = dispatch_consignee
         self.confirm_date = str(confirm_date)
         self.confirm_time = confirm_time
-        self.base_payee = base_payee
-        self.middle_payee = middle_payee
-        self.query(
-            'record_dispatch',
-            (
+        fields = [
                 'dispatch_date', 'Job_N',
                 'dispatch_time', 'role', 'user_name',
                 'pay_pw', 'if_mn', 'buy_coins',
                 'buy_date', 'buy_time', 'dispatch_consignee',
-                'confirm_date', 'confirm_time', 'base_payee',
-                'middle_payee',
-            ),
-            (
+                'confirm_date', 'confirm_time'
+            ]
+        values = [
                 self.dispatch_date, self.job_number,
                 self.dispatch_time, self.role, self.user_name,
                 self.pay_pw, self.if_mn, self.buy_coins,
                 self.buy_date, self.buy_time, self.dispatch_consignee,
-                self.confirm_date, self.confirm_time, self.base_payee,
-                self.middle_payee,
-            )
-        )
+                self.confirm_date, self.confirm_time
+            ]
+        if base_payee:
+            self.base_payee = base_payee
+            fields.append('base_payee')
+            values.append(self.base_payee)
+        if middle_payee:
+            self.middle_payee = middle_payee
+            fields.append('middle_payee')
+            values.append(self.middle_payee)
+        self.query(table='record_dispatch', fields=tuple(fields), values=tuple(values))
 
     @classmethod
     def query(cls, table, fields, values, database=Record):

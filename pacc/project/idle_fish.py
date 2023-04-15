@@ -254,7 +254,7 @@ class IdleFish(Project):
             confirm_time=dispatch_time, base_payee=base_payee,
             middle_payee=middle_payee,
         )
-        input()
+        # input()
         return dispatch_consignee
 
     def should_pay(self):
