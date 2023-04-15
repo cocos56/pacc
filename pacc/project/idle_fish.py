@@ -225,23 +225,34 @@ class IdleFish(Project):
         dispatch_time = get_now_time()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         role = retrieve_idle_fish_ins.role
+        user_name = retrieve_idle_fish_ins.user_name
+        pay_pw = retrieve_idle_fish_ins.pay_pw
+        if_mn = retrieve_idle_fish_ins.if_mn
+        buy_coins = retrieve_idle_fish_ins.last_buy_coins
+        buy_date = retrieve_idle_fish_ins.last_buy_date
+        buy_time = retrieve_idle_fish_ins.last_buy_time
         confirm_date = dispatch_date + timedelta(days=10)
+        base_payee = retrieve_idle_fish_ins.base_payee
+        middle_payee = retrieve_idle_fish_ins.middle_payee
         print(
             f'dispatch_date={dispatch_date}, job_number={job_number}, '
             f'dispatch_time={dispatch_time}, role={role}, '
-            f'user_name={retrieve_idle_fish_ins.user_name}, '
-            f'pay_pw={retrieve_idle_fish_ins.pay_pw}, if_mn={retrieve_idle_fish_ins.if_mn}, '
-            f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
-            f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
-            f'buy_time={retrieve_idle_fish_ins.last_buy_time}, \n'
-            f'dispatch_consignee={dispatch_consignee}, '
-            f'confirm_date={confirm_date}, '
-            f'confirm_time={dispatch_time}, \nbase_payee={retrieve_idle_fish_ins.base_payee}, '
-            f'middle_payee={retrieve_idle_fish_ins.middle_payee}'
+            f'user_name={user_name}, pay_pw={pay_pw}, '
+            f'if_mn={if_mn}, buy_coins={buy_coins}, '
+            f'buy_date={buy_date}, buy_time={buy_time}, \n'
+            f'dispatch_consignee={dispatch_consignee}, confirm_date={confirm_date}, '
+            f'confirm_time={dispatch_time}, \nbase_payee={base_payee}, '
+            f'middle_payee={middle_payee}'
         )
         CreateRecordDispatch(
             dispatch_date=dispatch_date, job_number=job_number,
-            dispatch_time=dispatch_time, role=role
+            dispatch_time=dispatch_time, role=role,
+            user_name=user_name, pay_pw=pay_pw,
+            if_mn=if_mn, buy_coins=buy_coins,
+            buy_date=buy_date, buy_time=buy_time,
+            dispatch_consignee=dispatch_consignee, confirm_date=confirm_date,
+            confirm_time=dispatch_time, base_payee=base_payee,
+            middle_payee=middle_payee,
         )
         input()
         return dispatch_consignee
