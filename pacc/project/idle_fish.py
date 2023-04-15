@@ -7,7 +7,7 @@ from datetime import date, timedelta
 
 from .project import Project
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, CreateRecordDispatch
 from ..tools import get_now_time
 
 ROOT = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.'
@@ -220,22 +220,29 @@ class IdleFish(Project):
         name, mobile = name_mobile[0], name_mobile[1]
         dispatch_consignee = f'N={name}, M={mobile}'
         print(dispatch_consignee)
-        job_number = RetrieveIdleFishByConsignee(dispatch_consignee).job_number
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         dispatch_date = date.today()
-        confirm_date = dispatch_date + timedelta(days=10)
+        job_number = RetrieveIdleFishByConsignee(dispatch_consignee).job_number
         dispatch_time = get_now_time()
-        print(f'job_number={job_number}, role={retrieve_idle_fish_ins.role}, '
-              f'user_name={retrieve_idle_fish_ins.user_name}, '
-              f'pay_pw={retrieve_idle_fish_ins.pay_pw}, if_mn={retrieve_idle_fish_ins.if_mn}, '
-              f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
-              f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
-              f'buy_time={retrieve_idle_fish_ins.last_buy_time}, \n'
-              f'dispatch_consignee={dispatch_consignee}, dispatch_date={dispatch_date}, '
-              f'dispatch_time={dispatch_time}, confirm_date={confirm_date}, '
-              f'confirm_time={dispatch_time}, \nbase_payee={retrieve_idle_fish_ins.base_payee}, '
-              f'middle_payee={retrieve_idle_fish_ins.middle_payee}')
-
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        role = retrieve_idle_fish_ins.role
+        confirm_date = dispatch_date + timedelta(days=10)
+        print(
+            f'dispatch_date={dispatch_date}, job_number={job_number}, '
+            f'dispatch_time={dispatch_time}, role={role}, '
+            f'user_name={retrieve_idle_fish_ins.user_name}, '
+            f'pay_pw={retrieve_idle_fish_ins.pay_pw}, if_mn={retrieve_idle_fish_ins.if_mn}, '
+            f'buy_coins={retrieve_idle_fish_ins.last_buy_coins}, '
+            f'buy_date={retrieve_idle_fish_ins.last_buy_date}, '
+            f'buy_time={retrieve_idle_fish_ins.last_buy_time}, \n'
+            f'dispatch_consignee={dispatch_consignee}, '
+            f'confirm_date={confirm_date}, '
+            f'confirm_time={dispatch_time}, \nbase_payee={retrieve_idle_fish_ins.base_payee}, '
+            f'middle_payee={retrieve_idle_fish_ins.middle_payee}'
+        )
+        CreateRecordDispatch(
+            dispatch_date=dispatch_date, job_number=job_number,
+            dispatch_time=dispatch_time, role=role
+        )
         input()
         return dispatch_consignee
 
