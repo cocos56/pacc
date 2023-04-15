@@ -175,11 +175,18 @@ class CreateRecordDispatch(Create):
             (
                 'dispatch_date', 'Job_N',
                 'dispatch_time', 'role', 'user_name',
-                'pay_pw', 'if_mn', 'buy_coins'),
+                'pay_pw', 'if_mn', 'buy_coins',
+                'buy_date', 'buy_time', 'dispatch_consignee',
+                'confirm_date', 'confirm_time', 'base_payee',
+                'middle_payee',
+            ),
             (
                 str(self.dispatch_date), self.job_number,
                 self.dispatch_time, self.role, self.user_name,
                 self.pay_pw, self.if_mn, self.buy_coins,
+                self.buy_date, self.buy_time, self.dispatch_consignee,
+                self.confirm_date, self.confirm_time, self.base_payee,
+                self.middle_payee,
             )
         )
 

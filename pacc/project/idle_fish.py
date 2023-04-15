@@ -235,7 +235,8 @@ class IdleFish(Project):
               f'dispatch_time={dispatch_time}, confirm_date={confirm_date}, '
               f'confirm_time={dispatch_time}, \nbase_payee={retrieve_idle_fish_ins.base_payee}, '
               f'middle_payee={retrieve_idle_fish_ins.middle_payee}')
-        # input()
+
+        input()
         return dispatch_consignee
 
     def should_pay(self):
