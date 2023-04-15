@@ -301,7 +301,13 @@ class IdleFish(Project):
             else:
                 err_cnt += 1
             if not err_cnt:
-                self.get_dispatch_address((939, 1330))
+                try:
+                    self.get_dispatch_address((939, 1330))
+                except TypeError as err:
+                    print(err)
+                    err_cnt += 1
+                    self.open_app()
+                    continue
                 if self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01):
                     success_cnt += 1
                     err_cnt = 0
