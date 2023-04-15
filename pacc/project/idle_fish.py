@@ -208,7 +208,7 @@ class IdleFish(Project):
             if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
                 success_cnt += 1
 
-    def get_dispatch_address(self, point):
+    def get_dispatch_address(self, point):   # pylint: disable=too-many-locals
         """获取发货时的地址
 
         :param point: 点的x和y坐标

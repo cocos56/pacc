@@ -158,7 +158,7 @@ class CreateRecordDispatch(Create):
         :param base_payee: 基层收款人
         :param middle_payee: 中层收款人
         """
-        self.dispatch_date = dispatch_date
+        self.dispatch_date = str(dispatch_date)
         self.job_number = job_number
         if self.exist:
             print(f'记录dispatch_date={self.dispatch_date}, '
@@ -170,10 +170,10 @@ class CreateRecordDispatch(Create):
         self.pay_pw = pay_pw
         self.if_mn = if_mn
         self.buy_coins = buy_coins
-        self.buy_date = buy_date
+        self.buy_date = str(buy_date)
         self.buy_time = buy_time
         self.dispatch_consignee = dispatch_consignee
-        self.confirm_date = confirm_date
+        self.confirm_date = str(confirm_date)
         self.confirm_time = confirm_time
         self.base_payee = base_payee
         self.middle_payee = middle_payee
@@ -188,7 +188,7 @@ class CreateRecordDispatch(Create):
                 'middle_payee',
             ),
             (
-                str(self.dispatch_date), self.job_number,
+                self.dispatch_date, self.job_number,
                 self.dispatch_time, self.role, self.user_name,
                 self.pay_pw, self.if_mn, self.buy_coins,
                 self.buy_date, self.buy_time, self.dispatch_consignee,
