@@ -15,14 +15,14 @@ from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, RetrieveIdleFishRecords, \
     UpdateIdleFish, CreateRecordIdleFish
-from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU
+from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU, get_now_time
 
 
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
     """闲鱼类"""
 
     @classmethod
-    def backups(cls, start_index, end_index, dir_path='E:/ldbks', reserved_gbs=6 * 1024):
+    def backups(cls, start_index, end_index, dir_path='E:/ld_backups', reserved_gbs=6 * 1024):
         """批量备份雷电模拟器的设备
 
         :param start_index: 起始索引值
@@ -954,7 +954,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             LDConsole.quit(index)
             job_number = LDConsole(index).get_job_number()
             if today != RetrieveIdleFish(job_number).last_run_date:
-                UpdateIdleFish(job_number).update_last_run_date(today)
+                update_idle_fish_ins = UpdateIdleFish(job_number)
+                update_idle_fish_ins.update_last_run_date(today)
+                update_idle_fish_ins.update_last_run_time(get_now_time())
             print(f'第{index}项已执行完毕')
 
     @classmethod
@@ -964,7 +966,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param start_index: 起始索引值（包含）
         :param end_index: 终止索引值（包含）
         :param p_num: 并发数量
-        :param check_after_run: 检查的起始索引值，默认为-1代表不检查
+        :param check_after_run: 检查的起始索引值，默认为-1（代表不检查）
         """
         src_start_index = start_index
         now = datetime.now()

@@ -326,6 +326,13 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_run_date', last_run_date))
 
+    def update_last_run_time(self, last_run_time: str) -> None:
+        """更新设备上次运行的时间
+
+        :param last_run_time: 新上次运行的时间
+        """
+        print(self.query('last_run_time', last_run_time))
+
     def update_last_bak_date(self, last_bak_date: date.today()) -> None:
         """更新设备的上次备份日期
 
