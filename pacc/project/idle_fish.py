@@ -255,7 +255,9 @@ class IdleFish(Project):
             confirm_time=dispatch_time, base_payee=base_payee,
             middle_payee=middle_payee,
         )
-        UpdateIdleFish(job_number=job_number).
+        update_idle_fish_ins = UpdateIdleFish(job_number=job_number)
+        update_idle_fish_ins.update_last_dispatch_date(dispatch_date)
+        update_idle_fish_ins.update_last_dispatch_time(dispatch_time)
         # input()
         return dispatch_consignee
 

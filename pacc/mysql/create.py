@@ -168,7 +168,6 @@ class CreateRecordDispatch(Create):
         self.role = role
         self.user_name = user_name
         self.pay_pw = pay_pw
-        self.if_mn = if_mn
         self.buy_coins = buy_coins
         self.buy_date = str(buy_date)
         self.buy_time = str(buy_time)
@@ -176,19 +175,19 @@ class CreateRecordDispatch(Create):
         self.confirm_date = str(confirm_date)
         self.confirm_time = confirm_time
         fields = [
-                'dispatch_date', 'Job_N',
-                'dispatch_time', 'role', 'user_name',
-                'pay_pw', 'if_mn', 'buy_coins',
-                'buy_date', 'buy_time', 'dispatch_consignee',
+                'dispatch_date', 'Job_N', 'dispatch_time', 'role', 'user_name',
+                'pay_pw', 'buy_coins', 'buy_date', 'buy_time', 'dispatch_consignee',
                 'confirm_date', 'confirm_time'
             ]
         values = [
-                self.dispatch_date, self.job_number,
-                self.dispatch_time, self.role, self.user_name,
-                self.pay_pw, self.if_mn, self.buy_coins,
-                self.buy_date, self.buy_time, self.dispatch_consignee,
+                self.dispatch_date, self.job_number, self.dispatch_time, self.role, self.user_name,
+                self.pay_pw, self.buy_coins, self.buy_date, self.buy_time, self.dispatch_consignee,
                 self.confirm_date, self.confirm_time
             ]
+        if if_mn:
+            self.if_mn = if_mn
+            fields.append('if_mn')
+            values.append(self.if_mn)
         if base_payee:
             self.base_payee = base_payee
             fields.append('base_payee')
