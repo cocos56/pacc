@@ -106,9 +106,11 @@ class IdleFish(Project):
             print(self.walked_li)
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
-            self.uia_ins.click(text='支付宝', interval=15)
+            if not self.uia_ins.click(text='支付宝', interval=15):
+                continue
             try:
-                self.uia_ins.click(text='扫一扫')
+                if not self.uia_ins.click(text='扫一扫'):
+                    continue
                 self.uia_ins.tap((939, 1399))
                 self.uia_ins.click('com.alipay.mobile.beephoto:id/iv_photo')
             except (FileNotFoundError, ExpatError) as err:
