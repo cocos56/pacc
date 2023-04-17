@@ -33,7 +33,11 @@ SELECT Job_N, user_name, if_mn, last_buy_date, pay_pw, `hosts`, `收货地址` F
 
 SELECT Job_N, role FROM idle_fish WHERE role like '%_待删'
 
-# 8. 混合查询
+# 8. 查询收款人
+
+SELECT Job_N, role, last_buy_consignee, base_payee, middle_payee FROM idle_fish
+
+# 9. 混合查询
 
 1. 查询大于目标币值的账号信息（工号排序）
 2. 查询大于目标币值的账号信息（主机列表排序）
