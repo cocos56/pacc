@@ -37,7 +37,11 @@ SELECT Job_N, role FROM idle_fish WHERE role like '%_待删'
 
 SELECT Job_N, role, last_buy_consignee, base_payee, middle_payee FROM idle_fish
 
-# 9. 混合查询
+# 9. 查询主机账号数
+
+SELECT Left((`hosts`), 2), COUNT(1), MAX(last_run_time) FROM `idle_fish` GROUP BY Left((`hosts`), 2) ORDER BY Left((`hosts`), 2)
+
+# 10. 混合查询
 
 1. 查询大于目标币值的账号信息（工号排序）
 2. 查询大于目标币值的账号信息（主机列表排序）
