@@ -350,9 +350,15 @@ class IdleFish(Project):
                 self.open_app()
                 continue
             self.uia_ins.click(content_desc='赏好评', interval=0.01)
+            self.uia_ins.click(text='聊聊本次交易感受，你的评价能帮助到其他人~', interval=0.01)
             self.uia_ins.click(content_desc='沟通体验', interval=0.01)
             self.uia_ins.click(content_desc='发布', xml=self.uia_ins.xml, interval=0.01)
-            self.uia_ins.click(content_desc='确定', interval=0.01)
+            try:
+                self.uia_ins.click(content_desc='确定', interval=0.01)
+            except FileNotFoundError as err:
+                print_err(err)
+                self.open_app()
+                continue
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
             self.adb_ins.press_back_key(0.01)
