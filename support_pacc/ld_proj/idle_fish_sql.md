@@ -37,9 +37,9 @@ SELECT Job_N, role FROM idle_fish WHERE role like '%_待删'
 
 SELECT Job_N, role, last_buy_consignee, base_payee, middle_payee FROM idle_fish
 
-# 9. 查询主机账号数
+# 9. 查询某主机上账号信息的汇总分析情况
 
-SELECT Left((`hosts`), 2), COUNT(1), MAX(last_run_time) FROM `idle_fish` GROUP BY Left((`hosts`), 2) ORDER BY Left((`hosts`), 2)
+SELECT Left((`hosts`), 2), COUNT(1), MAX(last_run_time), MIN(last_run_date), MAX(last_run_date) FROM `idle_fish` GROUP BY Left((`hosts`), 2) ORDER BY Left((`hosts`), 2)
 
 # 10. 混合查询
 
@@ -60,7 +60,7 @@ SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, 
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date=@target_date and `hosts` LIKE @HostsName ORDER BY last_buy_time;
 -- 结果5：查询今日下单进行回收鱼币操作的账号信息（回收时间排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date=@target_date and `hosts` LIKE @HostsName ORDER BY confirm, `加注日期`, `hosts`;
--- 结果6：
+-- 结果6：查询可能存在偷卖偷用的账号信息
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date<=DATE_SUB(CURDATE(),INTERVAL 14 DAY) and `hosts` LIKE @HostsName ORDER BY last_buy_date, coins;
 -- 结果7：查询今日剩余需要进行自动确认收货操作的账号信息（主机名排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and confirm=1 and `hosts` LIKE @HostsName ORDER BY `hosts`;
