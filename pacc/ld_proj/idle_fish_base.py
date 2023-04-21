@@ -314,6 +314,8 @@ class IdleFishBase(LDProj):
                     naf_err_cnt += 1
                     if naf_err_cnt >= 5:
                         break
+                    elif lduia_ins.get_dict(text='验证码拦截', xml=lduia_ins.xml):
+                        return False
                 lduia_ins.click(content_desc='再次购买')
                 if naf_err_cnt >= 5:
                     return self.first_buy_on_target_device(today)
