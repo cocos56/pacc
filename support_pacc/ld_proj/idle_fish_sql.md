@@ -35,7 +35,7 @@ SELECT Job_N, role FROM idle_fish WHERE role like '%_待删'
 
 # 8. 查询收款人
 
-SELECT Job_N, role, last_buy_consignee, base_payee, middle_payee FROM idle_fish
+SELECT Job_N, role, user_name, last_buy_consignee, base_payee, middle_payee FROM idle_fish
 
 # 9. 查询某主机上账号信息的汇总分析情况
 
