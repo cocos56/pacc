@@ -370,6 +370,7 @@ class IdleFishBase(LDProj):
             print_err(err)
         if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml):
             print(f'设备{self.ld_index}上的账号需要添加收货地址')
+            sleep(1 * 60)
             return False
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
