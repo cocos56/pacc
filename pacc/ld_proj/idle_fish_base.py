@@ -393,7 +393,9 @@ class IdleFishBase(LDProj):
         lduia_ins = LDUIA(self.ld_index)
         ldadb_ins = LDADB(self.ld_index)
         try:
-            lduia_ins.click(ResourceID.tab_title, '消息')
+            if not lduia_ins.click(ResourceID.tab_title, '消息'):
+                if lduia_ins.get_dict(text='验证码拦截', xml=lduia_ins.xml):
+                    return False
             if lduia_ins.click(text='我知道了'):
                 lduia_ins.xml = ''
             while not lduia_ins.click(index='1', content_desc='xgqm', xml=lduia_ins.xml):
