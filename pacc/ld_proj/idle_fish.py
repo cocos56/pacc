@@ -445,7 +445,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 continue
             lduia_ins = LDUIA(start_index)
             try:
-                lduia_ins.click(ResourceID.tab_title, '我的')
+                if not lduia_ins.click(ResourceID.tab_title, '我的'):
+                    if lduia_ins.get_dict(text='验证码拦截', xml=lduia_ins.xml):
+                        start_index += 1
+                        sleep(10 * 60)
+                        continue
             except FileNotFoundError as err:
                 print_err(err)
                 continue
@@ -502,6 +506,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             except FileNotFoundError as err:
                 print_err(err)
             start_index += 1
+            sleep(1*60)
 
     @classmethod
     def top_up_mobile(cls, start_index, end_index) -> None:
