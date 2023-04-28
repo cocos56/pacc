@@ -305,7 +305,7 @@ class IdleFish(Project):
             if not err_cnt:
                 try:
                     self.get_dispatch_address((939, 1330))
-                except TypeError as err:
+                except (TypeError, KeyError) as err:
                     print(err)
                     err_cnt += 1
                     self.open_app()
