@@ -107,6 +107,7 @@ class IdleFish(Project):
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
             if not self.uia_ins.click(text='支付宝', interval=15):
+                self.uia_ins.click('android:id/button2')
                 continue
             try:
                 if not self.uia_ins.click(text='扫一扫'):
@@ -117,8 +118,13 @@ class IdleFish(Project):
                 print_err(err)
                 continue
             self.uia_ins.click('com.alipay.mobile.beephoto:id/bt_finish', interval=12)
+            if self.uia_ins.get_dict(text='照片中未识别到二维码'):
+                remove(alipay_code)
+                self.free_memory()
+                continue
             try:
-                if not self.uia_ins.click(text='确认付款', index='8', interval=2) and not self.\
+                if not self.uia_ins.click(
+                        text='确认付款', index='8', xml=self.uia_ins.xml, interval=2) and not self.\
                         uia_ins.click(text='确认付款', index='9', xml=self.uia_ins.xml, interval=2):
                     remove(alipay_code)
                     continue
