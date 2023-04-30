@@ -1,9 +1,9 @@
 # 1. 查询无支付密码的账号确认收货的明细
 
-## 1.1. 单日期
+## 1.1. 今日
 SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date='2023-04-25' ORDER BY Job_N
 
-## 1.2. 日期段
+## 1.2. 今日和昨日
 SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date<=CURDATE() and confirm_date>=DATE_SUB(CURDATE(),INTERVAL 1 DAY) ORDER BY Job_N
 
 SELECT * FROM `record_dispatch` WHERE pay_pw='AAAAAA' ORDER BY confirm_date, confirm_time
