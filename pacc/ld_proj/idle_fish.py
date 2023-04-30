@@ -348,11 +348,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     lduia_ins.xml = ''
                     sleep(2)
                 if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
-                    if not lduia_ins.click(text='卡', xml=lduia_ins.xml):
-                        if not lduia_ins.click(text='余额', xml=lduia_ins.xml):
-                            if not lduia_ins.click(text='支付宝小荷包', xml=lduia_ins.xml):
-                                if lduia_ins.get_dict(text='0.00', xml=lduia_ins.xml):
-                                    return False
+                    if not lduia_ins.click(text='卡', xml=lduia_ins.xml) and not lduia_ins.\
+                            click(text='余额', xml=lduia_ins.xml) and not lduia_ins.\
+                            click(text='支付宝小荷包', xml=lduia_ins.xml) and lduia_ins.\
+                            get_dict(text='0.00', xml=lduia_ins.xml):
+                        return False
                     sleep(1)
                     while not lduia_ins.click(text='找朋友帮忙付'):
                         print('未找到找朋友帮忙付')
