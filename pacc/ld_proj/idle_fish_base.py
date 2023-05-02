@@ -19,6 +19,8 @@ class Activity:  # pylint: disable=too-few-public-methods
     ApplicationError = 'Application Error: com.taobao.idlefish'
     WebViewActivity = 'com.taobao.idlefish/com.ali.user.mobile.ability.webview.WebViewActivity'
     WebHybridActivity = 'com.taobao.idlefish/com.taobao.idlefish.webview.WebHybridActivity'
+    ContainerActivity = 'com.taobao.idlefish/com.alibaba.wireless.security.open.middletier.fc.' \
+                        'ui.ContainerActivity'
 
 
 class ResourceID:  # pylint: disable=too-few-public-methods
@@ -118,6 +120,11 @@ class IdleFishBase(LDProj):
                 update_idle_fish_ins.update_login(1)
                 print(f'设备{self.ld_index}由于已掉线，无法继续进行，{work_name}异常终止\n')
                 return True
+            if Activity.ContainerActivity in current_focus:
+                print('检测到滑块验证码')
+                lduia_ins.get_screen()
+                lduia_ins.get_current_ui_hierarchy()
+                input()
         except FileNotFoundError as err:
             print_err(err)
             if depth < 3:
