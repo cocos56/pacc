@@ -6,10 +6,19 @@ from pymysql import connect, OperationalError, ProgrammingError
 from ..base import sleep, print_err
 
 
+def get_connection(database='mobile'):
+    """获取数据库的连接
+
+    :param database: 数据库名
+    :return: 数据库的连接
+    """
+    return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
+                   password=getenv('MySQL_PW'))
+
+
 class MySQL:
     """MySQL数据库类"""
-    conn = connect(host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
-                   password=getenv('MySQL_PW'))
+    conn = get_connection()
     cs = conn.cursor()
 
     # pylint: disable=too-many-arguments
