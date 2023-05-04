@@ -768,10 +768,15 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         job_number = LDConsole(index).get_job_number()
         update_idle_fish_ins = UpdateIdleFish(job_number)
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        if Activity.ContainerActivity in current_focus and lduia_ins.get_dict(text='验证码拦截'):
-            print('检测到滑块验证码')
-            ldadb_ins = LDADB(index)
-            ldadb_ins.press_back_key()
+        if Activity.ContainerActivity in current_focus:
+            try:
+                if lduia_ins.get_dict(text='验证码拦截'):
+                    print('检测到滑块验证码')
+                    ldadb_ins = LDADB(index)
+                    ldadb_ins.press_back_key()
+            except FileNotFoundError as err:
+                print_err(err)
+                return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         lduia_ins.tap((50, 85), 9)
         try:
             if lduia_ins.get_dict(content_desc='数码店'):
