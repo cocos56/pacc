@@ -16,7 +16,7 @@ def get_connection(database='mobile'):
         return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
                        password=getenv('MySQL_PW'))
     except OperationalError as err:
-        print(err)
+        print_err(err)
         sleep(60)
         return get_connection(database)
 
