@@ -1,5 +1,6 @@
 """MySQL数据库模块"""
 from os import getenv
+from datetime import datetime
 
 from pymysql import connect, OperationalError, ProgrammingError
 
@@ -16,7 +17,7 @@ def get_connection(database='mobile'):
         return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
                        password=getenv('MySQL_PW'))
     except OperationalError as err:
-        print_err(err)
+        print_err(f'{datetime.now()}: {err}')
         sleep(60)
         return get_connection(database)
 
