@@ -43,10 +43,12 @@ SELECT Left((`hosts`), 2), COUNT(1), MAX(last_run_time), MIN(last_run_date), MAX
 
 # 10. 混合查询
 
-1. 查询大于目标币值的账号信息（工号排序）
-2. 查询大于目标币值的账号信息（主机列表排序）
-3. 查询大于目标币值的账号信息（RT值排序）
-4. 查询今日下单进行回收鱼币操作的账号信息（回收时间排序）
+1. 结果1：查询大于目标币值的账号信息（工号排序）
+2. 结果2：查询大于目标币值的账号信息（主机列表排序）
+3. 结果3：查询大于目标币值的账号信息（RT值、币值排序）
+4. 结果4：查询大于目标币值的账号信息（上次回收时间排序）
+5. 结果5：查询大于目标币值的账号信息（币值排序）
+6. 结果6：查询今日下单进行回收鱼币操作的账号信息（回收时间排序）
 
 -- 变量设置
 SET @coins=30000, @HostsName='%', @Job_N='%', @price=0.0003, @target_date=CURDATE();
@@ -54,8 +56,8 @@ SET @coins=30000, @HostsName='%', @Job_N='%', @price=0.0003, @target_date=CURDAT
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName;
 -- 结果2：查询大于目标币值的账号信息（主机列表排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName ORDER BY `hosts`;
--- 结果3：查询大于目标币值的账号信息（RT值排序）
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName ORDER BY RT;
+-- 结果3：查询大于目标币值的账号信息（RT值、币值排序）
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName ORDER BY RT, coins DESC;
 -- 结果4：查询大于目标币值的账号信息（上次回收时间排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and coins >= @coins and `hosts` LIKE @HostsName ORDER BY last_buy_date;
 -- 结果5：查询大于目标币值的账号信息（币值排序）

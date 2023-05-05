@@ -327,8 +327,18 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         self.run_app(19)
         lduia_ins = LDUIA(self.ld_index)
         ldadb_ins = LDADB(self.ld_index)
+        job_number = LDConsole(self.ld_index).get_job_number()
+        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
+        update_idle_fish_ins = UpdateIdleFish(job_number)
         try:
             lduia_ins.click(content_desc='我的，未选中状态')
+            dic = lduia_ins.get_dict(class_='android.view.View', index='1')
+            nickname = str(dic['@content-desc']).split('\n')[0]
+            print([nickname], [retrieve_idle_fish_ins.nickname])
+            if nickname != retrieve_idle_fish_ins.nickname:
+                update_idle_fish_ins.update_nickname(nickname)
+                update_idle_fish_ins.update_last_update_nn_date(today)
+                update_idle_fish_ins.update_last_update_nn_time(get_now_time())
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             dst_path = r'\\10.1.1.2\aps\\'
@@ -382,9 +392,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         except FileNotFoundError as err:
             print_err(err)
             return self.get_pay_code(today, retry_cnt)
-        job_number = LDConsole(self.ld_index).get_job_number()
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        update_idle_fish_ins = UpdateIdleFish(job_number)
         update_idle_fish_ins.update_buy('NULL')
         update_idle_fish_ins = UpdateIdleFish(job_number)
         if 10000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:

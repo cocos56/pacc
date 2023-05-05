@@ -389,6 +389,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('if_mn')
 
     @property
+    def nickname(self):
+        """从数据库中读取闲鱼账号的昵称"""
+        return self.query('nickname')
+
+    @property
     def last_check_date(self):
         """从数据库中读取上次检查的日期"""
         return self.query('last_check_date')

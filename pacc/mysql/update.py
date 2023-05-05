@@ -312,7 +312,28 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('if_mn', if_mn))
 
-    def update_last_check_date(self, last_check_date: date.today()):
+    def update_nickname(self, nickname) -> None:
+        """更新设备上闲鱼账号的昵称
+
+        :param nickname: 闲鱼账号的新昵称
+        """
+        print(self.query('nickname', nickname))
+
+    def update_last_update_nn_date(self, last_update_nn_date: date.today()) -> None:
+        """更新设备的上次运行日期
+
+        :param last_update_nn_date: 新的上次更新昵称的日期
+        """
+        print(self.query('last_update_nn_date', last_update_nn_date))
+
+    def update_last_update_nn_time(self, last_update_nn_time: str) -> None:
+        """更新设备的上次更新昵称的时间
+
+        :param last_update_nn_time: 新上次更新昵称的时间
+        """
+        print(self.query('last_update_nn_time', last_update_nn_time))
+
+    def update_last_check_date(self, last_check_date: date.today()) -> None:
         """更新设备的上次检查日期
 
         :param last_check_date: 新的上次检查日期
