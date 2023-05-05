@@ -12,8 +12,13 @@ def get_connection(database='mobile'):
     :param database: 数据库名
     :return: 数据库的连接
     """
-    return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
-                   password=getenv('MySQL_PW'))
+    try:
+        return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
+                       password=getenv('MySQL_PW'))
+    except OperationalError as err:
+        print(err)
+        sleep(60)
+        return get_connection(database)
 
 
 class MySQL:
