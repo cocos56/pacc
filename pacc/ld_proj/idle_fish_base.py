@@ -374,6 +374,11 @@ class IdleFishBase(LDProj):
             print(f'设备{self.ld_index}上的账号需要添加收货地址')
             sleep(2 * 60)
             return False
+        if lduia_ins.get_dict(text='验证码拦截'):
+            print(f'{retrieve_idle_fish_ins.job_number}{retrieve_idle_fish_ins.role}于'
+                  f'{datetime.now()}确认购买后检测到有验证码')
+            sleep(5 * 60)
+            return False
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
         update_idle_fish_ins.update_last_buy_time(get_now_time())

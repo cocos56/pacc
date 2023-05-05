@@ -335,13 +335,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             dic = lduia_ins.get_dict(class_='android.view.View', index='1')
             nickname = str(dic['@content-desc']).split('\n', maxsplit=1)[0]
             print([nickname], [retrieve_idle_fish_ins.nickname])
-            if nickname == '昵称未设置':
-                print(f'nickname={nickname}, 请先设置好昵称')
-                return False
-            if nickname != retrieve_idle_fish_ins.nickname:
-                update_idle_fish_ins.update_nickname(nickname)
-                update_idle_fish_ins.update_last_update_nn_date(today)
-                update_idle_fish_ins.update_last_update_nn_time(get_now_time())
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
             dst_path = r'\\10.1.1.2\aps\\'
@@ -395,15 +388,24 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         except FileNotFoundError as err:
             print_err(err)
             return self.get_pay_code(today, retry_cnt)
-        update_idle_fish_ins.update_buy('NULL')
-        update_idle_fish_ins = UpdateIdleFish(job_number)
-        if 10000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
-            new_reminder_threshold = retrieve_idle_fish_ins.reminder_threshold + 10000
-            print(f'new reminder_threshold is {new_reminder_threshold}')
-            update_idle_fish_ins.update_reminder_threshold(new_reminder_threshold)
-        if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
-            update_idle_fish_ins.update_confirm(1)
-        LDConsole.quit(self.ld_index)
+        if nickname == '昵称未设置':
+            print(f'nickname={nickname}, 请先设置好昵称')
+            while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
+                ldadb_ins.press_back_key()
+        else:
+            update_idle_fish_ins.update_buy('NULL')
+            update_idle_fish_ins = UpdateIdleFish(job_number)
+            if 10000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
+                new_reminder_threshold = retrieve_idle_fish_ins.reminder_threshold + 10000
+                print(f'new reminder_threshold is {new_reminder_threshold}')
+                update_idle_fish_ins.update_reminder_threshold(new_reminder_threshold)
+            if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
+                update_idle_fish_ins.update_confirm(1)
+            if nickname != retrieve_idle_fish_ins.nickname:
+                update_idle_fish_ins.update_nickname(nickname)
+                update_idle_fish_ins.update_last_update_nn_date(today)
+            update_idle_fish_ins.update_last_update_nn_time(get_now_time())
+            LDConsole.quit(self.ld_index)
         files = listdir(dst_path)
         length = len(files)
         print(files, length)
