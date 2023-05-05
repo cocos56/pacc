@@ -333,8 +333,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         try:
             lduia_ins.click(content_desc='我的，未选中状态')
             dic = lduia_ins.get_dict(class_='android.view.View', index='1')
-            nickname = str(dic['@content-desc']).split('\n')[0]
+            nickname = str(dic['@content-desc']).split('\n', maxsplit=1)[0]
             print([nickname], [retrieve_idle_fish_ins.nickname])
+            if nickname == '昵称未设置':
+                print(f'nickname={nickname}, 请先设置好昵称')
+                return False
             if nickname != retrieve_idle_fish_ins.nickname:
                 update_idle_fish_ins.update_nickname(nickname)
                 update_idle_fish_ins.update_last_update_nn_date(today)
