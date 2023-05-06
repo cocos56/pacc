@@ -481,6 +481,7 @@ class IdleFishBase(LDProj):
                 return False
         except FileNotFoundError as err:
             print_err(err)
+            input()
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
         update_idle_fish_ins.update_last_buy_date(today)
         update_idle_fish_ins.update_last_buy_time(get_now_time())
