@@ -265,6 +265,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if retrieve_idle_fish_ins.last_buy_date == today:
                 print('今日已购买，无需重复购买')
                 cls(start_index).get_pay_code(today)
+                sleep(3 * 60)
                 start_index += 1
                 continue
             if retrieve_idle_fish_ins.reminder_threshold == 10000:
