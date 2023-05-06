@@ -40,7 +40,7 @@ class ResourceID:
 class SD(Project):
     """刷单类"""
 
-    instances = []
+    offline_devices = []
 
     # pylint: disable=too-many-return-statements, too-many-branches, too-many-statements
     def check(self):
@@ -50,9 +50,11 @@ class SD(Project):
         """
         show_datetime('检查', start_br=True)
         if datetime.now().hour == 3:
-            print('当前正值自动开关机时段，，无需额外检查\n')
+            print('当前正值自动开关机时段，无需额外检查\n')
             return True
-        self.adb_ins.keep_online()
+        if not self.adb_ins.is_online():
+            print('当前设备不在线，无法检查')
+            self.__class__.offline_devices.append(self.adb_ins.dbr.serial_num)
         current_focus = self.adb_ins.get_current_focus()
         if TB_ROOT in current_focus:
             print('淘宝正在运行，无需额外检查\n')
@@ -140,9 +142,10 @@ class SD(Project):
 
         :param devices_sn: 多个设备的编号
         """
-        for device_sn in devices_sn:
-            cls.instances.append(cls(device_sn))
         while True:
-            for i in cls.instances:
-                i.check()
+            cls.offline_devices.clear()
+            for device_sn in devices_sn:
+                cls(device_sn).check()
+            if cls.offline_devices:
+                print(f'离线设备：{cls.offline_devices}')
             sleep(600)

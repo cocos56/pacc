@@ -277,6 +277,13 @@ class ADB:  # pylint: disable=too-many-public-methods
             print(f'{self.dbr.serial_num}不在线，该设备的ID为：{self.dbr.id_num}，请核对！')
             input()
 
+    def is_online(self):
+        """判断当前设备是否在线
+
+        :return: 在线返回True，否则返回False
+        """
+        return self.dbr.id_num in get_online_devices()
+
     def open_app(self, activity):
         """打开APP
 

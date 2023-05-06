@@ -1,0 +1,1 @@
+scrcpy -s 2a1743b0 --window-title 001001005sd_淮Mi4_蒋厅|
