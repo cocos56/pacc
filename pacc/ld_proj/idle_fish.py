@@ -332,16 +332,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         job_number = LDConsole(self.ld_index).get_job_number()
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         update_idle_fish_ins = UpdateIdleFish(job_number)
+        if Activity.Launcher in ldadb_ins.get_current_focus():
+            return self.get_pay_code(today, retry_cnt, not_found)
         try:
             lduia_ins.click(content_desc='我的，未选中状态')
             dic = lduia_ins.get_dict(class_='android.view.View', index='1')
             ldadb_ins.get_current_focus()
-            try:
-                nickname = str(dic['@content-desc']).split('\n', maxsplit=1)[0]
-            except TypeError as err:
-                print_err(err)
-                input()
-                return self.get_pay_code(today, retry_cnt, not_found)
+            nickname = str(dic['@content-desc']).split('\n', maxsplit=1)[0]
             print([nickname], [retrieve_idle_fish_ins.nickname])
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
