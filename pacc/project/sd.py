@@ -142,10 +142,11 @@ class SD(Project):
 
         :param devices_sn: 多个设备的编号
         """
+        instances = [cls(device_sn) for device_sn in devices_sn]
         while True:
             cls.offline_devices.clear()
-            for device_sn in devices_sn:
-                cls(device_sn).check()
+            for ins in instances:
+                ins.check()
             if cls.offline_devices:
                 print(f'离线设备：{cls.offline_devices}')
             sleep(600)
