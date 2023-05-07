@@ -1,0 +1,1 @@
+scrcpy -s 18b2afbc --window-title 001001006sd_淮Mi4_张帅康|
