@@ -53,6 +53,7 @@ class IdleFishSalary4NoPaymentPassword:
             res = RetrieveDispatchRecords.query_base_payee_group_records()
         elif level == 'middle':
             res = RetrieveDispatchRecords.query_middle_payee_group_records()
+        # pylint: disable=duplicate-code
         res_dic = {}
         for names, payee in res:
             res_dic.update({payee: str(names).split('||')})
