@@ -377,6 +377,7 @@ class RetrieveRecordDispatchBase:
         """
         self.job_number = job_number
 
+    # pylint: disable=too-many-arguments
     def query(self, field, table, aimed_field='Job_N', value='', database=Record):
         """查询函数：查询数据
 
@@ -400,6 +401,7 @@ class RetrieveRecordDispatchBase:
 class RetrieveRecordDispatch(RetrieveRecordDispatchBase):  # pylint: disable=too-many-public-methods
     """该类用于从record数数据库中的record_dispatch表中查询单项记录的某个字段数据"""
 
+    # pylint: disable=too-many-arguments
     def query(
             self, field, table='record_dispatch', aimed_field='Job_N', value='', database=Account):
         """查询函数：查询数据

@@ -69,7 +69,7 @@ class IdleFishSalary4NoPaymentPassword:
         return cls.get_payee_group_records('middle')
 
     @classmethod
-    def get_payee_dic(cls):
+    def get_payee_dic(cls):  # pylint: disable=too-many-locals, too-many-branches
         """获取所有人员账号汇总后的字典信息"""
         base_payee_group_records = cls.get_base_payee_group_records()
         middle_payee_group_records = cls.get_middle_payee_group_records()
@@ -161,6 +161,7 @@ class IdleFishSalary4NoPaymentPassword:
                f'收货：{record_dic.get("dispatch_consignee")}\n'
         return info
 
+    # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
     def get_payee_message(cls):
         """获取所有人员的通知消息"""
