@@ -11,7 +11,10 @@ class IdleFishSalary4NoPaymentPassword:
 
     @classmethod
     def get_no_payee_jns(cls):
-        """获取没有收款人的记录"""
+        """获取没有收款人的记录
+
+        :return: 没有收款人的记录
+        """
         records = []
         for user_name, dispatch_consignee, base_payee, middle_payee in RetrieveDispatchRecords. \
                 query_no_payee_records():
@@ -26,7 +29,7 @@ class IdleFishSalary4NoPaymentPassword:
         return records
 
     @classmethod
-    def update_no_payee_records(cls):
+    def update_no_payee_records(cls) -> None:
         """更新没有收款人的记录"""
         for job_number in cls.get_no_payee_jns():
             retrieve_ins = RetrieveIdleFish(job_number)
@@ -146,11 +149,16 @@ class IdleFishSalary4NoPaymentPassword:
 
     @classmethod
     def get_single_info(cls, index, record_dic):
-        """获取单条信息"""
+        """获取单条信息
+
+        :param index: 索引
+        :param record_dic: 单条记录字典
+        :return: 单条信息
+        """
         info = f'序号：{str(index).zfill(3)}，工号：{record_dic.get("job_number")}' \
                f'{record_dic.get("role")}，账号：{record_dic.get("user_name")}，' \
                f'手机：{record_dic.get("if_mn")}，鱼币：{record_dic.get("buy_coins") // 10000}万，' \
-               f'收货：{record_dic.get("if_mn")}\n'
+               f'收货：{record_dic.get("dispatch_consignee")}\n'
         return info
 
     @classmethod

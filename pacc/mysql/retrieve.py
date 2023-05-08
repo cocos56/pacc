@@ -389,7 +389,7 @@ class RetrieveRecordDispatchBase:
         """
         cmd = f'select `{field}` from `{table}` where `{aimed_field}`={value}' \
               f' and confirm_date = CURDATE()'
-        print(cmd)
+        # print(cmd)
         res = database.query(cmd)
         database.commit()
         if len(res) == 1:
