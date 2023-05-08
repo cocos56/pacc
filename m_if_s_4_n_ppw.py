@@ -62,6 +62,7 @@ class IdleFishSalary4NoPaymentPassword:
     @classmethod
     def get_base_payee_group_records(cls):
         """获取所有基层人员账号分组汇总后的信息"""
+        # pylint: disable=duplicate-code
         return cls.get_payee_group_records()
 
     @classmethod
@@ -116,7 +117,7 @@ class IdleFishSalary4NoPaymentPassword:
                        'buy_coins': retrieve_ins.buy_coins,
                        'dispatch_consignee': retrieve_ins.dispatch_consignee,
                        'confirm_date': retrieve_ins.confirm_date,
-                       'level': 'base_mid',
+                       'level': 'base',
                        }
                 dic_li.append(dic)
             if name not in res_dic:
@@ -134,7 +135,7 @@ class IdleFishSalary4NoPaymentPassword:
                        'buy_coins': retrieve_ins.buy_coins,
                        'dispatch_consignee': retrieve_ins.dispatch_consignee,
                        'confirm_date': retrieve_ins.confirm_date,
-                       'level': 'base_mid',
+                       'level': 'middle',
                        }
                 dic_li.append(dic)
             if name not in res_dic:
