@@ -635,3 +635,17 @@ class UpdateRecordDispatch(UpdateRecordDispatchBase):
         :param job_number: 新的工号信息
         """
         print(self.query('Job_N', job_number))
+
+    def update_base_payee(self, base_payee: str) -> None:
+        """更新设备在数据库中的基层收款人信息
+
+        :param base_payee: 新的基层收款人
+        """
+        print(self.query('base_payee', base_payee))
+
+    def update_middle_payee(self, middle_payee: str) -> None:
+        """更新设备在数据库中的中层收款人信息
+
+        :param middle_payee: 新的中层收款人信息
+        """
+        print(self.query('middle_payee', middle_payee))

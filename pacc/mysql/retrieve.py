@@ -367,6 +367,83 @@ class RetrieveIdleFishByUsername(RetrieveIdleFishByUsernameBase):
         return job_number
 
 
+class RetrieveRecordDispatchBase:
+    """该类用于为从record数据库中的record_dispatch表中查询数据提供基础支持"""
+
+    def __init__(self, job_number):
+        """构造函数
+
+        :param job_number: 工号
+        """
+        self.job_number = job_number
+
+    def query(self, field, table, aimed_field='Job_N', value='', database=Record):
+        """查询函数：查询数据
+
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
+        :return: 查询到的结果（单条）
+        """
+        cmd = f'select `{field}` from `{table}` where `{aimed_field}`={value}' \
+              f' and confirm_date = CURDATE()'
+        print(cmd)
+        res = database.query(cmd)
+        database.commit()
+        if len(res) == 1:
+            return res[0]
+        return res
+
+
+class RetrieveRecordDispatch(RetrieveRecordDispatchBase):  # pylint: disable=too-many-public-methods
+    """该类用于从record数数据库中的record_dispatch表中查询单项记录的某个字段数据"""
+
+    def query(
+            self, field, table='record_dispatch', aimed_field='Job_N', value='', database=Account):
+        """查询函数：查询数据
+
+        :param field: 待查询数据的字段名
+        :param table: 待匹配的表名
+        :param aimed_field: 待匹配的目标字段名
+        :param value: 待匹配的值
+        :param database: 待匹配的数据库名
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table, aimed_field, f"'{self.job_number}'")
+
+    @property
+    def role(self):
+        """从数据库中读取角色的信息"""
+        return self.query('role')
+
+    @property
+    def user_name(self):
+        """从数据库中读取闲鱼账号的会员名"""
+        return self.query('user_name')
+
+    @property
+    def if_mn(self):
+        """从数据库中读取闲鱼绑定的手机号（Idle Fish Mobile Number）"""
+        return self.query('if_mn')
+
+    @property
+    def buy_coins(self):
+        """从数据库中读取购买时所消耗的闲鱼币"""
+        return self.query('buy_coins')
+
+    @property
+    def dispatch_consignee(self):
+        """从数据库中读取发货时的收货人信息"""
+        return self.query('dispatch_consignee')
+
+    @property
+    def confirm_date(self):
+        """从数据库中读取确认收货的日期"""
+        return self.query('confirm_date')
+
+
 class RetrieveIdleFishBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中查询数据提供基础支持"""
 
@@ -388,7 +465,7 @@ class RetrieveIdleFishBase(Retrieve):
         :param database: 待匹配的数据库名
         :return: 查询到的结果（单条）
         """
-        return super().query(field, table, aimed_field, f"'{self.job_number}'", Account)
+        return super().query(field, table, aimed_field, f"'{self.job_number}'", database)
 
 
 class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public-methods
@@ -647,6 +724,43 @@ class RetrieveDispatchRecords:
                 res = list(res)
         # print(res)
         return res
+
+    @classmethod
+    def query_payee_group_records(cls, group_by='base_payee', database=Record):
+        """查询所有人员账号分组汇总后的记录函数
+
+        :param group_by: 分组依据的字段名
+        :param database: 数据库名
+        :return: 查询到的结果
+        """
+        cmd = f'SELECT GROUP_CONCAT(Job_N SEPARATOR "||"), {group_by} FROM `record_dispatch` ' \
+              f'WHERE confirm_date = CURDATE() and pay_pw="AAAAAA" GROUP BY {group_by} ' \
+              f'ORDER BY `Job_N`;'
+        # print(cmd)
+        res = database.query(cmd)
+        if res:
+            if isinstance(res[0], str):
+                res = [res]
+            else:
+                res = list(res)
+        # print(res)
+        return res
+
+    @classmethod
+    def query_base_payee_group_records(cls):
+        """查询所有基层人员账号分组汇总后的记录函数
+
+        :return: 查询到的结果
+        """
+        return cls.query_payee_group_records()
+
+    @classmethod
+    def query_middle_payee_group_records(cls):
+        """查询所有中层人员账号分组汇总后的记录函数
+
+        :return: 查询到的结果
+        """
+        return cls.query_payee_group_records('middle_payee')
 
 
 class RetrieveAccount(Retrieve):
