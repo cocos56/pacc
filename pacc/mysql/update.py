@@ -1,7 +1,7 @@
 """MySQL数据库包的改模块"""
 from datetime import date
 
-from .mysql import Mobile, Account
+from .mysql import Mobile, Account, Record
 from .retrieve import RetrieveKsjsb, RetrieveMobileInfo
 
 
@@ -548,7 +548,7 @@ class UpdateIdleFishStaffBase:
         return res
 
 
-class UpdateIdleFishStaff(UpdateIdleFishStaffBase):  # pylint: disable=too-many-public-methods
+class UpdateIdleFishStaff(UpdateIdleFishStaffBase):
     """该类用于修改account数据库中的idle_fish_staff表中的数据"""
 
     def query(self, field, value, table='idle_fish_staff'):
@@ -581,3 +581,50 @@ class UpdateIdleFishStaff(UpdateIdleFishStaffBase):  # pylint: disable=too-many-
         :param last_salary_time: 上次发工资时的时间
         """
         print(self.query('last_salary_time', last_salary_time))
+
+
+class UpdateRecordDispatchBase:
+    """该类用于为修改record数据库中的record_dispatch表中的数据提供基础支持"""
+
+    def __init__(self, user_name):
+        """构造函数：初始化改类的对象
+
+        :param user_name: 用户名
+        """
+        self.user_name = user_name
+
+    def query(self, field, value, table):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        cmd = f'update `{table}` set `{field}` = "{value}" where `user_name` = "{self.user_name}"' \
+              f' and confirm_date = CURDATE()'
+        print(cmd)
+        res = Record.query(cmd)
+        Record.commit()
+        return res
+
+
+class UpdateRecordDispatch(UpdateRecordDispatchBase):
+    """更新发货记录类：该类用于修改record数据库中的record_dispatch表中的数据"""
+
+    def query(self, field, value, table='record_dispatch'):
+        """查询函数：修改数据
+
+        :param field: 字段名
+        :param value: 新值（用于替换原有的旧值）
+        :param table: 表名
+        :return: 修改的结果
+        """
+        return super().query(field, value, table)
+
+    def update_role(self, role: str) -> None:
+        """更新设备在数据库中的角色信息
+
+        :param role: 上次发工资时的钱数
+        """
+        print(self.query('role', role))

@@ -309,8 +309,8 @@ class RetrieveIdleFishByConsignee(RetrieveIdleFishByConsigneeBase):
         if not job_number:
             print(f'未找到上次购买时的收货人：{self.last_buy_consignee}所对应的工号，请确认')
             input()
-        else:
-            return job_number
+            return False
+        return job_number
 
 
 class RetrieveIdleFishByUsernameBase(Retrieve):
@@ -363,9 +363,8 @@ class RetrieveIdleFishByUsername(RetrieveIdleFishByUsernameBase):
         job_number = self.query('Job_N')
         if not job_number:
             print(f'未找到用户名：{self.user_name}所对应的工号，请确认')
-            input()
-        else:
-            return job_number
+            return False
+        return job_number
 
 
 class RetrieveIdleFishBase(Retrieve):
@@ -627,8 +626,8 @@ class RetrieveIdleFishRecords:
         return cls.query_payee_group_records('middle_payee')
 
 
-class RetrieveIdleFishDispatchRecords:
-    """查询闲鱼发货记录类：该类用于从record数据库中的record_dispatch表中查询符合条件的所有记录"""
+class RetrieveDispatchRecords:
+    """查询发货记录类：该类用于从record数据库中的record_dispatch表中查询符合条件的所有记录"""
     @classmethod
     def query_no_payee_records(cls, database=Record):
         """查询所有需要创建的记录函数
