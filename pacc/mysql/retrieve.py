@@ -1,5 +1,5 @@
 """MySQL数据库包的查模块"""
-from .mysql import MySQL, Mobile, Account
+from .mysql import MySQL, Mobile, Account, Record
 
 
 class RetrieveSD:
@@ -305,7 +305,67 @@ class RetrieveIdleFishByConsignee(RetrieveIdleFishByConsigneeBase):
     @property
     def job_number(self):
         """从数据库中读取工号的信息"""
-        return self.query('Job_N')
+        job_number = self.query('Job_N')
+        if not job_number:
+            print(f'未找到上次购买时的收货人：{self.last_buy_consignee}所对应的工号，请确认')
+            input()
+        else:
+            return job_number
+
+
+class RetrieveIdleFishByUsernameBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中通过用户名查询数据提供基础支持"""
+
+    def __init__(self, user_name):
+        """构造函数
+
+        :param user_name: 用户名
+        """
+        self.user_name = user_name
+
+    # pylint: disable=too-many-arguments
+    def query(self, field, table, aimed_field='user_name', value='', database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        if not value:
+            value = self.user_name
+        return super().query(field, table, aimed_field, f"'{value}'", database)
+
+
+# pylint: disable=too-many-public-methods
+class RetrieveIdleFishByUsername(RetrieveIdleFishByUsernameBase):
+    """通过用户名查询闲鱼数据类：该类用于从account数据库中的idle_fish表中通过用户名查询单项记录的某个字段数据"""
+    # pylint: disable=too-many-arguments
+    def query(
+            self, field, table='idle_fish', aimed_field='user_name', value='',
+            database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
+
+    @property
+    def job_number(self):
+        """从数据库中读取工号的信息"""
+        job_number = self.query('Job_N')
+        if not job_number:
+            print(f'未找到用户名：{self.user_name}所对应的工号，请确认')
+            input()
+        else:
+            return job_number
 
 
 class RetrieveIdleFishBase(Retrieve):
@@ -565,6 +625,29 @@ class RetrieveIdleFishRecords:
         :return: 查询到的结果
         """
         return cls.query_payee_group_records('middle_payee')
+
+
+class RetrieveIdleFishDispatchRecords:
+    """查询闲鱼发货记录类：该类用于从record数据库中的record_dispatch表中查询符合条件的所有记录"""
+    @classmethod
+    def query_no_payee_records(cls, database=Record):
+        """查询所有需要创建的记录函数
+
+        :param database: 数据库名
+        :return: 查询到的结果
+        """
+        cmd = 'select dispatch_date, Job_N, role, user_name, dispatch_consignee, base_payee, ' \
+              'middle_payee from ' \
+              '`record_dispatch` where confirm_date = CURDATE() ORDER BY Job_N'
+        print(cmd)
+        res = database.query(cmd)
+        if res:
+            if isinstance(res[0], str):
+                res = [res]
+            else:
+                res = list(res)
+        # print(res)
+        return res
 
 
 class RetrieveAccount(Retrieve):
