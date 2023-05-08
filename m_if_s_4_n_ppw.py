@@ -223,6 +223,7 @@ class IdleFishSalary4NoPaymentPassword:
                     if record.get('level') == 'base':
                         index += 1
                         sum_info += cls.get_single_info(index, record)
+            # pylint: disable=duplicate-code
             sum_info += '\n'
             sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{today}'
             payee_cnt += 1
