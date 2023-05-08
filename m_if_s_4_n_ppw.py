@@ -7,3 +7,7 @@ class IdleFishSalary4NoPaymentPassword:
     @classmethod
     def get_no_payee_records(cls):
         """获取没有收款人的记录"""
+
+    @classmethod
+    def update_no_payee_records(cls):
+        """更新没有收款人的记录"""
