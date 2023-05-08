@@ -635,7 +635,7 @@ class RetrieveDispatchRecords:
         :param database: 数据库名
         :return: 查询到的结果
         """
-        cmd = 'select dispatch_date, Job_N, role, user_name, dispatch_consignee, base_payee, ' \
+        cmd = 'select user_name, dispatch_consignee, base_payee, ' \
               'middle_payee from ' \
               '`record_dispatch` where confirm_date = CURDATE() ORDER BY Job_N'
         print(cmd)

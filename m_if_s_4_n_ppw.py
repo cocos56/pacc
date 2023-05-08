@@ -1,6 +1,6 @@
 """针对于没有支付密码的闲鱼工资程序入口模块"""
 from pacc.mysql import RetrieveDispatchRecords, RetrieveIdleFishByUsername, \
-    RetrieveIdleFishByConsignee, RetrieveIdleFish
+    RetrieveIdleFishByConsignee, RetrieveIdleFish, UpdateRecordDispatch
 
 
 class IdleFishSalary4NoPaymentPassword:
@@ -10,11 +10,8 @@ class IdleFishSalary4NoPaymentPassword:
     def get_no_payee_jns(cls):
         """获取没有收款人的记录"""
         records = []
-        for dispatch_date, job_number, role, user_name, dispatch_consignee, base_payee, \
-                middle_payee in RetrieveDispatchRecords.query_no_payee_records():
-            # print(
-            #     dispatch_date, Job_N, role, user_name, dispatch_consignee,
-            #     base_payee, middle_payee)
+        for user_name, dispatch_consignee, base_payee, middle_payee in RetrieveDispatchRecords.\
+                query_no_payee_records():
             if not base_payee or not middle_payee:
                 un_jn = RetrieveIdleFishByUsername(user_name).job_number
                 dc_jn = RetrieveIdleFishByConsignee(dispatch_consignee).job_number
@@ -36,6 +33,9 @@ class IdleFishSalary4NoPaymentPassword:
                       base_payee, middle_payee)
                 print('还未设置收款人信息，请先设置')
                 input()
+            update_ins = UpdateRecordDispatch(retrieve_ins.user_name)
+            update_ins.update_role(retrieve_ins.role)
+            update_ins.update_job_number(job_number)
 
 
 IdleFishSalary4NoPaymentPassword.update_no_payee_records()

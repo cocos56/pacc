@@ -625,6 +625,13 @@ class UpdateRecordDispatch(UpdateRecordDispatchBase):
     def update_role(self, role: str) -> None:
         """更新设备在数据库中的角色信息
 
-        :param role: 上次发工资时的钱数
+        :param role: 新的角色信息
         """
         print(self.query('role', role))
+
+    def update_job_number(self, job_number: str) -> None:
+        """更新设备在数据库中的工号信息
+
+        :param job_number: 新的工号信息
+        """
+        print(self.query('Job_N', job_number))
