@@ -74,6 +74,7 @@ class IdleFishSalary4NoPaymentPassword:
     @classmethod
     def get_payee_dic(cls):  # pylint: disable=too-many-locals, too-many-branches
         """获取所有人员账号汇总后的字典信息"""
+        # pylint: disable=duplicate-code
         base_payee_group_records = cls.get_base_payee_group_records()
         middle_payee_group_records = cls.get_middle_payee_group_records()
         base_mid_dic = {}
@@ -118,7 +119,6 @@ class IdleFishSalary4NoPaymentPassword:
                        'buy_coins': retrieve_ins.buy_coins,
                        'dispatch_consignee': retrieve_ins.dispatch_consignee,
                        'confirm_date': retrieve_ins.confirm_date,
-                       # pylint: disable=duplicate-code
                        'level': 'base',
                        }
                 dic_li.append(dic)
