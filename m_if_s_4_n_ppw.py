@@ -68,6 +68,7 @@ class IdleFishSalary4NoPaymentPassword:
     @classmethod
     def get_middle_payee_group_records(cls):
         """获取所有中层人员账号分组汇总后的信息"""
+        # pylint: disable=duplicate-code
         return cls.get_payee_group_records('middle')
 
     @classmethod
@@ -117,6 +118,7 @@ class IdleFishSalary4NoPaymentPassword:
                        'buy_coins': retrieve_ins.buy_coins,
                        'dispatch_consignee': retrieve_ins.dispatch_consignee,
                        'confirm_date': retrieve_ins.confirm_date,
+                       # pylint: disable=duplicate-code
                        'level': 'base',
                        }
                 dic_li.append(dic)
@@ -167,6 +169,7 @@ class IdleFishSalary4NoPaymentPassword:
     @classmethod
     def get_payee_message(cls):
         """获取所有人员的通知消息"""
+        # pylint: disable=duplicate-code
         payee_group_records = cls.get_payee_dic()
         payee_cnt = 0
         send_cnt = 0
@@ -224,7 +227,6 @@ class IdleFishSalary4NoPaymentPassword:
                     if record.get('level') == 'base':
                         index += 1
                         sum_info += cls.get_single_info(index, record)
-            # pylint: disable=duplicate-code
             sum_info += '\n'
             sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{today}'
             payee_cnt += 1
