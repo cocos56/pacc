@@ -68,13 +68,11 @@ class SD(Project):
                 self.reopen_app()
                 self.__class__.home_devices.remove(self.serial_num)
                 return self.check()
-            else:
-                print(f'第一次检测到设备{self.serial_num}桌面正在运行，无需额外检查\n')
-                self.__class__.home_devices.append(self.serial_num)
-                return True
-        else:
-            if self.serial_num in self.__class__.home_devices:
-                self.__class__.home_devices.remove(self.serial_num)
+            print(f'第一次检测到设备{self.serial_num}桌面正在运行，无需额外检查\n')
+            self.__class__.home_devices.append(self.serial_num)
+            return True
+        if self.serial_num in self.__class__.home_devices:
+            self.__class__.home_devices.remove(self.serial_num)
         if 'mCurrentFocus=null' in current_focus:
             print('无法正常获取当前正在运行的程序信息，无法进行检查\n')
             return False
