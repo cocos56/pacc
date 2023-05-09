@@ -25,9 +25,9 @@ def send_single_wechat_msg(person, single_msg):
     """
     # 清空剪切板并将目标写入到剪切板
     pyperclip.copy("")
-    time.sleep(0.1)
+    time.sleep(0.5)
     pyperclip.copy(person)
-    time.sleep(0.1)
+    time.sleep(0.5)
     # 打开微信窗
     pyautogui.hotkey("ctrl", "alt", "w")
     time.sleep(1)
@@ -42,8 +42,9 @@ def send_single_wechat_msg(person, single_msg):
     time.sleep(1)
     # 清空剪切板并将未点检信息写入到剪切板
     pyperclip.copy("")
+    time.sleep(0.5)
     pyperclip.copy(single_msg)
-    time.sleep(0.1)
+    time.sleep(0.5)
     # 使用快捷键ctrl+v将信息粘贴到微信输入框，按回车发送消息
     pyautogui.hotkey("ctrl", "v")
     time.sleep(1)
