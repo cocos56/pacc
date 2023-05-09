@@ -4,6 +4,7 @@ from datetime import date
 from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff, \
     UpdateIdleFishStaff
 from pacc.tools import create_dir, get_now_time, send_wechat_msg
+from pacc.config import UnitPrice
 
 
 class IdleFishSalary:
@@ -131,15 +132,19 @@ class IdleFishSalary:
             # print(base_mid_coins, base_coins, middle_coins)
             dir_path = f'D:/0/computer/闲鱼挂机/结账信息/{str(date.today()).replace("-", "_")}'
             create_dir(dir_path)
-            sum_money = base_mid_coins//10000*3+base_coins//10000*2+middle_coins//10000*1
+            sum_money = UnitPrice.get_base_mid_money(base_mid_coins) + UnitPrice.get_base_money(
+                base_coins) + UnitPrice.get_middle_money(middle_coins)
             sum_info = f'收款人：{name}，总钱数：{sum_money}元'
             txt = f'{dir_path}/{name}_{sum_money}元.txt'
             if base_mid_coins != 0:
-                sum_info += f'，中基层鱼币共：{base_mid_coins//10000}万（{base_mid_coins//10000*3}元）'
+                sum_info += f'，中基层鱼币共：{base_mid_coins // 10000}万' \
+                            f'（{UnitPrice.get_base_mid_money(base_mid_coins)}元）'
             if middle_coins != 0:
-                sum_info += f'，中层鱼币共：{middle_coins//10000}万（{middle_coins//10000*1}元）'
+                sum_info += f'，中层鱼币共：{middle_coins // 10000}万' \
+                            f'（{UnitPrice.get_middle_money(middle_coins)}元）'
             if base_coins != 0:
-                sum_info += f'，基层鱼币共：{base_coins//10000}万（{base_coins//10000*2}元）'
+                sum_info += f'，基层鱼币共：{base_coins // 10000}万' \
+                            f'（{UnitPrice.get_base_money(base_coins)}元）'
             sum_info += '。\n\n'
             if base_mid_coins != 0:
                 sum_info += '【中基层鱼币账号信息详情如下】\n'
@@ -150,7 +155,7 @@ class IdleFishSalary:
                         sum_info += f'序号：{str(index).zfill(3)}，工号：{record.get("job_number")}' \
                                     f'{record.get("role")}，账号：{record.get("user_name")}' \
                                     f'，手机：{record.get("if_mn")}' \
-                                    f'，鱼币：{record.get("last_buy_coins")//10000}万\n'
+                                    f'，鱼币：{record.get("last_buy_coins") // 10000}万\n'
             if middle_coins != 0:
                 if base_mid_coins != 0:
                     sum_info += '\n'
@@ -162,7 +167,7 @@ class IdleFishSalary:
                         sum_info += f'序号：{str(index).zfill(3)}，工号：{record.get("job_number")}' \
                                     f'{record.get("role")}，账号：{record.get("user_name")}' \
                                     f'，手机：{record.get("if_mn")}' \
-                                    f'，鱼币：{record.get("last_buy_coins")//10000}万\n'
+                                    f'，鱼币：{record.get("last_buy_coins") // 10000}万\n'
             if base_coins != 0:
                 if base_mid_coins != 0 or middle_coins != 0:
                     sum_info += '\n'
@@ -174,7 +179,7 @@ class IdleFishSalary:
                         sum_info += f'序号：{str(index).zfill(3)}，工号：{record.get("job_number")}' \
                                     f'{record.get("role")}，账号：{record.get("user_name")}' \
                                     f'，手机：{record.get("if_mn")}' \
-                                    f'，鱼币：{record.get("last_buy_coins")//10000}万\n'
+                                    f'，鱼币：{record.get("last_buy_coins") // 10000}万\n'
             sum_info += '\n'
             sum_info += f'收款人：{name}，总钱数：{sum_money}元，日期：{today}'
             payee_cnt += 1

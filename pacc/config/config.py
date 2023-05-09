@@ -5,6 +5,40 @@ from os import chdir
 LDC = 'ldconsole.exe '
 
 
+class UnitPrice:
+    """闲鱼币单价类"""
+    base_mid = 2.5
+    base = 1.5
+    middle = 1.0
+
+    @classmethod
+    def get_base_mid_money(cls, base_mid_coins):
+        """获取中基层鱼币所对应的的钱数
+
+        :param base_mid_coins: 中基层的鱼币
+        :return: 中基层鱼币所对应的的钱数
+        """
+        return base_mid_coins // 10000 * cls.base_mid
+
+    @classmethod
+    def get_base_money(cls, base_coins):
+        """获取基层鱼币所对应的的钱数
+
+        :param base_coins: 基层的鱼币
+        :return: 基层鱼币所对应的的钱数
+        """
+        return base_coins // 10000 * cls.base
+
+    @classmethod
+    def get_middle_money(cls, middle_coins):
+        """获取中层鱼币所对应的的钱数
+
+        :param middle_coins: 中层的鱼币
+        :return: 中层鱼币所对应的的钱数
+        """
+        return middle_coins // 10000 * cls.middle
+
+
 class Language(Enum):
     """语言枚举类"""
     CH = 'Chinese'
