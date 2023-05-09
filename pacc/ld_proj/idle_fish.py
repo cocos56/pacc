@@ -259,7 +259,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 start_index += 1
                 continue
             if retrieve_idle_fish_ins.login:
-                print(f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
+                print(
+                    f'设备{start_index}上的账号已掉线，login={retrieve_idle_fish_ins.login}，无法购买')
                 start_index += 1
                 continue
             if retrieve_idle_fish_ins.last_buy_date == today:
@@ -359,9 +360,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     lduia_ins.xml = ''
                     sleep(2)
                 if not lduia_ins.click(text='找朋友帮忙付', xml=lduia_ins.xml):
-                    if not lduia_ins.click(text='卡', xml=lduia_ins.xml) and not lduia_ins.\
-                            click(text='余额', xml=lduia_ins.xml) and not lduia_ins.\
-                            click(text='支付宝小荷包', xml=lduia_ins.xml) and lduia_ins.\
+                    if not lduia_ins.click(text='卡', xml=lduia_ins.xml) and not lduia_ins. \
+                            click(text='余额', xml=lduia_ins.xml) and not lduia_ins. \
+                            click(text='支付宝小荷包', xml=lduia_ins.xml) and lduia_ins. \
                             get_dict(text='0.00', xml=lduia_ins.xml):
                         return False
                     sleep(1)
@@ -387,7 +388,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     shutil.copy(src_png, dst_png)
                 if lduia_ins.get_dict(text='帮我付款'):
                     if not qr_codes and retry_cnt < 16:
-                        return self.get_pay_code(today, retry_cnt=retry_cnt+1)
+                        return self.get_pay_code(today, retry_cnt=retry_cnt + 1)
                 else:
                     return self.get_pay_code(today, retry_cnt)
         except FileNotFoundError as err:
@@ -525,7 +526,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             except FileNotFoundError as err:
                 print_err(err)
             start_index += 1
-            sleep(1*60)
+            sleep(1 * 60)
 
     @classmethod
     def top_up_mobile(cls, start_index, end_index) -> None:
@@ -778,7 +779,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         current_focus = LDADB(index).get_current_focus()
         if cls(index).should_restart(current_focus):
             sleep_time += 30
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if cls(index).is_logout('检查工作', current_focus):
             return False
         lduia_ins = LDUIA(index)
@@ -799,21 +800,21 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
-                return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+                return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if lduia_ins.get_dict(content_desc='奖励：闲鱼币x', xml=lduia_ins.xml):
             lduia_ins.tap((264, 709), 6)
         elif lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         elif lduia_ins.get_dict(content_desc=r'HI，店长 ', xml=lduia_ins.xml):
             lduia_ins.tap((266, 599), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         elif lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店', xml=lduia_ins.xml):
             lduia_ins.tap((283, 763), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
             ex_p = int(dic['@content-desc'][5:])
@@ -821,11 +822,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print('正在尝试关闭因生日提醒窗导致的错误')
             lduia_ins.tap((271, 765), 3)  # 关闭生日礼物
             print_err(err)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         for _ in range(int(ex_p / 200)):
             lduia_ins.tap((276, 600), 0.01)
         if ex_p >= 200:
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.tap((267, 642), 3)
@@ -834,7 +835,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
         except FileNotFoundError as err:
             print_err(err)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         try:
             coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
@@ -842,7 +843,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             coins = int(coins)
         except (KeyError, TypeError, ValueError) as err:
             print_err(err)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time+30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if coins != retrieve_idle_fish_ins.coins:
             update_idle_fish_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
@@ -873,12 +874,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         return True
 
     @classmethod
-    def check_after_run(cls, start_index, end_index, break_flag=False):
+    def check_after_run(cls, start_index, end_index, break_flag=False, reserved_gbs=-1):
         """从数据库中读取到运行过的状态之后再进行检查
 
         :param start_index: 起始索引值（包含）
         :param end_index: 终止索引值（包含）
         :param break_flag: 执行完之后是否终止执行
+        :param reserved_gbs: 保留的GB数
         """
         src_start_index = start_index
         start_day = date.today()
@@ -898,6 +900,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                       f'{datetime.now()}\n')
                 if datetime.now().hour >= 23 or all_done:
                     start_day = date.today() + timedelta(days=1)
+                    if all_done and reserved_gbs != -1:
+                        cls.backups(start_index, end_index, reserved_gbs=reserved_gbs)
                 src_start_index = start_index = 1
                 all_done = True
                 if break_flag:
@@ -960,9 +964,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             self.run_app(sleep_time)
-            return self.run_task_on_target_device(today, sleep_time=sleep_time+30)
+            return self.run_task_on_target_device(today, sleep_time=sleep_time + 30)
         if self.should_restart():
-            return self.run_task_on_target_device(today, sleep_time=sleep_time+30)
+            return self.run_task_on_target_device(today, sleep_time=sleep_time + 30)
         return True
 
     @classmethod
@@ -1034,4 +1038,4 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 start_index = src_start_index = 1
                 start_day = date.today() + timedelta(days=1)
                 if check_after_run != -1:
-                    cls.check_after_run(check_after_run+1, end_index, True)
+                    cls.check_after_run(check_after_run + 1, end_index, True)
