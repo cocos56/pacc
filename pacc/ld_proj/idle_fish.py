@@ -399,6 +399,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
                 ldadb_ins.press_back_key()
         else:
+            if nickname != retrieve_idle_fish_ins.nickname:
+                update_idle_fish_ins.update_nickname(nickname)
+                update_idle_fish_ins.update_last_update_nn_date(today)
             update_idle_fish_ins.update_buy('NULL')
             update_idle_fish_ins = UpdateIdleFish(job_number)
             if 10000 <= retrieve_idle_fish_ins.reminder_threshold <= 40000:
@@ -407,9 +410,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 update_idle_fish_ins.update_reminder_threshold(new_reminder_threshold)
             if retrieve_idle_fish_ins.pay_pw and retrieve_idle_fish_ins.pay_pw != 'AAAAAA':
                 update_idle_fish_ins.update_confirm(1)
-            if nickname != retrieve_idle_fish_ins.nickname:
-                update_idle_fish_ins.update_nickname(nickname)
-                update_idle_fish_ins.update_last_update_nn_date(today)
             update_idle_fish_ins.update_last_update_nn_time(get_now_time())
             LDConsole.quit(self.ld_index)
         files = listdir(dst_path)
