@@ -1,10 +1,10 @@
 """闲鱼工资程序入口模块"""
 from datetime import date
 
+from pacc.config import UnitPrice
 from pacc.mysql import RetrieveIdleFishRecords, RetrieveIdleFish, RetrieveIdleFishStaff, \
     UpdateIdleFishStaff
 from pacc.tools import create_dir, get_now_time, send_wechat_msg
-from pacc.config import UnitPrice
 
 
 class IdleFishSalary:

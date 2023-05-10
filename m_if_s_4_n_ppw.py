@@ -1,5 +1,7 @@
 """针对于没有支付密码的闲鱼工资程序入口模块"""
 from datetime import date
+
+from pacc.config import UnitPrice
 from pacc.mysql import RetrieveDispatchRecords, RetrieveIdleFishByUsername, \
     RetrieveIdleFishByConsignee, RetrieveIdleFish, UpdateRecordDispatch, UpdateIdleFishStaff, \
     RetrieveIdleFishStaff, RetrieveRecordDispatch
@@ -190,17 +192,19 @@ class IdleFishSalary4NoPaymentPassword:
             dir_path = f'D:/0/computer/闲鱼挂机/结账信息/' \
                        f'{str(date.today()).replace("-", "_")}_无支付密码'
             create_dir(dir_path)
-            sum_money = base_mid_coins // 10000 * 3 + base_coins // 10000 * 2 + (
-                    middle_coins // 10000 * 1)
+            sum_money = UnitPrice.get_base_mid_money(base_mid_coins) + UnitPrice.get_base_money(
+                base_coins) + UnitPrice.get_middle_money(middle_coins)
             sum_info = f'收款人：{name}，总钱数：{sum_money}元'
             txt = f'{dir_path}/{name}_{sum_money}元.txt'
             if base_mid_coins != 0:
                 sum_info += f'，中基层鱼币共：{base_mid_coins // 10000}万' \
-                            f'（{base_mid_coins // 10000 * 3}元）'
+                            f'（{UnitPrice.get_base_mid_money(base_mid_coins)}元）'
             if middle_coins != 0:
-                sum_info += f'，中层鱼币共：{middle_coins // 10000}万（{middle_coins // 10000 * 1}元）'
+                sum_info += f'，中层鱼币共：{middle_coins // 10000}万' \
+                            f'（{UnitPrice.get_middle_money(middle_coins)}元）'
             if base_coins != 0:
-                sum_info += f'，基层鱼币共：{base_coins // 10000}万（{base_coins // 10000 * 2}元）'
+                sum_info += f'，基层鱼币共：{base_coins // 10000}万' \
+                            f'（{UnitPrice.get_base_money(base_coins)}元）'
             sum_info += '。\n\n'
             if base_mid_coins != 0:
                 sum_info += '【中基层鱼币账号信息详情如下】\n'
