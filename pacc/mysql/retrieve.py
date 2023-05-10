@@ -257,6 +257,11 @@ class RetrieveIdleFishStaff(RetrieveIdleFishStaffBase):
         """从数据库中读取上次发工资时的日期"""
         return self.query('last_salary_date')
 
+    @property
+    def last_npps_date(self):
+        """从数据库中读取上次针对于没有支付密码的发工资时的日期（NPPS：No Pay Password Salary）"""
+        return self.query('last_npps_date')
+
 
 class RetrieveIdleFishByConsigneeBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中通过收货人查询数据提供基础支持"""

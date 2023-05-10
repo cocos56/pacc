@@ -582,6 +582,27 @@ class UpdateIdleFishStaff(UpdateIdleFishStaffBase):
         """
         print(self.query('last_salary_time', last_salary_time))
 
+    def update_last_npps_amount(self, last_npps_amount: float) -> None:
+        """更新设备在数据库中上次针对于没有支付密码的发工资时的钱数（NPPS：No Pay Password Salary）
+
+        :param last_npps_amount: 上次针对于没有支付密码的发工资时的钱数（NPPS：No Pay Password Salary）
+        """
+        print(self.query('last_npps_amount', last_npps_amount))
+
+    def update_last_npps_date(self, last_npps_date: date) -> None:
+        """更新设备在数据库中上次针对于没有支付密码的发工资时的日期（NPPS：No Pay Password Salary）
+
+        :param last_npps_date: 上次针对于没有支付密码的发工资时的日期（NPPS：No Pay Password Salary）
+        """
+        print(self.query('last_npps_date', last_npps_date))
+
+    def update_last_npps_time(self, last_npps_time: str) -> None:
+        """更新设备在数据库中上次针对于没有支付密码的发工资时的时间（NPPS：No Pay Password Salary）
+
+        :param last_npps_time: 上次针对于没有支付密码的发工资时的时间（NPPS：No Pay Password Salary）
+        """
+        print(self.query('last_npps_time', last_npps_time))
+
 
 class UpdateRecordDispatchBase:
     """该类用于为修改record数据库中的record_dispatch表中的数据提供基础支持"""

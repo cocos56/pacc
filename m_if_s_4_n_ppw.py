@@ -240,12 +240,12 @@ class IdleFishSalary4NoPaymentPassword:
                 print(f'该员工{name}不存在，或备注{remark}未设置，请处理！')
                 input()
             print(f'序号：{payee_cnt}, 姓名：{name}, 备注：{remark}, 金额：{sum_money}元')
-            if retrieve_idlefish_staff_ins.last_salary_date != today:
+            if retrieve_idlefish_staff_ins.last_npps_date != today:
                 send_wechat_msg(remark, sum_info)
-                update_idlefish_staff_ins = UpdateIdleFishStaff(name)
-                update_idlefish_staff_ins.update_last_salary_amount(sum_money)
-                update_idlefish_staff_ins.update_last_salary_date(date.today())
-                update_idlefish_staff_ins.update_last_salary_time(get_now_time())
+                update_ins = UpdateIdleFishStaff(name)
+                update_ins.update_last_npps_amount(sum_money)
+                update_ins.update_last_npps_date(date.today())
+                update_ins.update_last_npps_time(get_now_time())
                 send_cnt += 1
             else:
                 print('今日已发送信息，无需重复发送')
