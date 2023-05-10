@@ -16,7 +16,7 @@ SELECT * FROM `record_dispatch` WHERE pay_pw='AAAAAA' ORDER BY confirm_date, con
 # 2. 按日期归类查询无支付密码的账号确认收货的汇总信息
 
 ## 2.1. 截止至今日
-SELECT confirm_date, MIN(confirm_time), MAX(confirm_time), count(Job_N), sum(buy_coins), sum(buy_coins)*3 FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date>=CURDATE() GROUP BY confirm_date ORDER BY confirm_date DESC
+SELECT confirm_date, MIN(confirm_time), MAX(confirm_time), count(Job_N), sum(buy_coins), FORMAT(sum(buy_coins)*0.00025,2) FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date>=CURDATE() GROUP BY confirm_date ORDER BY confirm_date DESC
 
 ## 2.2. 截止至昨日
 SELECT confirm_date, MIN(confirm_time), MAX(confirm_time), count(Job_N), sum(buy_coins) FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date>=DATE_SUB(CURDATE(),INTERVAL 1 DAY) GROUP BY confirm_date ORDER BY confirm_date DESC
