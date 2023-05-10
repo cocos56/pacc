@@ -435,7 +435,9 @@ class IdleFishBase(LDProj):
             return self.second_buy_on_target_device(today)
         lduia_ins.click(content_desc='再次购买')
         last_buy_coins = 0
-        if coins >= 50000:
+        if coins >= 60000:
+            last_buy_coins = 60000
+        elif coins >= 50000:
             last_buy_coins = 50000
         elif coins >= 40000:
             last_buy_coins = 40000
