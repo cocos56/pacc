@@ -783,7 +783,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             return False
         lduia_ins = LDUIA(index)
         job_number = LDConsole(index).get_job_number()
-        update_idle_fish_ins = UpdateIdleFish(job_number)
+        update_ins = UpdateIdleFish(job_number)
         retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
         if Activity.ContainerActivity in current_focus:
             try:
@@ -844,7 +844,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if coins != retrieve_idle_fish_ins.coins:
-            update_idle_fish_ins.update_coins(coins)
+            update_ins.update_coins(coins)
         png_path = lduia_ins.get_screen()
         dir_name = f'CurrentUIHierarchy/{str(date.today()).replace("-", "_")}'
         reminder_threshold = retrieve_idle_fish_ins.reminder_threshold
@@ -868,7 +868,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         LDConsole.quit(index)
         today = date.today()
         if today != retrieve_idle_fish_ins.last_check_date:
-            update_idle_fish_ins.update_last_check_date(today)
+            update_ins.update_last_check_date(today)
+            update_ins.update_last_check_time(get_now_time())
         print(f'第{index}项已检查完毕\n')
         return True
 
@@ -937,11 +938,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print()
                 continue
             CPU.wait_until_idle()
-            # if retrieve_idle_fish_ins.top_up_mobile and retrieve_idle_fish_ins.top_up_mobile_cnt \
-            #         and retrieve_idle_fish_ins.top_up_mobile_cnt > 3:
-            #     cls(start_index).top_up_mobile_on_target_device(False)
             cls(start_index).run_app(19)
-            # cls.restart_before_check_target_device(start_index)
             cls.check_target_device(start_index)
             start_index += 1
 
