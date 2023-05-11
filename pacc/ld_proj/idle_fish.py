@@ -525,7 +525,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             except FileNotFoundError as err:
                 print_err(err)
             start_index += 1
-            sleep(1 * 60)
+            # sleep(1 * 60)
 
     @classmethod
     def top_up_mobile(cls, start_index, end_index) -> None:
