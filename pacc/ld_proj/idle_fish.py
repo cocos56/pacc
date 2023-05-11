@@ -21,6 +21,8 @@ from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU, get_now_ti
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
     """闲鱼类"""
 
+    being_open_num = 0
+
     @classmethod
     def backups(cls, start_index, end_index, dir_path='E:/ld_backups', reserved_gbs=6 * 1024):
         """批量备份雷电模拟器的设备
@@ -397,6 +399,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print(f'nickname={nickname}, 请先设置好昵称')
             while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
                 ldadb_ins.press_back_key()
+            self.__class__.being_open_num += 1
+            print(f'being_open_num={self.__class__.being_open_num}')
+            if self.__class__.being_open_num >= 10:
+                print('当前窗口过多，请先处理')
+                input()
         else:
             if nickname != retrieve_idle_fish_ins.nickname:
                 update_idle_fish_ins.update_nickname(nickname)
