@@ -18,7 +18,6 @@ def get_connection(database='mobile'):
                        password=getenv('MySQL_PW'))
     except OperationalError as err:
         print_err(f'{datetime.now()}: {err}')
-        sleep(60)
         return get_connection(database)
 
 
