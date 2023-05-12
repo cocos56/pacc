@@ -401,8 +401,11 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             return self.get_pay_code(today, retry_cnt)
         if nickname == '昵称未设置':
             print(f'nickname={nickname}, 请先设置好昵称')
-            while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
-                ldadb_ins.press_back_key()
+            try:
+                while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
+                    ldadb_ins.press_back_key()
+            except FileNotFoundError as err:
+                print_err(err)
             self.__class__.being_open_num += 1
         else:
             if nickname != retrieve_idle_fish_ins.nickname:
