@@ -281,6 +281,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 cls(start_index).get_pay_code(today)
             # sleep(3 * 60)
             start_index += 1
+            print(f'being_open_num={cls.being_open_num}, now={datetime.now()}')
+            if cls.being_open_num >= 13:
+                print('当前窗口过多，请先处理')
+                input()
 
     @classmethod
     def first_buy(cls, start_index, end_index):
@@ -400,10 +404,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
                 ldadb_ins.press_back_key()
             self.__class__.being_open_num += 1
-            print(f'being_open_num={self.__class__.being_open_num}')
-            if self.__class__.being_open_num >= 10:
-                print('当前窗口过多，请先处理')
-                input()
         else:
             if nickname != retrieve_idle_fish_ins.nickname:
                 update_idle_fish_ins.update_nickname(nickname)
