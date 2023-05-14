@@ -374,11 +374,11 @@ class IdleFishBase(LDProj):
                 return False
         except FileNotFoundError as err:
             print_err(err)
-        if last_buy_consignee == 'N=, M=请添加收货地址' or lduia_ins.click(
-                index='3', text='添加收货地址', xml=lduia_ins.xml):
+        if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml
+                           ) or last_buy_consignee == 'N=, M=请添加收货地址':
+            self.__class__.being_open_num += 1
             print(f'设备{self.ld_index}上的账号需要添加收货地址，'
                   f'being_open_num={self.__class__.being_open_num}')
-            self.__class__.being_open_num += 1
             sleep(2 * 60)
             return False
         if lduia_ins.get_dict(text='验证码拦截'):
