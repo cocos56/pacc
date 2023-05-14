@@ -357,13 +357,14 @@ class IdleFishBase(LDProj):
             last_buy_consignee = f'N={name}, M={mobile}'
             print(last_buy_consignee)
             update_idle_fish_ins = UpdateIdleFish(job_number)
+            lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
             if last_buy_consignee == 'N=, M=请添加收货地址':
-                print(f'设备{self.ld_index}上的账号需要添加收货地址')
                 self.__class__.being_open_num += 1
+                print(f'设备{self.ld_index}上的账号需要添加收货地址，'
+                      f'being_open_num={self.__class__.being_open_num}')
                 sleep(2 * 60)
                 return False
             update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
-            lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
             return self.first_buy_on_target_device(today)
