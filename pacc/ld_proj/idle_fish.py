@@ -349,12 +349,14 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             dst_path = r'\\10.1.1.2\aps\\'
             if not lduia_ins.click(content_desc='去付款', interval=3):
                 if lduia_ins.click(content_desc='删除订单', xml=lduia_ins.xml):
+                    self.__class__.being_open_num += 1
                     return False
                 if lduia_ins.get_dict(content_desc='确认收货', xml=lduia_ins.xml):
                     pass
                 elif not lduia_ins.get_dict(content_desc='提醒发货', xml=lduia_ins.xml):
                     if not not_found:
                         return self.get_pay_code(today, retry_cnt=retry_cnt, not_found=True)
+                    self.__class__.being_open_num += 1
                     return False
             else:
                 if lduia_ins.click(content_desc='支付宝支付'):
@@ -367,6 +369,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                             click(text='余额', xml=lduia_ins.xml) and not lduia_ins. \
                             click(text='支付宝小荷包', xml=lduia_ins.xml) and lduia_ins. \
                             get_dict(text='0.00', xml=lduia_ins.xml):
+                        self.__class__.being_open_num += 1
                         return False
                     sleep(1)
                     while not lduia_ins.click(text='找朋友帮忙付'):

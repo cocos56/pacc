@@ -319,6 +319,7 @@ class IdleFishBase(LDProj):
                     if naf_err_cnt >= 5:
                         break
                     if lduia_ins.get_dict(text='验证码拦截', xml=lduia_ins.xml):
+                        self.__class__.being_open_num += 1
                         sleep(5*60)
                         return False
                 lduia_ins.click(content_desc='再次购买')
@@ -343,6 +344,7 @@ class IdleFishBase(LDProj):
         elif coins >= 10000:
             last_buy_coins = 10000
         else:
+            self.__class__.being_open_num += 1
             return False
         last_buy_coins = min(last_buy_coins, retrieve_idle_fish_ins.reminder_threshold)
         try:
@@ -355,8 +357,12 @@ class IdleFishBase(LDProj):
             last_buy_consignee = f'N={name}, M={mobile}'
             print(last_buy_consignee)
             update_idle_fish_ins = UpdateIdleFish(job_number)
-            if not last_buy_consignee == 'N=, M=请添加收货地址':
-                update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
+            if last_buy_consignee == 'N=, M=请添加收货地址':
+                print(f'设备{self.ld_index}上的账号需要添加收货地址')
+                self.__class__.being_open_num += 1
+                sleep(2 * 60)
+                return False
+            update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
         except FileNotFoundError as err:
             print_err(err)
@@ -374,11 +380,13 @@ class IdleFishBase(LDProj):
             print_err(err)
         if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml):
             print(f'设备{self.ld_index}上的账号需要添加收货地址')
+            self.__class__.being_open_num += 1
             sleep(2 * 60)
             return False
         if lduia_ins.get_dict(text='验证码拦截'):
             print(f'{retrieve_idle_fish_ins.job_number}{retrieve_idle_fish_ins.role}于'
                   f'{datetime.now()}确认购买后检测到有验证码')
+            self.__class__.being_open_num += 1
             sleep(5 * 60)
             return False
         update_idle_fish_ins.update_last_buy_coins(last_buy_coins)
