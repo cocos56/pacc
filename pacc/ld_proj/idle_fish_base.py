@@ -358,13 +358,8 @@ class IdleFishBase(LDProj):
             print(last_buy_consignee)
             update_idle_fish_ins = UpdateIdleFish(job_number)
             lduia_ins.click(content_desc='确认购买', xml=lduia_ins.xml, interval=3)
-            if last_buy_consignee == 'N=, M=请添加收货地址':
-                self.__class__.being_open_num += 1
-                print(f'设备{self.ld_index}上的账号需要添加收货地址，'
-                      f'being_open_num={self.__class__.being_open_num}')
-                sleep(2 * 60)
-                return False
-            update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
+            if not last_buy_consignee == 'N=, M=请添加收货地址':
+                update_idle_fish_ins.update_last_buy_consignee(last_buy_consignee)
         except FileNotFoundError as err:
             print_err(err)
             return self.first_buy_on_target_device(today)
@@ -379,8 +374,10 @@ class IdleFishBase(LDProj):
                 return False
         except FileNotFoundError as err:
             print_err(err)
-        if lduia_ins.click(index='3', text='添加收货地址', xml=lduia_ins.xml):
-            print(f'设备{self.ld_index}上的账号需要添加收货地址')
+        if last_buy_consignee == 'N=, M=请添加收货地址' or lduia_ins.click(
+                index='3', text='添加收货地址', xml=lduia_ins.xml):
+            print(f'设备{self.ld_index}上的账号需要添加收货地址，'
+                  f'being_open_num={self.__class__.being_open_num}')
             self.__class__.being_open_num += 1
             sleep(2 * 60)
             return False
