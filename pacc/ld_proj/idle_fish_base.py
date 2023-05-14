@@ -43,6 +43,8 @@ class ResourceID:  # pylint: disable=too-few-public-methods
 class IdleFishBase(LDProj):
     """闲鱼基类"""
 
+    being_open_num = 0
+
     def __init__(self, ld_index=1):
         """构造函数
 

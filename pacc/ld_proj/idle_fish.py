@@ -21,8 +21,6 @@ from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU, get_now_ti
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
     """闲鱼类"""
 
-    being_open_num = 0
-
     @classmethod
     def backups(cls, start_index, end_index, dir_path='E:/ld_backups', reserved_gbs=6 * 1024):
         """批量备份雷电模拟器的设备
@@ -85,8 +83,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         """
         ac_li = []
         for item in listdir(r'\\10.1.1.2\acs')[::-1]:
-            spli = item.split('.')
-            if spli and spli[-1] == 'txt':
+            split_li = item.split('.')
+            if split_li and split_li[-1] == 'txt':
                 ac_li.append(item)
         return ac_li
 
