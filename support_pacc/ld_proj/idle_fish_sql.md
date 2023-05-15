@@ -39,7 +39,7 @@ SELECT Job_N, role, user_name, if_mn, pay_pw, nickname, last_buy_consignee, base
 
 # 9. 查询某主机上账号信息的汇总分析情况
 
-SELECT Left((`hosts`), 2), COUNT(1), MAX(last_run_time), MIN(last_run_date), MAX(last_run_date) FROM `idle_fish` GROUP BY Left((`hosts`), 2) ORDER BY Left((`hosts`), 2)
+SELECT Left((`hosts`), 2) AS 主机名, COUNT(1) AS 账号数, MAX(last_run_time) AS 最晚运行时间, MIN(last_run_date) AS 最早运行日期, MAX(last_run_date) AS 最晚运行日期 FROM `idle_fish` GROUP BY Left((`hosts`), 2) ORDER BY Left((`hosts`), 2)
 
 # 10. 混合查询
 
