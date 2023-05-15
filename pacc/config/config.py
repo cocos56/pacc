@@ -7,8 +7,8 @@ LDC = 'ldconsole.exe '
 
 class UnitPrice:
     """闲鱼币单价类"""
-    base_mid = 2.5
-    base = 1.5
+    base_mid = 2.0
+    base = 1.0
     middle = 1.0
 
     @classmethod
