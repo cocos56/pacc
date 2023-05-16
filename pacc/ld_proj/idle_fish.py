@@ -400,8 +400,17 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         except FileNotFoundError as err:
             print_err(err)
             return self.get_pay_code(today, retry_cnt)
-        if nickname == '昵称未设置':
-            print(f'nickname={nickname}, 请先设置好昵称')
+        should_update_nickname_flag = nickname == '昵称未设置'
+        next_update_nn_date = retrieve_idle_fish_ins.next_update_nn_date
+        if next_update_nn_date:
+            if next_update_nn_date > today:
+                should_update_nickname_flag = False
+            else:
+                should_update_nickname_flag = True
+        if should_update_nickname_flag:
+            print(f'nickname={nickname}, '
+                  f'should_update_nickname_flag={should_update_nickname_flag}, '
+                  f'next_update_nn_date={next_update_nn_date}, 请先设置好昵称')
             try:
                 while not lduia_ins.get_dict(ResourceID.tab_title, '我的'):
                     ldadb_ins.press_back_key()

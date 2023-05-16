@@ -532,6 +532,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('if_mn')
 
     @property
+    def next_update_nn_date(self):
+        """从数据库中读取下次可以更新昵称的日期"""
+        return self.query('next_update_nn_date')
+
+    @property
     def nickname(self):
         """从数据库中读取闲鱼账号的昵称"""
         return self.query('nickname')
