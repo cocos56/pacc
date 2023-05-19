@@ -104,7 +104,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     print(ac_txt)
                     remove(join(r'\\10.1.1.2\acs', ac_txt))
                 continue
-            print(f'time_cnt={time_cnt}')
+            print(f'time_cnt={time_cnt}, global_ipv4_addr={get_global_ipv4_addr()}')
             sleep(1)
             time_cnt += 1
 
