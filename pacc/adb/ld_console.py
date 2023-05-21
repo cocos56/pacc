@@ -166,7 +166,7 @@ class LDConsole:
             sleep(1, False, False)
             cmd = 'wmic process where name="Ld9BoxHeadless.exe" call SetPriority 256'
             print(cmd)
-            with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT):
+            with subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT):
                 sleep(2, False, False)
         else:
             sleep(5, False, False)
