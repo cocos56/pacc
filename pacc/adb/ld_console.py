@@ -1,9 +1,10 @@
 """雷电模拟器控制台模块"""
 from os import popen, system, path, remove
 from datetime import date
+import subprocess
 
 from ..base import sleep, print_err
-from ..config import LDC
+from ..config import LDC, Config
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
 
 
@@ -161,7 +162,14 @@ class LDConsole:
         # print(cmd)
         popen(cmd)
         print(f'正在启动设备{self.ld_index}并开启应用{app_name}')
-        sleep(5, False, False)
+        if Config.set_priority:
+            sleep(1, False, False)
+            cmd = 'wmic process where name="Ld9BoxHeadless.exe" call SetPriority 256'
+            print(cmd)
+            subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            sleep(2, False, False)
+        else:
+            sleep(5, False, False)
 
     @classmethod
     def copy(cls, name):

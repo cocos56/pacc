@@ -55,6 +55,7 @@ class ServerStatus(Enum):
 class Config:
     """配置类"""
     debug = False
+    set_priority = False
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod
