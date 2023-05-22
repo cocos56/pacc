@@ -819,7 +819,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if lduia_ins.get_dict(content_desc='数码店'):
                 lduia_ins.tap((270, 652), 3)
                 lduia_ins.tap((268, 809), 6)
-                return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
+                return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time)
         except (FileNotFoundError, ExpatError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
@@ -827,13 +827,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             lduia_ins.tap((264, 709), 6)
         elif lduia_ins.get_dict(content_desc='经验不够，这里可以去赚哦', xml=lduia_ins.xml):
             lduia_ins.tap((487, 596), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time)
         elif lduia_ins.get_dict(content_desc=r'HI，店长 ', xml=lduia_ins.xml):
             lduia_ins.tap((266, 599), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time)
         elif lduia_ins.get_dict(content_desc='领取闲鱼币，去开新店', xml=lduia_ins.xml):
             lduia_ins.tap((283, 763), 3)
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
+            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time)
         dic = lduia_ins.get_dict(content_desc='我的经验', xml=lduia_ins.xml)
         try:
             ex_p = int(dic['@content-desc'][5:])
