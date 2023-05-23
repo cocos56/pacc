@@ -1,6 +1,6 @@
 # 1. 查询无支付密码的账号确认收货的明细
 
-## 1.1. 今日所有汇总
+## 1.1. 今日所有汇总（按工号排序）
 SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date=CURDATE() ORDER BY Job_N
 
 ## 1.2. 今日某代理汇总信息
@@ -8,7 +8,11 @@ SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consign
 SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date=CURDATE() and Job_N LIKE 'ZLJ%' ORDER BY buy_coins desc;
 SELECT COUNT(Job_N), SUM(buy_coins), SUM(buy_coins)*3  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date=CURDATE() and Job_N LIKE 'ZLJ%';
 
-## 1.3. 今日和昨日
+## 1.3. 今日及之后的汇总信息（按工号排序）
+
+SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date>=CURDATE() ORDER BY Job_N
+
+## 1.4. 今日和昨日
 SELECT dispatch_date, Job_N, role, user_name, if_mn, buy_coins, dispatch_consignee,confirm_date, base_payee, middle_payee  FROM `record_dispatch` WHERE pay_pw='AAAAAA' and confirm_date<=CURDATE() and confirm_date>=DATE_SUB(CURDATE(),INTERVAL 1 DAY) ORDER BY Job_N
 
 SELECT * FROM `record_dispatch` WHERE pay_pw='AAAAAA' ORDER BY confirm_date, confirm_time
