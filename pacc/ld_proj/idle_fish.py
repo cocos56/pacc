@@ -122,8 +122,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print(f'所有共{end_index - src_start_index + 1}项已登录完毕'
                       f'，当前时间为：{datetime.now()}')
                 break
-            now = datetime.now()
-            print(now)
+            print(f'being_open_num={cls.being_open_num}, now={datetime.now()}')
             if not LDConsole(start_index).is_exist():
                 print(f'设备{start_index}不存在，无需登录')
                 start_index += 1
@@ -227,6 +226,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print_err(err)
                 lduia_ins.tap((478, 919))
             start_index += 1
+            cls.being_open_num += 1
+            if cls.being_open_num >= 15:
+                print('当前窗口过多，请先处理')
+                input()
 
     @classmethod
     def auto_buy(cls, start_index, end_index):
