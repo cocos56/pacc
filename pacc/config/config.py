@@ -60,7 +60,7 @@ class Config:
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod
-    def set_debug(cls, debug):
+    def set_debug(cls, debug: bool) -> None:
         """设置是否为调试状态
 
         :param debug: 调试状态标志
@@ -68,10 +68,10 @@ class Config:
         cls.debug = debug
 
     @classmethod
-    def set_ld_work_path(cls, ld_work_path=r'F:\leidian\LDPlayer9'):
-        """设置是否为调试状态
+    def set_ld_work_path(cls, ld_work_path=r'F:\leidian\LDPlayer9') -> None:
+        """设置雷电工作目录
 
         :param ld_work_path: 雷电模拟器的工作路径
         """
         cls.ld_work_path = ld_work_path
-        chdir(Config.ld_work_path)
+        chdir(cls.ld_work_path)
