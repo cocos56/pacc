@@ -70,10 +70,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             today = date.today()
             print(job_number, role, today)
             LDConsole.copy(job_number + role)
-            update_idle_fish_ins = UpdateIdleFish(job_number)
-            update_idle_fish_ins.update_create('NULL')
-            update_idle_fish_ins.update_login(1)
-            update_idle_fish_ins.update_last_create_date(today)
+            update_ins = UpdateIdleFish(job_number)
+            update_ins.update_create('NULL')
+            update_ins.update_login(1)
+            update_ins.update_last_create_date(today)
         cls.login(start_index, LDConsole.get_last_device_num())
 
     @classmethod

@@ -6,6 +6,7 @@ import subprocess
 from ..base import sleep, print_err
 from ..config import LDC, Config
 from ..mysql import RetrieveIdleFish, UpdateIdleFish
+from ..tools import get_now_time
 
 
 class LDConsole:
@@ -92,7 +93,9 @@ class LDConsole:
         print(f'正在执行对设备{self.ld_index}的备份工作')
         system(cmd)
         print(f'已完成对设备{self.ld_index}的备份工作')
-        UpdateIdleFish(job_number).update_last_bak_date(today)
+        update_ins = UpdateIdleFish(job_number)
+        update_ins.update_last_bak_date(today)
+        update_ins.update_last_bak_time(get_now_time())
         return True
 
     def is_exist(self):

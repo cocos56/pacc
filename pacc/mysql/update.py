@@ -368,6 +368,13 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_bak_date', last_bak_date))
 
+    def update_last_bak_time(self, last_bak_time: str) -> None:
+        """更新设备上次备份的时间
+
+        :param last_bak_time: 新的上次备份的时间
+        """
+        print(self.query('last_bak_time', last_bak_time))
+
     def update_today_global_ipv4_addr(self, today_global_ipv4_addr: str) -> None:
         """更新设备的本机今日公网IPv4地址
 
