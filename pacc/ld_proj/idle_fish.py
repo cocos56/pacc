@@ -230,6 +230,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if cls.being_open_num >= 15:
                 print('当前窗口过多，请先处理')
                 input()
+                cls.being_open_num = 0
 
     @classmethod
     def auto_buy(cls, start_index, end_index):
