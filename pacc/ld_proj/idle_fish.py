@@ -16,6 +16,7 @@ from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, RetrieveIdleFishRecords, \
     UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU, get_now_time
+from ..config import Config
 
 
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
@@ -227,7 +228,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 lduia_ins.tap((478, 919))
             start_index += 1
             cls.being_open_num += 1
-            if cls.being_open_num >= 15:
+            if Config.enable_being_open_num and cls.being_open_num >= 15:
                 print('当前窗口过多，请先处理')
                 input()
                 cls.being_open_num = 0

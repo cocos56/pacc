@@ -56,6 +56,7 @@ class Config:
     """配置类"""
     debug = False
     set_priority = False
+    enable_being_open_num = True
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod
