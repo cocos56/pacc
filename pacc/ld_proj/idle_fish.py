@@ -111,11 +111,12 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
 
     # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
-    def login(cls, start_index, end_index):
+    def login(cls, start_index, end_index, being_open_max=15):
         """登录
 
         :param start_index: 起始索引值
         :param end_index: 终止索引值
+        :param being_open_max: 同时多开时的最大数量
         """
         src_start_index = start_index
         while True:
@@ -228,7 +229,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 lduia_ins.tap((478, 919))
             start_index += 1
             cls.being_open_num += 1
-            if Config.enable_being_open_num and cls.being_open_num >= 15:
+            if Config.enable_being_open_num and cls.being_open_num >= being_open_max:
                 print('当前窗口过多，请先处理')
                 input()
                 cls.being_open_num = 0
