@@ -438,10 +438,10 @@ class IdleFishBase(LDProj):
                 sleep(1)
                 if lduia_ins.click(content_desc='立即购买'):
                     break
+            lduia_ins.click(content_desc='再次购买')
         except FileNotFoundError as err:
             print_err(err)
             return self.second_buy_on_target_device(today)
-        lduia_ins.click(content_desc='再次购买')
         last_buy_coins = 0
         if coins >= 60000:
             last_buy_coins = 60000
