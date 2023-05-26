@@ -132,7 +132,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             job_number = LDConsole(start_index).get_job_number()
             retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
             today = date.today()
-            print(f'start_index={start_index}, device_name={LDConsole(start_index).get_name()}, '
+            device_name = LDConsole(start_index).get_name()
+            print(f'start_index={start_index}, device_name={device_name}, '
                   f'user_name={retrieve_idle_fish_ins.user_name}, '
                   f'login_pw={retrieve_idle_fish_ins.login_pw}, '
                   f'if_mn={retrieve_idle_fish_ins.if_mn}, '
@@ -223,7 +224,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     print_err(err)
             lduia_ins.get_screen()
             try:
-                lduia_ins.get_current_ui_hierarchy()
+                if lduia_ins.get_dict(text='安全验证'):
+                    print(f'{start_index} {device_name}于{datetime.now()}使用'
+                          f'{get_global_ipv4_addr()}登录时出现安全验证，请先处理')
+                    input()
             except FileNotFoundError as err:
                 print_err(err)
                 lduia_ins.tap((478, 919))
