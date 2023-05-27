@@ -57,6 +57,7 @@ class Config:
     debug = False
     set_priority = False
     enable_being_open_num = True
+    safety_verification_max_num = 1
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod

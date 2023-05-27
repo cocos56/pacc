@@ -119,6 +119,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param being_open_max: 同时多开时的最大数量
         """
         src_start_index = start_index
+        safety_verification_count = 0
         while True:
             if start_index - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已登录完毕'
@@ -226,8 +227,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             try:
                 if lduia_ins.get_dict(text='安全验证'):
                     print(f'{start_index} {device_name}于{datetime.now()}使用'
-                          f'{get_global_ipv4_addr()}登录时出现安全验证，请先处理')
-                    input()
+                          f'{get_global_ipv4_addr()}登录时出现安全验证，请处理')
+                    safety_verification_count += 1
+                    if Config.safety_verification_max_num <= safety_verification_count:
+                        input()
             except FileNotFoundError as err:
                 print_err(err)
                 lduia_ins.tap((478, 919))
