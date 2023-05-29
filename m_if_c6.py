@@ -6,7 +6,7 @@ from pacc.ld_proj import IdleFish
 
 Config.debug = True
 Config.set_priority = True
-Config.safety_verification_max_num = 15
+Config.safety_verification_max_num = 5
 Config.set_ld_work_path()
 start_index, end_index = 1, LDConsole.get_last_device_num()
 print(f'start_index={start_index}, end_index={end_index}')
