@@ -172,22 +172,29 @@ class IdleFish(Project):
             except TypeError as err:
                 print(err)
                 continue
-            print(dic)
             if not dic:
                 print('没有需要改价的订单')
                 continue
             point = (932, 738)
             if '¥0.01' in dic['@content-desc']:
                 print('1 已改')
-                dic = self.uia_ins.get_dict(
-                    index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+                try:
+                    dic = self.uia_ins.get_dict(
+                        index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+                except TypeError as err:
+                    print(err)
+                    continue
                 if not dic:
                     continue
                 point = (932, 1267)
             if '¥0.01' in dic['@content-desc']:
                 print('2 已改')
-                dic = self.uia_ins.get_dict(
-                    index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+                try:
+                    dic = self.uia_ins.get_dict(
+                        index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+                except TypeError as err:
+                    print(err)
+                    continue
                 if not dic:
                     continue
                 point = (932, 1796)
