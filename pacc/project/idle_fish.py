@@ -238,7 +238,7 @@ class IdleFish(Project):
         :return: 发货时的地址
         """
         self.uia_ins.tap(point, 2)
-        address_dic = self.uia_ins.get_dict('root')['node']['node'][3]['node'][3]['node']
+        address_dic = self.uia_ins.get_dict('root')['node']['node'][2]['node'][3]['node']
         name_mobile = str(address_dic[0]['@text']).split()
         name, mobile = name_mobile[0], name_mobile[1]
         dispatch_consignee = f'N={name}, M={mobile}'
@@ -310,9 +310,8 @@ class IdleFish(Project):
             self.uia_ins.click(content_desc='我卖出的', interval=0.01, xml=self.uia_ins.xml)
             self.uia_ins.click(content_desc='待发货', interval=0.01)
             try:
-                self.get_dispatch_address((939, 786))
+                self.get_dispatch_address((939, 736))
             except (KeyError, TypeError) as err:
-                print(err)
                 err_cnt += 1
                 self.open_app()
                 continue
@@ -324,7 +323,7 @@ class IdleFish(Project):
                 err_cnt += 1
             if not err_cnt:
                 try:
-                    self.get_dispatch_address((939, 1330))
+                    self.get_dispatch_address((939, 1270))
                 except (TypeError, KeyError) as err:
                     print(err)
                     err_cnt += 1
@@ -338,7 +337,7 @@ class IdleFish(Project):
                     err_cnt += 1
             if not err_cnt:
                 try:
-                    self.get_dispatch_address((939, 1877))
+                    self.get_dispatch_address((939, 1808))
                 except TypeError as err:
                     print(err)
                     err_cnt += 1
