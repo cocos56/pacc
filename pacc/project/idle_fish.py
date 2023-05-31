@@ -89,7 +89,7 @@ class IdleFish(Project):
         """打开闲鱼APP"""
         self.free_memory()
         self.adb_ins.open_app(Activity.MainActivity)
-        sleep(5)
+        sleep(6)
 
     def pay(self):
         """付款"""
@@ -167,24 +167,31 @@ class IdleFish(Project):
                 continue
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
             self.uia_ins.click(content_desc='待付款', interval=0.01)
-            dic = self.uia_ins.get_dict(index='0', content_desc='实收款')
+            try:
+                dic = self.uia_ins.get_dict(index='0', content_desc='等待买家付款')['node'][1]
+            except TypeError as err:
+                print(err)
+                continue
+            print(dic)
             if not dic:
                 print('没有需要改价的订单')
                 continue
-            point = (920, 789)
-            if '实收款 ¥ 0.01' in dic['@content-desc']:
+            point = (932, 738)
+            if '¥0.01' in dic['@content-desc']:
                 print('1 已改')
-                dic = self.uia_ins.get_dict(index='1', content_desc='实收款', xml=self.uia_ins.xml)
+                dic = self.uia_ins.get_dict(
+                    index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
                 if not dic:
                     continue
-                point = (918, 1325)
-            if '实收款 ¥ 0.01' in dic['@content-desc']:
+                point = (932, 1267)
+            if '¥0.01' in dic['@content-desc']:
                 print('2 已改')
-                dic = self.uia_ins.get_dict(index='2', content_desc='实收款', xml=self.uia_ins.xml)
+                dic = self.uia_ins.get_dict(
+                    index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
                 if not dic:
                     continue
-                point = (921, 1876)
-            if '实收款 ¥ 0.01' in dic['@content-desc']:
+                point = (932, 1796)
+            if '¥0.01' in dic['@content-desc']:
                 print('3 已改')
                 continue
             self.uia_ins.tap(point)
