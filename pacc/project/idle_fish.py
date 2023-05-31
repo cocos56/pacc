@@ -312,6 +312,7 @@ class IdleFish(Project):
             try:
                 self.get_dispatch_address((939, 736))
             except (KeyError, TypeError) as err:
+                print_err(err)
                 err_cnt += 1
                 self.open_app()
                 continue
@@ -325,7 +326,7 @@ class IdleFish(Project):
                 try:
                     self.get_dispatch_address((939, 1270))
                 except (TypeError, KeyError) as err:
-                    print(err)
+                    print_err(err)
                     err_cnt += 1
                     self.open_app()
                     continue
@@ -339,7 +340,7 @@ class IdleFish(Project):
                 try:
                     self.get_dispatch_address((939, 1808))
                 except TypeError as err:
-                    print(err)
+                    print_err(err)
                     err_cnt += 1
                     self.open_app()
                     continue
