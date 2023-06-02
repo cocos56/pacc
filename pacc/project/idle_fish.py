@@ -307,6 +307,7 @@ class IdleFish(Project):
                 sleep(3600)
             else:
                 sleep(seconds)
+            hour = datetime.now().hour
         self.should_pay()
         err_cnt = success_cnt = 0
         self.open_app()
