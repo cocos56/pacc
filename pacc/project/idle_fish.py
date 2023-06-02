@@ -3,7 +3,7 @@ from os import listdir, remove
 from os.path import join
 from random import randint
 from xml.parsers.expat import ExpatError
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from .project import Project
 from ..base import sleep, print_err
@@ -82,7 +82,7 @@ class IdleFish(Project):
             if random_err > 10 or random_ap not in self.walked_li:
                 self.walked_li.append(random_ap)
                 return random_ap
-            return self.get_random_ap(random_err+1)
+            return self.get_random_ap(random_err + 1)
         return None
 
     def open_app(self):
@@ -124,7 +124,7 @@ class IdleFish(Project):
                 continue
             try:
                 if not self.uia_ins.click(
-                        text='确认付款', index='8', xml=self.uia_ins.xml, interval=2) and not self.\
+                        text='确认付款', index='8', xml=self.uia_ins.xml, interval=2) and not self. \
                         uia_ins.click(text='确认付款', index='9', xml=self.uia_ins.xml, interval=2):
                     remove(alipay_code)
                     continue
@@ -231,7 +231,7 @@ class IdleFish(Project):
             if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
                 success_cnt += 1
 
-    def get_dispatch_address(self, point):   # pylint: disable=too-many-locals
+    def get_dispatch_address(self, point):  # pylint: disable=too-many-locals
         """获取发货时的地址
 
         :param point: 点的x和y坐标
@@ -298,6 +298,15 @@ class IdleFish(Project):
 
         :param err_num: 结束时的连续错误阈值
         """
+        hour = datetime.now().hour
+        while hour >= 3:
+            print(hour)
+            seconds = (datetime.fromisoformat(
+                f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
+            if seconds > 3600:
+                sleep(3600)
+            else:
+                sleep(seconds)
         self.should_pay()
         err_cnt = success_cnt = 0
         self.open_app()
