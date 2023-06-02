@@ -301,6 +301,7 @@ class IdleFish(Project):
         hour = datetime.now().hour
         while hour >= 3:
             print(hour)
+            # pylint: disable=duplicate-code
             seconds = (datetime.fromisoformat(
                 f'{date.today() + timedelta(days=1)} 00:00:00') - datetime.now()).seconds
             if seconds > 3600:
