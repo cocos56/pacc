@@ -68,7 +68,7 @@ SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, 
 -- 结果7：查询今日下单且无备注的账号信息（按照能否自动确认、加注日期、主机名排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date=@target_date and `hosts` LIKE @HostsName ORDER BY confirm, `加注日期`, `hosts`;
 -- 结果8：查询可能存在偷卖偷用的账号信息
-SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date<=DATE_SUB(CURDATE(),INTERVAL 14 DAY) and `hosts` LIKE @HostsName ORDER BY last_buy_date, coins;
+SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, last_buy_time, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and last_buy_date<=DATE_SUB(CURDATE(),INTERVAL 20 DAY) and `hosts` LIKE @HostsName ORDER BY last_buy_date, coins;
 -- 结果9：查询今日剩余需要进行自动确认收货操作的账号信息（主机名排序）
 SELECT Job_N, role, `hosts`, version, user_name, pay_pw, if_mn, coins, RT, buy, last_buy_coins, last_buy_date, confirm, 加注日期 FROM idle_fish WHERE Job_N LIKE @Job_N and confirm=1 and `hosts` LIKE @HostsName ORDER BY `hosts`;
 -- 结果10：
