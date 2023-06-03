@@ -873,13 +873,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
             coins = int(coins)
-        except KeyError as err:
-            print_err(f'KeyError={err}')
-            coins = dic['node']['node']['node']['node']['node'][1]['@content-desc']
-            if '万' in coins:
-                coins = float(coins[:-1]) * 10000
-            coins = int(coins)
-        except (TypeError, ValueError) as err:
+        except (KeyError, TypeError, ValueError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if coins != retrieve_idle_fish_ins.coins:
