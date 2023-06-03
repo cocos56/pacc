@@ -864,16 +864,22 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             lduia_ins.tap((267, 642), 3)
             lduia_ins.xml = ''
         try:
-            dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node']
+            dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node'][1]['node']
         except FileNotFoundError as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         try:
-            coins = dic[1]['node']['node']['node']['node']['node'][1]['@content-desc']
+            coins = dic['node']['node']['node']['node'][1]['@content-desc']
             if '万' in coins:
                 coins = float(coins[:-1]) * 10000
             coins = int(coins)
-        except (KeyError, TypeError, ValueError) as err:
+        except KeyError as err:
+            print_err(f'KeyError={err}')
+            coins = dic['node']['node']['node']['node']['node'][1]['@content-desc']
+            if '万' in coins:
+                coins = float(coins[:-1]) * 10000
+            coins = int(coins)
+        except (TypeError, ValueError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         if coins != retrieve_idle_fish_ins.coins:
