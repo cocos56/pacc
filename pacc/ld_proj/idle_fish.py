@@ -765,7 +765,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 elif retrieve_idle_fish_ins.last_update_version_date >= today:
                     start_index += 1
                     continue
-                elif retrieve_idle_fish_ins.version[:4] in ['7.5.', '7.7.', '7.8.', '7.9.']:
+                elif '7.' in retrieve_idle_fish_ins.version:
                     start_index += 1
                     continue
             else:
