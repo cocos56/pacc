@@ -42,7 +42,7 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
         window.mainloop()  # 父窗口进入事件循环，可以理解为保持窗口运行，否则界面不展示
 
     # 功能函数
-    def src_into_db(self):
+    def src_into_db(self):  # pylint: disable=too-many-locals
         """将源数据插入到数据库中"""
         src = self.init_data_text.get(1.0, END)
         dic_li = []
