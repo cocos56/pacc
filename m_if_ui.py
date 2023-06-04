@@ -61,13 +61,32 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             dic_li.append(dic)
         print(dic_li)
         for dic in dic_li:
+            job_number = dic.get('Job_N')
+            role = dic.get('role')
+            if '%' in job_number:
+                # print(job_number, role)
+                jn_prefix = job_number.split('%')[0]
+                # print(jn_prefix)
+                suffix = 1
+                job_number = f'{jn_prefix}{str(suffix).zfill(3)}'
+                exist_record = CreateIdleFish.exist_record(job_number)
+                # print(job_number, exist_record)
+                while exist_record:
+                    suffix += 1
+                    job_number = f'{jn_prefix}{str(suffix).zfill(3)}'
+                    exist_record = CreateIdleFish.exist_record(job_number)
+                    # print(job_number, exist_record)
+                role_prefix = role.split('%')[0]
+                role = f'{role_prefix}{suffix}'
+                print(f'自动推导出的job_number={job_number}, role={role}, 请确认后按回车以继续')
+                input()
             # pylint: disable=too-many-boolean-expressions
-            if dic.get('Job_N') and dic.get('role') and dic.get('RT') and dic.get('user_name') and \
+            if job_number and role and dic.get('RT') and dic.get('user_name') and \
                     dic.get('login_pw') and dic.get('pay_pw'):
                 CreateIdleFish(
-                    dic.get('Job_N'), dic.get('role'), dic.get('RT'), dic.get('user_name'),
+                    job_number, role, dic.get('RT'), dic.get('user_name'),
                     dic.get('login_pw'), dic.get('pay_pw'))
-                txt_name = f'{dic.get("Job_N")}{dic.get("role")}.txt'
+                txt_name = f'{job_number}{role}.txt'
                 print(txt_name)
                 with open(txt_name, 'w+', encoding='utf-8') as file:
                     file.write(txt_name)
