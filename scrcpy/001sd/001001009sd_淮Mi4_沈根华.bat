@@ -1,0 +1,1 @@
+scrcpy -s 43539872 --window-title 001001009sd_淮Mi4_沈根华|
