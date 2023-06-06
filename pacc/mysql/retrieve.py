@@ -582,21 +582,6 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('last_update_version_date')
 
     @property
-    def top_up_mobile(self):
-        """从数据库中读取是否执行薅羊毛赚话费的标志"""
-        return self.query('top_up_mobile')
-
-    @property
-    def top_up_mobile_cnt(self):
-        """执行薅羊毛赚话费任务成功的次数"""
-        return self.query('top_up_mobile_cnt')
-
-    @property
-    def last_top_up_mobile_date(self):
-        """从数据库中获取上次薅羊毛赚话费的日期"""
-        return self.query('last_top_up_mobile_date')
-
-    @property
     def login(self):
         """从数据库中读取是否需要登录的标志"""
         return self.query('login')
@@ -610,6 +595,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
     def last_login_ipv4_addr(self):
         """从数据库中获取上次登录的的公网IPv4地址"""
         return self.query('last_login_ipv4_addr')
+
+    @property
+    def avc_link(self) -> str:
+        """从数据库中读取解码链接"""
+        return self.query('avc_link')
 
     @property
     def buy(self):
@@ -655,6 +645,21 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
     def middle_payee(self):
         """从数据库中读取中层收款人"""
         return self.query('middle_payee')
+
+    @property
+    def top_up_mobile(self):
+        """从数据库中读取是否执行薅羊毛赚话费的标志"""
+        return self.query('top_up_mobile')
+
+    @property
+    def top_up_mobile_cnt(self):
+        """执行薅羊毛赚话费任务成功的次数"""
+        return self.query('top_up_mobile_cnt')
+
+    @property
+    def last_top_up_mobile_date(self):
+        """从数据库中获取上次薅羊毛赚话费的日期"""
+        return self.query('last_top_up_mobile_date')
 
 
 class RetrieveIdleFishRecords:

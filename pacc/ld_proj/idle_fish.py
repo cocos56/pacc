@@ -2,9 +2,10 @@
 # pylint: disable=too-many-lines
 import shutil
 from datetime import date, datetime, timedelta
-from os import listdir, path, remove, rename
+from os import listdir, path, remove, rename, system
 from os.path import join, exists
 from xml.parsers.expat import ExpatError
+import requests
 
 import pyperclip
 from PIL import Image
@@ -108,6 +109,30 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print(f'time_cnt={time_cnt}, global_ipv4_addr={get_global_ipv4_addr()}')
             sleep(1)
             time_cnt += 1
+
+    @classmethod
+    def get_vc(cls, avc_link):
+        """"获取验证码
+
+        :param avc_link: 接码链接
+        """
+        try:
+            txt = requests.get(avc_link).text[1:-1]
+        except ConnectionError as err:
+            print(err)
+            return cls.get_vc(avc_link)
+        print(txt, type(txt))
+        txt_split = txt.split(',')
+        # print(txt_split)
+        dic = {}
+        for element in txt_split:
+            key, value = element.split(':')
+            key = str(key).strip('"')
+            value = str(value).strip('"')
+            dic.update({key: value})
+            # print(key, value)
+        print(dic, type(dic))
+        return True
 
     # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
@@ -216,6 +241,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 update_idle_fish_ins.update_top_up_mobile_cnt(-1)
             if Activity.WebViewActivity in ldadb_ins.get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
+                avc_link = retrieve_idle_fish_ins.avc_link
+                if avc_link:
+                    lduia_ins.tap((435, 316), 10)
+                    print(avc_link)
+                    system(f'start {avc_link}')
+                    cls.get_vc(avc_link)
+                    input()
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 update_idle_fish_ins.update_last_nvc_date(today)
