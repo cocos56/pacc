@@ -88,8 +88,8 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             if job_number and role and dic.get('RT') and dic.get('user_name') and \
                     dic.get('login_pw') and dic.get('pay_pw'):
                 CreateIdleFish(
-                    job_number, role, dic.get('RT'), dic.get('user_name'),
-                    dic.get('login_pw'), dic.get('pay_pw'), dic.get('avc_link'))
+                    job_number, role, dic.get('RT'), dic.get('user_name'), dic.get('login_pw'),
+                    dic.get('pay_pw'), dic.get('avc_link'), dic.get('if_mn'))
                 txt_name = f'{job_number}{role}.txt'
                 print(txt_name)
                 with open(txt_name, 'w+', encoding='utf-8') as file:
