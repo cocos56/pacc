@@ -42,9 +42,16 @@ class CreateIdleFish(Create):
         if self.exist:
             print(f'记录job_number={self.job_number}已存在，无需重复创建')
             return
-        self.query('idle_fish',
-                   ('Job_N', 'role', 'RT', 'user_name', 'login_pw', 'pay_pw', 'create'),
-                   (self.job_number, role, reminder_threshold, user_name, login_pw, pay_pw, 1))
+        if '%' in pay_pw:
+            self.query(
+                'idle_fish',
+                ('Job_N', 'role', 'RT', 'user_name', 'login_pw', 'create'),
+                (self.job_number, role, reminder_threshold, user_name, login_pw, 1))
+        else:
+            self.query(
+                'idle_fish',
+                ('Job_N', 'role', 'RT', 'user_name', 'login_pw', 'pay_pw', 'create'),
+                (self.job_number, role, reminder_threshold, user_name, login_pw, pay_pw, 1))
 
     @classmethod
     def query(cls, table, fields, values, database=Account):
