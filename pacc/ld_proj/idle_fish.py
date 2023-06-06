@@ -117,7 +117,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param avc_link: 接码链接
         """
         try:
-            txt = requests.get(avc_link).text[1:-1]
+            txt = requests.get(avc_link, timeout=30).text[1:-1]
         except ConnectionError as err:
             print(err)
             return cls.get_vc(avc_link)
@@ -126,13 +126,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         # print(txt_split)
         dic = {}
         for element in txt_split:
-            key, value = element.split(':')
-            key = str(key).strip('"')
-            value = str(value).strip('"')
+            ele_split = element.split(':')
+            key = ele_split[0].strip('"')
+            value = ':'.join(ele_split[1:]).strip('"')
             dic.update({key: value})
             # print(key, value)
         print(dic, type(dic))
-        return True
+        return False
 
     # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
