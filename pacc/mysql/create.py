@@ -28,7 +28,7 @@ class CreateIdleFish(Create):
     """idle_fish表的增类：往数据库中的idle_fish表中新增数据"""
 
     # pylint: disable=too-many-arguments
-    def __init__(self, job_number, role, reminder_threshold, user_name, login_pw, pay_pw):
+    def __init__(self, job_number, role, reminder_threshold, user_name, login_pw, pay_pw, avc_link):
         """构造函数：初始化增类的对象
 
         :param job_number: 工号
@@ -37,21 +37,21 @@ class CreateIdleFish(Create):
         :param user_name: 闲鱼账号的会员名
         :param login_pw: 闲鱼账号的登录密码
         :param pay_pw: 闲鱼账号所绑定支付宝账号的的支付密码
+        :param avc_link: 接码链接
         """
         self.job_number = job_number
         if self.exist:
             print(f'记录job_number={self.job_number}已存在，无需重复创建')
             return
-        if '%' in pay_pw:
-            self.query(
-                'idle_fish',
-                ('Job_N', 'role', 'RT', 'user_name', 'login_pw', 'create'),
-                (self.job_number, role, reminder_threshold, user_name, login_pw, 1))
-        else:
-            self.query(
-                'idle_fish',
-                ('Job_N', 'role', 'RT', 'user_name', 'login_pw', 'pay_pw', 'create'),
-                (self.job_number, role, reminder_threshold, user_name, login_pw, pay_pw, 1))
+        fields = ['Job_N', 'role', 'RT', 'user_name', 'login_pw', 'create']
+        values = [self.job_number, role, reminder_threshold, user_name, login_pw, 1]
+        if '%' not in pay_pw:
+            fields.append('pay_pw')
+            values.append(pay_pw)
+        if '%' not in avc_link:
+            fields.append('avc_link')
+            values.append(avc_link)
+        self.query('idle_fish', tuple(fields), tuple(values))
 
     @classmethod
     def query(cls, table, fields, values, database=Account):

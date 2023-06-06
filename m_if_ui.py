@@ -53,12 +53,16 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
             self.result_data_text.insert(1.0, f'f{split_single_src}\n')
             dic = {}
             for element in split_single_src:
-                for key_v in [element.split('=')]:
+                ele_split = element.split('=')
+                # print(element, ele_split)
+                for key_v in [ele_split]:
                     if not key_v:
                         continue
-                    dic.update({key_v[0]: key_v[1]})
+                    dic.update({key_v[0]: '='.join(key_v[1:])})
+                    # print('='.join(key_v[1:]))
             print(dic)
             dic_li.append(dic)
+        # input()
         print(dic_li)
         for dic in dic_li:
             job_number = dic.get('Job_N')
@@ -85,7 +89,7 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
                     dic.get('login_pw') and dic.get('pay_pw'):
                 CreateIdleFish(
                     job_number, role, dic.get('RT'), dic.get('user_name'),
-                    dic.get('login_pw'), dic.get('pay_pw'))
+                    dic.get('login_pw'), dic.get('pay_pw'), dic.get('avc_link'))
                 txt_name = f'{job_number}{role}.txt'
                 print(txt_name)
                 with open(txt_name, 'w+', encoding='utf-8') as file:
