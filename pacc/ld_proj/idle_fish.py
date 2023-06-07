@@ -6,6 +6,7 @@ from os import listdir, path, remove, rename, system
 from os.path import join, exists
 from xml.parsers.expat import ExpatError
 import requests
+import re
 
 import pyperclip
 from PIL import Image
@@ -118,10 +119,10 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         """
         try:
             txt = requests.get(avc_link, timeout=30).text[1:-1]
-        except ConnectionError as err:
-            print(err)
+        except requests.exceptions.ConnectionError as err:
+            print_err(err)
             return cls.get_vc(avc_link)
-        print(txt, type(txt))
+        # print(txt, type(txt))
         txt_split = txt.split(',')
         # print(txt_split)
         dic = {}
@@ -132,7 +133,16 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             dic.update({key: value})
             # print(key, value)
         print(dic, type(dic))
-        return False
+        data = dic.get('data')
+        print(data, type(data))
+        pattern = re.compile(r'\d+')
+        try:
+            verification_code = pattern.findall(data)[0]
+        except IndexError as err:
+            print_err(err)
+            return cls.get_vc(avc_link)
+        print(verification_code)
+        return verification_code
 
     # pylint: disable=too-many-statements, too-many-branches, too-many-locals
     @classmethod
@@ -237,17 +247,32 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             update_idle_fish_ins.update_last_login_ipv4_addr(get_global_ipv4_addr())
             update_idle_fish_ins.update_login('NULL')
             update_idle_fish_ins.update_version('NULL')
-            if retrieve_idle_fish_ins.top_up_mobile:
-                update_idle_fish_ins.update_top_up_mobile_cnt(-1)
-            if Activity.WebViewActivity in ldadb_ins.get_current_focus():
+            # if retrieve_idle_fish_ins.top_up_mobile:
+            #     update_idle_fish_ins.update_top_up_mobile_cnt(-1)
+            no_safety_verification_err = True
+            try:
+                if lduia_ins.get_dict(text='安全验证'):
+                    no_safety_verification_err = False
+                    print(f'{start_index} {device_name}于{datetime.now()}使用'
+                          f'{get_global_ipv4_addr()}登录时出现安全验证，请处理')
+                    safety_verification_count += 1
+                    if Config.safety_verification_max_num <= safety_verification_count:
+                        input()
+            except FileNotFoundError as err:
+                no_safety_verification_err = False
+                print_err(err)
+                lduia_ins.tap((478, 919))
+            if no_safety_verification_err and Activity.WebViewActivity in ldadb_ins.\
+                    get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
                 avc_link = retrieve_idle_fish_ins.avc_link
                 if avc_link:
-                    lduia_ins.tap((435, 316), 10)
+                    lduia_ins.tap((435, 316), 5)
                     print(avc_link)
+                    lduia_ins.tap((216, 316))
                     system(f'start {avc_link}')
-                    cls.get_vc(avc_link)
-                    input()
+                    ldadb_ins.input_text(cls.get_vc(avc_link))
+                    lduia_ins.tap((256, 439))
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 update_idle_fish_ins.update_last_nvc_date(today)
@@ -256,16 +281,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 except FileNotFoundError as err:
                     print_err(err)
             lduia_ins.get_screen()
-            try:
-                if lduia_ins.get_dict(text='安全验证'):
-                    print(f'{start_index} {device_name}于{datetime.now()}使用'
-                          f'{get_global_ipv4_addr()}登录时出现安全验证，请处理')
-                    safety_verification_count += 1
-                    if Config.safety_verification_max_num <= safety_verification_count:
-                        input()
-            except FileNotFoundError as err:
-                print_err(err)
-                lduia_ins.tap((478, 919))
             start_index += 1
             cls.being_open_num += 1
             if Config.enable_being_open_num and cls.being_open_num >= being_open_max:
