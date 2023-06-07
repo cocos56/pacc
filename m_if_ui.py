@@ -82,8 +82,8 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
                     # print(job_number, exist_record)
                 role_prefix = role.split('%')[0]
                 role = f'{role_prefix}{suffix}'
-                print(f'自动推导出的job_number={job_number}, role={role}, 请确认后按回车以继续')
-                input()
+                # print(f'自动推导出的job_number={job_number}, role={role}, 请确认后按回车以继续')
+                # input()
             # pylint: disable=too-many-boolean-expressions
             if job_number and role and dic.get('RT') and dic.get('user_name') and \
                     dic.get('login_pw') and dic.get('pay_pw'):

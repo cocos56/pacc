@@ -20,7 +20,7 @@ SELECT Job_N, role FROM idle_fish WHERE login IS NULL
 # 5. 查询所有账号的基础信息
 ## 5.1. 某一代理的
 
-SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn FROM `idle_fish` WHERE Job_N LIKE 'ZLJ%'
+SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn FROM `idle_fish` WHERE Job_N LIKE 'WAS%'
 
 SELECT Job_N, role, version, coins, user_name, login_pw, pay_pw, if_mn FROM `idle_fish` WHERE Job_N LIKE 'ZDR%'
 
