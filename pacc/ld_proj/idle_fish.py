@@ -1,24 +1,24 @@
-"""闲鱼全自动刷闲鱼币中央监控系统模块"""
 # pylint: disable=too-many-lines
+"""闲鱼全自动刷闲鱼币中央监控系统模块"""
+import re
 import shutil
 from datetime import date, datetime, timedelta
 from os import listdir, path, remove, rename, system
 from os.path import join, exists
 from xml.parsers.expat import ExpatError
-import requests
-import re
 
 import pyperclip
+import requests
 from PIL import Image
 from pyzbar.pyzbar import decode
 
 from .idle_fish_base import Activity, ResourceID, IdleFishBase
 from ..adb import LDConsole, LDADB, LDUIA
 from ..base import sleep, print_err
+from ..config import Config
 from ..mysql import RetrieveIdleFish, RetrieveIdleFishRecords, \
     UpdateIdleFish, CreateRecordIdleFish
 from ..tools import create_dir, get_global_ipv4_addr, DiskUsage, CPU, get_now_time
-from ..config import Config
 
 
 class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
