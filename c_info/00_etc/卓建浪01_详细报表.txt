@@ -1,0 +1,336 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1021.1300.108
+  时间:             2021-10-18 18:41:41
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            雷神 911Air 笔记本电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              英特尔 Core i7-9750H @ 2.60GHz 六核
+  主板                雷神 NLAH ( HM370 芯片组 )
+  主显卡              Nvidia GeForce GTX 1650 ( 4 GB / Nvidia )
+  内存                16 GB ( 酷兽 DDR4 2666MHz / 金泰克 DDR4 2666MHz )
+  主硬盘              建兴 CL1-8D512 ( 512 GB / 固态硬盘 )
+  显示器              友达 AUO21ED ( 15.5 英寸  )
+  声卡                英特尔 High Definition Audio 控制器
+  网卡                英特尔 Wireless-AC 9560
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            雷神 NLAH
+  芯片组              HM370 芯片组
+  序列号              QCQV71K94700GO
+  主板版本            Type2 - Board Version
+  BIOS版本            Insyde TP211  /  BIOS程序发布日期: 10/25/2019
+  BIOS的大小          10240 KB
+
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 Core i7-9750H @ 2.60GHz 六核
+  速度                2.60 GHz (100 MHz x 26.0)
+  处理器数量          核心数: 6 / 线程数: 12
+  插槽/插座           U3E1
+  一级数据缓存        6 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        6 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            6 x 256 KB, 4-Way, 64 byte lines
+  三级缓存            12 MB, 16-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, HTT, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                建兴  CL1-8D512 (固态硬盘)
+  大小                512 GB
+  硬盘已使用          共 865 次，累计 2536 小时
+  固件                CT22101
+  接口                NVM Express
+  特征                S.M.A.R.T
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  ChannelA-DIMM0      酷兽 DDR4 2666MHz 8GB
+  制造日期            2021 年 36 周
+  型号                7F7F7F7F7F7F7F7FBC CS4S2666D19081C
+  序列号              D4C1769D
+  厂商                Cuso
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+  ChannelB-DIMM0      金泰克 DDR4 2666MHz 8GB
+  制造日期            2019 年 37 周
+  型号                7F7F7F7F7F7F7F10 TMKS8G68ALFBCH-2666V
+  序列号              00002415
+  厂商                KingTiger
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  显卡                英特尔 UHD Graphics 630
+  显存                128 MB
+  制造商              广达
+  制造商              Intel
+  驱动版本            25.20.100.6577
+  驱动日期            20190207
+
+  主显卡              Nvidia GeForce GTX 1650
+  显存                4 GB
+  制造商              Nvidia
+  制造商              Nvidia
+  驱动版本            25.21.14.1972
+  驱动日期            20190318
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                友达 AUO21ED
+  厂商                友达
+  固件程序日期        2016 年 (非显示器制造日期)
+  屏幕尺寸            15.5 英寸 (344 毫米 x 193 毫米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  最大分辨率          1920 x 1080
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  无线网卡            英特尔 Wireless-AC 9560
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+  制造商              广达
+
+  声卡                英特尔 High Definition Audio 控制器
+
+  声卡                Nvidia High Definition Audio 控制器
+
+  键盘                HID 标准键盘
+  键盘                HID 标准键盘
+  键盘                HID 标准键盘
+  鼠标                PS/2 兼容鼠标
+  鼠标                HID-compliant 鼠标
+  鼠标                HID-compliant 鼠标
+
+  摄像头              广达 USB HD Webcam
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Host Bridge/DRAM Registers - 3EC4
+  设备ID              3EC4
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core PCIe Controller  - 1901
+  设备ID              1901
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                UHD Graphics 630
+  设备ID              3E9B
+  制造商              Intel
+  制造商ID            8086
+  类别                Display / VGA
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Thermal Subsystem - A379
+  设备ID              A379
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                符合 USB xHCI 的主机控制器
+  设备ID              A36D
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                PCI 标准 RAM 控制器
+  设备ID              A36F
+  制造商              Intel
+  制造商ID            8086
+  类别                Memory / RAM
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Wireless-AC 9560
+  设备ID              A370
+  制造商              Intel
+  制造商ID            8086
+  类别                Network / Other
+  子系统制造商        Intel
+  子系统ID            02A48086
+
+  设备                Serial IO I2C Host Controller - A368
+  设备ID              A368
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / Other
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Serial IO I2C Host Controller - A369
+  设备ID              A369
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / Other
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Management Engine Interface
+  设备ID              A360
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                300 Series Chipset Family SATA AHCI Controller
+  设备ID              A353
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                PCI Express Root Port #9 - A330
+  设备ID              A330
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PCI Express Root Port #14 - A335
+  设备ID              A335
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PCI Express Root Port #16 - A337
+  设备ID              A337
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                HM370 Chipset LPC Controller
+  设备ID              A30D
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                High Definition Audio 控制器
+  设备ID              A348
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Quanta
+  子系统ID            1207152D
+
+  设备                SMBus - A323
+  设备ID              A323
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                SPI  Controller - A324
+  设备ID              A324
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / Other
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                GeForce GTX 1650
+  设备ID              1F91
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Display / VGA
+  子系统制造商        Nvidia
+  子系统ID            000010DE
+
+  设备                High Definition Audio 控制器
+  设备ID              10FA
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Nvidia
+  子系统ID            000010DE
+
+  设备                标准 NVM Express 控制器
+  设备ID              9100
+  制造商              GVC/BCM Advanced Research
+  制造商ID            14A4
+  类别                Storage / 
+  子系统制造商        Silicon Motion
+  子系统ID            2263126F
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+  设备                Realtek PCIE CardReader
+  设备ID              522A
+  制造商              Realtek
+  制造商ID            10EC
+  类别                 / 
+  子系统制造商        Quanta
+  子系统ID            1199152D
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  描述                Quanta USB HD Webcam
+  制造商ID            0408
+  产品ID              5050
+  类别                239 / 2 / 1
+  设备                 
+  版本                USB 2.0
+
+  制造商ID            1C4F
+  产品ID              0034
+  类别                0 / 0 / 0
+  设备                SIGMACHIP Usb Mouse
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            1A2C
+  产品ID              20C0
+  类别                0 / 0 / 0
+  设备                USB? USB Keyboard
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            8087
+  产品ID              0AAA
+  类别                224 / 1 / 1
+  设备                 
+  版本                USB 2.0
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  CPU温度             37℃
+  CPU核心             37℃
+  CPU封装             37℃
+  显卡                34℃
+  硬盘温度            25℃
+

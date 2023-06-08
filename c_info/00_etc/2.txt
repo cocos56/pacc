@@ -1,0 +1,238 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1019.1105.1129
+  时间:             2019-12-03 19:41:20
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            昂达 H110CD3 台式电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              英特尔 Pentium(奔腾) G4400 双核
+  主板                昂达 H110CD3 ( 100 Series/C230 Series 芯片组 Family - A143 )
+  显卡                英特尔 HD Graphics 510 ( 128 MB / 英特尔 )
+  内存                4 GB ( 金士顿 DDR3 1600MHz )
+  主硬盘              西数 WDC WDS120G2G0A-00JH30 ( 120 GB / 固态硬盘 )
+  显示器              惠普 HWP3260 HP V222 ( 23.4 英寸  )
+  声卡                英特尔 英特尔 显示器音频 @ 英特尔 High Definition Audio 控制器
+  网卡                瑞昱 RTL810x/8139 Family Fast Ethernet NIC
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            昂达 H110CD3
+  芯片组              100 Series/C230 Series 芯片组 Family - A143
+  序列号              Default string
+  主板版本            VER1.02
+  BIOS版本            American Megatrends Inc. 5.12  /  BIOS程序发布日期: 08/13/2018
+  BIOS的大小          16384 KB
+  BIOS的序列号        63-0100-000001-00101111-040416-Chipset
+
+  板载设备            视频设备 (启用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 Pentium(奔腾) G4400 双核
+  速度                3.31 GHz (100 MHz x 33.0)
+  处理器数量          核心数: 2 / 线程数: 2
+  核心代号            Skylake
+  生产工艺            14.0纳米
+  插槽/插座           Socket 1151 / H4 / LGA1151
+  一级数据缓存        32 KB, 8-Way, 64 byte lines
+  一级代码缓存        32 KB, 8-Way, 64 byte lines
+  二级缓存            256 KB, 4-Way, 64 byte lines
+  三级缓存            3 MB, 12-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, EM64T, EIST
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                西数 WDC WDS120G2G0A-00JH30 (固态硬盘)
+  大小                120 GB
+  硬盘已使用          共 162 次，累计 3685 小时
+  固件                UE360000
+  接口                SATA III
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  ChannelB-DIMM0      金士顿 DDR3 1600MHz 4GB
+  制造日期            2016 年 38 周
+  型号                7F98 9905584-017.A00LF
+  序列号              1A2E790D
+  厂商                Kingston
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              英特尔 HD Graphics 510
+  显存                128 MB
+  制造商              英特尔
+  制造商              Intel
+  BIOS日期            12/12/20 (非显卡制造日期)
+  驱动版本            25.20.100.6373
+  驱动日期            20181118
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                惠普 HWP3260 HP V222
+  厂商                惠普
+  固件程序日期        2016 年 11 周 (非显示器制造日期)
+  屏幕尺寸            23.4 英寸 (52 厘米 x 29 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1536 x 864 32 位真彩色
+  Gamma               2.20
+  电源管理            Active-Off
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                瑞昱 RTL810x/8139 Family Fast Ethernet NIC
+
+  声卡                英特尔 英特尔 显示器音频 @ 英特尔 High Definition Audio 控制器
+
+  键盘                远程桌面键盘设备
+  键盘                PS/2 标准键盘
+  键盘                HID 标准键盘
+  鼠标                远程桌面鼠标设备
+  鼠标                HID-compliant 鼠标
+  鼠标                微软 PS/2 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core Host Bridge/DRAM Registers - 190F
+  设备ID              190F
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Intel
+  子系统ID            20158086
+
+  设备                HD Graphics 510
+  设备ID              1902
+  制造商              Intel
+  制造商ID            8086
+  类别                Display / VGA
+  子系统制造商        Intel
+  子系统ID            22128086
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core Gaussian Mixture Model - 1911
+  设备ID              1911
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            20158086
+
+  设备                USB 3.0 eXtensible Host Controller
+  设备ID              A12F
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                100 Series/C230 Series Chipset Family Thermal subsystem - A131
+  设备ID              A131
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                Management Engine Interface
+  设备ID              A13A
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Intel
+  子系统ID            19998086
+
+  设备                100 Series/C230 Chipset Family SATA AHCI Controller
+  设备ID              A102
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #5 - A114
+  设备ID              A114
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family LPC Controller  - A143
+  设备ID              A143
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                100 Series/C230 Series Chipset Family PMC - A121
+  设备ID              A121
+  制造商              Intel
+  制造商ID            8086
+  类别                Memory / Other
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                High Definition Audio 控制器
+  设备ID              A170
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                100 Series/C230 Series Chipset Family SMBus - A123
+  设备ID              A123
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Intel
+  子系统ID            72708086
+
+  设备                RTL810x/8139 Family Fast Ethernet NIC
+  设备ID              8136
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Realtek
+  子系统ID            012310EC
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  描述                Dell Keyboard
+  制造商ID            413C
+  产品ID              2003
+  类别                0 / 0 / 0
+  设备                Dell Dell USB Keyboard
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            0461
+  产品ID              4D22
+  类别                0 / 0 / 0
+  设备                ? USB Optical Mouse
+  Serial              ?
+  版本                USB 2.0
+
+  制造商ID            148F
+  产品ID              7601
+  类别                0 / 0 / 0
+  设备                ? ?
+  版本                USB 2.0
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                NUVOTON NCT6779D
+  CPU温度             28℃
+  CPU核心             49℃
+  CPU封装             49℃
+  硬盘温度            30℃
+  风扇                1551转
+

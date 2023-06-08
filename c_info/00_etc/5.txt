@@ -1,0 +1,317 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1020.1170.415
+  时间:             2020-04-24 08:51:26
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            联想 Lenovo Product P500RXB7 台式电脑
+  操作系统            Windows 10 专业版 64位 ( DirectX 12 )
+
+  处理器              AMD A4-5300 APU with Radeon HD Graphics 双核
+  主板                联想 Bantry CRB ( AMD K15 )
+  显卡                Nvidia GeForce GT 705 ( 1 GB / 宝龙达 )
+  内存                4 GB ( 海力士 DDR3 1600MHz )
+  主硬盘              西数 WDC WD5000AAKX-08U6AA0 ( 500 GB / 7200 转/分 )
+  显示器              联想 LEN65A2 LEN LI2241wA ( 21.7 英寸  )
+  光驱                TSSTcorp DVD-ROM SH-116CB DVD光驱
+  声卡                瑞昱 ALC662 @ AMD High Definition Audio Controller
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller / 联想
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            联想 Bantry CRB
+  芯片组              AMD K15
+  主板版本            Not Defined
+  BIOS的大小          64 KB
+
+  板载设备            Onboard Video / 视频设备 (禁用)
+  板载设备            Onboard LAN / 网卡 (禁用)
+  板载设备            Onboard Audio / 音频设备 (启用)
+  板载设备            Sata Controller / SATA 控制器 (禁用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              AMD A4-5300 APU with Radeon HD Graphics 双核
+  步进                TN-A1
+  速度                3.40 GHz (100 MHz x 34.0)
+  处理器数量          核心数: 2 / 线程数: 2
+  核心代号            Trinity
+  生产工艺            32 纳米
+  插槽/插座           Socket FP2 (904)
+  一级数据缓存        16 KB, 4-Way, 64 byte lines
+  一级代码缓存        64 KB, 2-Way, 64 byte lines
+  二级缓存            1 x 1024 KB, 16-Way, 64  byte lines
+  特征                MMX+, SSE, SSE2, SSE3, SSSE3, SSE4A, SSE4.1, SSE5, HTT, X86-64
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                西数 WDC WD5000AAKX-08U6AA0 (蓝盘)
+  大小                500 GB
+  转速                7200 转/分
+  缓存                16 MB
+  硬盘已使用          共 3160 次，累计 7237 小时
+  固件                19.01H19
+  接口                SATA III
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  DIMM 3              海力士 DDR3 1600MHz 4GB
+  制造日期            2014 年 46 周
+  型号                AD HMT451U6BFR8C-PB
+  序列号              0279FA69
+  厂商                Hynix
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              Nvidia GeForce GT 705
+  显存                1 GB
+  制造商              宝龙达
+  制造商              Nvidia
+  BIOS版本            75.19.67.00.83
+  驱动版本            23.21.13.9135
+  驱动日期            20180323
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                联想 LEN65A2 LEN LI2241wA
+  厂商                联想
+  固件程序日期        2015 年 7 周 (非显示器制造日期)
+  屏幕尺寸            21.7 英寸 (48 厘米 x 27 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  电源管理            Active-Off
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+  产品                TSSTcorp DVD-ROM SH-116CB DVD光驱
+  缓存/固件:          198 KB /LC02
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+  制造商              联想
+
+  声卡                瑞昱 ALC662 @ AMD High Definition Audio Controller
+
+  声卡                Nvidia  @ Nvidia GF119 HDMI Audio Controller
+
+  键盘                HID 标准键盘
+  鼠标                HID-compliant 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                K15 Root Complex
+  设备ID              1410
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                K15 I/O Memory Management Unit
+  设备ID              1419
+  制造商              AMD
+  制造商ID            1022
+  类别                System / 
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                K15 PCI Express Root Port
+  设备ID              1412
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                K15 PCI Express Root Port
+  设备ID              1417
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                FCH USB XHCI Controller
+  设备ID              7814
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (UHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson SATA Controller
+  设备ID              7801
+  制造商              AMD
+  制造商ID            1022
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7807
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (OHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7808
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7807
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (OHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7808
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                SB900 SMBus Controller
+  设备ID              780B
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / SMBus Controller
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                High Definition Audio Controller
+  设备ID              780D
+  制造商              AMD
+  制造商ID            1022
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson LPC Bridge
+  设备ID              780E
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to ISA
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                Hudson PCI Bridge
+  设备ID              780F
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI (Subtractive Decode)
+  子系统ID            00000000
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7809
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (OHCI)
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+  设备                K15 Processor Function 0
+  设备ID              1400
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 1
+  设备ID              1401
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 2
+  设备ID              1402
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Miscellaneous Control
+  设备ID              1403
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 4
+  设备ID              1404
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 5
+  设备ID              1405
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                GeForce GT 705
+  设备ID              104C
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Display / VGA
+  子系统制造商        Bitland
+  子系统ID            3A981642
+
+  设备                GF119 HDMI Audio Controller
+  设备ID              0E08
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Bitland
+  子系统ID            3A981642
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Lenovo
+  子系统ID            36A017AA
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            17EF
+  产品ID              602E
+  类别                0 / 0 / 0
+  设备                ? USB Optical Mouse
+  Serial              ?
+  版本                USB 2.0
+
+  制造商ID            17EF
+  产品ID              602D
+  类别                0 / 0 / 0
+  设备                ? Lenovo Black Silk USB Keyboard
+  Serial              ?
+  版本                USB 2.0
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                NUVOTON NCT6792D
+  CPU温度             24℃
+  CPU核心             25℃
+  主板                36℃
+  显卡                37℃
+  硬盘温度            27℃
+  风扇                1856转
+

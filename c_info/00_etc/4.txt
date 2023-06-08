@@ -1,0 +1,258 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1019.1095.1011
+  时间:             2019-11-30 13:14:08
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            联想 Lenovo G480 20149 笔记本电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              英特尔 第三代酷睿 i5-3210M @ 2.50GHz 双核
+  主板                联想 Product Name ( HM76 Express 芯片组 )
+  显卡                英特尔 HD Graphics 4000 ( 32 MB / 联想 )
+  内存                4 GB ( 记忆科技 DDR3 1600MHz )
+  主硬盘              西数 WDC WD5000BPVT-24HXZT3 ( 500 GB / 5400 转/分 )
+  显示器              龙腾光电 IVO057A ( 14 英寸  )
+  光驱                PLDS DVD-RW DS8A8SH DVD刻录机
+  声卡                Conexant SmartAudio HD @ 英特尔 Realtek ALC662 Audio Controller
+  网卡                鈺硕 AR8162 Fast Ethernet / 联想
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            联想 Product Name
+  芯片组              HM76 Express 芯片组
+  序列号              LB00331127
+  主板版本            Mainboard version
+  BIOS版本            联想 5ECN40WW(V3.06)  /  BIOS程序发布日期: 10/22/2012
+  BIOS的大小          4608 KB
+
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 第三代酷睿 i5-3210M @ 2.50GHz 双核
+  步进                E1
+  速度                2.50 GHz (100 MHz x 25.0)
+  处理器数量          核心数: 2 / 线程数: 4
+  核心代号            Ivy Bridge
+  生产工艺            22 纳米
+  插槽/插座           Socket BGA1023
+  一级数据缓存        2 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        2 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            2 x 256 KB, 8-Way, 64 byte lines
+  三级缓存            3 MB, 12-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, HTT, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                西数 WDC WD5000BPVT-24HXZT3 (蓝盘)
+  大小                500 GB
+  转速                5400 转/分
+  缓存                8 MB
+  硬盘已使用          共 2188 次，累计 4802 小时
+  固件                03.01A03
+  接口                SATA II
+  数据传输率          300.00 MB/秒
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  DIMM0               记忆科技 DDR3 1600MHz 4GB
+  制造日期            2012 年 48 周
+  型号                7F7F7F7F43 RMT3160ED58E9W1600
+  序列号              430F9865
+  厂商                Ramaxel
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              英特尔 HD Graphics 4000
+  显存                32 MB
+  制造商              联想
+  制造商              Intel
+  BIOS日期            03/14/20 (非显卡制造日期)
+  驱动版本            10.18.10.4303
+  驱动日期            20151008
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                龙腾光电 IVO057A
+  厂商                龙腾光电
+  固件程序日期        2010 年 6 周 (非显示器制造日期)
+  屏幕尺寸            14 英寸 (31 厘米 x 17 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  最大分辨率          1366 x 768
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+  产品                PLDS DVD-RW DS8A8SH DVD刻录机
+  缓存/固件:          1024 KB /KL31
+
+  网卡                鈺硕 AR8162 Fast Ethernet
+  制造商              联想
+
+  无线网卡            博通 BCM4313 802.11b/g LP-PHY Network Adapter
+
+  声卡                Conexant SmartAudio HD @ 英特尔 Realtek ALC662 Audio Controller
+
+  键盘                远程桌面键盘设备
+  键盘                PS/2 标准键盘
+  鼠标                远程桌面鼠标设备
+  鼠标                HID-compliant 鼠标
+  鼠标                Synaptics 指点杆
+
+  摄像头              联想 EasyCamera
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Ivy Bridge DRAM Controller
+  设备ID              0154
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                HD Graphics 4000
+  设备ID              0166
+  制造商              Intel
+  制造商ID            8086
+  类别                Display / VGA
+  子系统制造商        Lenovo
+  子系统ID            390117AA
+
+  设备                Panther Point USB xHCI Host Controller
+  设备ID              1E31
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point MEI Controller #1
+  设备ID              1E3A
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point USB Enhanced Host Controller #2
+  设备ID              1E2D
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Realtek ALC662 Audio Controller
+  设备ID              1E20
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point PCI Express Root Port 1
+  设备ID              1E10
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Panther Point PCI Express Root Port 2
+  设备ID              1E12
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Panther Point USB Enhanced Host Controller #1
+  设备ID              1E26
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                HM76 Express Chipset LPC Controller
+  设备ID              1E59
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point 6 port SATA Controller
+  设备ID              1E03
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point SMBus Controller
+  设备ID              1E22
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                Panther Point Thermal Management Controller
+  设备ID              1E24
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Lenovo
+  子系统ID            397717AA
+
+  设备                AR8162 Fast Ethernet
+  设备ID              1090
+  制造商              Attansic
+  制造商ID            1969
+  类别                Network / Ethernet
+  子系统制造商        Lenovo
+  子系统ID            397917AA
+
+  设备                BCM4313 802.11b/g LP-PHY Network Adapter
+  设备ID              4727
+  制造商              Broadcom
+  制造商ID            14E4
+  类别                Network / Other
+  子系统制造商        Broadcom
+  子系统ID            051B14E4
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            275D
+  产品ID              0BA6
+  类别                0 / 0 / 0
+  设备                ? USB OPTICAL MOUSE
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            5986
+  产品ID              0294
+  类别                239 / 2 / 1
+  设备                 
+  版本                USB 2.0
+
+  制造商ID            0BDA
+  产品ID              0129
+  类别                255 / 255 / 255
+  设备                Generic USB2.0-CRW
+  Serial              20100201396000000
+  版本                USB 2.0
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  CPU温度             48℃
+  CPU核心             48℃
+  CPU封装             49℃
+  硬盘温度            35℃
+

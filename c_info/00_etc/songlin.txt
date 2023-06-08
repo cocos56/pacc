@@ -1,0 +1,251 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1020.1215.721
+  时间:             2020-07-27 17:50:29
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            X64 兼容 台式电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              英特尔 第四代酷睿 i5-4590 @ 3.30GHz 四核
+  主板                七彩虹 C.B85K PRO ( Lynx Point )
+  显卡                Nvidia GeForce GTX 1050 Ti ( 4 GB / 影驰 )
+  内存                8 GB ( 金泰克 DDR3 1600MHz )
+  主硬盘               Getrich 120GB ( 120 GB / 固态硬盘 )
+  显示器              QTF2700 ( 27 英寸  )
+  声卡                英特尔 Lynx Point  高保真音频
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            七彩虹 C.B85K PRO
+  芯片组              Lynx Point
+  主板版本            V23A
+  BIOS版本            American Megatrends Inc. 4.6.5  /  BIOS程序发布日期: 12/09/2015
+  BIOS的大小          4096 KB
+  BIOS的序列号        63-0100-000001-00101111-041312-Chipset
+
+  板载设备            视频设备 (启用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 第四代酷睿 i5-4590 @ 3.30GHz 四核
+  步进                C0
+  速度                3.30 GHz (103 MHz x 32.0)
+  处理器数量          核心数: 4 / 线程数: 4
+  核心代号            Haswell
+  生产工艺            22 纳米
+  插槽/插座           Socket H3 (LGA 1150)
+  一级数据缓存        2 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        2 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            2 x 256 KB, 8-Way, 64 byte lines
+  三级缓存            6 MB, 12-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                Getrich 120GB (固态硬盘)
+  大小                120 GB
+  硬盘已使用          共 3772 次，累计 533 小时
+  固件                XKR904
+  接口                SATA III
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  ChannelA-DIMM0      金泰克 DDR3 1600MHz 8GB
+  制造日期            2018 年 31 周
+  型号                7F7F7F7F7F7F7F10 DDR3-VLP-8G-1600
+  厂商                KingTiger
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              Nvidia GeForce GTX 1050 Ti
+  显存                4 GB
+  制造商              影驰
+  制造商              Nvidia
+  驱动版本            26.21.14.3200
+  驱动日期            20190724
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                 QTF2700
+  固件程序日期        2017 年 33 周 (非显示器制造日期)
+  屏幕尺寸            27 英寸 (60 厘米 x 33 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  电源管理            Active-Off
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+
+  声卡                英特尔 Lynx Point HD Audio Controller
+
+  声卡                Nvidia nForce MCP2S PCI to ISA Bridge @ Nvidia High Definition Audio 控制器
+
+  键盘                HID 标准键盘
+  键盘                HID 标准键盘
+  鼠标                HID-compliant 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Haswell DRAM Controller
+  设备ID              0C00
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Intel
+  子系统ID            0C008086
+
+  设备                Haswell PCI Express x16 Controller
+  设备ID              0C01
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Lynx Point USB xHCI Host Controller
+  设备ID              8C31
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Intel
+  子系统ID            8C318086
+
+  设备                Lynx Point MEI Controller #1
+  设备ID              8C3A
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Intel
+  子系统ID            8C3A8086
+
+  设备                Lynx Point USB Enhanced Host Controller #2
+  设备ID              8C2D
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Intel
+  子系统ID            8C2D8086
+
+  设备                Lynx Point HD Audio Controller
+  设备ID              8C20
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Intel
+  子系统ID            8C208086
+
+  设备                Lynx Point PCI Express Root Port 1
+  设备ID              8C10
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Lynx Point PCI Express Root Port 3
+  设备ID              8C14
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Lynx Point USB Enhanced Host Controller #1
+  设备ID              8C26
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Intel
+  子系统ID            8C268086
+
+  设备                Lynx Point LPC Controller
+  设备ID              8C50
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Intel
+  子系统ID            8C508086
+
+  设备                Lynx Point 6-Port SATA AHCI Controller
+  设备ID              8C02
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Intel
+  子系统ID            8C028086
+
+  设备                Lynx Point SMBus Controller
+  设备ID              8C22
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Intel
+  子系统ID            8C228086
+
+  设备                Lynx Point Thermal Management Controller
+  设备ID              8C24
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Intel
+  子系统ID            8C248086
+
+  设备                GeForce GTX 1050 Ti
+  设备ID              1C82
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Display / VGA
+  子系统制造商        Galaxy
+  子系统ID            11BF1B4C
+
+  设备                High Definition Audio 控制器
+  设备ID              0FB9
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Galaxy
+  子系统ID            11BF1B4C
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Realtek
+  子系统ID            012310EC
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            18F8
+  产品ID              0F97
+  类别                0 / 0 / 0
+  设备                ? USB OPTICAL MOUSE
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            1A2C
+  产品ID              2124
+  类别                0 / 0 / 0
+  设备                SEM? USB Keyboard
+  Serial              ?
+  版本                USB 1.1
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                NUVOTON NCT6779D
+  CPU温度             34℃
+  CPU核心             54℃
+  CPU封装             54℃
+  主板                35℃
+  显卡                32℃
+  硬盘温度            40℃
+  风扇                1844转
+

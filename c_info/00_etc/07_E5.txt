@@ -1,0 +1,616 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1020.1195.526
+  时间:             2020-06-18 12:21:30
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            X64 兼容 台式电脑
+  操作系统            Windows 10 专业版 64位 ( DirectX 12 )
+
+  处理器              英特尔 Xeon(至强) E5-1620 v2 @ 3.70GHz 四核
+  主板                HUANAN X79 ( X79 PCH - )
+  显卡                AMD Radeon RX 480 ( 8 GB / 撼讯 )
+  内存                16 GB ( 三星 DDR3 1333MHz )
+  主硬盘              三星 SSD 960 EVO 250GB ( 250 GB / 固态硬盘 )
+  显示器              XMD004A Mi TV ( 55.2 英寸  )
+  声卡                英特尔 Realtek ALC892
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            HUANAN X79
+  芯片组              X79 PCH -
+  序列号              MB-201610292016
+  主板版本            V2.46
+  BIOS版本            American Megatrends Inc. 4.6.5  /  BIOS程序发布日期: 10/29/2016
+  BIOS的大小          4096 KB
+  BIOS的序列号        63-0100-000001-00101111-060914-Chipset
+
+  板载设备            视频设备 (启用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 Xeon(至强) E5-1620 v2 @ 3.70GHz 四核
+  步进                S1
+  速度                3.70 GHz (148 MHz x 25.0)
+  处理器数量          核心数: 4 / 线程数: 8
+  核心代号            Ivy Bridge E
+  生产工艺            22 纳米
+  插槽/插座           Socket R (LGA 2011)
+  一级数据缓存        4 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        4 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            4 x 256 KB, 8-Way, 64 byte lines
+  三级缓存            10 MB, 20-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, HTT, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                三星  SSD 960 EVO 250GB (固态硬盘)
+  大小                250 GB
+  硬盘已使用          共 1120 次，累计 2183 小时
+  固件                2B7QCXE7
+  接口                NVM Express
+  特征                S.M.A.R.T
+
+  产品                西数 WDC WD10EZEX-08WN4A0
+  大小                1 TB
+  转速                7200 转/分
+  缓存                64 MB
+  硬盘已使用          共 1310 次，累计 7705 小时
+  固件                01.01A01
+  接口                SATA III
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  Node0_Dimm0         三星 DDR3 1333MHz 4GB
+  制造日期            2011 年 25 周
+  型号                CE 36JSF51272PZh1G8?
+  序列号              82916490
+  厂商                SAMSUNG
+  模块电压:           SSTL 1.5V
+
+  Node0_Dimm1         三星 DDR3 1333MHz 4GB
+  制造日期            2011 年 25 周
+  型号                CE 36JSF512?PZ-1G4G8
+  序列号              829164B3
+  厂商                SAMSUNG
+  模块电压:           SSTL 1.5V
+
+  Node0_Dimm2         三星 DDR3 1333MHz 4GB
+  制造日期            2011 年 25 周
+  型号                CE 36JSF51272PZ-1G4G1
+  序列号              829164C2
+  厂商                SAMSUNG
+  模块电压:           SSTL 1.5V
+
+  Node0_Dimm3         三星 DDR3 1333MHz 4GB
+  制造日期            2011 年 25 周
+  型号                CE 36JSF51272PZ-1G4G1
+  序列号              829164E2
+  厂商                SAMSUNG
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              AMD Radeon RX 480
+  显存                8 GB
+  频率                核心: 1279MHz / 显存: 2000MHz
+  制造商              撼讯
+  制造商              AMD
+  BIOS版本            113-D0090101_103
+  驱动版本            26.20.12028.2
+  驱动日期            8-16-2019
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                 XMD004A Mi TV
+  固件程序日期        2018 年 6 周 (非显示器制造日期)
+  屏幕尺寸            55.2 英寸 (122 厘米 x 69 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 (缩放比例:150%) 32 位真彩色
+  Gamma               2.20
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+
+  声卡                英特尔 Realtek ALC892
+
+  声卡                AMD High Definition Audio 控制器
+
+  键盘                HID 标准键盘
+  键盘                PS/2 标准键盘
+  键盘                HID 标准键盘
+  鼠标                微软 PS/2 鼠标
+  鼠标                HID-compliant 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Ivytown DMI2
+  设备ID              0E00
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Intel
+  子系统ID            0E008086
+
+  设备                Ivytown PCI Express Root Port 1b
+  设备ID              0E03
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Ivytown PCI Express Root Port 2a
+  设备ID              0E04
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Ivytown PCI Express Root Port 3a
+  设备ID              0E08
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Ivytown VTd/Memory Map/Misc
+  设备ID              0E28
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            0E288086
+
+  设备                Ivytown IIO RAS
+  设备ID              0E2A
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            0E2A8086
+
+  设备                Ivytown IOAPIC
+  设备ID              0E2C
+  制造商              Intel
+  制造商ID            8086
+  类别                System / I/O(x) APIC
+  子系统制造商        Intel
+  子系统ID            0E2C8086
+
+  设备                PATSBURG Chipset Family PCI Express Virtual Root Port
+  设备ID              1D3E
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PATSBURG Chipset Family USB Enhanced Host Controller
+  设备ID              1D2D
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Intel
+  子系统ID            1D2D8086
+
+  设备                Realtek ALC892
+  设备ID              1D20
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Intel
+  子系统ID            1D208086
+
+  设备                PATSBURG Chipset Family PCI Express Root Port 1
+  设备ID              1D10
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PATSBURG Chipset Family PCI Express Root Port 3
+  设备ID              1D14
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PATSBURG Chipset Family PCI Express Root Port 4
+  设备ID              1D16
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                PATSBURG Chipset Family USB Enhanced Host Controller
+  设备ID              1D26
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Intel
+  子系统ID            1D268086
+
+  设备                82801 PCI Bridge
+  设备ID              244E
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI (Subtractive Decode)
+  子系统ID            00000000
+
+  设备                X79 PCH - LPC Interface Controller
+  设备ID              1D41
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Intel
+  子系统ID            1D418086
+
+  设备                PBG Chipset Family SATA AHCI Controller 1
+  设备ID              1D02
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Intel
+  子系统ID            1D028086
+
+  设备                PCH SMBus Controller
+  设备ID              1D22
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Intel
+  子系统ID            1D228086
+
+  设备                Samsung NVMe Controller
+  设备ID              A804
+  制造商              Samsung
+  制造商ID            144D
+  类别                Storage / 
+  子系统制造商        Samsung
+  子系统ID            A801144D
+
+  设备                Radeon RX 480
+  设备ID              67DF
+  制造商              AMD
+  制造商ID            1002
+  类别                Display / VGA
+  子系统制造商        PowerColor
+  子系统ID            2372148C
+
+  设备                High Definition Audio 控制器
+  设备ID              AAF0
+  制造商              AMD
+  制造商ID            1002
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        PowerColor
+  子系统ID            AAF0148C
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Realtek
+  子系统ID            012310EC
+
+  设备                VIA USB eXtensible Host Controller
+  设备ID              3483
+  制造商              VIA
+  制造商ID            1106
+  类别                Serial / USB (UHCI)
+  子系统制造商        VIA
+  子系统ID            34831106
+
+  设备                Ivytown QPI Link 0
+  设备ID              0E80
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown QPI Link 1
+  设备ID              0E90
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Power Control Unit 0
+  设备ID              0EC0
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Power Control Unit 1
+  设备ID              0EC1
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Power Control Unit 2
+  设备ID              0EC2
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Power Control Unit 3
+  设备ID              0EC3
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Semaphore and Scratchpad Configuration Registers
+  设备ID              0E1E
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Semaphore and Scratchpad Configuration Registers
+  设备ID              0E1F
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Unicast Registers
+  设备ID              0EE0
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Unicast Registers
+  设备ID              0EE2
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Unicast Registers
+  设备ID              0EE1
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Unicast Registers
+  设备ID              0EE3
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Home Agent 0
+  设备ID              0EA0
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统ID            00000000
+
+  设备                Ivytown Home Agent 0
+  设备ID              0E30
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Performance Counters
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 Target Address/Thermal Registers
+  设备ID              0EA8
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 RAS Registers
+  设备ID              0E71
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 Channel Target Address Decoder Registers
+  设备ID              0EAA
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 Channel Target Address Decoder Registers
+  设备ID              0EAB
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 Channel Target Address Decoder Registers
+  设备ID              0EAC
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 0 Channel Target Address Decoder Registers
+  设备ID              0EAD
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 Thermal Control 0
+  设备ID              0EB0
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 Thermal Control 1
+  设备ID              0EB1
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 ERROR Registers 0
+  设备ID              0EB2
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 ERROR Registers 1
+  设备ID              0EB3
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 Thermal Control 2
+  设备ID              0EB4
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 Thermal Control 3
+  设备ID              0EB5
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 ERROR Registers 2
+  设备ID              0EB6
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Integrated Memory Controller 1 Channel 0-3 ERROR Registers 3
+  设备ID              0EB7
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown R2PCIe
+  设备ID              0E1D
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown PCI Express Ring Performance Monitoring
+  设备ID              0E34
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Performance Counters
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown QPI Ring Registers
+  设备ID              0E81
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown QPI Ring Performance Ring Monitoring
+  设备ID              0E36
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Performance Counters
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown System Address Decoder
+  设备ID              0EC8
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Broadcast Registers
+  设备ID              0EC9
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+  设备                Ivytown Broadcast Registers
+  设备ID              0ECA
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Intel
+  子系统ID            00008086
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            1EA7
+  产品ID              0064
+  类别                0 / 0 / 0
+  设备                ? 2.4G Mouse
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            04D9
+  产品ID              0024
+  类别                0 / 0 / 0
+  设备                HOLDCHIP USB Gaming Keyboard
+  Serial              ?
+  版本                USB 1.1
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                NUVOTON NCT6779D
+  CPU温度             7℃
+  CPU核心             32℃
+  CPU封装             32℃
+  主板                31℃
+  显卡                51℃
+  硬盘温度            32℃
+  风扇                1390转
+

@@ -1,0 +1,308 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1020.1215.721
+  时间:             2020-07-27 17:33:19
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            X64 兼容 台式电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              AMD A8-7500 Radeon R7, 10 Compute Cores 4C+6G 四核
+  主板                华硕 A68HM-K ( AMD K15 )
+  显卡                AMD Radeon R7 Graphics ( 512 MB / 华硕 )
+  内存                4 GB ( 金士顿 DDR3 1600MHz )
+  主硬盘              台电 120GB S500 ( 120 GB / 固态硬盘 )
+  显示器              QTF2700 ( 27 英寸  )
+  声卡                瑞昱 ALC887 @ AMD High Definition Audio Controller
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller / 华硕
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            华硕 A68HM-K
+  芯片组              AMD K15
+  序列号              171217104314968
+  主板版本            Rev X.0x
+  BIOS版本            American Megatrends Inc. 1703  /  BIOS程序发布日期: 05/27/2017
+  BIOS的大小          8192 KB
+  BIOS的序列号        63-0100-000001-00101111-122211-Chipset
+
+  板载设备            视频设备 (启用)
+  板载设备            网卡 (启用)
+  板载设备            音频设备 (启用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              AMD A8-7500 Radeon R7, 10 Compute Cores 4C+6G 四核
+  步进                KV-A1
+  速度                3.00 GHz (100 MHz x 30.0)
+  处理器数量          核心数: 4 / 线程数: 4
+  核心代号            Kaveri
+  生产工艺            28 纳米
+  插槽/插座           Socket FM2+ (906)
+  一级数据缓存        16 KB, 4-Way, 64 byte lines
+  一级代码缓存        96 KB, 64 byte lines
+  二级缓存            2 x 2048 KB, 16-Way, 64  byte lines
+  特征                MMX+, SSE, SSE2, SSE3, SSSE3, SSE4A, SSE4.1, SSE5, HTT, X86-64
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                台电  120GB S500 (固态硬盘)
+  大小                120 GB
+  硬盘已使用          共 591 次，累计 511 小时
+  固件                Q0627A0
+  接口                SATA III
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  DIMM_B1             金士顿 DDR3 1600MHz 4GB
+  制造日期            2014 年 16 周
+  型号                7F98 99P5474-037.A00LF
+  序列号              8521336C
+  厂商                Kingston
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.5V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              AMD Radeon R7 Graphics
+  显存                512 MB
+  频率                核心: 720MHz / 显存: 800MHz
+  制造商              华硕
+  制造商              AMD
+  BIOS版本            113-SPEC-102
+  驱动版本            26.20.12028.2
+  驱动日期            8-16-2019
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                 QTF2700
+  固件程序日期        2017 年 33 周 (非显示器制造日期)
+  屏幕尺寸            27 英寸 (60 厘米 x 33 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  电源管理            Active-Off
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+  制造商              华硕
+
+  声卡                瑞昱 ALC887 @ AMD High Definition Audio Controller
+
+  键盘                HID 标准键盘
+  键盘                HID 标准键盘
+  鼠标                HID-compliant 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                K15 Root Complex
+  设备ID              1422
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统制造商        ASUSTeK
+  子系统ID            85CB1043
+
+  设备                Radeon R7 Graphics (Kaveri)
+  设备ID              1313
+  制造商              AMD
+  制造商ID            1002
+  类别                Display / VGA
+  子系统制造商        ASUSTeK
+  子系统ID            85CB1043
+
+  设备                K15 Root Port
+  设备ID              1424
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Root Port
+  设备ID              1424
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Root Port
+  设备ID              1424
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                FCH USB XHCI Controller
+  设备ID              7814
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (UHCI)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson SATA Controller
+  设备ID              7801
+  制造商              AMD
+  制造商ID            1022
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7807
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (OHCI)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7808
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7807
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB (OHCI)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson USB OHCI Controller
+  设备ID              7808
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                SB900 SMBus Controller
+  设备ID              780B
+  制造商              AMD
+  制造商ID            1022
+  类别                Serial / SMBus Controller
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                High Definition Audio Controller
+  设备ID              780D
+  制造商              AMD
+  制造商ID            1022
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        ASUSTeK
+  子系统ID            85761043
+
+  设备                Hudson LPC Bridge
+  设备ID              780E
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to ISA
+  子系统制造商        ASUSTeK
+  子系统ID            866A1043
+
+  设备                Hudson PCI Bridge
+  设备ID              780F
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI (Subtractive Decode)
+  子系统ID            00000000
+
+  设备                Hudson PCI Express Root Port
+  设备ID              43A0
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Hudson PCI Express Root Port
+  设备ID              43A2
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                K15 Processor Function 0
+  设备ID              141A
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 1
+  设备ID              141B
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 2
+  设备ID              141C
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 3
+  设备ID              141D
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 4
+  设备ID              141E
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                K15 Processor Function 5
+  设备ID              141F
+  制造商              AMD
+  制造商ID            1022
+  类别                Bridge / PCI to HOST
+  子系统ID            00000000
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        ASUSTeK
+  子系统ID            859E1043
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            18F8
+  产品ID              0F97
+  类别                0 / 0 / 0
+  设备                ? USB OPTICAL MOUSE
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            1A2C
+  产品ID              2124
+  类别                0 / 0 / 0
+  设备                SEM? USB Keyboard
+  Serial              ?
+  版本                USB 1.1
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                ITE IT8603
+  CPU温度             61℃
+  CPU核心             46℃
+  主板                40℃
+  风扇                1537转
+

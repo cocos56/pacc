@@ -1,0 +1,310 @@
+Microsoft Visual Studio Ultimate 2012
+版本 11.0.50727.1 RTMREL
+Microsoft .NET Framework
+版本 4.7.02558
+
+已安装的版本: Ultimate
+
+LightSwitch for Visual Studio 2012   04940-004-0038003-02720
+Microsoft LightSwitch for Visual Studio 2012
+
+Office 开发人员工具   04940-004-0038003-02720
+Microsoft Office 开发人员工具
+
+Team Explorer for Visual Studio 2012   04940-004-0038003-02720
+Microsoft Team Explorer for Visual Studio 2012
+
+Visual Basic 2012   04940-004-0038003-02720
+Microsoft Visual Basic 2012
+
+Visual C# 2012   04940-004-0038003-02720
+Microsoft Visual C# 2012
+
+Visual C++ 2012   04940-004-0038003-02720
+Microsoft Visual C++ 2012
+
+Visual F# 2012   04940-004-0038003-02720
+Microsoft Visual F# 2012
+
+Visual Studio 2012 SharePoint 开发人员工具   04940-004-0038003-02720
+Microsoft Visual Studio 2012 SharePoint 开发人员工具
+
+Visual Studio 2012 代码分析拼写检查器   04940-004-0038003-02720
+Microsoft(R) Visual Studio(R) 2012 代码分析拼写检查器
+
+International CorrectSpell(TM) spelling correction system(C) 1993 部分版权归 Lernout & Hauspie Speech Products N.V. 所有。保留所有权利。
+
+The American Heritage(R) Dictionary of the English Language, Third Edition。版权所有 (C) 1992 Houghton Mifflin Company。电子版的版权归 Lernout & Hauspie Speech Products N.V. 所有。保留所有权利。
+
+体系结构和建模工具   04940-004-0038003-02720
+Microsoft 体系结构和建模工具
+    
+UML(R) 和 Unified Modeling Language(TM) 是 Object Management Group, Inc. 在美国和其他国家/地区的商标或注册商标。
+
+NuGet 程序包管理器   2.0.30625.9003
+Visual Studio 中的 NuGet 程序包管理器。有关 NuGet 的详细信息，请访问 http://docs.nuget.org/。
+
+PreEmptive Analytics 可视化工具   1.0
+Microsoft Visual Studio 扩展可以可视化 PreEmptive Analytics 产品的聚合摘要。
+
+SQL Server Data Tools   11.1.20627.00
+Microsoft SQL Server Data Tools
+
+Web Developer 工具   1.0.30710.0
+Microsoft Web Developer 工具包含以下组件:
+Page Inspector: 提供一种用于分解 Web 应用程序并诊断前端问题的有效方法的工具。
+Web 发布: 托管服务器及内部部署设备的 Web 发布所需的扩展。
+Web 窗体模板: 包含 Web 窗体应用程序的默认模板。
+编辑器扩展: 包含可显著增强开发体验的 HTML、CSS 和 JS 编辑器扩展。
+
+
+
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1019.1095.1011
+  时间:             2019-11-20 08:42:49
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            Bochs Standard PC (i440FX + PIIX, 1996) 其他 笔记本电脑
+  操作系统            Windows 7 旗舰版 32位 SP1 ( DirectX 11 )
+
+  处理器              英特尔 酷睿2 双核 T7700 @ 2.40GHz 笔记本处理器
+  主板                Red Hat 主板 ( 英特尔 82440/1FX 440FX )
+  显卡                Red Hat Sangfor Tech Titan GPU v2 ( Red Hat )
+  内存                3 GB
+  主硬盘              Sangfor FastIO SCSI Disk Device ( 128 GB )
+  声卡                Red Hat @ 英特尔 82801FB Realtek  高保真音频
+  网卡                Red Hat Virtio network device
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            Red Hat 主板
+  芯片组              英特尔 82440/1FX 440FX
+  BIOS的大小          1088 KB
+
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 酷睿2 双核 T7700 @ 2.40GHz 笔记本处理器
+  步进                G0
+  速度                2.40 GHz (167 MHz x 14.0) 前端总线: 667 MHz
+  处理器数量          核心数: 2 / 线程数: 2
+  核心代号            Allendale
+  生产工艺            65 纳米
+  插槽/插座           Socket 775 (FC-LGA6)
+  一级数据缓存        2 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        2 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            2 x 4 MB, 16-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, EM64T
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  显卡                Red Hat Sangfor Tech Titan GPU v2
+  制造商              Red Hat
+  BIOS版本            Rev. 1
+  驱动版本            2.0.0.2
+  驱动日期            20160219
+
+  主显卡              Red Hat Sangfor Tech Titan GPU v2
+  制造商              Red Hat
+  驱动版本            2.0.0.2
+  驱动日期            20160219
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                Red Hat Virtio network device
+
+  声卡                Red Hat @ 英特尔 82801FB Realtek  高保真音频
+
+  键盘                PS/2 标准键盘
+  鼠标                Sangfor Technologies Inc.
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                82440/1FX 440FX  System Controller
+  设备ID              1237
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                82371SB[Natoma/Triton II] PIIX3 ISA
+  设备ID              7000
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                82371SB[Natoma/Triton II] PIIX3 IDE
+  设备ID              7010
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / IDE (ATA)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                82371SB[Natoma/Triton II] PIIX3 USB
+  设备ID              7020
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                82371AB/EB/MB PIIX4/E/M Power Management Controller
+  设备ID              7113
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to Other
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                Sangfor Tech Titan GPU v2
+  设备ID              0102
+  制造商              Red Hat, Inc.
+  制造商ID            1B36
+  类别                Display / VGA
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                82801FB Realtek HD Audio Controller
+  设备ID              2668
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #1
+  设备ID              2934
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #2
+  设备ID              2935
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #3
+  设备ID              2936
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #4
+  设备ID              2937
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #5
+  设备ID              2938
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB Universal Host Controller #6
+  设备ID              2939
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                ICH9 USB2 Enhanced Host Controller #1
+  设备ID              293A
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB 2.0 (EHCI)
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                Sangfor ChannelSerial Driver
+  设备ID              101F
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Simple Communication / Other
+  子系统制造商        Red Hat
+  子系统ID            00031AF4
+
+  设备                Virtio console
+  设备ID              1003
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Simple Communication / Other
+  子系统制造商        Red Hat
+  子系统ID            00031AF4
+
+  设备                Sangfor ChannelSerial Driver
+  设备ID              101F
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Simple Communication / Other
+  子系统制造商        Red Hat
+  子系统ID            00031AF4
+
+  设备                Sangfor Tech Titan GPU v2
+  设备ID              0102
+  制造商              Red Hat, Inc.
+  制造商ID            1B36
+  类别                Display / Other
+  子系统制造商        Red Hat
+  子系统ID            11001AF4
+
+  设备                Virtio memory balloon
+  设备ID              1002
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Unknown / 
+  子系统制造商        Red Hat
+  子系统ID            00051AF4
+
+  设备                Virtio block device
+  设备ID              1001
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Storage / SCSI
+  子系统制造商        Red Hat
+  子系统ID            00021AF4
+
+  设备                Virtio network device
+  设备ID              1000
+  制造商              Red Hat
+  制造商ID            1AF4
+  类别                Network / Ethernet
+  子系统制造商        Red Hat
+  子系统ID            00011AF4
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+

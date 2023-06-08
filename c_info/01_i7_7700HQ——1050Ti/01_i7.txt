@@ -1,0 +1,391 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1019.1105.1129
+  时间:             2019-11-30 13:10:48
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            THUNDEROBOT 911K 笔记本电脑
+  操作系统            Windows 10 64位 ( DirectX 12 )
+
+  处理器              英特尔 Core i7-7700HQ @ 2.80GHz 四核
+  主板                THUNDEROBOT NL8K ( 100 Series/C230 Series 芯片组 Family - A152 )
+  显卡                Nvidia GeForce GTX 1050 Ti ( 4 GB )
+  内存                16 GB ( 威刚 DDR4 2400MHz )
+  主硬盘              建兴 T11 256 ( 256 GB / 固态硬盘 )
+  显示器              友达 AUO44ED ( 15.5 英寸  )
+  声卡                瑞昱  @ 英特尔 High Definition Audio 控制器
+  网卡                英特尔 Dual Band Wireless-AC 3165
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            THUNDEROBOT NL8K
+  芯片组              100 Series/C230 Series 芯片组 Family - A152
+  序列号              QCQTD46741014W
+  主板版本            INVALID
+  BIOS版本            广达 TP127  /  BIOS程序发布日期: 01/05/2018
+  BIOS的大小          8192 KB
+
+  板载设备            视频设备 (启用)
+  板载设备            网卡 (禁用)
+  板载设备            音频设备 (禁用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 Core i7-7700HQ @ 2.80GHz 四核
+  速度                2.81 GHz (100 MHz x 28.0)
+  处理器数量          核心数: 4 / 线程数: 8
+  插槽/插座           U3E1
+  一级数据缓存        4 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        4 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            4 x 256 KB, 4-Way, 64 byte lines
+  三级缓存            6 MB, 12-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, HTT, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                希捷 ST1000LM048-2E7172
+  大小                1 TB
+  转速                5400 转/分
+  缓存                128 MB
+  硬盘已使用          共 768 次，累计 12527 小时
+  固件                SDM1
+  接口                SATA III
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+  产品                建兴  T11 256 (固态硬盘)
+  大小                256 GB
+  硬盘已使用          共 764 次，累计 9792 小时
+  固件                LTNFW1.0
+  接口                NVM Express
+  特征                S.M.A.R.T
+
+  产品                希捷 ST2000LM007-1R8174
+  大小                2 TB
+  转速                5400 转/分
+  缓存                128 MB
+  硬盘已使用          共 475 次，累计 10227 小时
+  固件                SBK2
+  接口                SATA II
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+  产品                希捷 ST4000LM024-2AN17V
+  大小                4 TB
+  转速                10000 转/分
+  硬盘已使用          共 75 次，累计 4930 小时
+  固件                0001
+  接口                SATA II
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+  产品                IM3D B17A (固态硬盘)
+  大小                1024 GB
+  硬盘已使用          共 72 次，累计 5236 小时
+  固件                R0817B0
+  接口                SATA III
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  ChannelA-DIMM0      威刚 DDR4 2400MHz 8GB
+  制造日期            2017 年 35 周
+  型号                7F7F7F7FCB AM1P24HC8T1-BURS
+  序列号              BE160100
+  厂商                AData
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+  ChannelB-DIMM0      威刚 DDR4 2400MHz 8GB
+  制造日期            2017 年 37 周
+  型号                7F7F7F7FCB AM1P24HC8T1-BURS
+  序列号              A9280200
+  厂商                AData
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  显卡                英特尔 HD Graphics 630
+  显存                128 MB
+  制造商              广达
+  制造商              Intel
+  BIOS日期            07/21/20 (非显卡制造日期)
+  驱动版本            25.20.100.6374
+  驱动日期            20181118
+
+  主显卡              Nvidia GeForce GTX 1050 Ti
+  显存                4 GB
+  制造商              Nvidia
+  BIOS日期            07/21/20 (非显卡制造日期)
+  驱动版本            23.21.13.8873
+  驱动日期            20171218
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                友达 AUO44ED
+  厂商                友达
+  固件程序日期        2016 年 (非显示器制造日期)
+  屏幕尺寸            15.5 英寸 (34 厘米 x 19 厘米)
+  显示比例            宽屏 16 : 9
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  最大分辨率          1920 x 1080
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  无线网卡            英特尔 Dual Band Wireless-AC 3165
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+  制造商              广达
+
+  无线网卡            瑞丽 802.11 n WLAN
+
+  声卡                瑞昱  @ 英特尔 High Definition Audio 控制器
+
+  键盘                远程桌面键盘设备
+  键盘                HID 标准键盘
+  键盘                PS/2 标准键盘
+  鼠标                Alps Pointing-device
+  鼠标                HID-compliant 鼠标
+  鼠标                HID-compliant 鼠标
+  鼠标                远程桌面鼠标设备
+
+  摄像头              USB HD WEBCAM
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                Xeon E3 - 1200 v6/7th Gen Intel Core Host Bridge/DRAM Registers - 5910
+  设备ID              5910
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core PCIe Controller  - 1901
+  设备ID              1901
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                HD Graphics 630
+  设备ID              591B
+  制造商              Intel
+  制造商ID            8086
+  类别                Display / VGA
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                USB 3.0 eXtensible Host Controller
+  设备ID              A12F
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Series Chipset Family Thermal subsystem - A131
+  设备ID              A131
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                串行 IO I2C 主机控制器 - A160
+  设备ID              A160
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Series Chipset Family Serial IO I2C Host Controller - A161
+  设备ID              A161
+  制造商              Intel
+  制造商ID            8086
+  类别                Data Aquisition & Signal Processing / Other
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                Management Engine Interface
+  设备ID              A13A
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Chipset Family SATA AHCI Controller
+  设备ID              A103
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #1 - A110
+  设备ID              A110
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #7 - A116
+  设备ID              A116
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #8 - A117
+  设备ID              A117
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #9 - A118
+  设备ID              A118
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family PCI Express Root Port #15 - A11E
+  设备ID              A11E
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                100 Series/C230 Series Chipset Family LPC Controller  - A152
+  设备ID              A152
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Series Chipset Family PMC - A121
+  设备ID              A121
+  制造商              Intel
+  制造商ID            8086
+  类别                Memory / Other
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                High Definition Audio 控制器
+  设备ID              A171
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                100 Series/C230 Series Chipset Family SMBus - A123
+  设备ID              A123
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                Realtek PCIE CardReader
+  设备ID              522A
+  制造商              Realtek
+  制造商ID            10EC
+  类别                 / 
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+  设备                Dual Band Wireless-AC 3165
+  设备ID              3165
+  制造商              Intel
+  制造商ID            8086
+  类别                Network / Other
+  子系统制造商        Intel
+  子系统ID            40108086
+
+  设备                标准 NVM Express 控制器
+  设备ID              5100
+  制造商              GVC/BCM Advanced Research
+  制造商ID            14A4
+  类别                Storage / 
+  子系统制造商        GVC/BCM Advanced Research
+  子系统ID            510014A4
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Quanta
+  子系统ID            1156152D
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            0408
+  产品ID              2020
+  类别                239 / 2 / 1
+  设备                 
+  版本                USB 2.0
+
+  制造商ID            8087
+  产品ID              0A2A
+  类别                224 / 1 / 1
+  设备                 
+  版本                USB 2.0
+
+  制造商ID            0BC2
+  产品ID              AB24
+  类别                0 / 0 / 0
+  设备                Seagate BUP Slim BK
+  Serial              NA9B5NRB
+  版本                USB 3.0
+
+  制造商ID            0BC2
+  产品ID              AB28
+  类别                0 / 0 / 0
+  设备                Seagate BUP BK
+  Serial              NA9W3JVA
+  版本                USB 3.0
+
+  制造商ID            2109
+  产品ID              0715
+  类别                0 / 0 / 0
+  设备                VLI Manufacture String VLI Product String
+  Serial              000000123C2C
+  版本                USB 3.0
+
+  制造商ID            046D
+  产品ID              C534
+  类别                0 / 0 / 0
+  设备                Logitech USB Receiver
+  Serial              ?
+  版本                USB 2.0
+
+  制造商ID            1EA7
+  产品ID              0064
+  类别                0 / 0 / 0
+  设备                ? 2.4G Mouse
+  Serial              ?
+  版本                USB 1.1
+
+  制造商ID            148F
+  产品ID              7601
+  类别                0 / 0 / 0
+  设备                MediaTek 802.11 n WLAN
+  Serial              1.0
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  CPU温度             51℃
+  CPU核心             56℃
+  CPU封装             56℃
+  硬盘温度            49℃
+

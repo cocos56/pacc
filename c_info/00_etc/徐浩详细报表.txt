@@ -1,0 +1,306 @@
+--------[ 鲁大师 ]--------------------------------------------------------------------------------
+
+  软件:             鲁大师 5.1020.1180.427
+  时间:             2020-05-02 22:00:40
+  网站:             http://www.ludashi.com
+
+--------[ 概览 ]----------------------------------------------------------------------------------
+
+  电脑型号            技嘉 B365M D2VX SI 台式电脑
+  操作系统            Windows 10 专业版 64位 ( DirectX 12 )
+
+  处理器              英特尔 Core i5-9400F @ 2.90GHz 六核
+  主板                技嘉 B365M D2VX SI ( 300 Series 芯片组 Family (B365) )
+  显卡                Nvidia GeForce GTX 1660 ( 6 GB / 影驰 )
+  内存                16 GB ( 金士顿 DDR4 2400MHz )
+  主硬盘              英特尔 SSDSC2KF240H6L ( 240 GB / 固态硬盘 )
+  显示器              SGT0238 FHD238 ( 23.8 英寸  )
+  声卡                瑞昱 ALC887 @ 英特尔 High Definition Audio 控制器
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller / 技嘉
+
+--------[ 主板 ]----------------------------------------------------------------------------------
+
+  主板型号            技嘉 B365M D2VX SI
+  芯片组              300 Series 芯片组 Family (B365)
+  序列号              Default string
+  主板版本            x.x
+  BIOS版本            American Megatrends Inc. F3  /  BIOS程序发布日期: 03/22/2019
+  BIOS的大小          16384 KB
+  BIOS的序列号        63-0100-000001-00101111-090216-Chipset
+
+  板载设备            视频设备 (启用)
+
+--------[ 处理器 ]--------------------------------------------------------------------------------
+
+  处理器              英特尔 Core i5-9400F @ 2.90GHz 六核
+  速度                3.90 GHz (100 MHz x 39.0)
+  处理器数量          核心数: 6 / 线程数: 6
+  插槽/插座           U3E1
+  一级数据缓存        3 x 32 KB, 8-Way, 64 byte lines
+  一级代码缓存        3 x 32 KB, 8-Way, 64 byte lines
+  二级缓存            3 x 256 KB, 4-Way, 64 byte lines
+  三级缓存            9 MB, 12-Way, 64 byte lines
+  特征                MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, EM64T, EIST, Turbo Boost
+
+--------[ 硬盘 ]----------------------------------------------------------------------------------
+
+  产品                英特尔  SSDSC2KF240H6L (固态硬盘)
+  大小                240 GB
+  硬盘已使用          共 192 次，累计 132 小时
+  固件                LSFL37P
+  接口                SATA III
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+  产品                东芝  MQ01ABF050
+  大小                500 GB
+  转速                5400 转/分
+  缓存                8 MB
+  硬盘已使用          共 445 次，累计 865 小时
+  固件                AM0Q6E
+  接口                SATA III
+  数据传输率          600.00 MB/秒
+  特征                S.M.A.R.T,  APM,  48-bit LBA,  NCQ
+
+--------[ 内存 ]----------------------------------------------------------------------------------
+
+  ChannelA-DIMM0      金士顿 DDR4 2400MHz 8GB
+  制造日期            2019 年 28 周
+  型号                7F98 99P5701-005.A00G
+  序列号              F1185F81
+  厂商                Kingston
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+  ChannelB-DIMM0      金士顿 DDR4 2400MHz 8GB
+  制造日期            2019 年 28 周
+  型号                7F98 99P5701-005.A00G
+  序列号              FA181E81
+  厂商                Kingston
+  模块位宽:           64 Bits
+  模块电压:           SSTL 1.2V
+
+--------[ 显卡 ]----------------------------------------------------------------------------------
+
+  主显卡              Nvidia GeForce GTX 1660
+  显存                6 GB
+  制造商              影驰
+  制造商              Nvidia
+  BIOS日期            05/26/19 (非显卡制造日期)
+  驱动版本            26.21.14.3200
+  驱动日期            20190724
+
+--------[ 显示器 ]--------------------------------------------------------------------------------
+
+  产品                 SGT0238 FHD238
+  固件程序日期        2019 年 29 周 (非显示器制造日期)
+  屏幕尺寸            23.8 英寸 (52 厘米 x 31 厘米)
+  显示比例            宽屏 16 : 10
+  分辨率              1920 x 1080 32 位真彩色
+  Gamma               2.20
+  电源管理            Standby, Suspend, Active-Off
+
+--------[ 其他设备 ]------------------------------------------------------------------------------
+
+
+  网卡                瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller
+  制造商              技嘉
+
+  声卡                瑞昱 ALC887 @ 英特尔 High Definition Audio 控制器
+
+  声卡                Nvidia GeForce Go 7800 GTX @ Nvidia High Definition Audio 控制器
+
+  键盘                HID 标准键盘
+  键盘                HID 标准键盘
+  鼠标                HID-compliant 鼠标
+
+
+--------[ PCI设备 ]-------------------------------------------------------------------------------
+
+  设备                PCI 标准主机 CPU 桥
+  设备ID              3EC2
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to HOST
+  子系统制造商        Gigabyte
+  子系统ID            50001458
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core PCIe Controller  - 1901
+  设备ID              1901
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                Xeon E3 - 1200/1500 v5/6th Gen Intel Core Gaussian Mixture Model - 1911
+  设备ID              1911
+  制造商              Intel
+  制造商ID            8086
+  类别                System / Other
+  子系统制造商        Gigabyte
+  子系统ID            50001458
+
+  设备                符合 USB xHCI 的主机控制器
+  设备ID              A2AF
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / USB (UHCI)
+  子系统制造商        Gigabyte
+  子系统ID            50071458
+
+  设备                Management Engine Interface
+  设备ID              A2BA
+  制造商              Intel
+  制造商ID            8086
+  类别                Simple Communication / Other
+  子系统制造商        Gigabyte
+  子系统ID            1C3A1458
+
+  设备                标准 SATA AHCI 控制器
+  设备ID              A282
+  制造商              Intel
+  制造商ID            8086
+  类别                Storage / Serial ATA (AHCI 1.0)
+  子系统制造商        Gigabyte
+  子系统ID            B0051458
+
+  设备                200 Series Chipset Family PCI Express Root Port #21 - A2EB
+  设备ID              A2EB
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                200 Series Chipset Family PCI Express Root Port #5 - A294
+  设备ID              A294
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                200 Series Chipset Family PCI Express Root Port #6 - A295
+  设备ID              A295
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                200 Series Chipset Family PCI Express Root Port #7 - A296
+  设备ID              A296
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                200 Series Chipset Family PCI Express Root Port #8 - A297
+  设备ID              A297
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                200 Series Chipset Family PCI Express Root Port #9 - A298
+  设备ID              A298
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to PCI
+  子系统ID            00000000
+
+  设备                300 Series Chipset Family LPC Controller (B365)
+  设备ID              A2CC
+  制造商              Intel
+  制造商ID            8086
+  类别                Bridge / PCI to ISA
+  子系统制造商        Gigabyte
+  子系统ID            50011458
+
+  设备                200 Series Chipset Family PMC - A2A1
+  设备ID              A2A1
+  制造商              Intel
+  制造商ID            8086
+  类别                Memory / Other
+  子系统制造商        Gigabyte
+  子系统ID            50011458
+
+  设备                High Definition Audio 控制器
+  设备ID              A2F0
+  制造商              Intel
+  制造商ID            8086
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Gigabyte
+  子系统ID            A1821458
+
+  设备                200 Series Chipset Family SMBUS - A2A3
+  设备ID              A2A3
+  制造商              Intel
+  制造商ID            8086
+  类别                Serial / SMBus Controller
+  子系统制造商        Gigabyte
+  子系统ID            50011458
+
+  设备                GeForce GTX 1660
+  设备ID              2184
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Display / VGA
+  子系统制造商        Galaxy
+  子系统ID            13661B4C
+
+  设备                High Definition Audio 控制器
+  设备ID              1AEB
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Multimedia / Hi-definition Audio
+  子系统制造商        Galaxy
+  子系统ID            13661B4C
+
+  设备                符合 USB xHCI 的主机控制器
+  设备ID              1AEC
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Serial / USB (UHCI)
+  子系统制造商        Galaxy
+  子系统ID            13661B4C
+
+  设备                USB Type-C Port Policy Controller
+  设备ID              1AED
+  制造商              Nvidia
+  制造商ID            10DE
+  类别                Serial / Other
+  子系统制造商        Galaxy
+  子系统ID            13661B4C
+
+  设备                RTL8168/8111/8112 Gigabit Ethernet Controller
+  设备ID              8168
+  制造商              Realtek
+  制造商ID            10EC
+  类别                Network / Ethernet
+  子系统制造商        Gigabyte
+  子系统ID            E0001458
+
+--------[ USB设备 ]-------------------------------------------------------------------------------
+
+  制造商ID            1BCF
+  产品ID              0005
+  类别                0 / 0 / 0
+  设备                ? USB Optical Mouse
+  Serial              ?
+  版本                USB 2.0
+
+  制造商ID            258A
+  产品ID              002A
+  类别                0 / 0 / 0
+  设备                SINO WEALTH Gaming KB
+  Serial              ?
+  版本                USB 1.1
+
+--------[ 传感器 ]--------------------------------------------------------------------------------
+
+  名称                ITE IT8686
+  CPU温度             33℃
+  CPU核心             38℃
+  CPU封装             38℃
+  主板                37℃
+  显卡                38℃
+  硬盘温度            26℃
+  风扇                901转
+
