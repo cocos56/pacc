@@ -120,7 +120,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         """
         if retry_cnt > 6:
             return False
-        elif retry_cnt > 0:
+        if retry_cnt > 0:
             sleep(5)
         try:
             txt = requests.get(avc_link, timeout=30).text[1:-1]
