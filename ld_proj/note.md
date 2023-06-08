@@ -8,9 +8,10 @@ Windows通过修改注册表设置开机启动程序：https://coco56.blog.csdn.
 
 ## 1.2. 他写
 
-ld和dnconsole，相同命令下，有什么区别呢：https://www.ldmnq.com/forum/70798.html
-【开发指南】技术必看！！！各类开源代码，API，工具：https://www.ldmnq.com/forum/17995.html
-蓝叠安卓模拟器开发者版本命令行整理帖：https://www.bluestacks.cn/news/92.html
+ld和dnconsole，相同命令下，有什么区别呢: https://www.ldmnq.com/forum/70798.html
+【开发指南】技术必看！！！各类开源代码，API，工具: https://www.ldmnq.com/forum/17995.html
+蓝叠安卓模拟器开发者版本命令行整理帖: https://www.bluestacks.cn/news/92.html
+Win10怎么删除远程桌面连接记录: https://www.anyviewer.cn/how-to/clear-rdp-connection-history-2111.html
 
 # 2. 开机自启项
 
