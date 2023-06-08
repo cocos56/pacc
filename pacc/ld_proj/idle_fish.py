@@ -112,16 +112,21 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             time_cnt += 1
 
     @classmethod
-    def get_vc(cls, avc_link):
+    def get_vc(cls, avc_link, retry_cnt=0):
         """"获取验证码
 
         :param avc_link: 接码链接
+        :param retry_cnt: 重试次数
         """
+        if retry_cnt > 6:
+            return False
+        elif retry_cnt > 0:
+            sleep(5)
         try:
             txt = requests.get(avc_link, timeout=30).text[1:-1]
         except requests.exceptions.ConnectionError as err:
             print_err(err)
-            return cls.get_vc(avc_link)
+            return cls.get_vc(avc_link, retry_cnt+1)
         # print(txt, type(txt))
         txt_split = txt.split(',')
         # print(txt_split)
@@ -140,7 +145,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             verification_code = pattern.findall(data)[0]
         except IndexError as err:
             print_err(err)
-            return cls.get_vc(avc_link)
+            return cls.get_vc(avc_link, retry_cnt+1)
         print(verification_code)
         return verification_code
 
@@ -259,20 +264,22 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     if Config.safety_verification_max_num <= safety_verification_count:
                         input()
             except FileNotFoundError as err:
-                no_safety_verification_err = False
                 print_err(err)
                 lduia_ins.tap((478, 919))
-            if no_safety_verification_err and Activity.WebViewActivity in ldadb_ins.\
-                    get_current_focus():
+            avc_link = retrieve_idle_fish_ins.avc_link
+            if not no_safety_verification_err:
+                system(f'start {avc_link}')
+            elif Activity.WebViewActivity in ldadb_ins.get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
-                avc_link = retrieve_idle_fish_ins.avc_link
                 if avc_link:
                     lduia_ins.tap((435, 316), 5)
                     print(avc_link)
                     lduia_ins.tap((216, 316))
                     system(f'start {avc_link}')
-                    ldadb_ins.input_text(cls.get_vc(avc_link))
-                    lduia_ins.tap((256, 439))
+                    verification_code = cls.get_vc(avc_link)
+                    if verification_code:
+                        ldadb_ins.input_text(verification_code)
+                        lduia_ins.tap((256, 439))
                 update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 update_idle_fish_ins.update_last_nvc_date(today)
