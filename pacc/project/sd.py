@@ -49,7 +49,7 @@ class SD(Project):
 
         :return: 状态正常返回True，否则返回False
         """
-        show_datetime('检查', start_br=True)
+        show_datetime(f'检查设备{self.serial_num}', start_br=True)
         if datetime.now().hour == 3:
             print('当前正值自动开关机时段，无需额外检查\n')
             return True
