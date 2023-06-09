@@ -1,10 +1,11 @@
 """MySQL数据库模块"""
-from os import getenv
 from datetime import datetime
+from os import getenv
 
 from pymysql import connect, OperationalError, ProgrammingError
 
 from ..base import sleep, print_err
+from ..config import Config
 
 
 def get_connection(database='mobile'):
@@ -14,8 +15,8 @@ def get_connection(database='mobile'):
     :return: 数据库的连接
     """
     try:
-        return connect(host=getenv('MySQL_Host'), port=3306, database=database, user='root',
-                       password=getenv('MySQL_PW'))
+        return connect(host=Config.server_host, port=3306, database=database, user='root',
+                       password=Config.mysql_pw)
     except OperationalError as err:
         print_err(f'{datetime.now()}: {err}')
         return get_connection(database)

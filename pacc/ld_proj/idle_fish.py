@@ -85,7 +85,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :return: 所有支付宝的代付码
         """
         ac_li = []
-        for item in listdir(r'\\10.1.1.2\acs')[::-1]:
+        for item in listdir(fr'\\{Config.server_host}\acs')[::-1]:
             split_li = item.split('.')
             if split_li and split_li[-1] == 'txt':
                 ac_li.append(item)

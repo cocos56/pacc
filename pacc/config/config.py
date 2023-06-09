@@ -1,6 +1,6 @@
 """配置模块"""
 from enum import Enum
-from os import chdir
+from os import chdir, getenv
 
 LDC = 'ldconsole.exe '
 
@@ -58,6 +58,8 @@ class Config:
     set_priority = False
     enable_being_open_num = True
     safety_verification_max_num = 1
+    server_host = getenv('MySQL_Host')
+    mysql_pw = getenv('MySQL_PW')
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod
