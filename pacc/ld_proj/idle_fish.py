@@ -92,20 +92,21 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         return new_device_names_list
 
     @classmethod
-    def auto_create(cls):
+    def auto_create(cls) -> None:
         """自动登录"""
         time_cnt = 0
         while True:
-            acs = cls.get_new_device_names_list()
-            print(acs)
-            if acs:
+            new_device_names_list = cls.get_new_device_names_list()
+            print(new_device_names_list)
+            if new_device_names_list:
                 start_index, end_index = 1, LDConsole.get_last_device_num()
                 cls.create(end_index)
                 cls.login(start_index, end_index)
                 time_cnt = 0
-                for ac_txt in acs:
-                    print(ac_txt)
-                    remove(join(r'\\10.1.1.2\acs', ac_txt))
+                for new_device_name_txt in new_device_names_list:
+                    print(new_device_name_txt)
+                    remove(
+                        join(fr'\\{Config.server_host}\if\new_device_names', new_device_name_txt))
                 continue
             print(f'time_cnt={time_cnt}, global_ipv4_addr={get_global_ipv4_addr()}')
             sleep(1)
