@@ -1,6 +1,5 @@
 """MySQL数据库模块"""
 from datetime import datetime
-from os import getenv
 
 from pymysql import connect, OperationalError, ProgrammingError
 
@@ -28,8 +27,8 @@ class MySQL:
     cs = conn.cursor()
 
     # pylint: disable=too-many-arguments
-    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='mobile', user='root',
-                 password=getenv('MySQL_PW'), charset='utf8'):
+    def __init__(self, host=Config.server_host, port=3306, database='mobile', user='root',
+                 password=Config.mysql_pw, charset='utf8'):
         """构造函数：初始化增类的对象
 
         :param host: 主机，默认从Windows系统变量中获取
@@ -101,8 +100,8 @@ class Account(MySQL):
     """MySQL中名为account的数据库，该数据库用于存储网络账号相关的信息"""
 
     # pylint: disable=too-many-arguments
-    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='account', user='root',
-                 password=getenv('MySQL_PW'), charset='utf8'):
+    def __init__(self, host=Config.server_host, port=3306, database='account', user='root',
+                 password=Config.mysql_pw, charset='utf8'):
         """构造函数"""
         super().__init__(host=host, port=port, database=database, user=user,
                          password=password, charset=charset)
@@ -115,8 +114,8 @@ class Record(MySQL):
     """MySQL中名为record的数据库，该数据库用于存储记录相关的信息"""
 
     # pylint: disable=too-many-arguments
-    def __init__(self, host=getenv('MySQL_Host'), port=3306, database='record', user='root',
-                 password=getenv('MySQL_PW'), charset='utf8'):
+    def __init__(self, host=Config.server_host, port=3306, database='record', user='root',
+                 password=Config.mysql_pw, charset='utf8'):
         """构造函数：初始化增类的对象
 
         :param host: 主机，默认从Windows系统变量中获取
