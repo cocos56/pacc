@@ -261,8 +261,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     print(f'{start_index} {device_name}于{datetime.now()}使用'
                           f'{get_global_ipv4_addr()}登录时出现安全验证，请处理')
                     safety_verification_count += 1
-                    if Config.safety_verification_max_num <= safety_verification_count:
-                        input()
             except FileNotFoundError as err:
                 print_err(err)
                 lduia_ins.tap((478, 919))
@@ -294,6 +292,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print('当前窗口过多，请先处理')
                 input()
                 cls.being_open_num = 0
+            elif Config.safety_verification_max_num <= safety_verification_count:
+                print('当前出现安全验证的窗口过多，请先处理')
+                input()
 
     @classmethod
     def auto_buy(cls, start_index, end_index):
