@@ -29,7 +29,7 @@ class CreateIdleFish(Create):
 
     # pylint: disable=too-many-arguments
     def __init__(
-            self, job_number, role, reminder_threshold, user_name, login_pw, pay_pw, avc_link,
+            self, job_number, role, reminder_threshold, user_name: str, login_pw, pay_pw, avc_link,
             if_mn):
         """构造函数：初始化增类的对象
 
@@ -56,7 +56,7 @@ class CreateIdleFish(Create):
             values.append(avc_link)
         if 'user_name' in if_mn:
             fields.append('if_mn')
-            values.append(user_name)
+            values.append(user_name.replace('-', ''))
         self.query('idle_fish', tuple(fields), tuple(values))
 
     @classmethod
