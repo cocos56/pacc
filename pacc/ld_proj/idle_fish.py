@@ -79,24 +79,24 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         cls.login(start_index, LDConsole.get_last_device_num())
 
     @classmethod
-    def get_acs(cls):
-        """获取所有支付宝的代付码
+    def get_new_device_names_list(cls):
+        """获取由所有待创建设备的名称所构成的列表
 
-        :return: 所有支付宝的代付码
+        :return: 由所有待创建设备的名称所构成的列表
         """
-        ac_li = []
-        for item in listdir(fr'\\{Config.server_host}\acs')[::-1]:
+        new_device_names_list = []
+        for item in listdir(fr'\\{Config.server_host}\if\new_device_names')[::-1]:
             split_li = item.split('.')
             if split_li and split_li[-1] == 'txt':
-                ac_li.append(item)
-        return ac_li
+                new_device_names_list.append(item)
+        return new_device_names_list
 
     @classmethod
     def auto_create(cls):
         """自动登录"""
         time_cnt = 0
         while True:
-            acs = cls.get_acs()
+            acs = cls.get_new_device_names_list()
             print(acs)
             if acs:
                 start_index, end_index = 1, LDConsole.get_last_device_num()
