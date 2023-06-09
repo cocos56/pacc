@@ -267,7 +267,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print_err(err)
                 lduia_ins.tap((478, 919))
             avc_link = retrieve_idle_fish_ins.avc_link
-            if not no_safety_verification_err:
+            if no_safety_verification_err:
                 system(f'start {avc_link}')
             elif Activity.WebViewActivity in ldadb_ins.get_current_focus():
                 print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
