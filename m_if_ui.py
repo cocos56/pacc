@@ -94,7 +94,7 @@ class IdleFishGUI:  # pylint: disable=too-many-instance-attributes
                 print(txt_name)
                 with open(txt_name, 'w+', encoding='utf-8') as file:
                     file.write(txt_name)
-                move(txt_name, join(r'\\10.1.1.2\acs', txt_name))
+                move(txt_name, join(r'D:\if\new_device_names', txt_name))
                 print()
             else:
                 continue
