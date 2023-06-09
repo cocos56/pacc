@@ -259,17 +259,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             try:
                 if lduia_ins.get_dict(text='安全验证'):
                     no_safety_verification_err = False
-                    print(f'{start_index} {device_name}于{datetime.now()}使用'
-                          f'{get_global_ipv4_addr()}登录时出现安全验证，请处理')
                     safety_verification_count += 1
             except FileNotFoundError as err:
                 print_err(err)
                 lduia_ins.tap((478, 919))
             avc_link = retrieve_idle_fish_ins.avc_link
-            if not no_safety_verification_err:
-                system(f'start {avc_link}')
             if Activity.WebViewActivity in ldadb_ins.get_current_focus():
-                if not no_safety_verification_err:
+                if no_safety_verification_err:
                     if avc_link:
                         print(f'{start_index}于{datetime.now()}需要验证码登录，正在尝试自动输入验证码')
                         lduia_ins.tap((435, 316), 5)
@@ -283,12 +279,18 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                     else:
                         print(f'{start_index}于{datetime.now()}需要验证码登录，请手动输入验证码')
                     update_idle_fish_ins.update_last_hvc_date(today)
+                else:
+                    print(f'{start_index} {device_name}于{datetime.now()}使用'
+                          f'{get_global_ipv4_addr()}登录时出现安全验证')
             else:
                 update_idle_fish_ins.update_last_nvc_date(today)
                 try:
                     lduia_ins.click(ResourceID.tab_title, '我的')
                 except FileNotFoundError as err:
                     print_err(err)
+                if avc_link:
+                    print(avc_link)
+                    system(f'start {avc_link}')
             lduia_ins.get_screen()
             start_index += 1
             cls.being_open_num += 1
