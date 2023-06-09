@@ -159,7 +159,6 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         :param being_open_max: 同时多开时的最大数量
         """
         src_start_index = start_index
-        safety_verification_count = 0
         while True:
             if start_index - 1 >= end_index:
                 print(f'所有共{end_index - src_start_index + 1}项已登录完毕'
@@ -255,6 +254,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             # if retrieve_idle_fish_ins.top_up_mobile:
             #     update_idle_fish_ins.update_top_up_mobile_cnt(-1)
             no_safety_verification_err = True
+            safety_verification_count = 0
             try:
                 if lduia_ins.get_dict(text='安全验证'):
                     no_safety_verification_err = False
