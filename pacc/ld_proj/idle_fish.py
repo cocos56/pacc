@@ -265,20 +265,23 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print_err(err)
                 lduia_ins.tap((478, 919))
             avc_link = retrieve_idle_fish_ins.avc_link
-            if no_safety_verification_err:
+            if not no_safety_verification_err:
                 system(f'start {avc_link}')
-            elif Activity.WebViewActivity in ldadb_ins.get_current_focus():
-                print(f'{start_index}于{datetime.now()}需要验证码登录，请输入验证码')
-                if avc_link:
-                    lduia_ins.tap((435, 316), 5)
-                    print(avc_link)
-                    lduia_ins.tap((216, 316))
-                    system(f'start {avc_link}')
-                    verification_code = cls.get_vc(avc_link)
-                    if verification_code:
-                        ldadb_ins.input_text(verification_code)
-                        lduia_ins.tap((256, 439))
-                update_idle_fish_ins.update_last_hvc_date(today)
+            if Activity.WebViewActivity in ldadb_ins.get_current_focus():
+                if not no_safety_verification_err:
+                    if avc_link:
+                        print(f'{start_index}于{datetime.now()}需要验证码登录，正在尝试自动输入验证码')
+                        lduia_ins.tap((435, 316), 5)
+                        print(avc_link)
+                        lduia_ins.tap((216, 316))
+                        system(f'start {avc_link}')
+                        verification_code = cls.get_vc(avc_link)
+                        if verification_code:
+                            ldadb_ins.input_text(verification_code)
+                            lduia_ins.tap((256, 439))
+                    else:
+                        print(f'{start_index}于{datetime.now()}需要验证码登录，请手动输入验证码')
+                    update_idle_fish_ins.update_last_hvc_date(today)
             else:
                 update_idle_fish_ins.update_last_nvc_date(today)
                 try:
