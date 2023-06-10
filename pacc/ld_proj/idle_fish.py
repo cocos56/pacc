@@ -2,6 +2,7 @@
 """闲鱼全自动刷闲鱼币中央监控系统模块"""
 import re
 import shutil
+import socket
 from datetime import date, datetime, timedelta
 from os import listdir, path, remove, rename, system
 from os.path import join, exists
@@ -88,7 +89,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         new_device_names_list = []
         for item in listdir(fr'\\{Config.server_host}\if\new_device_names')[::-1]:
             split_li = item.split('.')
-            if split_li and split_li[-1] == 'txt':
+            if split_li and split_li[-1] == 'txt' and split_li[0][:3] == socket.gethostname():
                 new_device_names_list.append(item)
         return new_device_names_list
 
