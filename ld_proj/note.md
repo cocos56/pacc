@@ -5,6 +5,7 @@
 永久关闭Windows Defender实时保护：https://blog.csdn.net/COCO56/article/details/128613164
 Windows cmd查杀与新开进程：https://coco56.blog.csdn.net/article/details/105886366
 Windows通过修改注册表设置开机启动程序：https://coco56.blog.csdn.net/article/details/102493477
+Win10怎么删除远程桌面连接记录？（3种方法）: https://coco56.blog.csdn.net/article/details/131138363
 
 ## 1.2. 他写
 
