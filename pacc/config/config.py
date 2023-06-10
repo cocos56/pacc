@@ -60,6 +60,7 @@ class Config:
     safety_verification_max_num = 1
     server_host = getenv('MySQL_Host')
     mysql_pw = getenv('MySQL_PW')
+    aps_path = r'D:\if\aps'
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod

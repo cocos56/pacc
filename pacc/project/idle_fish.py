@@ -10,6 +10,7 @@ from ..base import sleep, print_err
 from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, CreateRecordDispatch, \
     UpdateIdleFish
 from ..tools import get_now_time
+from ..config import Config
 
 ROOT = 'com.taobao.idlefish/com.taobao.idlefish.maincontainer.activity.'
 
@@ -36,7 +37,7 @@ def get_random_aps():
     :return: 所有支付宝的代付码
     """
     ap_li = []
-    for i in listdir(r'D:\aps')[::-1]:
+    for i in listdir(Config.aps_path)[::-1]:
         spli = i.split('.')
         if spli and spli[-1] == 'png':
             ap_li.append(i)
@@ -101,7 +102,7 @@ class IdleFish(Project):
                 sleep(10)
                 time_cnt += 10
                 continue
-            alipay_code = join(r'D:\aps', random_ap)
+            alipay_code = join(Config.aps_path, random_ap)
             print(alipay_code)
             print(self.walked_li)
             self.adb_ins.push_pic(alipay_code)
