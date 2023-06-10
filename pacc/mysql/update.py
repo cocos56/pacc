@@ -281,6 +281,20 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         return super().query2(field, value, table)
 
+    def update_role(self, role: str) -> None:
+        """更新设备在数据库中的角色值
+
+        :param role: 最新的设备的角色值
+        """
+        print(self.query('role', role))
+
+    def update_hosts(self, hosts: str) -> None:
+        """更新设备在数据库中的主机列表值
+
+        :param hosts: 最新的设备所在主机列表值
+        """
+        print(self.query('hosts', hosts))
+
     def update_version(self, version='NULL') -> None:
         """更新设备的版本号
 
@@ -388,13 +402,6 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_update_ip_date: 上次更新本机公网IPv4地址的日期
         """
         print(self.query('last_update_ip_date', last_update_ip_date))
-
-    def update_hosts(self, hosts: str) -> None:
-        """更新设备在数据库中的主机列表值
-
-        :param hosts: 最新的设备所在主机列表值
-        """
-        print(self.query('hosts', hosts))
 
     def update_last_update_hosts_date(self, last_update_hosts_date: date.today()):
         """更新设备在数据库中上次更新主机列表值的日期

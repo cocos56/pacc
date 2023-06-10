@@ -260,6 +260,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 if lduia_ins.get_dict(text='安全验证'):
                     no_safety_verification_err = False
                     safety_verification_count += 1
+                    new_role = f'{retrieve_idle_fish_ins.role}_安全验证'
+                    print(new_role)
+                    update_idle_fish_ins.update_role(new_role)
             except FileNotFoundError as err:
                 print_err(err)
                 lduia_ins.tap((478, 919))
