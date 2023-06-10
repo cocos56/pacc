@@ -70,8 +70,9 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         """
         for job_number, role in RetrieveIdleFishRecords.query_all_create_records():
             today = date.today()
-            print(job_number, role, today)
-            LDConsole.copy(job_number + role)
+            device_name = f'{job_number}{role}'
+            print(device_name, today)
+            LDConsole.copy(device_name)
             update_ins = UpdateIdleFish(job_number)
             update_ins.update_create('NULL')
             update_ins.update_login(1)
