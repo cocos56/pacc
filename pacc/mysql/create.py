@@ -31,7 +31,7 @@ class CreateIdleFish(Create):
     def __init__(
             self, job_number, role, reminder_threshold, user_name: str, login_pw, pay_pw, avc_link,
             if_mn):
-        """构造函数：初始化增类的对象
+        """构造函数：初始化idle_fish表的增类的对象
 
         :param job_number: 工号
         :param role: 角色
@@ -57,6 +57,9 @@ class CreateIdleFish(Create):
         if 'user_name' in if_mn:
             fields.append('if_mn')
             values.append(user_name.replace('-', ''))
+        elif '%' not in if_mn:
+            fields.append('if_mn')
+            values.append(if_mn)
         self.query('idle_fish', tuple(fields), tuple(values))
 
     @classmethod
