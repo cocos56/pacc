@@ -1,4 +1,4 @@
-"""闲鱼程序入口C8_2模块"""
+"""闲鱼程序入口C15_2模块"""
 from pacc.adb import LDConsole
 from pacc.config import Config
 from pacc.ld_proj.idle_fish import IdleFish
