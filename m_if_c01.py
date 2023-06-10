@@ -1,4 +1,4 @@
-"""闲鱼程序入口C2_1模块"""
+"""闲鱼程序入口C01_1模块"""
 from pacc.config import Config
 from pacc.project import IdleFish
 
