@@ -1,4 +1,4 @@
-"""闲鱼程序入口C4_3模块"""
+"""闲鱼程序入口C12_3模块"""
 # pylint: disable=duplicate-code
 from pacc.adb import LDConsole
 from pacc.config import Config
