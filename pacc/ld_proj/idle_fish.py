@@ -294,13 +294,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             lduia_ins.get_screen()
             start_index += 1
             cls.being_open_num += 1
+            if Config.safety_verification_max_num <= safety_verification_count:
+                print('当前出现安全验证的窗口过多，请先处理')
+                input()
             if Config.enable_being_open_num and cls.being_open_num >= being_open_max:
                 print('当前窗口过多，请先处理')
                 input()
                 cls.being_open_num = 0
-            elif Config.safety_verification_max_num <= safety_verification_count:
-                print('当前出现安全验证的窗口过多，请先处理')
-                input()
 
     @classmethod
     def auto_buy(cls, start_index, end_index):
