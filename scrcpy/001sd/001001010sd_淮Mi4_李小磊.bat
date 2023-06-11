@@ -1,0 +1,1 @@
+scrcpy -s 965596a --window-title 001001010sd_淮Mi4_李小磊|
