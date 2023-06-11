@@ -146,7 +146,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
         pattern = re.compile(r'\d+')
         try:
             verification_code = pattern.findall(data)[0]
-        except IndexError as err:
+        except (IndexError, TypeError) as err:
             print_err(err)
             return cls.get_vc(avc_link, retry_cnt+1)
         print(verification_code)
