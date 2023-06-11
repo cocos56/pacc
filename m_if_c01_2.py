@@ -4,4 +4,4 @@ from pacc.project import IdleFish
 
 
 Config.set_debug(True)
-IdleFish('001011001').pay()
+IdleFish('003002001').pay()
