@@ -61,6 +61,7 @@ class Config:
     server_host = getenv('MySQL_Host')
     mysql_pw = getenv('MySQL_PW')
     aps_path = r'D:\if\aps'
+    aps_network_path = fr'\\{server_host}\if\aps'
     ld_work_path = r'F:\leidian\LDPlayer9'
 
     @classmethod

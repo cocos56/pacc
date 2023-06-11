@@ -425,7 +425,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print([nickname], [retrieve_idle_fish_ins.nickname])
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
-            dst_path = r'\\10.1.1.2\aps\\'
+            dst_path = Config.aps_network_path
             if not lduia_ins.click(content_desc='去付款', interval=3):
                 if lduia_ins.click(content_desc='删除订单', xml=lduia_ins.xml):
                     self.__class__.being_open_num += 1
