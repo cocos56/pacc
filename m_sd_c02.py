@@ -4,7 +4,6 @@ from pacc.config import Config
 
 Config.set_debug(True)
 SD.mainloop([
-    '001021001',  # 闫明星，无法充电
     # '001021002',  # 李文蓉，无ROOT
     '001021003',
     # '001021005',  # 徐其锋，无ROOT
