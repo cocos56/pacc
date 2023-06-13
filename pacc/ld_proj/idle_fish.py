@@ -476,7 +476,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                         return self.get_pay_code(today, retry_cnt=retry_cnt + 1)
                 else:
                     return self.get_pay_code(today, retry_cnt)
-        except FileNotFoundError as err:
+        except (FileNotFoundError, TypeError) as err:
             print_err(err)
             return self.get_pay_code(today, retry_cnt)
         should_update_nickname_flag = nickname == '昵称未设置'
