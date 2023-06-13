@@ -5,7 +5,7 @@ from pacc.config import Config
 Config.set_debug(True)
 SD.mainloop([
     # '001021002',  # 李文蓉，无ROOT
-    '001021003',
+    # '001021003',    # 张水莲，无ROOT
     # '001021005',  # 徐其锋，无ROOT
     # '001021007',  # 黎梅华，无ROOT
     # '001024001',  # 徐可可，无ROOT
