@@ -146,7 +146,7 @@ class IdleFish(Project):
                 except PermissionError as err:
                     print(err)
 
-    def change_price(self, dispatch=True):  # pylint: disable=too-many-branches, too-many-statements
+    def change_price(self) -> None:  # pylint: disable=too-many-branches, too-many-statements
         """改价"""
         success_cnt = 0
         time_cnt = 0
@@ -201,6 +201,24 @@ class IdleFish(Project):
                 point = (932, 1796)
             if '¥0.01' in dic['@content-desc']:
                 print('3 已改')
+                try:
+                    dic = self.uia_ins.get_dict(
+                        index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+                except TypeError as err:
+                    print(err)
+                    continue
+                if not dic:
+                    continue
+                self.uia_ins.tap((926, 2106))
+                raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
+                order_num = (str(raw_order_num).split('\n'))[1]
+                print(order_num)
+                point = self.uia_ins.get_point(content_desc='修改价格', xml=self.uia_ins.xml)
+                # print(point)
+                self.uia_ins.get_screen()
+                # input()
+            if '¥0.01' in dic['@content-desc']:
+                print('4 已改')
                 continue
             self.uia_ins.tap(point)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
@@ -208,21 +226,8 @@ class IdleFish(Project):
                 src_price = float(dic['@text'])
             except TypeError as err:
                 print_err(err)
-                if not dispatch:
-                    continue
-                if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
-                        content_desc='去发货', interval=0.01):
-                    self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
-                    self.uia_ins.click(text='继续', interval=0.01)
                 continue
             if str(src_price)[-1] == '1':
-                if not dispatch:
-                    continue
-                self.adb_ins.press_back_key(0.01)
-                if self.uia_ins.click(content_desc='待发货', interval=0.01) and self.uia_ins.click(
-                        content_desc='去发货', interval=0.01):
-                    self.uia_ins.click('com.taobao.idlefish:id/right_text', interval=0.01)
-                    self.uia_ins.click(text='继续', interval=0.01)
                 continue
             price = src_price / 10 + 0.01
             print(f'price={price}')
