@@ -931,7 +931,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             lduia_ins.xml = ''
         try:
             dic = lduia_ins.get_dict('android:id/content', xml=lduia_ins.xml)['node'][1]['node']
-        except FileNotFoundError as err:
+        except (FileNotFoundError, KeyError) as err:
             print_err(err)
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         try:
