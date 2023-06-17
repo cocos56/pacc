@@ -176,6 +176,7 @@ class IdleFish(Project):
             if not dic:
                 print('没有需要改价的订单')
                 continue
+            index = '0'
             if '¥0.01' in dic['@content-desc']:
                 print('1 已改')
                 try:
@@ -186,8 +187,7 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-            else:
-                self.uia_ins.click(index='0', content_desc='等待买家付款', xml=self.uia_ins.xml)
+                index = '1'
             if '¥0.01' in dic['@content-desc']:
                 print('2 已改')
                 try:
@@ -198,8 +198,7 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-            else:
-                self.uia_ins.click(index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)
+                index = '2'
             if '¥0.01' in dic['@content-desc']:
                 print('3 已改')
                 try:
@@ -210,13 +209,11 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-            else:
-                self.uia_ins.click(index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)
+                index = '3'
             if '¥0.01' in dic['@content-desc']:
                 print('4 已改')
                 continue
-            else:
-                self.uia_ins.click(index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)
+            self.uia_ins.click(index=index, content_desc='等待买家付款', xml=self.uia_ins.xml)
             raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
             order_num = (str(raw_order_num).split('\n'))[1]
             print(f'order_num={order_num}')
