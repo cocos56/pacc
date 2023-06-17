@@ -425,6 +425,13 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             print([nickname], [retrieve_idle_fish_ins.nickname])
             ldadb_ins.swipe([260, 800], [260, 660])
             lduia_ins.click(content_desc='我买到的')
+            if lduia_ins.click(content_desc='等待买家付款'):
+                ldadb_ins.swipe([260, 860], [260, 390])
+                raw_order_num = lduia_ins.get_dict(content_desc='订单编号')['@content-desc']
+                order_num = (str(raw_order_num).split('\n'))[1]
+                print(f'order_num={order_num}')
+                update_idle_fish_ins.update_last_buy_order_num(order_num)
+                ldadb_ins.press_back_key()
             dst_path = Config.aps_network_path
             if not lduia_ins.click(content_desc='去付款', interval=3):
                 if lduia_ins.click(content_desc='删除订单', xml=lduia_ins.xml):

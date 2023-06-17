@@ -501,6 +501,13 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_consignee', last_buy_consignee))
 
+    def update_last_buy_order_num(self, last_buy_order_num: str) -> None:
+        """更新设备上次购买时的订单编号
+
+        :param last_buy_order_num: 上次购买时的订单编号
+        """
+        print(self.query('last_buy_order_num', last_buy_order_num))
+
     def update_last_dispatch_date(self, last_dispatch_date: date.today()) -> None:
         """更新设备上次发货的日期
 
