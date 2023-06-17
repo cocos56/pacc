@@ -214,7 +214,11 @@ class IdleFish(Project):
                 print('4 已改')
                 continue
             self.uia_ins.click(index=index, content_desc='等待买家付款', xml=self.uia_ins.xml)
-            raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
+            try:
+                raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
+            except TypeError as err:
+                print_err(err)
+                continue
             order_num = (str(raw_order_num).split('\n'))[1]
             print(f'order_num={order_num}')
             self.uia_ins.click(content_desc='修改价格', xml=self.uia_ins.xml)
