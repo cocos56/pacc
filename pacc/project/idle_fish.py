@@ -176,7 +176,6 @@ class IdleFish(Project):
             if not dic:
                 print('没有需要改价的订单')
                 continue
-            point = (932, 738)
             if '¥0.01' in dic['@content-desc']:
                 print('1 已改')
                 try:
@@ -187,7 +186,8 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-                point = (932, 1267)
+            else:
+                self.uia_ins.click(index='0', content_desc='等待买家付款', xml=self.uia_ins.xml)
             if '¥0.01' in dic['@content-desc']:
                 print('2 已改')
                 try:
@@ -198,7 +198,8 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-                point = (932, 1796)
+            else:
+                self.uia_ins.click(index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)
             if '¥0.01' in dic['@content-desc']:
                 print('3 已改')
                 try:
@@ -209,18 +210,17 @@ class IdleFish(Project):
                     continue
                 if not dic:
                     continue
-                self.uia_ins.tap((926, 2106))
-                raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
-                order_num = (str(raw_order_num).split('\n'))[1]
-                print(order_num)
-                point = self.uia_ins.get_point(content_desc='修改价格', xml=self.uia_ins.xml)
-                # print(point)
-                self.uia_ins.get_screen()
-                # input()
+            else:
+                self.uia_ins.click(index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)
             if '¥0.01' in dic['@content-desc']:
                 print('4 已改')
                 continue
-            self.uia_ins.tap(point)
+            else:
+                self.uia_ins.click(index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)
+            raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
+            order_num = (str(raw_order_num).split('\n'))[1]
+            print(f'order_num={order_num}')
+            self.uia_ins.click(content_desc='修改价格', xml=self.uia_ins.xml)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
             try:
                 src_price = float(dic['@text'])
