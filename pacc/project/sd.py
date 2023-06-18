@@ -63,7 +63,9 @@ class SD(Project):
         if PDD_ROOT in current_focus:
             print('拼多多正在运行，无需额外检查\n')
             return True
-        if 'com.miui.home/com.miui.home.launcher.Launcher' in current_focus:
+        if 'com.miui.home/com.miui.home.launcher.Launcher' in current_focus or \
+                'com.huawei.android.launcher/com.huawei.android.launcher.unihome.' \
+                'UniHomeLauncher' in current_focus:
             if self.serial_num in self.__class__.home_devices:
                 self.reopen_app()
                 self.__class__.home_devices.remove(self.serial_num)
