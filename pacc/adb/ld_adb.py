@@ -25,6 +25,13 @@ class LDADB(LDBase):
         res = self.popen_run('shell pm list package')
         print(res)
 
+    def install(self, apk_path):
+        """安装
+
+        :param apk_path: 安装包的路径
+        """
+        self.sys_run(f'install {apk_path}')
+
     def press_key(self, keycode, sleep_time=1):
         """按键
 

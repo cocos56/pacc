@@ -53,13 +53,17 @@ class IdleFishBase(LDProj):
         super().__init__()
         self.ld_index = ld_index
 
-    def launch(self):
-        """启动雷电模拟器"""
+    def launch(self, sleep_time):
+        """启动雷电模拟器
+
+        :param sleep_time: 等待时间
+        """
         if LDConsole(self.ld_index).is_exist():
             LDConsole.quit(self.ld_index)
             LDConsole(self.ld_index).launch()
         else:
-            print(f'模拟器{self.ld_index}不存在，无法启动')
+            print(f'设备{self.ld_index}不存在，无法启动')
+        sleep(sleep_time)
 
     def run_app(self, sleep_time=60):
         """启动雷电模拟器并运行闲鱼APP
@@ -265,6 +269,17 @@ class IdleFishBase(LDProj):
         if reminder_threshold != 10000:
             return self.second_buy_on_target_device(today)
         return self.first_buy_on_target_device(today)
+
+    def bind_alipay_on_target_device(self):
+        """在特定设备上进行绑定支付宝"""
+        self.launch(5)
+        lduia_ins = LDUIA(self.ld_index)
+        ldadb_ins = LDADB(self.ld_index)
+        ldadb_ins.get_app_list()
+        ldadb_ins.install(r'D:\zfb.apk')
+        ldadb_ins.get_app_list()
+        lduia_ins.get_current_ui_hierarchy()
+        lduia_ins.get_screen()
 
     def first_buy_on_target_device(self, today: date.today()):  # pylint: disable=too-many-locals
         """在特定设备上进行首次购买（下单）

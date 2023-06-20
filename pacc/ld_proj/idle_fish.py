@@ -364,6 +364,40 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 input()
 
     @classmethod
+    def bind_alipay(cls, start_index, end_index, coins):
+        """绑定支付宝
+
+        :param start_index: 起始索引值
+        :param end_index: 终止索引值
+        :param coins: 闲鱼币的币值
+        """
+        src_start_index = start_index
+        while True:
+            if start_index - 1 >= end_index:
+                print(f'所有共{end_index - src_start_index + 1}项已购买完毕'
+                      f'，当前时间为：{datetime.now()}')
+                break
+            if not LDConsole(start_index).is_exist():
+                print(f'设备{start_index}不存在，无需绑定支付宝')
+                start_index += 1
+                continue
+            job_number = LDConsole(start_index).get_job_number()
+            retrieve_ins = RetrieveIdleFish(job_number)
+            if retrieve_ins.coins < coins:
+                print(f'设备{start_index}上的闲鱼币币值过低，无需绑定支付宝')
+                start_index += 1
+                continue
+            if retrieve_ins.pay_pw:
+                print(f'设备{start_index}已有支付密码，无需绑定支付宝')
+                start_index += 1
+                continue
+            cls(start_index).bind_alipay_on_target_device()
+            cls.being_open_num += 1
+            if cls.being_open_num >= 1:
+                input()
+            start_index += 1
+
+    @classmethod
     def first_buy(cls, start_index, end_index):
         """首次购买（下单）
 
