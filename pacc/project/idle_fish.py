@@ -7,8 +7,8 @@ from datetime import date, timedelta, datetime
 
 from .project import Project
 from ..base import sleep, print_err
-from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, CreateRecordDispatch, \
-    UpdateIdleFish
+from ..mysql import RetrieveIdleFish, RetrieveIdleFishByConsignee, RetrieveIdleFishByOrderNum, \
+    CreateRecordDispatch, UpdateIdleFish
 from ..tools import get_now_time
 from ..config import Config
 
@@ -221,6 +221,11 @@ class IdleFish(Project):
                 continue
             order_num = (str(raw_order_num).split('\n'))[1]
             print(f'order_num={order_num}')
+            job_number = RetrieveIdleFishByOrderNum(order_num).job_number
+            if not job_number:
+                continue
+            print(job_number)
+            update_idle_fish_ins = UpdateIdleFish(job_number=job_number)
             self.uia_ins.click(content_desc='修改价格', xml=self.uia_ins.xml)
             dic = self.uia_ins.get_dict(class_='android.widget.EditText')
             try:
@@ -236,6 +241,7 @@ class IdleFish(Project):
             self.adb_ins.input_text(price)
             self.uia_ins.click(content_desc='确定修改', interval=0.01)
             if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
+                update_idle_fish_ins.update_last_change_price_date(datetime.today())
                 success_cnt += 1
 
     def get_dispatch_address(self, point):  # pylint: disable=too-many-locals

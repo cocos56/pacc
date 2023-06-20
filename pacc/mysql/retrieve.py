@@ -318,6 +318,59 @@ class RetrieveIdleFishByConsignee(RetrieveIdleFishByConsigneeBase):
         return job_number
 
 
+class RetrieveIdleFishByOrderNumBase(Retrieve):
+    """该类用于为从account数据库中的idle_fish表中通过收货人查询数据提供基础支持"""
+
+    def __init__(self, last_buy_order_num):
+        """构造函数
+
+        :param last_buy_order_num: 上次购买时的订单编号
+        """
+        self.last_buy_order_num = last_buy_order_num
+
+    # pylint: disable=too-many-arguments
+    def query(self, field, table, aimed_field='last_buy_order_num', value='', database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        if not value:
+            value = self.last_buy_order_num
+        return super().query(field, table, aimed_field, f"'{value}'", database)
+
+
+class RetrieveIdleFishByOrderNum(RetrieveIdleFishByOrderNumBase):
+    """该类用于从account数据库中的idle_fish表中通过收货人查询单项记录的某个字段数据"""
+    # pylint: disable=too-many-arguments
+    def query(
+            self, field, table='idle_fish', aimed_field='last_buy_order_num', value='',
+            database=Account):
+        """查询函数：查询数据
+
+        :param database: 数据库名
+        :param table: 表名
+        :param field: 字段名
+        :param aimed_field: 目标字段名
+        :param value: 值
+        :return: 查询到的结果（单条）
+        """
+        return super().query(field, table)
+
+    @property
+    def job_number(self):
+        """从数据库中读取工号的信息"""
+        job_number = self.query('Job_N')
+        if not job_number:
+            print(f'未找到上次购买时的订单编号：{self.last_buy_order_num}所对应的工号')
+            return False
+        return job_number
+
+
 class RetrieveIdleFishByUsernameBase(Retrieve):
     """该类用于为从account数据库中的idle_fish表中通过用户名查询数据提供基础支持"""
 

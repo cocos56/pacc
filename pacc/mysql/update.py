@@ -347,20 +347,6 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_update_nn_time', last_update_nn_time))
 
-    def update_last_check_date(self, last_check_date: date.today()) -> None:
-        """更新设备上次检查的日期
-
-        :param last_check_date: 新上次检查的日期
-        """
-        print(self.query('last_check_date', last_check_date))
-
-    def update_last_check_time(self, last_check_time: str) -> None:
-        """更新设备上次检查的时间
-
-        :param last_check_time: 新上次运行的时间
-        """
-        print(self.query('last_check_time', last_check_time))
-
     def update_last_run_date(self, last_run_date: date.today()) -> None:
         """更新设备的上次运行日期
 
@@ -374,6 +360,20 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_run_time: 新上次运行的时间
         """
         print(self.query('last_run_time', last_run_time))
+
+    def update_last_check_date(self, last_check_date: date.today()) -> None:
+        """更新设备上次检查的日期
+
+        :param last_check_date: 新上次检查的日期
+        """
+        print(self.query('last_check_date', last_check_date))
+
+    def update_last_check_time(self, last_check_time: str) -> None:
+        """更新设备上次检查的时间
+
+        :param last_check_time: 新上次运行的时间
+        """
+        print(self.query('last_check_time', last_check_time))
 
     def update_last_bak_date(self, last_bak_date: date.today()) -> None:
         """更新设备的上次备份日期
@@ -416,20 +416,6 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_update_version_date: 上次更新版本号的日期
         """
         print(self.query('last_update_version_date', last_update_version_date))
-
-    def update_last_top_up_mobile_date(self, last_top_up_mobile_date: date.today()):
-        """更新设备在数据库中上次薅羊毛赚话费的日期
-
-        :param last_top_up_mobile_date: 上次薅羊毛赚话费的日期
-        """
-        print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
-
-    def update_top_up_mobile_cnt(self, top_up_mobile_cnt: int):
-        """更新设备在数据库中执行薅羊毛赚话费任务成功的次数
-
-        :param top_up_mobile_cnt: 执行薅羊毛赚话费任务成功的次数
-        """
-        print(self.query2('top_up_mobile_cnt', top_up_mobile_cnt))
 
     def update_login(self, login='NULL') -> None:
         """更新设备是否需要登录的标志
@@ -508,6 +494,13 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         """
         print(self.query('last_buy_order_num', last_buy_order_num))
 
+    def update_last_change_price_date(self, last_change_price_date: date.today()) -> None:
+        """更新设备上次改价的日期
+
+        :param last_change_price_date: 上次改价的日期
+        """
+        print(self.query('last_change_price_date', last_change_price_date))
+
     def update_last_dispatch_date(self, last_dispatch_date: date.today()) -> None:
         """更新设备上次发货的日期
 
@@ -549,6 +542,20 @@ class UpdateIdleFish(UpdateIdleFishBase):  # pylint: disable=too-many-public-met
         :param last_nvc_date: 上次无码的日期
         """
         print(self.query('last_nvc_date', last_nvc_date))
+
+    def update_last_top_up_mobile_date(self, last_top_up_mobile_date: date.today()):
+        """更新设备在数据库中上次薅羊毛赚话费的日期
+
+        :param last_top_up_mobile_date: 上次薅羊毛赚话费的日期
+        """
+        print(self.query('last_top_up_mobile_date', last_top_up_mobile_date))
+
+    def update_top_up_mobile_cnt(self, top_up_mobile_cnt: int):
+        """更新设备在数据库中执行薅羊毛赚话费任务成功的次数
+
+        :param top_up_mobile_cnt: 执行薅羊毛赚话费任务成功的次数
+        """
+        print(self.query2('top_up_mobile_cnt', top_up_mobile_cnt))
 
 
 class UpdateIdleFishStaffBase:
