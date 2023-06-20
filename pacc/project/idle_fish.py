@@ -31,19 +31,6 @@ class ResourceID:  # pylint: disable=too-few-public-methods
     toolbar_layout = 'top.niunaijun.blackboxa64:id/toolbar_layout'
 
 
-def get_random_aps():
-    """获取所有支付宝的代付码
-
-    :return: 所有支付宝的代付码
-    """
-    ap_li = []
-    for i in listdir(Config.aps_path)[::-1]:
-        spli = i.split('.')
-        if spli and spli[-1] == 'png':
-            ap_li.append(i)
-    return ap_li
-
-
 class IdleFish(Project):
     """闲鱼中控类"""
 
@@ -69,13 +56,26 @@ class IdleFish(Project):
         self.uia_ins.get_current_ui_hierarchy()
         self.uia_ins.get_screen()
 
+    @classmethod
+    def get_aps(cls):
+        """获取所有支付宝的代付码
+
+        :return: 所有支付宝的代付码
+        """
+        ap_li = []
+        for i in listdir(Config.aps_path)[::-1]:
+            spli = i.split('.')
+            if spli and spli[-1] == 'png':
+                ap_li.append(i)
+        return ap_li
+
     def get_random_ap(self, random_err=0):
         """随机获取一个支付宝的代付码
 
         :param random_err: 错误的数量
-        :return: 当代付码存在时会尽可能地随机返回一个未曾遍历过的代付码，当代付码不存在时直接返回False
+        :return: 当代付码存在时会尽可能地随机返回一个未曾遍历过的代付码，当代付码不存在时返回None
         """
-        ap_li = get_random_aps()
+        ap_li = self.__class__.get_aps()
         if ap_li:
             random_ap = ap_li[randint(0, len(ap_li) - 1)]
             if len(ap_li) <= len(self.walked_li):
@@ -84,6 +84,27 @@ class IdleFish(Project):
                 self.walked_li.append(random_ap)
                 return random_ap
             return self.get_random_ap(random_err + 1)
+        return None
+
+    def get_changed_ap(self):
+        """获取一个已改过价的支付宝代付码
+
+        :return: 当已改过价的代付码存在时会返回其中的一个已改过价的代付码，当不存在已改过价的代付码时直接返回None
+        """
+        ap_li = self.__class__.get_aps()
+        if ap_li:
+            for ap in ap_li:
+                job_number = ap[4:-4]
+                retrieve_ins = RetrieveIdleFish(job_number)
+                # print(f'ap={ap}, job_number={job_number}, last_change_price_date='
+                #       f'{retrieve_ins.last_change_price_date}, {date.today()}')
+                if len(ap_li) <= len(self.walked_li):
+                    self.walked_li = []
+                if ap in self.walked_li:
+                    continue
+                if retrieve_ins.last_change_price_date == date.today():
+                    self.walked_li.append(ap)
+                    return ap
         return None
 
     def open_app(self):
@@ -96,15 +117,14 @@ class IdleFish(Project):
         """付款"""
         time_cnt = 0
         while True:
-            random_ap = self.get_random_ap()
+            random_ap = self.get_changed_ap()
             if not random_ap:
                 print(f'time_cnt={time_cnt}')
                 sleep(10)
                 time_cnt += 10
                 continue
             alipay_code = join(Config.aps_path, random_ap)
-            print(alipay_code)
-            print(self.walked_li)
+            print(f'alipay_code={alipay_code}, self.walked_li={self.walked_li}')
             self.adb_ins.push_pic(alipay_code)
             self.free_memory()
             if not self.uia_ins.click(text='支付宝', interval=15):
@@ -152,9 +172,9 @@ class IdleFish(Project):
         time_cnt = 0
         while True:
             print(f'success_cnt={success_cnt}, time_cnt={time_cnt}')
-            random_aps = get_random_aps()
-            print(f'random_aps={random_aps}')
-            if not random_aps:
+            ap_li = self.__class__.get_aps()
+            print(f'ap_li={ap_li}')
+            if not ap_li:
                 time_cnt += 1
                 sleep(1)
                 continue
@@ -241,7 +261,7 @@ class IdleFish(Project):
             self.adb_ins.input_text(price)
             self.uia_ins.click(content_desc='确定修改', interval=0.01)
             if self.uia_ins.click(content_desc='确定', index='1', interval=0.01):
-                update_idle_fish_ins.update_last_change_price_date(datetime.today())
+                update_idle_fish_ins.update_last_change_price_date(date.today())
                 success_cnt += 1
 
     def get_dispatch_address(self, point):  # pylint: disable=too-many-locals
@@ -259,17 +279,17 @@ class IdleFish(Project):
         dispatch_date = date.today()
         job_number = RetrieveIdleFishByConsignee(dispatch_consignee).job_number
         dispatch_time = get_now_time()
-        retrieve_idle_fish_ins = RetrieveIdleFish(job_number)
-        role = retrieve_idle_fish_ins.role
-        user_name = retrieve_idle_fish_ins.user_name
-        pay_pw = retrieve_idle_fish_ins.pay_pw
-        if_mn = retrieve_idle_fish_ins.if_mn
-        buy_coins = retrieve_idle_fish_ins.last_buy_coins
-        buy_date = retrieve_idle_fish_ins.last_buy_date
-        buy_time = retrieve_idle_fish_ins.last_buy_time
+        retrieve_ins = RetrieveIdleFish(job_number)
+        role = retrieve_ins.role
+        user_name = retrieve_ins.user_name
+        pay_pw = retrieve_ins.pay_pw
+        if_mn = retrieve_ins.if_mn
+        buy_coins = retrieve_ins.last_buy_coins
+        buy_date = retrieve_ins.last_buy_date
+        buy_time = retrieve_ins.last_buy_time
         confirm_date = dispatch_date + timedelta(days=10)
-        base_payee = retrieve_idle_fish_ins.base_payee
-        middle_payee = retrieve_idle_fish_ins.middle_payee
+        base_payee = retrieve_ins.base_payee
+        middle_payee = retrieve_ins.middle_payee
         print(
             f'dispatch_date={dispatch_date}, job_number={job_number}, '
             f'dispatch_time={dispatch_time}, role={role}, '

@@ -675,6 +675,11 @@ class RetrieveIdleFish(RetrieveIdleFishBase):  # pylint: disable=too-many-public
         return self.query('last_buy_coins')
 
     @property
+    def last_change_price_date(self):
+        """从数据库中读取上次改价的日期"""
+        return self.query('last_change_price_date')
+
+    @property
     def pay(self):
         """从数据库中读取是否需要获取好友代付二维码的标志"""
         return self.query('pay')
