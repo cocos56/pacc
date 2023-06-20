@@ -188,52 +188,55 @@ class IdleFish(Project):
                 continue
             self.uia_ins.click(content_desc='我卖出的', interval=0.01)
             self.uia_ins.click(content_desc='待付款', interval=0.01)
+            index_list = []
             try:
                 dic = self.uia_ins.get_dict(index='0', content_desc='等待买家付款')['node'][1]
             except TypeError as err:
                 print(err)
+                dic = None
+            if dic:
+                if '¥0.01' in dic['@content-desc']:
+                    print('1 已改')
+                else:
+                    index_list.append('0')
+            try:
+                dic = self.uia_ins.get_dict(
+                    index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+            except TypeError as err:
+                print(err)
+                dic = None
+            if dic:
+                if '¥0.01' in dic['@content-desc']:
+                    print('2 已改')
+                else:
+                    index_list.append('1')
+            try:
+                dic = self.uia_ins.get_dict(
+                    index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+            except TypeError as err:
+                print(err)
+                dic = None
+            if dic:
+                if '¥0.01' in dic['@content-desc']:
+                    print('3 已改')
+                else:
+                    index_list.append('2')
+            try:
+                dic = self.uia_ins.get_dict(
+                    index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
+            except TypeError as err:
+                print(err)
+                dic = None
+            if dic:
+                if '¥0.01' in dic['@content-desc']:
+                    print('4 已改')
+                else:
+                    index_list.append('3')
+            print(f'index_list={index_list}')
+            if not index_list:
                 continue
-            if not dic:
-                print('没有需要改价的订单')
-                continue
-            index = '0'
-            if '¥0.01' in dic['@content-desc']:
-                print('1 已改')
-                try:
-                    dic = self.uia_ins.get_dict(
-                        index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
-                except TypeError as err:
-                    print(err)
-                    continue
-                if not dic:
-                    continue
-                index = '1'
-            if '¥0.01' in dic['@content-desc']:
-                print('2 已改')
-                try:
-                    dic = self.uia_ins.get_dict(
-                        index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
-                except TypeError as err:
-                    print(err)
-                    continue
-                if not dic:
-                    continue
-                index = '2'
-            if '¥0.01' in dic['@content-desc']:
-                print('3 已改')
-                try:
-                    dic = self.uia_ins.get_dict(
-                        index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
-                except TypeError as err:
-                    print(err)
-                    continue
-                if not dic:
-                    continue
-                index = '3'
-            if '¥0.01' in dic['@content-desc']:
-                print('4 已改')
-                continue
-            self.uia_ins.click(index=index, content_desc='等待买家付款', xml=self.uia_ins.xml)
+            self.uia_ins.click(
+                index=index_list[-1], content_desc='等待买家付款', xml=self.uia_ins.xml)
             try:
                 raw_order_num = self.uia_ins.get_dict(content_desc='订单编号')['@content-desc']
             except TypeError as err:
