@@ -123,6 +123,7 @@ class IdleFish(Project):
                 sleep(10)
                 time_cnt += 10
                 continue
+            time_cnt = 0
             alipay_code = join(Config.aps_path, random_ap)
             print(f'alipay_code={alipay_code}, self.walked_li={self.walked_li}')
             self.adb_ins.push_pic(alipay_code)
