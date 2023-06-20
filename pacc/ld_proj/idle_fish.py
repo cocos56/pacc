@@ -879,7 +879,7 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
                 print(f'设备{start_index}不存在，{datetime.now()}')
                 start_index += 1
                 continue
-            cls(start_index).launch()
+            cls(start_index).launch(1)
             sleep(5)
             cls.check_version_on_target_device(start_index, today)
             start_index += 1
