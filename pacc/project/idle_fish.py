@@ -93,18 +93,18 @@ class IdleFish(Project):
         """
         ap_li = self.__class__.get_aps()
         if ap_li:
-            for ap in ap_li:
-                job_number = ap[4:-4]
+            for ap_code in ap_li:
+                job_number = ap_code[4:-4]
                 retrieve_ins = RetrieveIdleFish(job_number)
                 # print(f'ap={ap}, job_number={job_number}, last_change_price_date='
                 #       f'{retrieve_ins.last_change_price_date}, {date.today()}')
                 if len(ap_li) <= len(self.walked_li):
                     self.walked_li = []
-                if ap in self.walked_li:
+                if ap_code in self.walked_li:
                     continue
                 if retrieve_ins.last_change_price_date == date.today():
-                    self.walked_li.append(ap)
-                    return ap
+                    self.walked_li.append(ap_code)
+                    return ap_code
         return None
 
     def open_app(self):
@@ -192,7 +192,7 @@ class IdleFish(Project):
             try:
                 dic = self.uia_ins.get_dict(index='0', content_desc='等待买家付款')['node'][1]
             except TypeError as err:
-                print(err)
+                print_err(f'1 err={err}')
                 dic = None
             if dic:
                 if '¥0.01' in dic['@content-desc']:
@@ -203,7 +203,7 @@ class IdleFish(Project):
                 dic = self.uia_ins.get_dict(
                     index='1', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
             except TypeError as err:
-                print(err)
+                print_err(f'2 err={err}')
                 dic = None
             if dic:
                 if '¥0.01' in dic['@content-desc']:
@@ -214,7 +214,7 @@ class IdleFish(Project):
                 dic = self.uia_ins.get_dict(
                     index='2', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
             except TypeError as err:
-                print(err)
+                print_err(f'3 err={err}')
                 dic = None
             if dic:
                 if '¥0.01' in dic['@content-desc']:
@@ -225,7 +225,7 @@ class IdleFish(Project):
                 dic = self.uia_ins.get_dict(
                     index='3', content_desc='等待买家付款', xml=self.uia_ins.xml)['node'][1]
             except TypeError as err:
-                print(err)
+                print_err(f'4 err={err}')
                 dic = None
             if dic:
                 if '¥0.01' in dic['@content-desc']:
