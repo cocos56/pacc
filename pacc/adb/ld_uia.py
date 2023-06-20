@@ -6,6 +6,7 @@ from os.path import exists
 import xmltodict
 
 from .ld_base import LDBase
+from .ld_console import LDConsole
 from .uia import Node
 from ..base import sleep
 from ..config import Config
@@ -41,7 +42,8 @@ class LDUIA(LDBase):
         """
         dir_name = 'CurrentUIHierarchy'
         create_dir(dir_name)
-        png_name = f'{str(self.ld_index).zfill(3)}.png'
+        png_name = f'{str(self.ld_index).zfill(3)}_' \
+                   f'{LDConsole(self.ld_index).get_job_number()}.png'
         png_path = f'{dir_name}/{png_name}'
         self.sys_run(f'shell rm /sdcard/{png_name}')
         self.sys_run(f'shell screencap -p /sdcard/{png_name}')
