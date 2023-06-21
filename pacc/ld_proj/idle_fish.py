@@ -964,8 +964,8 @@ class IdleFish(IdleFishBase):  # pylint: disable=too-many-public-methods
             return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
         for _ in range(int(ex_p / 200)):
             lduia_ins.tap((276, 600), 0.01)
-        if ex_p >= 200:
-            return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time + 30)
+        # if ex_p >= 200:
+        #     return cls.check_target_device(index, reopen_flag=True, sleep_time=sleep_time)
         if lduia_ins.get_dict(content_desc='点击领取', xml=lduia_ins.xml):
             lduia_ins.tap((453, 492), 3)
             lduia_ins.tap((267, 642), 3)
